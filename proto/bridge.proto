@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package bridge;
+
+service Bridge {
+  rpc PlayerJoin (PlayerJoinRequest) returns (PlayerJoinResponse);
+  rpc PlayerLeave (PlayerLeaveRequest) returns (PlayerLeaveResponse);
+  rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
+  rpc TransferBalance (TransferBalanceRequest) returns (TransferBalanceResponse);
+  rpc GetLeaderboard (GetLeaderboardRequest) returns (GetLeaderboardResponse);
+  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
+  rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
+  rpc SendFriendRequest (SendFriendRequestRequest) returns (SendFriendRequestResponse);
+  rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse);
+  rpc RejectFriendRequest (RejectFriendRequestRequest) returns (RejectFriendRequestResponse);
+  rpc GetFriendRequests (GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
+  rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
+}
+
+message PlayerJoinRequest {
+    string username = 1;
+}
+
+message PlayerJoinResponse {
+    bool success = 1;
+}
+
+message PlayerLeaveRequest {
+    string username = 1;
+}
+
+message PlayerLeaveResponse {
+    bool success = 1;
+}
+
+message GetBalanceRequest {
+    string username = 1;
+}
+
+message GetBalanceResponse {
+    int32 balance = 1;
+}
+
+message TransferBalanceRequest {
+    string sender = 1;
+    string receiver = 2;
+    int32 amount = 3;
+}
+
+message TransferBalanceResponse {
+    bool success = 1;
+}
+
+message GetLeaderboardRequest {
+    enum SortBy {
+        KILLS = 0;
+        DEATHS = 1;
+        KDR = 2;
+        COINS = 3;
+    }
+    SortBy sorting = 1;
+}
+
+message GetLeaderboardResponse {
+    map<string, uint32> players = 1;
+}
+
+message SendMessageRequest {
+    string username = 1;
+    string message = 2;
+}
+
+message SendMessageResponse {
+    string prefix = 1;
+    string username = 2;
+    string message = 3;
+}
+
+message GetFriendsRequest {
+   string username = 1;
+}
+
+message GetFriendsResponse {
+   repeated string friends = 1;
+}
+
+message SendFriendRequestRequest {
+   string sender = 1;
+  string receiver = 2;
+}
+
+message SendFriendRequestResponse {
+    bool success = 1;
+}
+
+message AcceptFriendRequestRequest {
+    string username = 1;
+    string sender = 2;
+}
+
+message AcceptFriendRequestResponse {
+    bool success = 1;
+}
+
+message RejectFriendRequestRequest {
+    string username = 1;
+    string sender = 2;
+}
+
+message RejectFriendRequestResponse  {
+    bool success = 1;
+}
+
+message GetFriendRequestsRequest {
+    string username = 1;
+}
+
+message GetFriendRequestsResponse {
+    repeated string senders = 1;
+}
+
+message CreateTeamRequest {
+    string username = 1;
+    string teamName = 2;
+    string color  = 3;
+}
+
+message CreateTeamResponse {
+    bool success = 1;
+}
