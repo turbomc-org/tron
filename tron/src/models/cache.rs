@@ -42,15 +42,15 @@ impl Cache {
         Ok(team.0)
     }
 
-    pub async fn get_prefix(&self, id: u64) -> anyhow::Result<Prefix> {
-        let val = self
-            .prefixes
-            .get(&id)
-            .map(|v| v.clone())
-            .ok_or_else(|| anyhow::anyhow!("Prefix not found"))?;
+    pub async fn get_prefix(&self, id: u64) -> anyhow::Result<Option<Prefix>> {
+        let val = match self.prefixes.get(&id) {
+            Some(v) => v.clone(),
+            None => return Ok(None),
+        };
+
         let prefix: (Prefix, usize) =
             bincode::decode_from_slice(&val, bincode::config::standard())?;
-        Ok(prefix.0)
+        Ok(Some(prefix.0))
     }
 
     pub async fn insert_prefix(&self, prefix: Prefix) -> anyhow::Result<()> {

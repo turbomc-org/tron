@@ -12,9 +12,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let censor: Censor = Sex + Standard + Zealous;
         let username = inner_request.username;
-        let message = censor.censor(&inner_request.message);
+        let message = censor.replace(&inner_request.message, "#");
         let players_cache = &self.cache.active_players.clone();
-        let players = &self.databases.players.clone();
 
         if !players_cache.contains_key(&username) {
             error!("Player {} not found in cache", username);
@@ -56,8 +55,6 @@ impl BridgeService {
         }
 
         let response = SendMessageResponse {
-            // The `prefix` field in the generated struct is an `Option`,
-            // so we can assign our `grpc_prefix` variable directly.
             prefix: grpc_prefix,
             username,
             message,
