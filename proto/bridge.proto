@@ -77,8 +77,13 @@ message SendMessageRequest {
     string message = 2;
 }
 
+message Prefix {
+    string text = 1;
+    string color = 2;
+}
+
 message SendMessageResponse {
-    string prefix = 1;
+    Prefix prefix = 1;
     string username = 2;
     string message = 3;
 }
@@ -123,7 +128,7 @@ message GetFriendRequestsRequest {
 }
 
 message GetFriendRequestsResponse {
-    repeated string senders = 1;
+   map<string, uint64> incoming_friend_requests = 1;
 }
 
 message CreateTeamRequest {

@@ -1,4 +1,5 @@
 use crate::models::player::Player;
+use crate::models::prefix::Prefix;
 use dashmap::DashMap;
 use std::sync::Arc;
 
@@ -6,8 +7,9 @@ use crate::models::team::Team;
 
 pub struct Cache {
     pub active_players: Arc<DashMap<String, Vec<u8>>>,
-    pub shop_items: Arc<DashMap<String, Vec<u8>>>,
-    pub teams: Arc<DashMap<String, Vec<u8>>>,
+    pub shop_items: Arc<DashMap<u64, Vec<u8>>>,
+    pub teams: Arc<DashMap<u64, Vec<u8>>>,
+    pub prefixes: Arc<DashMap<u64, Vec<u8>>>,
 }
 
 impl Cache {
@@ -16,6 +18,7 @@ impl Cache {
             active_players: Arc::new(DashMap::new()),
             shop_items: Arc::new(DashMap::new()),
             teams: Arc::new(DashMap::new()),
+            prefixes: Arc::new(DashMap::new()),
         }
     }
 
@@ -25,23 +28,40 @@ impl Cache {
 
     pub async fn insert_team(&self, team: Team) -> anyhow::Result<()> {
         let val = bincode::encode_to_vec(&team, bincode::config::standard())?;
-        self.teams.insert(team.name, val);
+        self.teams.insert(team.id, val);
         Ok(())
     }
 
-    pub async fn get_team(&self, team_name: String) -> anyhow::Result<Team> {
+    pub async fn get_team(&self, team_id: u64) -> anyhow::Result<Team> {
         let val = self
             .teams
-            .get(&team_name)
+            .get(&team_id)
             .map(|v| v.clone())
             .ok_or_else(|| anyhow::anyhow!("Team not found"))?;
         let team: (Team, usize) = bincode::decode_from_slice(&val, bincode::config::standard())?;
         Ok(team.0)
     }
 
+    pub async fn get_prefix(&self, id: u64) -> anyhow::Result<Prefix> {
+        let val = self
+            .prefixes
+            .get(&id)
+            .map(|v| v.clone())
+            .ok_or_else(|| anyhow::anyhow!("Prefix not found"))?;
+        let prefix: (Prefix, usize) =
+            bincode::decode_from_slice(&val, bincode::config::standard())?;
+        Ok(prefix.0)
+    }
+
+    pub async fn insert_prefix(&self, prefix: Prefix) -> anyhow::Result<()> {
+        let val = bincode::encode_to_vec(&prefix, bincode::config::standard())?;
+        self.prefixes.insert(prefix.id, val);
+        Ok(())
+    }
+
     pub async fn insert_active_player(&self, player: Player) -> anyhow::Result<()> {
         let val = bincode::encode_to_vec(&player, bincode::config::standard())?;
-        self.active_players.insert(player.player_name, val);
+        self.active_players.insert(player.username, val);
         Ok(())
     }
 
@@ -54,6 +74,12 @@ impl Cache {
         let player: (Player, usize) =
             bincode::decode_from_slice(&val, bincode::config::standard())?;
         Ok(player.0)
+    }
+
+    pub async fn update_active_player(&self, player: &Player) -> anyhow::Result<()> {
+        let val = bincode::encode_to_vec(player, bincode::config::standard())?;
+        self.active_players.insert(player.username.clone(), val);
+        Ok(())
     }
 }
 

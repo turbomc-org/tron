@@ -5,6 +5,7 @@ use mongodb::Collection;
 use mongodb::bson::doc;
 use mongodb::error::Error as MongoError;
 use serde::{Deserialize, Serialize};
+use std::collections::{HashMap, HashSet};
 
 use crate::GENERATOR;
 
@@ -15,17 +16,18 @@ pub struct Player {
     pub discord_id: Option<String>,
     pub edition: Edition,
     pub coins: u64,
-    pub prefixes: Vec<String>,
-    pub selected_prefix: Option<String>,
+    pub prefixes: HashSet<String>,
+    pub selected_prefix: Option<u64>,
     pub team_id: Option<String>,
-    pub friends: Vec<String>,
+    pub friends: HashSet<String>,
     pub invite_blocked: bool,
     pub kills: u64,
     pub deaths: u64,
     pub vault_count: u64,
-    pub owned_vault_ids: Vec<String>,
-    pub redeemed_codes: Vec<String>,
-    pub blocked_requests: Vec<String>,
+    pub owned_vault_ids: HashSet<String>,
+    pub redeemed_codes: HashSet<String>,
+    pub incoming_friend_requests: HashMap<String, u64>,
+    pub incoming_team_requests: HashMap<String, u64>,
     pub created_at: u64,
     pub updated_at: u64,
 }
@@ -88,15 +90,16 @@ impl Player {
             coins: 0,
             kills: 0,
             deaths: 0,
-            prefixes: Vec::new(),
+            prefixes: HashSet::new(),
             selected_prefix: None,
             team_id: None,
-            friends: Vec::new(),
+            friends: HashSet::new(),
             invite_blocked: false,
             vault_count: 0,
-            owned_vault_ids: Vec::new(),
-            redeemed_codes: Vec::new(),
-            blocked_requests: Vec::new(),
+            owned_vault_ids: HashSet::new(),
+            redeemed_codes: HashSet::new(),
+            incoming_friend_requests: HashMap::new(),
+            incoming_team_requests: HashMap::new(),
             created_at: now.timestamp() as u64,
             updated_at: now.timestamp() as u64,
         }
@@ -148,13 +151,66 @@ impl Player {
     }
 
     pub async fn transfer_coins(
-        from_username: u64,
+        from_id: u64,
         to_id: u64,
         amount: u64,
         col: &Collection<Self>,
     ) -> anyhow::Result<()> {
         Self::inc_coins(from_id, -(amount as i64), col).await?;
         Self::inc_coins(to_id, amount as i64, col).await?;
+
+        Ok(())
+    }
+
+    pub async fn add_friend_request(
+        sender: String,
+        receiver: String,
+        col: &Collection<Player>,
+    ) -> anyhow::Result<()> {
+        let timestamp = Utc::now().timestamp() as u64;
+
+        col.update_one(
+            doc! { "username": receiver},
+            doc! {
+                "$set": {
+                    format!("incoming_friend_requests.{}", sender): timestamp as i64
+                }
+            },
+        )
+        .await?;
+
+        Ok(())
+    }
+
+    pub async fn accept_friend_request(
+        username: String,
+        sender: String,
+        col: &Collection<Player>,
+    ) -> anyhow::Result<()> {
+        col.update_one(
+            doc! { "username": &username },
+            doc! {
+                "$unset": { format!("incoming_friend_requests.{}", sender): "" },
+                "$addToSet": { "friends": &sender }
+            },
+        )
+        .await?;
+
+        Ok(())
+    }
+
+    pub async fn reject_friend_request(
+        username: String,
+        sender: String,
+        col: &Collection<Player>,
+    ) -> anyhow::Result<()> {
+        col.update_one(
+            doc! {"username": &username},
+            doc! {
+                "$unset": { format!("incoming_friend_requests.{}", sender): "" },
+            },
+        )
+        .await?;
 
         Ok(())
     }

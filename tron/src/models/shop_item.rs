@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize)]
 pub struct ShopItem {
     #[serde(rename = "_id")]
-    pub id: String,
+    pub id: u64,
     pub item_id: String,
     pub name: String,
     pub description: String,

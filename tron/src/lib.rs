@@ -1,6 +1,7 @@
 use crate::models::cache::Cache;
 use crate::models::databases::Databases;
 use crate::utils::mongodb::MongoDB;
+use crate::utils::redis::Redis;
 use bridge::bridge_server::Bridge;
 use snowflaked::sync::Generator;
 use tonic::{Request, Response, Status};
@@ -11,7 +12,7 @@ pub mod models;
 pub mod requests;
 pub mod utils;
 
-pub static GENERATOR: Generator = Generator::new(0);
+static GENERATOR: Generator = Generator::new(0);
 
 pub mod bridge {
     tonic::include_proto!("bridge");
@@ -21,6 +22,7 @@ pub struct BridgeService {
     cache: Cache,
     mongodb: MongoDB,
     databases: Databases,
+    redis: Redis,
 }
 
 impl BridgeService {

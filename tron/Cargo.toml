@@ -18,6 +18,9 @@ tracing-subscriber = {workspace = true}
 anyhow = {workspace=true}
 snowflaked = { version = "1.0.3", features = ["sync"] }
 chrono = "0.4.42"
+redis = { version = "0.32.7", features = ["tokio-comp"] }
+censor = "0.3.0"
+whatlang = "0.18.0"
 
 [build-dependencies]
 tonic-build = "0.14.2"
