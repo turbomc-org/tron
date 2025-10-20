@@ -1,17 +1,41 @@
-use bridge::bridge_server::{Bridge, BridgeServer};
-use tonic::{Request, Response, Status, transport::Server};
+use crate::models::cache::Cache;
+use crate::models::databases::Databases;
+use crate::utils::mongodb::MongoDB;
+use bridge::bridge_server::Bridge;
+use snowflaked::sync::Generator;
+use tonic::{Request, Response, Status};
 
 pub mod grpc;
 pub mod logger;
 pub mod models;
 pub mod requests;
+pub mod utils;
+
+pub static GENERATOR: Generator = Generator::new(0);
 
 pub mod bridge {
     tonic::include_proto!("bridge");
 }
 
-#[derive(Default)]
-pub struct BridgeService;
+pub struct BridgeService {
+    cache: Cache,
+    mongodb: MongoDB,
+    databases: Databases,
+}
+
+impl BridgeService {
+    pub async fn new() -> Self {
+        let cache = Cache::new();
+        let mongodb = MongoDB::new().await.expect("failed to connect to MongoDB");
+        let databases = Databases::new(&mongodb.database);
+
+        Self {
+            cache,
+            mongodb,
+            databases,
+        }
+    }
+}
 
 #[tonic::async_trait]
 impl Bridge for BridgeService {

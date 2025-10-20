@@ -12,7 +12,9 @@ impl GRPCService {
             .expect("failed to parse the address");
         info!("🟩 Listener running on {}", addr);
 
-        let svc = BridgeServer::new(BridgeService::default());
+        let bs = BridgeService::new().await;
+
+        let svc = BridgeServer::new(bs);
         Server::builder()
             .add_service(svc)
             .serve(addr)

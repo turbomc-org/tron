@@ -19,6 +19,13 @@ service Bridge {
 
 message PlayerJoinRequest {
     string username = 1;
+
+    enum Edition {
+        BEDROCK = 0;
+        JAVA = 1;
+    }
+
+    Edition edition = 2;
 }
 
 message PlayerJoinResponse {
@@ -38,17 +45,17 @@ message GetBalanceRequest {
 }
 
 message GetBalanceResponse {
-    int32 balance = 1;
+    uint64 balance = 1;
 }
 
 message TransferBalanceRequest {
     string sender = 1;
     string receiver = 2;
-    int32 amount = 3;
+    uint64 amount = 3;
 }
 
 message TransferBalanceResponse {
-    bool success = 1;
+   bool success = 1;
 }
 
 message GetLeaderboardRequest {
