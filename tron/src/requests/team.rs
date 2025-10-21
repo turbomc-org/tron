@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 impl BridgeService {
     pub async fn handle_create_team(
         &self,
-        request: Request<CreateTeamRequest>,
+        _request: Request<CreateTeamRequest>,
     ) -> Result<Response<CreateTeamResponse>, Status> {
         unimplemented!()
     }

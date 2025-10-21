@@ -1,10 +1,23 @@
 use bincode::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 
+use crate::GENERATOR;
+
 #[derive(Serialize, Deserialize, Encode, Decode, Clone)]
 pub struct Prefix {
     pub id: u64,
-    pub prefix_text: String,
+    pub text: String,
     pub display_color_hex: String,
-    pub price: u32,
+    pub price: u64,
+}
+
+impl Prefix {
+    pub fn new(text: String, color: String, price: u64) -> Self {
+        Self {
+            id: GENERATOR.generate(),
+            text,
+            display_color_hex: color,
+            price,
+        }
+    }
 }

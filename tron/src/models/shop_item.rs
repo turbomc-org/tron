@@ -1,3 +1,4 @@
+use crate::GENERATOR;
 use bincode::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
@@ -10,8 +11,8 @@ pub struct ShopItem {
     pub name: String,
     pub description: String,
     pub category: String,
-    pub buy_price: u32,
-    pub sell_price: u32,
+    pub buy_price: u64,
+    pub sell_price: u64,
     pub rarity: Rarity,
 }
 
@@ -39,4 +40,33 @@ pub enum ItemType {
     Food,
     Misc,
     Container,
+}
+
+impl ShopItem {
+    pub fn new(
+        item_id: String,
+        item_type: ItemType,
+        name: String,
+        description: String,
+        category: String,
+        enchantments: HashSet<String>,
+        rarity: Rarity,
+        buy_price: u64,
+        sell_price: u64,
+    ) -> Self {
+        Self {
+            id: GENERATOR.generate(),
+            item: Item {
+                id: item_id,
+                item_type,
+                enchantments,
+            },
+            name,
+            description,
+            category,
+            buy_price,
+            sell_price,
+            rarity,
+        }
+    }
 }

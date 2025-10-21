@@ -1,5 +1,6 @@
 use mongodb::error::Error as MongoError;
 use mongodb::{Client, Database};
+use tracing::info;
 
 pub struct MongoDB {
     pub client: Client,
@@ -10,12 +11,11 @@ impl MongoDB {
     pub async fn new() -> Result<Self, MongoError> {
         let mongo_uri = std::env::var("MONGO_URI").expect("missing MONGO_URI");
 
-        // The '?' operator will propagate any connection errors.
         let client = Client::with_uri_str(&mongo_uri).await?;
 
-        let database = client.database("h01");
+        let database = client.database("tron");
 
-        println!("✅ Database connected successfully.");
+        info!("✅ Database connected successfully.");
 
         Ok(MongoDB { client, database })
     }

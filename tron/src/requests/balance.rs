@@ -129,3 +129,94 @@ impl BridgeService {
         Ok(Response::new(TransferBalanceResponse { success: true }))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::{
+        bridge::bridge_server::Bridge,
+        models::player::{Edition, Player},
+    };
+
+    #[tokio::test]
+    async fn test_get_balance_from_cache() {
+        let service = BridgeService::new().await;
+
+        let player = Player {
+            username: "Alice".to_string(),
+            coins: 500,
+            ..Player::new("Alice".to_string(), Edition::Java)
+        };
+
+        service.cache.insert_player(player.clone()).await.unwrap();
+
+        let req = tonic::Request::new(crate::bridge::GetBalanceRequest {
+            username: "Alice".to_string(),
+        });
+
+        let resp = service.handle_get_balance(req).await.unwrap().into_inner();
+
+        assert_eq!(resp.balance, 500);
+    }
+
+    #[tokio::test]
+    async fn test_handle_transfer_balance() {
+        let service = BridgeService::new().await;
+
+        let sender_join_req = tonic::Request::new(crate::bridge::PlayerJoinRequest {
+            username: "vaibhav".to_string(),
+            edition: Edition::Java as i32,
+        });
+
+        let sender_join_resp = service
+            .player_join(sender_join_req)
+            .await
+            .unwrap()
+            .into_inner();
+
+        assert!(sender_join_resp.success);
+
+        let receiver_join_req = tonic::Request::new(crate::bridge::PlayerJoinRequest {
+            username: "vaibhavi".to_string(),
+            edition: Edition::Java as i32,
+        });
+
+        let receiver_join_resp = service
+            .player_join(receiver_join_req)
+            .await
+            .unwrap()
+            .into_inner();
+
+        assert!(receiver_join_resp.success);
+
+        service
+            .databases
+            .players
+            .update_one(doc! {"username": "vaibhav"}, doc! {"$inc": {"coins": 100}})
+            .await
+            .unwrap();
+
+        let mut sender = service
+            .cache
+            .get_player(&"vaibhav".to_string())
+            .await
+            .unwrap()
+            .unwrap();
+        sender.coins -= 100;
+        service.cache.insert_player(sender).await.unwrap();
+
+        let req = tonic::Request::new(crate::bridge::TransferBalanceRequest {
+            sender: "vaibhav".to_string(),
+            receiver: "vaibhavi".to_string(),
+            amount: 100,
+        });
+
+        let resp = service
+            .handle_transfer_balance(req)
+            .await
+            .unwrap()
+            .into_inner();
+
+        assert!(resp.success);
+    }
+}

@@ -20,8 +20,10 @@ pub mod bridge {
 
 pub struct BridgeService {
     cache: Cache,
+    #[allow(unused)]
     mongodb: MongoDB,
     databases: Databases,
+    #[allow(unused)]
     redis: Redis,
 }
 
@@ -129,77 +131,77 @@ impl Bridge for BridgeService {
 
     async fn get_team(
         &self,
-        request: Request<crate::bridge::GetTeamRequest>,
+        _request: Request<crate::bridge::GetTeamRequest>,
     ) -> Result<Response<crate::bridge::GetTeamResponse>, Status> {
         unimplemented!()
     }
 
     async fn get_team_leaderboard(
         &self,
-        request: Request<crate::bridge::GetTeamLeaderboardRequest>,
+        _request: Request<crate::bridge::GetTeamLeaderboardRequest>,
     ) -> Result<Response<crate::bridge::GetTeamLeaderboardResponse>, Status> {
         unimplemented!()
     }
 
     async fn leave_team(
         &self,
-        request: Request<crate::bridge::LeaveTeamRequest>,
+        _request: Request<crate::bridge::LeaveTeamRequest>,
     ) -> Result<Response<crate::bridge::LeaveTeamResponse>, Status> {
         unimplemented!()
     }
 
     async fn join_team(
         &self,
-        request: Request<crate::bridge::JoinTeamRequest>,
+        _request: Request<crate::bridge::JoinTeamRequest>,
     ) -> Result<Response<crate::bridge::JoinTeamResponse>, Status> {
         unimplemented!()
     }
 
     async fn send_team_invite(
         &self,
-        request: Request<crate::bridge::SendTeamInviteRequest>,
+        _request: Request<crate::bridge::SendTeamInviteRequest>,
     ) -> Result<Response<crate::bridge::SendTeamInviteResponse>, Status> {
         unimplemented!()
     }
 
     async fn accept_team_invite(
         &self,
-        request: Request<crate::bridge::AcceptTeamInviteRequest>,
+        _request: Request<crate::bridge::AcceptTeamInviteRequest>,
     ) -> Result<Response<crate::bridge::AcceptTeamInviteResponse>, Status> {
         unimplemented!()
     }
 
     async fn reject_team_invite(
         &self,
-        request: Request<crate::bridge::RejectTeamInviteRequest>,
+        _request: Request<crate::bridge::RejectTeamInviteRequest>,
     ) -> Result<Response<crate::bridge::RejectTeamInviteResponse>, Status> {
         unimplemented!()
     }
 
     async fn get_team_members(
         &self,
-        request: Request<crate::bridge::GetTeamMembersRequest>,
+        _request: Request<crate::bridge::GetTeamMembersRequest>,
     ) -> Result<Response<crate::bridge::GetTeamMembersResponse>, Status> {
         unimplemented!()
     }
 
     async fn buy_item(
         &self,
-        request: Request<crate::bridge::BuyItemRequest>,
+        _request: Request<crate::bridge::BuyItemRequest>,
     ) -> Result<Response<crate::bridge::BuyItemResponse>, Status> {
         unimplemented!()
     }
 
     async fn sell_item(
         &self,
-        request: Request<crate::bridge::SellItemRequest>,
+        _request: Request<crate::bridge::SellItemRequest>,
     ) -> Result<Response<crate::bridge::SellItemResponse>, Status> {
         unimplemented!()
     }
 
     async fn get_items(
         &self,
-        request: Request<crate::bridge::GetItemsRequest>,
+        _request: Request<crate::bridge::GetItemsRequest>,
     ) -> Result<Response<crate::bridge::GetItemsResponse>, Status> {
         unimplemented!()
     }

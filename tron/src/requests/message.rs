@@ -51,7 +51,7 @@ impl BridgeService {
             match self.cache.get_prefix(&prefix_id).await {
                 Ok(Some(prefix_from_cache)) => {
                     grpc_prefix = Some(GrpcPrefix {
-                        text: prefix_from_cache.prefix_text,
+                        text: prefix_from_cache.text,
                         color: prefix_from_cache.display_color_hex,
                     });
                 }

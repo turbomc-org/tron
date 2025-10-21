@@ -11,6 +11,7 @@ use crate::GENERATOR;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode)]
 pub struct Player {
+    #[serde(rename = "_id")]
     pub id: u64,
     pub username: String,
     pub discord_id: Option<String>,
@@ -19,7 +20,7 @@ pub struct Player {
     pub prefixes: HashSet<String>,
     pub selected_prefix: Option<u64>,
     pub team: Option<u64>,
-    pub friends: HashSet<String>,
+    pub friends: HashSet<u64>,
     pub invite_blocked: bool,
     pub kills: u64,
     pub rank: Rank,
@@ -27,8 +28,8 @@ pub struct Player {
     pub vault_count: u64,
     pub owned_vault_ids: HashSet<String>,
     pub redeemed_codes: HashSet<String>,
-    pub incoming_friend_requests: HashMap<String, u64>,
-    pub incoming_team_requests: HashMap<String, u64>,
+    pub incoming_friend_requests: HashMap<u64, u64>,
+    pub incoming_team_requests: HashMap<u64, u64>,
     pub created_at: u64,
     pub updated_at: u64,
 }
@@ -60,7 +61,7 @@ impl Player {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode)]
+#[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode, PartialEq)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum Edition {
     Java,

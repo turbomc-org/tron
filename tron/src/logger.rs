@@ -5,8 +5,7 @@ pub struct Logger {}
 
 impl Logger {
     pub async fn init(trace: bool) {
-        let file_appender =
-            RollingFileAppender::new(Rotation::HOURLY, "./.copper-golem/logs", "cg.log");
+        let file_appender = RollingFileAppender::new(Rotation::HOURLY, "./.tron/logs", "tr.log");
         let (non_blocking_file, _guard) = tracing_appender::non_blocking(file_appender);
 
         let level = if trace {

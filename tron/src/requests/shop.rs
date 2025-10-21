@@ -5,14 +5,14 @@ use tonic::{Request, Response, Status};
 impl BridgeService {
     pub async fn handle_buy_item(
         &self,
-        request: Request<BuyItemRequest>,
+        _request: Request<BuyItemRequest>,
     ) -> Result<Response<BuyItemResponse>, Status> {
         unimplemented!()
     }
 
     pub async fn handle_sell_item(
         &self,
-        request: Request<SellItemRequest>,
+        _request: Request<SellItemRequest>,
     ) -> Result<Response<SellItemResponse>, Status> {
         unimplemented!()
     }
