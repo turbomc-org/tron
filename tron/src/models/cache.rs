@@ -1,15 +1,16 @@
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
+use crate::models::shop_item::ShopItem;
+use crate::models::team::Team;
+use anyhow::Result;
 use dashmap::DashMap;
 use std::sync::Arc;
 
-use crate::models::team::Team;
-
 pub struct Cache {
-    pub active_players: Arc<DashMap<String, Vec<u8>>>,
-    pub shop_items: Arc<DashMap<u64, Vec<u8>>>,
-    pub teams: Arc<DashMap<u64, Vec<u8>>>,
-    pub prefixes: Arc<DashMap<u64, Vec<u8>>>,
+    pub active_players: Arc<DashMap<String, Player>>,
+    pub shop_items: Arc<DashMap<u64, ShopItem>>,
+    pub teams: Arc<DashMap<u64, Team>>,
+    pub prefixes: Arc<DashMap<u64, Prefix>>,
 }
 
 impl Cache {
@@ -22,63 +23,39 @@ impl Cache {
         }
     }
 
-    pub fn get_player(&self, username: String) -> Option<Vec<u8>> {
-        self.active_players.get(&username).map(|v| v.clone())
+    pub async fn get_player(&self, username: &String) -> Result<Option<Player>> {
+        Ok(self.active_players.get(username).map(|entry| entry.clone()))
     }
 
-    pub async fn insert_team(&self, team: Team) -> anyhow::Result<()> {
-        let val = bincode::encode_to_vec(&team, bincode::config::standard())?;
-        self.teams.insert(team.id, val);
+    pub async fn get_shop_item(&self, id: &u64) -> Result<Option<ShopItem>> {
+        Ok(self.shop_items.get(id).map(|entry| entry.clone()))
+    }
+
+    pub async fn get_team(&self, id: &u64) -> Result<Option<Team>> {
+        Ok(self.teams.get(id).map(|entry| entry.clone()))
+    }
+
+    pub async fn get_prefix(&self, id: &u64) -> Result<Option<Prefix>> {
+        Ok(self.prefixes.get(id).map(|entry| entry.clone()))
+    }
+
+    pub async fn insert_player(&self, player: Player) -> Result<()> {
+        self.active_players.insert(player.username.clone(), player);
         Ok(())
     }
 
-    pub async fn get_team(&self, team_id: u64) -> anyhow::Result<Team> {
-        let val = self
-            .teams
-            .get(&team_id)
-            .map(|v| v.clone())
-            .ok_or_else(|| anyhow::anyhow!("Team not found"))?;
-        let team: (Team, usize) = bincode::decode_from_slice(&val, bincode::config::standard())?;
-        Ok(team.0)
-    }
-
-    pub async fn get_prefix(&self, id: u64) -> anyhow::Result<Option<Prefix>> {
-        let val = match self.prefixes.get(&id) {
-            Some(v) => v.clone(),
-            None => return Ok(None),
-        };
-
-        let prefix: (Prefix, usize) =
-            bincode::decode_from_slice(&val, bincode::config::standard())?;
-        Ok(Some(prefix.0))
-    }
-
-    pub async fn insert_prefix(&self, prefix: Prefix) -> anyhow::Result<()> {
-        let val = bincode::encode_to_vec(&prefix, bincode::config::standard())?;
-        self.prefixes.insert(prefix.id, val);
+    pub async fn insert_shop_item(&self, shop_item: ShopItem) -> Result<()> {
+        self.shop_items.insert(shop_item.id, shop_item);
         Ok(())
     }
 
-    pub async fn insert_active_player(&self, player: Player) -> anyhow::Result<()> {
-        let val = bincode::encode_to_vec(&player, bincode::config::standard())?;
-        self.active_players.insert(player.username, val);
+    pub async fn insert_team(&self, team: Team) -> Result<()> {
+        self.teams.insert(team.id, team);
         Ok(())
     }
 
-    pub async fn get_active_player(&self, player_name: String) -> anyhow::Result<Player> {
-        let val = self
-            .active_players
-            .get(&player_name)
-            .map(|v| v.clone())
-            .ok_or_else(|| anyhow::anyhow!("Player not found"))?;
-        let player: (Player, usize) =
-            bincode::decode_from_slice(&val, bincode::config::standard())?;
-        Ok(player.0)
-    }
-
-    pub async fn update_active_player(&self, player: &Player) -> anyhow::Result<()> {
-        let val = bincode::encode_to_vec(player, bincode::config::standard())?;
-        self.active_players.insert(player.username.clone(), val);
+    pub async fn insert_prefix(&self, prefix: Prefix) -> Result<()> {
+        self.prefixes.insert(prefix.id, prefix);
         Ok(())
     }
 }

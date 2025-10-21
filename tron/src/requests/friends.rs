@@ -29,11 +29,24 @@ impl BridgeService {
 
         let player = self
             .cache
-            .get_active_player(username.clone())
+            .get_player(&username)
             .await
-            .map_err(|err| {
-                error!("Failed to get active player: {}", err.to_string());
-                Status::internal(format!("Failed to get active player {}", username))
+            .map_err(|e| {
+                error!(
+                    "Failed to fetch player {} from cache: {}",
+                    username,
+                    e.to_string()
+                );
+
+                Status::internal(format!("Failed to fetch player {} from cache", username))
+            })?
+            .ok_or_else(|| {
+                error!("Player {} not found in active players cache", username);
+
+                Status::data_loss(format!(
+                    "Player {} not found in active players cache",
+                    username
+                ))
             })?;
 
         let friends = player.friends;
@@ -61,11 +74,24 @@ impl BridgeService {
 
         let player = self
             .cache
-            .get_active_player(username.clone())
+            .get_player(&username)
             .await
-            .map_err(|err| {
-                error!("Failed to get active player: {}", err.to_string());
-                Status::internal(format!("Failed to get active player {}", username))
+            .map_err(|e| {
+                error!(
+                    "Failed to fetch player {} from cache: {}",
+                    username,
+                    e.to_string()
+                );
+
+                Status::internal(format!("Failed to fetch player {} from cache", username))
+            })?
+            .ok_or_else(|| {
+                error!("Player {} not found in active players cache", username);
+
+                Status::data_loss(format!(
+                    "Player {} not found in active players cache",
+                    username
+                ))
             })?;
 
         let friends_requests = player.incoming_friend_requests;
@@ -147,16 +173,22 @@ impl BridgeService {
 
         let mut player = self
             .cache
-            .get_active_player(username.clone())
+            .get_player(&username)
             .await
-            .map_err(|err| {
+            .map_err(|e| {
                 error!(
-                    "Failed to fetch player {} from cache even though it exists: {}",
-                    username, err
+                    "Failed to fetch player {} from cache: {}",
+                    username,
+                    e.to_string()
                 );
 
-                Status::internal(format!(
-                    "Failed to fetch player {} from cache even though it exists",
+                Status::internal(format!("Failed to fetch player {} from cache", username))
+            })?
+            .ok_or_else(|| {
+                error!("Player {} not found in active players cache", username);
+
+                Status::data_loss(format!(
+                    "Player {} not found in active players cache",
                     username
                 ))
             })?;
@@ -179,19 +211,16 @@ impl BridgeService {
 
         player.incoming_friend_requests.remove(&sender);
         player.friends.insert(sender);
-        self.cache
-            .update_active_player(&player)
-            .await
-            .map_err(|err| {
-                error!(
-                    "Failed to update active player {} in cache: {}",
-                    username, err
-                );
-                Status::internal(format!(
-                    "Failed to update active player {} in cache",
-                    username
-                ))
-            });
+        self.cache.insert_player(player).await.map_err(|err| {
+            error!(
+                "Failed to update active player {} in cache: {}",
+                username, err
+            );
+            Status::internal(format!(
+                "Failed to update active player {} in cache",
+                username
+            ))
+        });
 
         Ok(Response::new(AcceptFriendRequestResponse { success: true }))
     }
@@ -216,16 +245,22 @@ impl BridgeService {
 
         let mut player = self
             .cache
-            .get_active_player(username.clone())
+            .get_player(&username)
             .await
-            .map_err(|err| {
+            .map_err(|e| {
                 error!(
-                    "Failed to fetch player {} from cache even though it exists: {}",
-                    username, err
+                    "Failed to fetch player {} from cache: {}",
+                    username,
+                    e.to_string()
                 );
 
-                Status::internal(format!(
-                    "Failed to fetch player {} from cache even though it exists",
+                Status::internal(format!("Failed to fetch player {} from cache", username))
+            })?
+            .ok_or_else(|| {
+                error!("Player {} not found in active players cache", username);
+
+                Status::data_loss(format!(
+                    "Player {} not found in active players cache",
                     username
                 ))
             })?;
@@ -247,19 +282,16 @@ impl BridgeService {
             })?;
 
         player.incoming_friend_requests.remove(&sender);
-        self.cache
-            .update_active_player(&player)
-            .await
-            .map_err(|err| {
-                error!(
-                    "Failed to update active player {} in cache: {}",
-                    username, err
-                );
-                Status::internal(format!(
-                    "Failed to update active player {} in cache",
-                    username
-                ))
-            });
+        self.cache.insert_player(player).await.map_err(|err| {
+            error!(
+                "Failed to update active player {} in cache: {}",
+                username, err
+            );
+            Status::internal(format!(
+                "Failed to update active player {} in cache",
+                username
+            ))
+        });
 
         Ok(Response::new(RejectFriendRequestResponse { success: true }))
     }

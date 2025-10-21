@@ -1,7 +1,7 @@
 use bincode::{Decode, Encode};
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Encode, Decode)]
+#[derive(Serialize, Deserialize, Encode, Decode, Clone)]
 pub struct Team {
     #[serde(rename = "_id")]
     pub id: u64,

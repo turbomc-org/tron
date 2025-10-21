@@ -18,10 +18,11 @@ pub struct Player {
     pub coins: u64,
     pub prefixes: HashSet<String>,
     pub selected_prefix: Option<u64>,
-    pub team_id: Option<String>,
+    pub team: Option<u64>,
     pub friends: HashSet<String>,
     pub invite_blocked: bool,
     pub kills: u64,
+    pub rank: Rank,
     pub deaths: u64,
     pub vault_count: u64,
     pub owned_vault_ids: HashSet<String>,
@@ -30,6 +31,15 @@ pub struct Player {
     pub incoming_team_requests: HashMap<String, u64>,
     pub created_at: u64,
     pub updated_at: u64,
+}
+
+#[derive(Serialize, Deserialize, Encode, Decode, Debug, Clone)]
+pub enum Rank {
+    Newbie,
+    Member,
+    Vip,
+    Elite,
+    Legend,
 }
 
 impl Player {
@@ -92,10 +102,11 @@ impl Player {
             deaths: 0,
             prefixes: HashSet::new(),
             selected_prefix: None,
-            team_id: None,
+            team: None,
             friends: HashSet::new(),
             invite_blocked: false,
             vault_count: 0,
+            rank: Rank::Newbie,
             owned_vault_ids: HashSet::new(),
             redeemed_codes: HashSet::new(),
             incoming_friend_requests: HashMap::new(),

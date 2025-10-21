@@ -25,17 +25,30 @@ impl BridgeService {
 
         let player = self
             .cache
-            .get_active_player(username.clone())
+            .get_player(&username)
             .await
-            .map_err(|err| {
-                error!("Failed to get active player: {}", err.to_string());
-                Status::internal(format!("Failed to get active player {}", username))
+            .map_err(|e| {
+                error!(
+                    "Failed to fetch player {} from cache: {}",
+                    username,
+                    e.to_string()
+                );
+
+                Status::internal(format!("Failed to fetch player {} from cache", username))
+            })?
+            .ok_or_else(|| {
+                error!("Player {} not found in active players cache", username);
+
+                Status::data_loss(format!(
+                    "Player {} not found in active players cache",
+                    username
+                ))
             })?;
 
         let mut grpc_prefix: Option<GrpcPrefix> = None;
 
         if let Some(prefix_id) = player.selected_prefix {
-            match self.cache.get_prefix(prefix_id).await {
+            match self.cache.get_prefix(&prefix_id).await {
                 Ok(Some(prefix_from_cache)) => {
                     grpc_prefix = Some(GrpcPrefix {
                         text: prefix_from_cache.prefix_text,

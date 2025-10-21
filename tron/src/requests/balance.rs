@@ -18,15 +18,27 @@ impl BridgeService {
         let username = inner_request.username;
 
         let response = if players_cache.contains_key(&username) {
-            let player = self.cache.get_active_player(username.clone()).await.map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from cache even it's key was present in cache : {}",
-                    username,
-                    e.to_string()
-                );
+            let player = self
+                .cache
+                .get_player(&username)
+                .await
+                .map_err(|e| {
+                    error!(
+                        "Failed to fetch player {} from cache: {}",
+                        username,
+                        e.to_string()
+                    );
 
-                Status::internal(format!("Failed to fetch player {} from cache", username))
-            })?;
+                    Status::internal(format!("Failed to fetch player {} from cache", username))
+                })?
+                .ok_or_else(|| {
+                    error!("Player {} not found in active players cache", username);
+
+                    Status::data_loss(format!(
+                        "Player {} not found in active players cache",
+                        username
+                    ))
+                })?;
 
             Response::new(GetBalanceResponse {
                 balance: player.coins,

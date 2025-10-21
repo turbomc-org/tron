@@ -26,7 +26,7 @@ impl BridgeService {
 
         let response = match Player::find_by_username(username.clone(), &players).await {
             Ok(Some(player)) => {
-                &self.cache.insert_active_player(player).await;
+                &self.cache.insert_player(player).await;
                 Response::new(PlayerJoinResponse { success: true })
             }
             Ok(None) => {
@@ -35,7 +35,7 @@ impl BridgeService {
                     .insert(&players)
                     .await
                     .map_err(|e| Status::internal(format!("Failed to insert player: {}", e)));
-                self.cache.insert_active_player(player);
+                self.cache.insert_player(player);
 
                 Response::new(PlayerJoinResponse { success: true })
             }

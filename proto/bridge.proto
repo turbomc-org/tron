@@ -14,7 +14,148 @@ service Bridge {
   rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse);
   rpc RejectFriendRequest (RejectFriendRequestRequest) returns (RejectFriendRequestResponse);
   rpc GetFriendRequests (GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
+  rpc GetTeam (GetTeamRequest) returns (GetTeamResponse);
+  rpc GetTeamLeaderboard (GetTeamLeaderboardRequest) returns (GetTeamLeaderboardResponse);
   rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
+  rpc LeaveTeam (LeaveTeamRequest) returns (LeaveTeamResponse);
+  rpc JoinTeam (JoinTeamRequest) returns (JoinTeamResponse);
+  rpc SendTeamInvite (SendTeamInviteRequest) returns (SendTeamInviteResponse);
+  rpc AcceptTeamInvite (AcceptTeamInviteRequest) returns (AcceptTeamInviteResponse);
+  rpc RejectTeamInvite (RejectTeamInviteRequest) returns (RejectTeamInviteResponse);
+  rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
+  rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
+  rpc SellItem (SellItemRequest) returns (SellItemResponse);
+  rpc GetItems (GetItemsRequest) returns (GetItemsResponse);
+}
+
+message Item {
+    string id = 1;
+    enum ItemType {
+        TOOL = 0;
+        BLOCK = 1;
+        ARMOR = 2;
+        FOOD = 3;
+        MISC = 4;
+        CONTAINER = 5;
+    }
+    ItemType item_type = 2;
+    repeated string enchantments = 3;
+}
+
+message ShopItem {
+    uint64 id = 1;
+    Item item = 2;
+    string name = 3;
+    string description = 4;
+    uint64 buy_price = 5;
+    uint64 sell_price = 6;
+    enum Rarity {
+        COMMON = 0;
+        UNCOMMON = 1;
+        RARE = 2;
+        EPIC= 3;
+        LEGENDARY= 4;
+    }
+    Rarity rarity = 7;
+
+}
+
+message GetItemsRequest {
+    string username = 1;
+}
+
+message GetItemsResponse {
+    repeated ShopItem items = 1;
+}
+
+message GetTeamLeaderboardRequest {
+    string username = 1;
+}
+
+message GetTeamLeaderboardResponse {
+    map<string, uint64> leaderboard = 1;
+}
+
+message BuyItemRequest {
+    string username = 1;
+    uint64 item = 2;
+}
+
+message BuyItemResponse {
+    bool success = 1;
+}
+
+message SellItemRequest {
+    string username = 1;
+    uint64 item = 2;
+}
+
+message SellItemResponse {
+    bool success = 1;
+}
+
+
+message GetTeamRequest {
+    string name = 1;
+}
+
+message GetTeamResponse {
+    string id = 1;
+    string name = 2;
+    bool open = 3;
+    map<string, uint32> players = 4;
+}
+
+message LeaveTeamRequest {
+    string username = 1;
+}
+
+message LeaveTeamResponse {
+    bool success = 1;
+}
+
+message JoinTeamRequest {
+    string username = 1;
+    string team_id = 2;
+}
+
+message JoinTeamResponse {
+    bool success = 1;
+}
+
+message SendTeamInviteRequest {
+    string sender = 1;
+    string receiver = 2;
+}
+
+message SendTeamInviteResponse {
+    bool success = 1;
+}
+
+message AcceptTeamInviteRequest {
+    string username = 1;
+    string team_id = 2;
+}
+
+message AcceptTeamInviteResponse {
+    bool success = 1;
+}
+
+message RejectTeamInviteRequest {
+    string username = 1;
+    string team_id = 2;
+}
+
+message RejectTeamInviteResponse {
+    bool success = 1;
+}
+
+message GetTeamMembersRequest {
+    string team_id = 1;
+}
+
+message GetTeamMembersResponse {
+    repeated string members = 1;
 }
 
 message PlayerJoinRequest {
