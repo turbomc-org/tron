@@ -33,6 +33,17 @@ impl Cache {
         Ok(self.active_players.get(username).map(|entry| entry.clone()))
     }
 
+    pub async fn get_player_with_handling(&self, username: &String) -> Result<Player, Status> {
+        let player = self.active_players.get(username).map(|entry| entry.clone());
+        match player {
+            Some(player) => Ok(player),
+            None => Err(Status::not_found(format!(
+                "Player {} not found in active players cache",
+                username
+            ))),
+        }
+    }
+
     pub async fn get_shop_item(&self, id: &u64) -> Result<Option<ShopItem>> {
         Ok(self.shop_items.get(id).map(|entry| entry.clone()))
     }

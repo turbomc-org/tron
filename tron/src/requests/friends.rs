@@ -20,6 +20,7 @@ impl BridgeService {
     ) -> Result<Response<GetFriendsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+        let player = self.cache.get_player_with_handling(&username).await?;
         let players = &self.cache.active_players.clone();
 
         if !players.contains_key(&username) {
@@ -29,28 +30,6 @@ impl BridgeService {
                 username
             )));
         }
-
-        let player = self
-            .cache
-            .get_player(&username)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from cache: {}",
-                    username,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from cache", username))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in active players cache", username);
-
-                Status::data_loss(format!(
-                    "Player {} not found in active players cache",
-                    username
-                ))
-            })?;
 
         let friends = self
             .cache
@@ -76,6 +55,7 @@ impl BridgeService {
     ) -> Result<Response<GetFriendRequestsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+        let player = self.cache.get_player_with_handling(&username).await?;
         let players = &self.cache.active_players.clone();
 
         if !players.contains_key(&username) {
@@ -85,28 +65,6 @@ impl BridgeService {
                 username
             )));
         }
-
-        let player = self
-            .cache
-            .get_player(&username)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from cache: {}",
-                    username,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from cache", username))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in active players cache", username);
-
-                Status::data_loss(format!(
-                    "Player {} not found in active players cache",
-                    username
-                ))
-            })?;
 
         let friends_requests = self
             .cache
@@ -224,6 +182,7 @@ impl BridgeService {
     ) -> Result<Response<AcceptFriendRequestResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+        let mut player = self.cache.get_player_with_handling(&username).await?;
         let sender = inner_request.sender;
         let players_cache = &self.cache.active_players.clone();
         let players = &self.databases.players.clone();
@@ -235,28 +194,6 @@ impl BridgeService {
                 username
             )));
         }
-
-        let mut player = self
-            .cache
-            .get_player(&username)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from cache: {}",
-                    username,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from cache", username))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in active players cache", username);
-
-                Status::data_loss(format!(
-                    "Player {} not found in active players cache",
-                    username
-                ))
-            })?;
 
         let sender_id = self.cache.check_friend_request(&player, &sender).await?;
 
@@ -290,6 +227,7 @@ impl BridgeService {
     ) -> Result<Response<RejectFriendRequestResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+        let mut player = self.cache.get_player_with_handling(&username).await?;
         let sender = inner_request.sender;
         let players_cache = &self.cache.active_players.clone();
         let players = &self.databases.players.clone();
@@ -301,28 +239,6 @@ impl BridgeService {
                 username
             )));
         }
-
-        let mut player = self
-            .cache
-            .get_player(&username)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from cache: {}",
-                    username,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from cache", username))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in active players cache", username);
-
-                Status::data_loss(format!(
-                    "Player {} not found in active players cache",
-                    username
-                ))
-            })?;
 
         let sender_id = self.cache.check_friend_request(&player, &sender).await?;
 

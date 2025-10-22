@@ -154,7 +154,6 @@ impl Player {
             doc! { "_id": id as i64 },
             doc! {
                 "$inc": { "coins": coins },
-                "$set": { "coins": { "$max": [ { "$add": ["$coins", coins] }, 0 ] } }
             },
         )
         .await?;
