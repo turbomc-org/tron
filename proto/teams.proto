@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package bridge;
+
+message GetTeamRequest {
+    string name = 1;
+}
+
+message GetTeamResponse {
+    string id = 1;
+    string name = 2;
+    bool open = 3;
+    map<string, uint32> players = 4;
+}
+
+message GetTeamLeaderboardRequest {
+    string username = 1;
+}
+
+message GetTeamLeaderboardResponse {
+    map<string, uint64> leaderboard = 1;
+}
+
+message CreateTeamRequest {
+    string username = 1;
+    string team = 2;
+    string color = 3;
+    bool open = 4;
+}
+
+message CreateTeamResponse {
+    bool success = 1;
+}
+
+message LeaveTeamRequest {
+    string username = 1;
+}
+
+message LeaveTeamResponse {
+    bool success = 1;
+}
+
+message JoinTeamRequest {
+    string username = 1;
+    string team = 2;
+}
+
+message JoinTeamResponse {
+    bool success = 1;
+}
+
+message SendTeamInviteRequest {
+    string sender = 1;
+    string receiver = 2;
+}
+
+message SendTeamInviteResponse {
+    bool success = 1;
+}
+
+message AcceptTeamInviteRequest {
+    string username = 1;
+    string team = 2;
+}
+
+message AcceptTeamInviteResponse {
+    bool success = 1;
+}
+
+message RejectTeamInviteRequest {
+    string username = 1;
+    string team = 2;
+}
+
+message RejectTeamInviteResponse {
+    bool success = 1;
+}
+
+message GetTeamMembersRequest {
+    string team_id = 1;
+}
+
+message GetTeamMembersResponse {
+    repeated string members = 1;
+}

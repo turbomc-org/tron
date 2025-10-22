@@ -60,10 +60,17 @@ impl BridgeService {
 
                 debug!("Inserting player {} into cache", username);
 
-                self.cache.insert_player(player).await.map_err(|err| {
-                    error!("Failed to insert player into cache: {}", err);
-                    Status::internal(format!("Failed to insert player into cache: {}", err))
-                })?;
+                self.cache
+                    .insert_player(player.clone())
+                    .await
+                    .map_err(|err| {
+                        error!("Failed to insert player into cache: {}", err);
+                        Status::internal(format!("Failed to insert player into cache: {}", err))
+                    })?;
+
+                debug!("Inserting player {} to player indexes", username);
+
+                self.cache.player_indexes.insert(player.id, player.username);
 
                 debug!(
                     "Successfully inserted player {} in cache and mongodb",

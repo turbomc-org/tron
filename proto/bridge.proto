@@ -2,282 +2,55 @@ syntax = "proto3";
 
 package bridge;
 
+import "session.proto";
+import "balance.proto";
+import "leaderboard.proto";
+import "messaging.proto";
+import "friends.proto";
+import "teams.proto";
+import "shop.proto";
+
 service Bridge {
-  rpc PlayerJoin (PlayerJoinRequest) returns (PlayerJoinResponse);
-  rpc PlayerLeave (PlayerLeaveRequest) returns (PlayerLeaveResponse);
-  rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
-  rpc TransferBalance (TransferBalanceRequest) returns (TransferBalanceResponse);
-  rpc GetLeaderboard (GetLeaderboardRequest) returns (GetLeaderboardResponse);
-  rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
-  rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
-  rpc SendFriendRequest (SendFriendRequestRequest) returns (SendFriendRequestResponse);
-  rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse);
-  rpc RejectFriendRequest (RejectFriendRequestRequest) returns (RejectFriendRequestResponse);
-  rpc GetFriendRequests (GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
-  rpc GetTeam (GetTeamRequest) returns (GetTeamResponse);
-  rpc GetTeamLeaderboard (GetTeamLeaderboardRequest) returns (GetTeamLeaderboardResponse);
-  rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
-  rpc LeaveTeam (LeaveTeamRequest) returns (LeaveTeamResponse);
-  rpc JoinTeam (JoinTeamRequest) returns (JoinTeamResponse);
-  rpc SendTeamInvite (SendTeamInviteRequest) returns (SendTeamInviteResponse);
-  rpc AcceptTeamInvite (AcceptTeamInviteRequest) returns (AcceptTeamInviteResponse);
-  rpc RejectTeamInvite (RejectTeamInviteRequest) returns (RejectTeamInviteResponse);
-  rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
-  rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
-  rpc SellItem (SellItemRequest) returns (SellItemResponse);
-  rpc GetItems (GetItemsRequest) returns (GetItemsResponse);
-}
+    // Session
+    rpc PlayerJoin (PlayerJoinRequest) returns (PlayerJoinResponse);
+    rpc PlayerLeave (PlayerLeaveRequest) returns (PlayerLeaveResponse);
 
-message Item {
-    string id = 1;
-    enum ItemType {
-        TOOL = 0;
-        BLOCK = 1;
-        ARMOR = 2;
-        FOOD = 3;
-        MISC = 4;
-        CONTAINER = 5;
-    }
-    ItemType item_type = 2;
-    repeated string enchantments = 3;
-}
+    // Balance
+    rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
+    rpc TransferBalance (TransferBalanceRequest) returns (TransferBalanceResponse);
 
-message ShopItem {
-    uint64 id = 1;
-    Item item = 2;
-    string name = 3;
-    string description = 4;
-    uint64 buy_price = 5;
-    uint64 sell_price = 6;
-    enum Rarity {
-        COMMON = 0;
-        UNCOMMON = 1;
-        RARE = 2;
-        EPIC= 3;
-        LEGENDARY= 4;
-    }
-    Rarity rarity = 7;
+    // Leaderboard
+    rpc OverallLeaderboard (OverallLeaderboardRequest) returns (OverallLeaderboardResponse);
+    rpc CoinsLeaderboard (CoinsLeaderboardRequest) returns (CoinsLeaderboardResponse);
+    rpc TeamsLeaderboard (TeamsLeaderboardRequest) returns (TeamsLeaderboardResponse);
+    rpc KdaLeaderboard (KdaLeaderboardRequest) returns (KdaLeaderboardResponse);
+    rpc DeathsLeaderboard (DeathsLeaderboardRequest) returns (DeathsLeaderboardResponse);
+    rpc KillsLeaderboard (KillsLeaderboardRequest) returns (KillsLeaderboardResponse);
 
-}
+    // Messaging
+    rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
 
-message GetItemsRequest {
-    string username = 1;
-}
+    // Friends
+    rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
+    rpc SendFriendRequest (SendFriendRequestRequest) returns (SendFriendRequestResponse);
+    rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse);
+    rpc RejectFriendRequest (RejectFriendRequestRequest) returns (RejectFriendRequestResponse);
+    rpc GetFriendRequests (GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
+    rpc RemoveFriend (RemoveFriendRequest)  returns (RemoveFriendResponse);
 
-message GetItemsResponse {
-    repeated ShopItem items = 1;
-}
+    // Teams
+    rpc GetTeam (GetTeamRequest) returns (GetTeamResponse);
+    rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
+    rpc LeaveTeam (LeaveTeamRequest) returns (LeaveTeamResponse);
+    rpc JoinTeam (JoinTeamRequest) returns (JoinTeamResponse);
+    rpc SendTeamInvite (SendTeamInviteRequest) returns (SendTeamInviteResponse);
+    rpc AcceptTeamInvite (AcceptTeamInviteRequest) returns (AcceptTeamInviteResponse);
+    rpc RejectTeamInvite (RejectTeamInviteRequest) returns (RejectTeamInviteResponse);
+    rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
+    rpc RemoveTeamMember (RemoveTeamMemberRequest) returns (RemoveTeamMemberResponse);
 
-message GetTeamLeaderboardRequest {
-    string username = 1;
-}
-
-message GetTeamLeaderboardResponse {
-    map<string, uint64> leaderboard = 1;
-}
-
-message BuyItemRequest {
-    string username = 1;
-    uint64 item = 2;
-}
-
-message BuyItemResponse {
-    bool success = 1;
-}
-
-message SellItemRequest {
-    string username = 1;
-    uint64 item = 2;
-}
-
-message SellItemResponse {
-    bool success = 1;
-}
-
-
-message GetTeamRequest {
-    string name = 1;
-}
-
-message GetTeamResponse {
-    string id = 1;
-    string name = 2;
-    bool open = 3;
-    map<string, uint32> players = 4;
-}
-
-message LeaveTeamRequest {
-    string username = 1;
-}
-
-message LeaveTeamResponse {
-    bool success = 1;
-}
-
-message JoinTeamRequest {
-    string username = 1;
-    string team_id = 2;
-}
-
-message JoinTeamResponse {
-    bool success = 1;
-}
-
-message SendTeamInviteRequest {
-    string sender = 1;
-    string receiver = 2;
-}
-
-message SendTeamInviteResponse {
-    bool success = 1;
-}
-
-message AcceptTeamInviteRequest {
-    string username = 1;
-    string team_id = 2;
-}
-
-message AcceptTeamInviteResponse {
-    bool success = 1;
-}
-
-message RejectTeamInviteRequest {
-    string username = 1;
-    string team_id = 2;
-}
-
-message RejectTeamInviteResponse {
-    bool success = 1;
-}
-
-message GetTeamMembersRequest {
-    string team_id = 1;
-}
-
-message GetTeamMembersResponse {
-    repeated string members = 1;
-}
-
-message PlayerJoinRequest {
-    string username = 1;
-
-    enum Edition {
-        BEDROCK = 0;
-        JAVA = 1;
-    }
-
-    Edition edition = 2;
-}
-
-message PlayerJoinResponse {
-    bool success = 1;
-}
-
-message PlayerLeaveRequest {
-    string username = 1;
-}
-
-message PlayerLeaveResponse {
-    bool success = 1;
-}
-
-message GetBalanceRequest {
-    string username = 1;
-}
-
-message GetBalanceResponse {
-    uint64 balance = 1;
-}
-
-message TransferBalanceRequest {
-    string sender = 1;
-    string receiver = 2;
-    uint64 amount = 3;
-}
-
-message TransferBalanceResponse {
-   bool success = 1;
-}
-
-message GetLeaderboardRequest {
-    enum SortBy {
-        KILLS = 0;
-        DEATHS = 1;
-        KDR = 2;
-        COINS = 3;
-    }
-    SortBy sorting = 1;
-}
-
-message GetLeaderboardResponse {
-    map<string, uint32> players = 1;
-}
-
-message SendMessageRequest {
-    string username = 1;
-    string message = 2;
-}
-
-message Prefix {
-    string text = 1;
-    string color = 2;
-}
-
-message SendMessageResponse {
-    Prefix prefix = 1;
-    string username = 2;
-    string message = 3;
-}
-
-message GetFriendsRequest {
-   string username = 1;
-}
-
-message GetFriendsResponse {
-   repeated string friends = 1;
-}
-
-message SendFriendRequestRequest {
-   string sender = 1;
-  string receiver = 2;
-}
-
-message SendFriendRequestResponse {
-    bool success = 1;
-}
-
-message AcceptFriendRequestRequest {
-    string username = 1;
-    string sender = 2;
-}
-
-message AcceptFriendRequestResponse {
-    bool success = 1;
-}
-
-message RejectFriendRequestRequest {
-    string username = 1;
-    string sender = 2;
-}
-
-message RejectFriendRequestResponse  {
-    bool success = 1;
-}
-
-message GetFriendRequestsRequest {
-    string username = 1;
-}
-
-message GetFriendRequestsResponse {
-   map<string, uint64> incoming_friend_requests = 1;
-}
-
-message CreateTeamRequest {
-    string username = 1;
-    string teamName = 2;
-    string color  = 3;
-}
-
-message CreateTeamResponse {
-    bool success = 1;
+    // Shop
+    rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
+    rpc SellItem (SellItemRequest) returns (SellItemResponse);
+    rpc GetItems (GetItemsRequest) returns (GetItemsResponse);
 }

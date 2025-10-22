@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package bridge;
+
+message PlayerJoinRequest {
+    string username = 1;
+    enum Edition {
+        BEDROCK = 0;
+        JAVA = 1;
+    }
+    Edition edition = 2;
+}
+
+message PlayerJoinResponse {
+    bool success = 1;
+}
+
+message PlayerLeaveRequest {
+    string username = 1;
+}
+
+message PlayerLeaveResponse {
+    bool success = 1;
+}

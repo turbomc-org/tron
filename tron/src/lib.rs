@@ -1,4 +1,4 @@
-use crate::models::cache::Cache;
+use crate::cache::Cache;
 use crate::models::databases::Databases;
 use crate::utils::mongodb::MongoDB;
 use crate::utils::redis::Redis;
@@ -6,6 +6,7 @@ use bridge::bridge_server::Bridge;
 use snowflaked::sync::Generator;
 use tonic::{Request, Response, Status};
 
+pub mod cache;
 pub mod grpc;
 pub mod logger;
 pub mod models;
@@ -29,9 +30,9 @@ pub struct BridgeService {
 
 impl BridgeService {
     pub async fn new() -> Self {
-        let cache = Cache::new();
         let mongodb = MongoDB::new().await.expect("failed to connect to MongoDB");
         let databases = Databases::new(&mongodb.database);
+        let cache = Cache::init(&databases).await.expect("failed to load cache");
         let redis = Redis::new();
 
         Self {
@@ -73,11 +74,46 @@ impl Bridge for BridgeService {
         self.handle_transfer_balance(request).await
     }
 
-    async fn get_leaderboard(
+    async fn overall_leaderboard(
         &self,
-        request: Request<crate::bridge::GetLeaderboardRequest>,
-    ) -> Result<Response<crate::bridge::GetLeaderboardResponse>, Status> {
-        self.handle_get_leaderboard(request).await
+        request: Request<crate::bridge::OverallLeaderboardRequest>,
+    ) -> Result<Response<crate::bridge::OverallLeaderboardResponse>, Status> {
+        self.handle_overall_leaderboard(request).await
+    }
+
+    async fn coins_leaderboard(
+        &self,
+        request: Request<crate::bridge::CoinsLeaderboardRequest>,
+    ) -> Result<Response<crate::bridge::CoinsLeaderboardResponse>, Status> {
+        self.handle_coins_leaderboard(request).await
+    }
+
+    async fn kda_leaderboard(
+        &self,
+        request: Request<crate::bridge::KdaLeaderboardRequest>,
+    ) -> Result<Response<crate::bridge::KdaLeaderboardResponse>, Status> {
+        self.handle_kda_leaderboard(request).await
+    }
+
+    async fn kills_leaderboard(
+        &self,
+        request: Request<crate::bridge::KillsLeaderboardRequest>,
+    ) -> Result<Response<crate::bridge::KillsLeaderboardResponse>, Status> {
+        self.handle_kills_leaderboard(request).await
+    }
+
+    async fn deaths_leaderboard(
+        &self,
+        request: Request<crate::bridge::DeathsLeaderboardRequest>,
+    ) -> Result<Response<crate::bridge::DeathsLeaderboardResponse>, Status> {
+        self.handle_deaths_leaderboard(request).await
+    }
+
+    async fn teams_leaderboard(
+        &self,
+        request: Request<crate::bridge::TeamsLeaderboardRequest>,
+    ) -> Result<Response<crate::bridge::TeamsLeaderboardResponse>, Status> {
+        self.handle_teams_leaderboard(request).await
     }
 
     async fn send_message(
@@ -122,6 +158,13 @@ impl Bridge for BridgeService {
         self.handle_get_friend_requests(request).await
     }
 
+    async fn remove_friend(
+        &self,
+        request: Request<crate::bridge::RemoveFriendRequest>,
+    ) -> Result<Response<crate::bridge::RemoveFriendResponse>, Status> {
+        self.handle_remove_friend(request).await
+    }
+
     async fn create_team(
         &self,
         request: Request<crate::bridge::CreateTeamRequest>,
@@ -131,58 +174,58 @@ impl Bridge for BridgeService {
 
     async fn get_team(
         &self,
-        _request: Request<crate::bridge::GetTeamRequest>,
+        request: Request<crate::bridge::GetTeamRequest>,
     ) -> Result<Response<crate::bridge::GetTeamResponse>, Status> {
-        unimplemented!()
-    }
-
-    async fn get_team_leaderboard(
-        &self,
-        _request: Request<crate::bridge::GetTeamLeaderboardRequest>,
-    ) -> Result<Response<crate::bridge::GetTeamLeaderboardResponse>, Status> {
-        unimplemented!()
+        self.handle_get_team(request).await
     }
 
     async fn leave_team(
         &self,
-        _request: Request<crate::bridge::LeaveTeamRequest>,
+        request: Request<crate::bridge::LeaveTeamRequest>,
     ) -> Result<Response<crate::bridge::LeaveTeamResponse>, Status> {
-        unimplemented!()
+        self.handle_leave_team(request).await
     }
 
     async fn join_team(
         &self,
-        _request: Request<crate::bridge::JoinTeamRequest>,
+        request: Request<crate::bridge::JoinTeamRequest>,
     ) -> Result<Response<crate::bridge::JoinTeamResponse>, Status> {
-        unimplemented!()
+        self.handle_join_team(request).await
     }
 
     async fn send_team_invite(
         &self,
-        _request: Request<crate::bridge::SendTeamInviteRequest>,
+        request: Request<crate::bridge::SendTeamInviteRequest>,
     ) -> Result<Response<crate::bridge::SendTeamInviteResponse>, Status> {
-        unimplemented!()
+        self.handle_send_team_invite(request).await
     }
 
     async fn accept_team_invite(
         &self,
-        _request: Request<crate::bridge::AcceptTeamInviteRequest>,
+        request: Request<crate::bridge::AcceptTeamInviteRequest>,
     ) -> Result<Response<crate::bridge::AcceptTeamInviteResponse>, Status> {
-        unimplemented!()
+        self.handle_accept_team_invite(request).await
     }
 
     async fn reject_team_invite(
         &self,
-        _request: Request<crate::bridge::RejectTeamInviteRequest>,
+        request: Request<crate::bridge::RejectTeamInviteRequest>,
     ) -> Result<Response<crate::bridge::RejectTeamInviteResponse>, Status> {
-        unimplemented!()
+        self.handle_reject_team_invite(request).await
     }
 
     async fn get_team_members(
         &self,
-        _request: Request<crate::bridge::GetTeamMembersRequest>,
+        request: Request<crate::bridge::GetTeamMembersRequest>,
     ) -> Result<Response<crate::bridge::GetTeamMembersResponse>, Status> {
-        unimplemented!()
+        self.handle_get_team_members(request).await
+    }
+
+    async fn remove_team_member(
+        &self,
+        request: Request<crate::bridge::RemoveTeamMemberRequest>,
+    ) -> Result<Response<crate::bridge::RemoveTeamMemberResponse>, Status> {
+        self.handle_remove_team_member(request).await
     }
 
     async fn buy_item(

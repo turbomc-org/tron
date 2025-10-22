@@ -1,8 +1,8 @@
 pub mod balance;
 pub mod friends;
-pub mod join;
 pub mod leaderboard;
-pub mod leave;
+pub mod leaderboards;
 pub mod message;
+pub mod session;
 pub mod shop;
 pub mod team;

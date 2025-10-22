@@ -1,38 +1,12 @@
 use crate::BridgeService;
-use crate::bridge::{
-    GetBalanceRequest, GetBalanceResponse, TransferBalanceRequest, TransferBalanceResponse,
-};
+use crate::bridge::{TransferBalanceRequest, TransferBalanceResponse};
 use crate::models::player::Player;
-use mongodb::Collection;
-use mongodb::bson::doc;
-use mongodb::options::FindOneOptions;
+use mongodb::{Collection, bson::doc, options::FindOneOptions};
 use serde::{Deserialize, Serialize};
-use tokio::sync::watch::error::RecvError;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
 impl BridgeService {
-    pub async fn handle_get_balance(
-        &self,
-        request: Request<GetBalanceRequest>,
-    ) -> Result<Response<GetBalanceResponse>, Status> {
-        let inner_request = request.into_inner();
-        let username = inner_request.username;
-
-        debug!("Get Balance request for player {} received", username);
-
-        let player = self.cache.get_player_with_handling(&username).await?;
-
-        info!(
-            "Successfully responded to Get Balance request for player {}",
-            username
-        );
-
-        Ok(Response::new(GetBalanceResponse {
-            balance: player.coins,
-        }))
-    }
-
     pub async fn handle_transfer_balance(
         &self,
         request: Request<TransferBalanceRequest>,
@@ -143,39 +117,7 @@ impl BridgeService {
 mod tests {
     use super::*;
     use crate::logger::Logger;
-    use crate::{
-        bridge::bridge_server::Bridge,
-        models::player::{Edition, Player},
-    };
-
-    #[tokio::test]
-    async fn test_get_balance_from_cache() {
-        Logger::init(true).await;
-        let service = BridgeService::new().await;
-        let username = "ladiesman217".to_string();
-
-        let player = Player {
-            username: username.clone(),
-            coins: 500,
-            ..Player::new(username.clone(), Edition::Java)
-        };
-
-        service.cache.insert_player(player.clone()).await.unwrap();
-
-        let req = tonic::Request::new(crate::bridge::GetBalanceRequest {
-            username: username.clone(),
-        });
-
-        let resp = service.handle_get_balance(req).await.unwrap().into_inner();
-
-        service
-            .databases
-            .players
-            .delete_one(doc! {"username": username})
-            .await
-            .unwrap();
-        assert_eq!(resp.balance, 500);
-    }
+    use crate::{bridge::bridge_server::Bridge, models::player::Edition};
 
     #[tokio::test]
     async fn test_handle_transfer_balance() {

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package bridge;
+
+import "common.proto";
+
+message GetItemsRequest {
+    string username = 1;
+}
+
+message GetItemsResponse {
+    repeated ShopItem items = 1;
+}
+
+message BuyItemRequest {
+    string username = 1;
+    uint64 item = 2;
+}
+
+message BuyItemResponse {
+    bool success = 1;
+}
+
+message SellItemRequest {
+    string username = 1;
+    uint64 item = 2;
+}
+
+message SellItemResponse {
+    bool success = 1;
+}

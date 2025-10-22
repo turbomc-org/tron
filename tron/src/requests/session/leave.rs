@@ -1,7 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{PlayerLeaveRequest, PlayerLeaveResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{debug, info};
 
 impl BridgeService {
     pub async fn handle_player_leave(
@@ -10,20 +10,14 @@ impl BridgeService {
     ) -> Result<Response<PlayerLeaveResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
-        let players_cache = &self.cache.active_players.clone();
 
         debug!("Leave request for player {} received", username);
 
-        if players_cache.contains_key(&username) {
-            players_cache.remove(&username);
+        let _ = self.cache.get_player_with_handling(&username).await?;
 
-            info!("Player {} left the server", username);
+        info!("Leave request for player {} completed", username);
 
-            return Ok(Response::new(PlayerLeaveResponse { success: true }));
-        } else {
-            error!("Player {} is not in cache but still was the game", username);
-            return Ok(Response::new(PlayerLeaveResponse { success: false }));
-        }
+        Ok(Response::new(PlayerLeaveResponse { success: true }))
     }
 }
 

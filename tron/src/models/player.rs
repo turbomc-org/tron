@@ -1,4 +1,5 @@
 use crate::bridge::player_join_request::Edition as GrpcEdition;
+use crate::models::team::Team;
 use bincode::{Decode, Encode};
 use chrono::{DateTime, Utc};
 use mongodb::Collection;
@@ -28,7 +29,15 @@ pub struct Player {
     pub vault_count: u64,
     pub owned_vault_ids: HashSet<String>,
     pub redeemed_codes: HashSet<String>,
+    #[serde(
+        serialize_with = "crate::utils::serde::serialize_u64_map",
+        deserialize_with = "crate::utils::serde::deserialize_u64_map"
+    )]
     pub incoming_friend_requests: HashMap<u64, u64>,
+    #[serde(
+        serialize_with = "crate::utils::serde::serialize_u64_map",
+        deserialize_with = "crate::utils::serde::deserialize_u64_map"
+    )]
     pub incoming_team_requests: HashMap<u64, u64>,
     pub created_at: u64,
     pub updated_at: u64,
@@ -174,17 +183,18 @@ impl Player {
     }
 
     pub async fn add_friend_request(
-        sender: String,
-        receiver: String,
+        sender: u64,
+        receiver: u64,
+        now: u64,
         col: &Collection<Player>,
     ) -> anyhow::Result<()> {
-        let timestamp = Utc::now().timestamp() as u64;
-
         col.update_one(
-            doc! { "username": receiver},
+            doc! { "_id": receiver as i64 },
             doc! {
                 "$set": {
-                    format!("incoming_friend_requests.{}", sender): timestamp as i64
+                    "incoming_friend_requests": {
+                        (sender as i64).to_string(): now as i64
+                    }
                 }
             },
         )
@@ -194,15 +204,23 @@ impl Player {
     }
 
     pub async fn accept_friend_request(
-        username: String,
-        sender: String,
+        id: u64,
+        sender: u64,
         col: &Collection<Player>,
     ) -> anyhow::Result<()> {
         col.update_one(
-            doc! { "username": &username },
+            doc! { "_id": id.clone() as i64 },
             doc! {
                 "$unset": { format!("incoming_friend_requests.{}", sender): "" },
-                "$addToSet": { "friends": &sender }
+                "$addToSet": { "friends": sender as i64}
+            },
+        )
+        .await?;
+
+        col.update_one(
+            doc! {"_id": sender.clone() as i64},
+            doc! {
+                "$addToSet": { "friends": id as i64}
             },
         )
         .await?;
@@ -211,17 +229,62 @@ impl Player {
     }
 
     pub async fn reject_friend_request(
-        username: String,
-        sender: String,
+        id: u64,
+        sender: u64,
         col: &Collection<Player>,
     ) -> anyhow::Result<()> {
         col.update_one(
-            doc! {"username": &username},
+            doc! {"_id": id as i64},
             doc! {
-                "$unset": { format!("incoming_friend_requests.{}", sender): "" },
+                "$unset": { format!("incoming_friend_requests.{}", sender as i64): "" },
             },
         )
         .await?;
+
+        Ok(())
+    }
+
+    pub async fn remove_friend(&self, target: u64, col: &Collection<Player>) -> anyhow::Result<()> {
+        col.update_one(
+            doc! {"_id": self.id as i64},
+            doc! {
+                "$pull": { "friends": target as i64 }
+            },
+        )
+        .await?;
+
+        Ok(())
+    }
+
+    pub async fn accept_team_request(
+        &self,
+        team_id: u64,
+        now: u64,
+        player_col: &Collection<Player>,
+        team_col: &Collection<Team>,
+    ) -> anyhow::Result<()> {
+        player_col
+            .update_one(
+                doc! { "_id": self.id.clone() as i64 },
+                doc! {
+                    "$unset": { format!("incoming_team_requests.{}", team_id as i64): "" },
+                    "$set": { "team": team_id as i64}
+                },
+            )
+            .await?;
+
+        team_col
+            .update_one(
+                doc! {"_id": team_id.clone() as i64},
+                doc! {
+                    "$set": {
+                        "members": {
+                            (self.id as i64).to_string(): now as i64
+                        }
+                    }
+                },
+            )
+            .await?;
 
         Ok(())
     }

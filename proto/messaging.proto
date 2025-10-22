@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package bridge;
+
+message Prefix {
+    string text = 1;
+    string color = 2;
+}
+
+message SendMessageRequest {
+    string username = 1;
+    string message = 2;
+}
+
+message SendMessageResponse {
+    Prefix prefix = 1;
+    string username = 2;
+    string message = 3;
+}

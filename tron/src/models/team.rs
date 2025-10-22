@@ -1,7 +1,15 @@
+use crate::cache::Cache;
+use crate::models::player::Player;
+use anyhow::Result;
 use bincode::{Decode, Encode};
 use chrono::Utc;
+use dashmap::DashMap;
+use mongodb::Collection;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::sync::Arc;
+use tonic::Status;
+use tracing::error;
 
 use crate::GENERATOR;
 
@@ -34,5 +42,27 @@ impl Team {
             banned_players: HashMap::new(),
             color,
         }
+    }
+
+    pub async fn insert(
+        &self,
+        col: &Collection<Self>,
+        cache: &Arc<DashMap<u64, Self>>,
+    ) -> Result<()> {
+        col.insert_one(self).await?;
+        cache.insert(self.id, self.clone());
+
+        Ok(())
+    }
+
+    pub async fn get_team(player: &Player, cache: &Cache) -> Result<Self, Status> {
+        let team_id = player.team.ok_or_else(|| {
+            error!("Player {} isn't in any team", player.username);
+            Status::not_found(format!("Player {} isn't in any team", player.username))
+        })?;
+
+        let team = cache.get_team(team_id).await?;
+
+        Ok(team)
     }
 }
