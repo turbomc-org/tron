@@ -3,7 +3,11 @@ use crate::models::databases::Databases;
 use crate::utils::mongodb::MongoDB;
 use crate::utils::redis::Redis;
 use bridge::bridge_server::Bridge;
+use once_cell::sync::Lazy;
 use snowflaked::sync::Generator;
+use std::iter::Take;
+use std::time::Duration;
+use tokio_retry::strategy::ExponentialBackoff;
 use tonic::{Request, Response, Status};
 
 pub mod cache;
@@ -12,6 +16,12 @@ pub mod logger;
 pub mod models;
 pub mod requests;
 pub mod utils;
+
+static RETRY_STRATEGY: Lazy<Take<ExponentialBackoff>> = Lazy::new(|| {
+    ExponentialBackoff::from_millis(100)
+        .max_delay(Duration::from_secs(1))
+        .take(3)
+});
 
 static GENERATOR: Generator = Generator::new(0);
 
@@ -172,13 +182,6 @@ impl Bridge for BridgeService {
         self.handle_create_team(request).await
     }
 
-    async fn get_team(
-        &self,
-        request: Request<crate::bridge::GetTeamRequest>,
-    ) -> Result<Response<crate::bridge::GetTeamResponse>, Status> {
-        self.handle_get_team(request).await
-    }
-
     async fn leave_team(
         &self,
         request: Request<crate::bridge::LeaveTeamRequest>,
@@ -226,6 +229,13 @@ impl Bridge for BridgeService {
         request: Request<crate::bridge::RemoveTeamMemberRequest>,
     ) -> Result<Response<crate::bridge::RemoveTeamMemberResponse>, Status> {
         self.handle_remove_team_member(request).await
+    }
+
+    async fn promote_team_member(
+        &self,
+        request: Request<crate::bridge::PromoteTeamMemberRequest>,
+    ) -> Result<Response<crate::bridge::PromoteTeamMemberResponse>, Status> {
+        self.handle_promote_team_member(request).await
     }
 
     async fn buy_item(

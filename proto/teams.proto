@@ -2,17 +2,6 @@ syntax = "proto3";
 
 package bridge;
 
-message GetTeamRequest {
-    string name = 1;
-}
-
-message GetTeamResponse {
-    string id = 1;
-    string name = 2;
-    bool open = 3;
-    map<string, uint32> players = 4;
-}
-
 message GetTeamLeaderboardRequest {
     string username = 1;
 }
@@ -50,8 +39,8 @@ message JoinTeamResponse {
 }
 
 message SendTeamInviteRequest {
-    string sender = 1;
-    string receiver = 2;
+    string username = 1;
+    string target = 2;
 }
 
 message SendTeamInviteResponse {
@@ -77,9 +66,18 @@ message RejectTeamInviteResponse {
 }
 
 message GetTeamMembersRequest {
-    string team_id = 1;
+    string username = 1;
 }
 
 message GetTeamMembersResponse {
     repeated string members = 1;
+}
+
+message PromoteTeamMemberRequest {
+    string username = 1;
+    string target = 2;
+}
+
+message PromoteTeamMemberResponse {
+    bool success = 1;
 }

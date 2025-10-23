@@ -16,7 +16,7 @@ impl Cache {
         match player {
             Some(player) => Ok(player),
             None => Err(Status::not_found(format!(
-                "Player {} not found in active players cache",
+                "Player {} not found or isn't active",
                 username
             ))),
         }

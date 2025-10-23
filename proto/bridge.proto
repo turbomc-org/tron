@@ -39,7 +39,6 @@ service Bridge {
     rpc RemoveFriend (RemoveFriendRequest)  returns (RemoveFriendResponse);
 
     // Teams
-    rpc GetTeam (GetTeamRequest) returns (GetTeamResponse);
     rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
     rpc LeaveTeam (LeaveTeamRequest) returns (LeaveTeamResponse);
     rpc JoinTeam (JoinTeamRequest) returns (JoinTeamResponse);
@@ -48,6 +47,7 @@ service Bridge {
     rpc RejectTeamInvite (RejectTeamInviteRequest) returns (RejectTeamInviteResponse);
     rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
     rpc RemoveTeamMember (RemoveTeamMemberRequest) returns (RemoveTeamMemberResponse);
+    rpc PromoteTeamMember (PromoteTeamMemberRequest) returns (PromoteTeamMemberResponse);
 
     // Shop
     rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);

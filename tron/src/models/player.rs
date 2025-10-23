@@ -1,14 +1,22 @@
 use crate::bridge::player_join_request::Edition as GrpcEdition;
+use crate::models::player;
 use crate::models::team::Team;
+use anyhow::Result;
 use bincode::{Decode, Encode};
 use chrono::{DateTime, Utc};
+use dashmap::DashMap;
 use mongodb::Collection;
 use mongodb::bson::doc;
 use mongodb::error::Error as MongoError;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
+use std::sync::Arc;
+use tokio::spawn;
+use tokio_retry::Retry;
+use tracing::error;
 
 use crate::GENERATOR;
+use crate::RETRY_STRATEGY;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode)]
 pub struct Player {
@@ -257,34 +265,153 @@ impl Player {
     }
 
     pub async fn accept_team_request(
-        &self,
+        &mut self,
         team_id: u64,
         now: u64,
-        player_col: &Collection<Player>,
-        team_col: &Collection<Team>,
-    ) -> anyhow::Result<()> {
-        player_col
-            .update_one(
-                doc! { "_id": self.id.clone() as i64 },
-                doc! {
-                    "$unset": { format!("incoming_team_requests.{}", team_id as i64): "" },
-                    "$set": { "team": team_id as i64}
-                },
-            )
-            .await?;
+        p_col: &Collection<Player>,
+        t_col: &Collection<Team>,
+        p_cache: &Arc<DashMap<String, Self>>,
+        t_cache: &Arc<DashMap<u64, Team>>,
+    ) -> Result<()> {
+        let p_col = p_col.clone();
+        let t_col = t_col.clone();
+        let player_id = self.id.clone();
+        let team_id = team_id.clone();
 
-        team_col
-            .update_one(
-                doc! {"_id": team_id.clone() as i64},
-                doc! {
-                    "$set": {
-                        "members": {
-                            (self.id as i64).to_string(): now as i64
-                        }
-                    }
-                },
-            )
-            .await?;
+        spawn({
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    p_col.update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! {
+                            "$unset": { format!("incoming_team_requests.{}", team_id as i64): "" },
+                            "$set": { "team": team_id as i64}
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        spawn(async move {
+            let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                t_col
+                    .update_one(
+                        doc! {"_id": team_id as i64},
+                        doc! {
+                            "$set": {
+                                "members": {
+                                    (player_id as i64).to_string(): now as i64
+                                }
+                            }
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying team update due to: {}", e);
+                        e
+                    })
+            })
+            .await;
+
+            if let Err(e) = retry_result {
+                error!("Team update permanently failed: {}", e);
+            }
+        });
+
+        self.incoming_team_requests.remove(&team_id);
+        p_cache.insert(self.username.clone(), self.clone());
+        let mut team: Team = t_cache.get(&team_id).unwrap().clone();
+        team.members.insert(self.id.clone(), now.clone());
+
+        Ok(())
+    }
+
+    pub async fn reject_team_request(
+        &mut self,
+        team_id: u64,
+        col: &Collection<Player>,
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> anyhow::Result<()> {
+        let player_id = self.id;
+        let team_id = team_id.clone();
+        let col = col.clone();
+
+        spawn({
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! {
+                            "$unset": { format!("incoming_team_requests.{}", team_id as i64): "" },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.incoming_team_requests.remove(&team_id);
+        cache.insert(self.username.clone(), self.clone());
+
+        Ok(())
+    }
+
+    pub async fn add_team_invite(
+        &mut self,
+        team_id: u64,
+        now: u64,
+        col: &Collection<Player>,
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+        let team_id = team_id.clone();
+        let col = col.clone();
+
+        spawn({
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! {
+                            "$set": { format!("incoming_team_requests.{}", team_id as i64): now as i64 },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.incoming_team_requests
+            .insert(team_id.clone(), now.clone());
+        cache.insert(self.username.clone(), self.clone());
 
         Ok(())
     }

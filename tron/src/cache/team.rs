@@ -39,6 +39,17 @@ impl Cache {
         )))
     }
 
+    pub async fn get_team_by_name(&self, team_name: &str) -> Result<Team, Status> {
+        for entry in self.teams.iter() {
+            let team = self.get_team(*entry.key()).await?;
+            if team.name == team_name {
+                return Ok(team);
+            }
+        }
+
+        Err(Status::not_found(format!("Team {} not found", team_name)))
+    }
+
     pub async fn accept_team_request(
         &self,
         player: &Player,
