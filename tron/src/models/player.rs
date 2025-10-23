@@ -1,5 +1,4 @@
 use crate::bridge::player_join_request::Edition as GrpcEdition;
-use crate::models::player;
 use crate::models::team::Team;
 use anyhow::Result;
 use bincode::{Decode, Encode};
@@ -11,7 +10,7 @@ use mongodb::error::Error as MongoError;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
-use tokio::spawn;
+use tokio::task;
 use tokio_retry::Retry;
 use tracing::error;
 
@@ -134,8 +133,15 @@ impl Player {
         }
     }
 
-    pub async fn insert(&self, col: &Collection<Self>) -> anyhow::Result<()> {
-        col.insert_one(self.clone()).await?;
+    pub async fn insert(
+        &self,
+        player_col: &Collection<Self>,
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        player_col.insert_one(self.clone()).await?;
+
+        cache.insert(self.username.clone(), self.clone());
+
         Ok(())
     }
 
@@ -166,7 +172,7 @@ impl Player {
         }
     }
 
-    pub async fn inc_coins(id: u64, coins: i64, col: &Collection<Self>) -> anyhow::Result<()> {
+    pub async fn inc_coins(id: u64, coins: i64, col: &Collection<Self>) -> Result<()> {
         col.update_one(
             doc! { "_id": id as i64 },
             doc! {
@@ -278,7 +284,7 @@ impl Player {
         let player_id = self.id.clone();
         let team_id = team_id.clone();
 
-        spawn({
+        task::spawn({
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     p_col.update_one(
@@ -302,7 +308,7 @@ impl Player {
             }
         });
 
-        spawn(async move {
+        task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                 t_col
                     .update_one(
@@ -346,7 +352,7 @@ impl Player {
         let team_id = team_id.clone();
         let col = col.clone();
 
-        spawn({
+        task::spawn({
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.update_one(
@@ -386,7 +392,7 @@ impl Player {
         let team_id = team_id.clone();
         let col = col.clone();
 
-        spawn({
+        task::spawn({
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.update_one(

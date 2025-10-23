@@ -18,14 +18,20 @@ message BuyItemRequest {
 }
 
 message BuyItemResponse {
-    bool success = 1;
+    ShopItem item = 1;
+}
+
+message SellItem {
+    string item_type = 1;
+    uint64 quantity = 2;
+    repeated string enchantments = 3;
 }
 
 message SellItemRequest {
     string username = 1;
-    uint64 item = 2;
+    repeated SellItem items = 2;
 }
 
 message SellItemResponse {
-    bool success = 1;
+    uint64 price = 1;
 }

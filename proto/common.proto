@@ -2,33 +2,36 @@ syntax = "proto3";
 
 package bridge;
 
-message Item {
-    string id = 1;
-    enum ItemType {
-        TOOL = 0;
-        BLOCK = 1;
-        ARMOR = 2;
-        FOOD = 3;
-        MISC = 4;
-        CONTAINER = 5;
-    }
-    ItemType item_type = 2;
-    repeated string enchantments = 3;
+message ShopItem {
+  uint64 id = 1;
+  Item item = 2;
+  string name = 3;
+  string description = 4;
+  string category = 5;
+  uint64 buy_price = 6;
+  uint64 sell_price = 7;
+  Rarity rarity = 8;
 }
 
-message ShopItem {
-    uint64 id = 1;
-    Item item = 2;
-    string name = 3;
-    string description = 4;
-    uint64 buy_price = 5;
-    uint64 sell_price = 6;
-    enum Rarity {
-        COMMON = 0;
-        UNCOMMON = 1;
-        RARE = 2;
-        EPIC = 3;
-        LEGENDARY = 4;
-    }
-    Rarity rarity = 7;
+enum Rarity {
+  COMMON = 0;
+  UNCOMMON = 1;
+  RARE = 2;
+  EPIC = 3;
+  LEGENDARY = 4;
+}
+
+message Item {
+  string id = 1;
+  ItemType item_type = 2;
+  repeated string enchantments = 3;
+}
+
+enum ItemType {
+  TOOL = 0;
+  BLOCK = 1;
+  ARMOR = 2;
+  FOOD = 3;
+  MISC = 4;
+  CONTAINER = 5;
 }

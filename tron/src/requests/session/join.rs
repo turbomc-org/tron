@@ -13,6 +13,7 @@ impl BridgeService {
         let players = self.databases.players.clone();
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
         #[allow(deprecated)]
         let edition: Edition =
             crate::bridge::player_join_request::Edition::from_i32(inner_request.edition)
@@ -51,21 +52,14 @@ impl BridgeService {
 
                 let player = Player::new(username.clone(), edition);
 
-                debug!("Inserting player {} into mongodb", username);
+                debug!("Inserting player {} into cache and database", username);
 
-                player.insert(&players).await.map_err(|e| {
-                    error!("Failed to insert player: {}", e);
-                    Status::internal(format!("Failed to insert player: {}", e))
-                })?;
-
-                debug!("Inserting player {} into cache", username);
-
-                self.cache
-                    .insert_player(player.clone())
+                player
+                    .insert(&players, &self.cache.active_players)
                     .await
-                    .map_err(|err| {
-                        error!("Failed to insert player into cache: {}", err);
-                        Status::internal(format!("Failed to insert player into cache: {}", err))
+                    .map_err(|e| {
+                        error!("Failed to insert player: {}", e);
+                        Status::internal(format!("Failed to insert player: {}", e))
                     })?;
 
                 debug!("Inserting player {} to player indexes", username);
