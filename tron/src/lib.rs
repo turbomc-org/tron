@@ -240,16 +240,16 @@ impl Bridge for BridgeService {
 
     async fn buy_item(
         &self,
-        _request: Request<crate::bridge::BuyItemRequest>,
+        request: Request<crate::bridge::BuyItemRequest>,
     ) -> Result<Response<crate::bridge::BuyItemResponse>, Status> {
-        unimplemented!()
+        self.handle_buy_item(request).await
     }
 
     async fn sell_item(
         &self,
-        _request: Request<crate::bridge::SellItemRequest>,
+        request: Request<crate::bridge::SellItemRequest>,
     ) -> Result<Response<crate::bridge::SellItemResponse>, Status> {
-        unimplemented!()
+        self.handle_sell_item(request).await
     }
 
     async fn get_items(
@@ -257,5 +257,19 @@ impl Bridge for BridgeService {
         _request: Request<crate::bridge::GetItemsRequest>,
     ) -> Result<Response<crate::bridge::GetItemsResponse>, Status> {
         unimplemented!()
+    }
+
+    async fn player_death(
+        &self,
+        request: Request<crate::bridge::PlayerDeathRequest>,
+    ) -> Result<Response<crate::bridge::PlayerDeathResponse>, Status> {
+        self.handle_player_death(request).await
+    }
+
+    async fn player_kill(
+        &self,
+        request: Request<crate::bridge::PlayerKillRequest>,
+    ) -> Result<Response<crate::bridge::PlayerKillResponse>, Status> {
+        self.handle_player_kill(request).await
     }
 }

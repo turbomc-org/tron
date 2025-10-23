@@ -9,6 +9,7 @@ import "messaging.proto";
 import "friends.proto";
 import "teams.proto";
 import "shop.proto";
+import "player.proto";
 
 service Bridge {
     // Session
@@ -53,4 +54,8 @@ service Bridge {
     rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
     rpc SellItem (SellItemRequest) returns (SellItemResponse);
     rpc GetItems (GetItemsRequest) returns (GetItemsResponse);
+
+    // Player
+    rpc PlayerDeath(PlayerDeathRequest) returns (PlayerDeathResponse);
+    rpc PlayerKill(PlayerKillRequest) returns (PlayerKillResponse);
 }

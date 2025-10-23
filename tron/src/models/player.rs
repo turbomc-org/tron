@@ -421,4 +421,80 @@ impl Player {
 
         Ok(())
     }
+
+    pub async fn add_kill(
+        &mut self,
+        kills: u64,
+        col: &Collection<Self>,
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let col = col.clone();
+        let player_id = self.id.clone();
+
+        task::spawn({
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! {
+                            "$inc": { "kills": kills as i64 },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.kills += kills;
+        cache.insert(self.username.clone(), self.clone());
+
+        Ok(())
+    }
+
+    pub async fn add_death(
+        &mut self,
+        deaths: u64,
+        col: &Collection<Self>,
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let col = col.clone();
+        let player_id = self.id.clone();
+
+        task::spawn({
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! {
+                            "$inc": { "deaths": deaths as i64 },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.deaths += deaths;
+        cache.insert(self.username.clone(), self.clone());
+
+        Ok(())
+    }
 }
