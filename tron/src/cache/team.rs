@@ -23,7 +23,7 @@ impl Cache {
         player: &Player,
         team_name: &str,
     ) -> Result<u64, Status> {
-        for (team_id, _now) in player.incoming_friend_requests.iter() {
+        for (team_id, _now) in player.incoming_team_requests.iter() {
             let team = self.get_team(*team_id).await?;
             if team.name == team_name.to_string() {
                 return Ok(*team_id);
@@ -34,7 +34,7 @@ impl Cache {
             player.username, team_name
         );
         Err(Status::not_found(format!(
-            "Player {} has no friend request from team {}",
+            "Player {} has no team request from team {}",
             player.username, team_name
         )))
     }

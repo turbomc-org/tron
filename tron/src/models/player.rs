@@ -12,6 +12,7 @@ use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
 use tokio::task;
 use tokio_retry::Retry;
+use tracing::debug;
 use tracing::error;
 
 use crate::GENERATOR;
@@ -412,6 +413,10 @@ impl Player {
         let player_id = self.id.clone();
         let team_id = team_id.clone();
 
+        debug!(
+            "Spawning a task to remove the incoming team request from player {}",
+            self.username
+        );
         task::spawn({
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
@@ -435,6 +440,11 @@ impl Player {
                 }
             }
         });
+
+        debug!(
+            "Spawning a task to add player {} into team's members",
+            self.username
+        );
 
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
@@ -460,14 +470,53 @@ impl Player {
             }
         });
 
+        debug!("Updating the cache");
+
         self.incoming_team_requests.remove(&team_id);
         p_cache.insert(self.username.clone(), self.clone());
 
-        if let Some(entry) = t_cache.get(&team_id) {
-            let mut team = entry.clone();
-            team.members.insert(self.id.clone(), now.clone());
-            t_cache.insert(team_id, team);
-        }
+        debug!("Updating the team");
+
+        let mut team: Team = t_cache.get(&team_id).unwrap().clone();
+        team.members.insert(self.id.clone(), now.clone());
+        t_cache.insert(team_id, team);
+
+        debug!("Successfully updated team");
+
+        Ok(())
+    }
+
+    pub async fn set_team(
+        &mut self,
+        team_id: u64,
+        p_col: &Collection<Player>,
+        p_cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let p_col = p_col.clone();
+        let player_id = self.id.clone();
+
+        task::spawn(async move {
+            let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                p_col
+                    .update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! { "$set": { "team": team_id as i64 }},
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+            })
+            .await;
+
+            if let Err(e) = retry_result {
+                error!("Player update permanently failed: {}", e);
+            }
+        });
+
+        self.team = Some(team_id);
+        p_cache.insert(self.username.clone(), self.clone());
 
         Ok(())
     }

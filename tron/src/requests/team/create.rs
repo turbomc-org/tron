@@ -21,7 +21,7 @@ impl BridgeService {
 
         info!("Create team request from player {} received", username);
 
-        let player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.cache.get_player_with_handling(&username).await?;
 
         #[derive(Serialize, Deserialize)]
         struct PartialResponse {
@@ -55,6 +55,14 @@ impl BridgeService {
                         error!("Failed to create team: {}", err);
 
                         Status::internal(format!("Failed to create team: {}", err))
+                    })?;
+
+                player
+                    .set_team(team.id, &self.databases.players, &self.cache.active_players)
+                    .await
+                    .map_err(|err| {
+                        error!("Failed to set player's team: {}", err);
+                        Status::internal(format!("Failed to set player's team: {}", err))
                     })?;
 
                 Ok(Response::new(CreateTeamResponse { success: true }))

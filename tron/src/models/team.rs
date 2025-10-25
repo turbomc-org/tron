@@ -135,7 +135,9 @@ impl Team {
                 t_col
                     .update_one(
                         doc! { "_id": team_id as i64 },
-                        doc! { "$push": { "members": player_id as i64 }},
+                        doc! {
+                            "$set": { format!("members.{}", player_id as i64): now as i64 },
+                        },
                     )
                     .await
                     .map_err(|e| {
