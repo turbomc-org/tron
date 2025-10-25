@@ -59,6 +59,13 @@ pub enum Rank {
     Legend,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode, PartialEq)]
+#[serde(rename_all = "UPPERCASE")]
+pub enum Edition {
+    Java,
+    Bedrock,
+}
+
 impl Player {
     pub fn coins(&self) -> u64 {
         self.coins
@@ -76,14 +83,6 @@ impl Player {
         self.deaths
     }
 }
-
-#[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode, PartialEq)]
-#[serde(rename_all = "UPPERCASE")]
-pub enum Edition {
-    Java,
-    Bedrock,
-}
-
 impl From<GrpcEdition> for Edition {
     fn from(value: GrpcEdition) -> Self {
         match value {
@@ -218,54 +217,183 @@ impl Player {
     }
 
     pub async fn accept_friend_request(
-        id: u64,
-        sender: u64,
+        &mut self,
+        sender: (u64, String),
         col: &Collection<Player>,
-    ) -> anyhow::Result<()> {
-        col.update_one(
-            doc! { "_id": id.clone() as i64 },
-            doc! {
-                "$unset": { format!("incoming_friend_requests.{}", sender): "" },
-                "$addToSet": { "friends": sender as i64}
-            },
-        )
-        .await?;
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
 
-        col.update_one(
-            doc! {"_id": sender.clone() as i64},
-            doc! {
-                "$addToSet": { "friends": id as i64}
-            },
-        )
-        .await?;
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": player_id.clone() as i64 },
+                        doc! {
+                            "$unset": { format!("incoming_friend_requests.{}", sender.0): "" },
+                            "$addToSet": { "friends": sender.0 as i64}
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! {"_id": sender.0.clone() as i64},
+                        doc! {
+                            "$addToSet": { "friends": player_id as i64}
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.incoming_friend_requests.remove(&sender.0);
+        self.friends.insert(sender.0.clone());
+
+        cache.insert(self.username.clone(), self.clone());
+
+        if cache.contains_key(&sender.1) {
+            let mut sender_player = cache.get(&sender.1).unwrap().clone();
+            sender_player.friends.insert(self.id.clone());
+            cache.insert(sender_player.username.clone(), sender_player);
+        }
 
         Ok(())
     }
 
     pub async fn reject_friend_request(
-        id: u64,
+        &mut self,
         sender: u64,
         col: &Collection<Player>,
-    ) -> anyhow::Result<()> {
-        col.update_one(
-            doc! {"_id": id as i64},
-            doc! {
-                "$unset": { format!("incoming_friend_requests.{}", sender as i64): "" },
-            },
-        )
-        .await?;
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+        let sender_id = sender.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! {"_id": player_id as i64},
+                        doc! {
+                            "$unset": { format!("incoming_friend_requests.{}", sender_id as i64): "" },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.incoming_friend_requests.remove(&sender_id);
+        cache.insert(self.username.clone(), self.clone());
 
         Ok(())
     }
 
-    pub async fn remove_friend(&self, target: u64, col: &Collection<Player>) -> anyhow::Result<()> {
-        col.update_one(
-            doc! {"_id": self.id as i64},
-            doc! {
-                "$pull": { "friends": target as i64 }
-            },
-        )
-        .await?;
+    pub async fn remove_friend(
+        &mut self,
+        target: u64,
+        col: &Collection<Player>,
+        cache: &Arc<DashMap<String, Self>>,
+        index: &Arc<DashMap<u64, String>>,
+    ) -> Result<()> {
+        let target = target.clone();
+        let player_id = target.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! {"_id":player_id as i64},
+                        doc! {
+                            "$pull": { "friends": target as i64 }
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! {"_id": target as i64},
+                        doc! {
+                            "$pull": { "friends": player_id as i64 }
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.friends.remove(&target);
+        cache.insert(self.username.clone(), self.clone());
+
+        let target_username = index.get(&target).unwrap().clone();
+
+        if cache.contains_key(&target_username) {
+            let mut target_player = cache.get(&target_username).unwrap().clone();
+            target_player.friends.remove(&self.id);
+            cache.insert(target_player.username.clone(), target_player);
+        }
 
         Ok(())
     }
@@ -315,9 +443,7 @@ impl Player {
                         doc! {"_id": team_id as i64},
                         doc! {
                             "$set": {
-                                "members": {
-                                    (player_id as i64).to_string(): now as i64
-                                }
+                                format!("members.{}", player_id): now as i64
                             }
                         },
                     )
@@ -336,8 +462,12 @@ impl Player {
 
         self.incoming_team_requests.remove(&team_id);
         p_cache.insert(self.username.clone(), self.clone());
-        let mut team: Team = t_cache.get(&team_id).unwrap().clone();
-        team.members.insert(self.id.clone(), now.clone());
+
+        if let Some(entry) = t_cache.get(&team_id) {
+            let mut team = entry.clone();
+            team.members.insert(self.id.clone(), now.clone());
+            t_cache.insert(team_id, team);
+        }
 
         Ok(())
     }
@@ -496,5 +626,15 @@ impl Player {
         cache.insert(self.username.clone(), self.clone());
 
         Ok(())
+    }
+
+    pub fn get_rank_value(rank: &Rank) -> u64 {
+        match rank {
+            Rank::Newbie => 1,
+            Rank::Member => 2,
+            Rank::Vip => 3,
+            Rank::Elite => 4,
+            Rank::Legend => 5,
+        }
     }
 }

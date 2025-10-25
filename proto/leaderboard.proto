@@ -13,12 +13,12 @@ message GetLeaderboardRequest {
 }
 
 message GetLeaderboardResponse {
-    map<string, uint32> players = 1;
+    map<string, uint64> players = 1;
 }
 
 message OverallLeaderboardRequest {}
 message OverallLeaderboardResponse {
-    map<string, uint32> leaderboard = 1;
+    map<string, uint64> leaderboard = 1;
 }
 
 message CoinsLeaderboardRequest {}
@@ -38,10 +38,10 @@ message KdaLeaderboardResponse {
 
 message DeathsLeaderboardRequest {}
 message DeathsLeaderboardResponse {
-    map<string, uint32> leaderboard = 1;
+    map<string, uint64> leaderboard = 1;
 }
 
 message KillsLeaderboardRequest {}
 message KillsLeaderboardResponse {
-    map<string, uint32> leaderboard = 1;
+    map<string, uint64> leaderboard = 1;
 }

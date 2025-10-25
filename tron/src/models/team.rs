@@ -21,9 +21,17 @@ pub struct Team {
     #[serde(rename = "_id")]
     pub id: u64,
     pub name: String,
+    #[serde(
+        serialize_with = "crate::utils::serde::serialize_u64_map",
+        deserialize_with = "crate::utils::serde::deserialize_u64_map"
+    )]
     pub members: HashMap<u64, u64>,
     pub leader: u64,
     pub open: bool,
+    #[serde(
+        serialize_with = "crate::utils::serde::serialize_u64_map",
+        deserialize_with = "crate::utils::serde::deserialize_u64_map"
+    )]
     pub banned_players: HashMap<u64, u64>,
     pub color: String,
 }

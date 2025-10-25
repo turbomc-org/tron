@@ -92,16 +92,18 @@ impl Cache {
         )))
     }
 
-    pub async fn remove_friends(&self, player: &Player, target: &str) -> Result<u64, Status> {
-        for target_id in player.friends.iter() {
-            if let Ok(username) = self.get_player_username(*target_id).await {
+    pub async fn get_friend_id(&self, player: &Player, target: &str) -> Result<u64, Status> {
+        for friend_id in player.friends.iter() {
+            if let Ok(username) = self.get_player_username(*friend_id).await {
                 if username == target {
-                    return Ok(*target_id);
+                    return Ok(*friend_id);
                 }
             }
         }
-
-        error!("Player {} is not your friend yet", target);
+        error!(
+            "Player {} is not your friend of {}",
+            target, player.username,
+        );
         Err(Status::not_found(format!(
             "Player {} is not your friend yet",
             target
