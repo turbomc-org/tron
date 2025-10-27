@@ -4,6 +4,7 @@ pub mod leaderboard;
 pub mod leaderboards;
 pub mod message;
 pub mod players;
+pub mod servers;
 pub mod session;
 pub mod shop;
 pub mod team;

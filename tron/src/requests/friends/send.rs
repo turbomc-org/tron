@@ -1,11 +1,6 @@
 use crate::BridgeService;
 use crate::bridge::{SendFriendRequestRequest, SendFriendRequestResponse};
-use crate::models::player::Player;
 use chrono::Utc;
-use mongodb::options::FindOneOptions;
-use mongodb::{Collection, bson::doc};
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
@@ -16,101 +11,64 @@ impl BridgeService {
     ) -> Result<Response<SendFriendRequestResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.sender;
-        let player = self.cache.get_player_with_handling(&username).await?;
-        let id = self
-            .cache
-            .get_active_player_id(&username)
-            .await
-            .map_err(|err| {
-                error!("Failed to get active player ID for {}: {}", username, err);
-                Status::data_loss(format!(
-                    "Failed to get active player ID for {}: {}",
-                    username, err
-                ))
-            })?;
-        let target = inner_request.receiver;
+        let target_username = inner_request.receiver;
         let players = self.databases.players.clone();
 
-        debug!(
-            "Friend request for player {} received from {}",
-            target, username
+        info!(
+            "Send friend request request from player {} received",
+            username
         );
 
-        #[derive(Serialize, Deserialize)]
-        struct PartialResponse {
-            #[serde(rename = "_id")]
-            id: u64,
-            #[serde(
-                serialize_with = "crate::utils::serde::serialize_u64_map",
-                deserialize_with = "crate::utils::serde::deserialize_u64_map"
-            )]
-            incoming_friend_requests: HashMap<u64, u64>,
-        }
-
-        let partial_players: Collection<PartialResponse> = self.databases.players.clone_with_type();
-        let projection = doc! { "_id": 1, "incoming_friend_requests": 1  };
-        let find_options = FindOneOptions::builder().projection(projection).build();
-
-        debug!("Fetching player {} from database", target);
-
-        let receiver = partial_players
-            .find_one(doc! {"username": &target})
-            .with_options(find_options)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from database : {}",
-                    target,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from database", username))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in database", username);
-
-                Status::not_found(format!("Player {} not found in database", username))
-            })?;
-
-        debug!(
-            "Fetched player {} from database with id {}",
-            target, receiver.id
-        );
-
-        if receiver.incoming_friend_requests.contains_key(&id) {
+        if username == target_username {
             error!(
-                "Player {} already sent a friend request to {}",
-                username, target
+                "Player {} tried to send a friend request to themselves",
+                username
             );
-
-            return Err(Status::already_exists(format!(
-                "Already sent a friend request to player {}",
-                &target,
-            )));
+            return Err(Status::invalid_argument(
+                "Cannot send friend request to yourself",
+            ));
         }
+
+        let player = self.cache.get_player_with_handling(&username).await?;
+        let mut target = self
+            .cache
+            .get_player_with_handling(&target_username)
+            .await?;
 
         let now = Utc::now().timestamp() as u64;
 
-        Player::add_friend_request(player.id, receiver.id, now.clone(), &players)
+        player
+            .add_friend_request(
+                &mut target,
+                now.clone(),
+                &players,
+                &self.cache.active_players,
+            )
             .await
             .map_err(|err| {
                 error!(
                     "Failed to send friend request to {} due to {}",
-                    target,
+                    target_username,
                     err.to_string()
                 );
-                Status::internal(format!("Failed to send friend request to {}", target))
+                Status::internal(format!(
+                    "Failed to send friend request to {}",
+                    target_username
+                ))
             })?;
 
-        debug!("Checking if player {} is online", target);
-        if self.cache.active_players.contains_key(&target) {
-            debug!("Adding request to player {}", target);
+        debug!("Checking if player {} is online", target_username);
+        if self.cache.active_players.contains_key(&target_username) {
+            debug!("Adding request to player {}", target_username);
             self.cache
-                .add_friend_request(target.clone(), player.id, now)
+                .add_friend_request(target_username.clone(), player.id, now)
                 .await?;
         }
 
-        info!("Player {} send a friend request to {}", username, target);
+        info!(
+            "Player {} send a friend request to {}",
+            username, target_username
+        );
 
         Ok(Response::new(SendFriendRequestResponse { success: true }))
     }

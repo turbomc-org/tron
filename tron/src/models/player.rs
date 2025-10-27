@@ -47,6 +47,8 @@ pub struct Player {
         deserialize_with = "crate::utils::serde::deserialize_u64_map"
     )]
     pub incoming_team_requests: HashMap<u64, u64>,
+    pub banned: u64,
+    pub timed_out: u64,
     pub created_at: u64,
     pub updated_at: u64,
 }
@@ -128,6 +130,8 @@ impl Player {
             redeemed_codes: HashSet::new(),
             incoming_friend_requests: HashMap::new(),
             incoming_team_requests: HashMap::new(),
+            banned: 0,
+            timed_out: 0,
             created_at: now.timestamp() as u64,
             updated_at: now.timestamp() as u64,
         }
@@ -185,34 +189,112 @@ impl Player {
     }
 
     pub async fn transfer_coins(
-        from_id: u64,
-        to_id: u64,
+        &mut self,
+        target: &mut Self,
         amount: u64,
         col: &Collection<Self>,
-    ) -> anyhow::Result<()> {
-        Self::inc_coins(from_id, -(amount as i64), col).await?;
-        Self::inc_coins(to_id, amount as i64, col).await?;
+        cache: &Arc<DashMap<String, Self>>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": player_id as i64 },
+                        doc! {
+                            "$inc": { "coins": -(amount as i64) },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        let target_id = target.id.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": target_id as i64 },
+                        doc! {
+                            "$inc": { "coins": amount as i64 },
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.coins -= amount;
+        target.coins += amount;
+        cache.insert(self.username.clone(), self.clone());
+        cache.insert(target.username.clone(), target.clone());
 
         Ok(())
     }
 
     pub async fn add_friend_request(
-        sender: u64,
-        receiver: u64,
+        &self,
+        target: &mut Self,
         now: u64,
         col: &Collection<Player>,
-    ) -> anyhow::Result<()> {
-        col.update_one(
-            doc! { "_id": receiver as i64 },
-            doc! {
-                "$set": {
-                    "incoming_friend_requests": {
-                        (sender as i64).to_string(): now as i64
-                    }
+        cache: &Arc<DashMap<String, Player>>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+        let target_id = target.id.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.update_one(
+                        doc! { "_id": target_id as i64 },
+                        doc! {
+                            "$set": {
+                                "incoming_friend_requests": {
+                                    (player_id as i64).to_string(): now as i64
+                                }
+                            }
+                        },
+                    )
+                    .await
+                    .map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
                 }
-            },
-        )
-        .await?;
+            }
+        });
+
+        target.incoming_friend_requests.insert(player_id, now);
+        cache.insert(target.username.clone(), target.clone());
 
         Ok(())
     }

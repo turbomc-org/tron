@@ -1,0 +1,78 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+message ProxyStartupRequest {}
+message ProxyStartupResponse {
+    uint64 client_id = 1;
+}
+
+message ProxyShutdownRequest {
+    uint64 client_id = 1;
+}
+message ProxyShutdownResponse {
+    bool success = 1;
+}
+
+message SurvivalStartupRequest {
+}
+message SurvivalStartupResponse {
+    uint64 client_id = 1;
+}
+
+message SurvivalShutdownRequest {
+    uint64 client_id = 1;
+}
+message SurvivalShutdownResponse {
+    bool success = 1;
+}
+
+message LobbyStartupRequest {
+}
+message LobbyStartupResponse {
+    uint64 client_id = 1;
+}
+
+message LobbyShutdownRequest {
+    uint64 client_id = 1;
+}
+message LobbyShutdownResponse {
+    bool success = 1;
+}
+
+message ServerSendMessageRequest {
+    uint64 client_id = 1;
+}
+
+message ServerSendMessageResponse {
+    enum Type {
+        INFO = 0;
+        WARNING = 1;
+        ERROR = 2;
+        ANNOUNCEMENT = 3;
+    }
+
+    string username = 1;
+    string message = 2;
+    Type message_type = 3;
+    uint64 timestamp = 4;
+}
+
+message ServerKickPlayerRequest {
+    string client_id = 1;
+}
+
+message ServerKickPlayerResponse {
+    string username = 1;
+    uint64 timestamp = 2;
+}
+
+message ServerBanPlayerRequest {
+    string client_id = 1;
+}
+
+message ServerBanPlayerResponse {
+    string username = 1;
+    uint64 timestamp = 3;
+}

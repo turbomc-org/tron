@@ -13,9 +13,10 @@ impl BridgeService {
 
         debug!("Leave request for player {} received", username);
 
-        let _ = self.cache.get_player_with_handling(&username).await?;
+        let player = self.cache.get_player_with_handling(&username).await?;
+        self.cache.active_players.remove(&player.username);
 
-        info!("Leave request for player {} completed", username);
+        info!("Player {} left the game", username);
 
         Ok(Response::new(PlayerLeaveResponse { success: true }))
     }

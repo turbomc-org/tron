@@ -1,5 +1,7 @@
+use crate::bridge::ServerSendMessageResponse;
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
+use crate::models::servers::Servers;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
 use crate::models::{databases::Databases, leaderboards::Leaderboards};
@@ -10,6 +12,8 @@ use mongodb::bson::doc;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
+use tokio::sync::mpsc;
+use tonic::Status;
 use tracing::info;
 
 pub mod player;
@@ -24,6 +28,8 @@ pub struct Cache {
     pub prefixes: Arc<DashMap<u64, Prefix>>,
     pub player_indexes: Arc<DashMap<u64, String>>,
     pub leaderboards: Leaderboards,
+    pub servers: Servers,
+    pub clients: Arc<DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>>,
 }
 
 impl Cache {
@@ -35,6 +41,8 @@ impl Cache {
             prefixes: Arc::new(DashMap::new()),
             player_indexes: Arc::new(DashMap::new()),
             leaderboards: Leaderboards::new(),
+            servers: Servers::new(),
+            clients: Arc::new(DashMap::new()),
         }
     }
 

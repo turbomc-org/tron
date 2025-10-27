@@ -19,12 +19,12 @@ impl BridgeService {
             crate::bridge::player_join_request::Edition::from_i32(inner_request.edition)
                 .unwrap_or(crate::bridge::player_join_request::Edition::Java)
                 .into();
-        let players_cache = &self.cache.active_players.clone();
 
         debug!("Join request for player {} received", username);
 
-        if players_cache.contains_key(&username) {
-            debug!("Player {} already exists in cache", username);
+        #[cfg(not(debug_assertions))]
+        if self.cache.active_players.contains_key(&username) {
+            error!("Player {} already exists in cache", username);
             return Ok(Response::new(PlayerJoinResponse { success: false }));
         }
 

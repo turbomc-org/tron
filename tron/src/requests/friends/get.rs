@@ -10,10 +10,9 @@ impl BridgeService {
     ) -> Result<Response<GetFriendsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+        let player = self.cache.get_player_with_handling(&username).await?;
 
         debug!("Get friends request for player {} received", username);
-
-        let player = self.cache.get_player_with_handling(&username).await?;
 
         let friends = self
             .cache

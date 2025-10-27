@@ -1,8 +1,6 @@
 use crate::BridgeService;
 use crate::bridge::{TransferBalanceRequest, TransferBalanceResponse};
 use crate::models::player::Player;
-use mongodb::{Collection, bson::doc, options::FindOneOptions};
-use serde::{Deserialize, Serialize};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
@@ -11,102 +9,57 @@ impl BridgeService {
         &self,
         request: Request<TransferBalanceRequest>,
     ) -> Result<Response<TransferBalanceResponse>, Status> {
-        let players = &self.databases.players.clone();
         let inner_request = request.into_inner();
         let username = inner_request.sender;
-        let mut player = self.cache.get_player_with_handling(&username).await?;
         let receiver = inner_request.receiver;
         let amount = inner_request.amount;
 
-        debug!(
+        info!(
             "Transfer Balance request for player {} to {} received",
             username, receiver
         );
 
-        #[derive(Serialize, Deserialize)]
-        struct PartialResponse {
-            #[serde(rename = "_id")]
-            id: u64,
-            coins: u64,
-            username: String,
-        }
-
-        let partial_players: Collection<PartialResponse> = self.databases.players.clone_with_type();
-        let projection = doc! { "_id": 1, "coins": 1, "username": 1 };
-        let find_options = FindOneOptions::builder().projection(projection).build();
-
-        debug!("Fetching receiver player {} from database", receiver);
-
-        let receiver = partial_players
-            .find_one(doc! {"username": &receiver})
-            .with_options(find_options)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from database : {}",
-                    receiver,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from database", receiver))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in database", receiver);
-
-                Status::not_found(format!("Player {} not found in database", receiver))
-            })?;
+        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut target = self.cache.get_player_with_handling(&receiver).await?;
 
         if player.coins < amount {
             error!("Player {} does not have enough coins", player.username);
 
             return Err(Status::invalid_argument(format!(
-                "Player {} does not have enough coins",
-                player.username
+                "You don't have enough coins"
             )));
         }
 
         debug!(
             "Transferring coins from player {} to player {}",
-            player.username, receiver.username
+            player.username, target.username
         );
 
-        Player::transfer_coins(player.id, receiver.id, amount, &players)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to transfer coins from player {} to player {} : {}",
-                    player.username,
-                    receiver.username,
-                    e.to_string()
-                );
+        Player::transfer_coins(
+            &mut player,
+            &mut target,
+            amount,
+            &self.databases.players,
+            &self.cache.active_players,
+        )
+        .await
+        .map_err(|e| {
+            error!(
+                "Failed to transfer coins from player {} to player {} : {}",
+                player.username,
+                target.username,
+                e.to_string()
+            );
 
-                Status::internal(format!(
-                    "Failed to transfer coins from player {} to player {}",
-                    player.username, receiver.username
-                ))
-            })?;
-
-        debug!("Current player coins: {}", player.coins);
-        debug!("The amount: {}", amount);
-        player.coins -= amount;
-        debug!("Current player coins after transfer: {}", player.coins);
-        self.cache
-            .insert_player(player.clone())
-            .await
-            .map_err(|err| {
-                error!(
-                    "Failed to update coins of player {} in cache: {}",
-                    player.username, err
-                );
-                Status::internal(format!(
-                    "Failed to update coins of player {} in cache",
-                    player.username
-                ))
-            })?;
+            Status::internal(format!(
+                "Failed to transfer coins to player {}",
+                target.username,
+            ))
+        })?;
 
         info!(
             "Successfully transferred coins from player {} to player {}",
-            player.username, receiver.username
+            player.username, target.username
         );
 
         Ok(Response::new(TransferBalanceResponse { success: true }))
@@ -118,6 +71,7 @@ mod tests {
     use super::*;
     use crate::logger::Logger;
     use crate::{bridge::bridge_server::Bridge, models::player::Edition};
+    use mongodb::bson::doc;
 
     #[tokio::test]
     async fn test_handle_transfer_balance() {

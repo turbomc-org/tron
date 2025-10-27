@@ -11,11 +11,17 @@ impl BridgeService {
     ) -> Result<Response<RejectFriendRequestResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+        let sender = inner_request.sender;
 
         info!("Reject friend request from player {} received", username);
 
+        if username == sender {
+            return Err(Status::invalid_argument(
+                "Cannot reject friend request of yourself",
+            ));
+        }
+
         let mut player = self.cache.get_player_with_handling(&username).await?;
-        let sender = inner_request.sender;
         let players = &self.databases.players.clone();
         let sender_id = self.cache.check_friend_request(&player, &sender).await?;
 

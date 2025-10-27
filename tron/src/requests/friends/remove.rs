@@ -14,6 +14,12 @@ impl BridgeService {
 
         debug!("Remove friend request from player {} received", username);
 
+        if username == target {
+            return Err(Status::invalid_argument(
+                "Cannot remove yourself from your friend list",
+            ));
+        }
+
         let mut player = self.cache.get_player_with_handling(&username).await?;
         let target_id = self.cache.get_friend_id(&player, &target).await?;
 

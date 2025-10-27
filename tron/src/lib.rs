@@ -3,12 +3,17 @@ use crate::models::databases::Databases;
 use crate::utils::mongodb::MongoDB;
 use crate::utils::redis::Redis;
 use bridge::bridge_server::Bridge;
+use futures::Stream;
 use once_cell::sync::Lazy;
 use snowflaked::sync::Generator;
 use std::iter::Take;
+use std::pin::Pin;
 use std::time::Duration;
+use tokio::sync::mpsc;
 use tokio_retry::strategy::ExponentialBackoff;
+use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 pub mod cache;
 pub mod grpc;
@@ -16,6 +21,14 @@ pub mod logger;
 pub mod models;
 pub mod requests;
 pub mod utils;
+
+type ServerSendMessageStream = Pin<
+    Box<
+        dyn Stream<Item = Result<crate::bridge::ServerSendMessageResponse, Status>>
+            + Send
+            + 'static,
+    >,
+>;
 
 static RETRY_STRATEGY: Lazy<Take<ExponentialBackoff>> = Lazy::new(|| {
     ExponentialBackoff::from_millis(100)
@@ -52,10 +65,45 @@ impl BridgeService {
             redis,
         }
     }
+
+    pub async fn broadcast_message(&self, msg: bridge::ServerSendMessageResponse) {
+        let mut dead_clients = Vec::new();
+
+        for entry in self.cache.clients.iter() {
+            let client_id = *entry.key();
+            let tx = entry.value();
+
+            if tx.send(Ok(msg.clone())).await.is_err() {
+                dead_clients.push(client_id);
+            }
+        }
+
+        for id in dead_clients {
+            self.cache.clients.remove(&id);
+        }
+    }
+
+    pub async fn send_to_client(
+        &self,
+        client_id: u64,
+        msg: bridge::ServerSendMessageResponse,
+    ) -> Result<(), Status> {
+        if let Some(entry) = self.cache.clients.get(&client_id) {
+            let tx = entry.value();
+            tx.send(Ok(msg))
+                .await
+                .map_err(|_| Status::unavailable("Client disconnected"))?;
+            Ok(())
+        } else {
+            Err(Status::not_found("Client not found"))
+        }
+    }
 }
 
 #[tonic::async_trait]
 impl Bridge for BridgeService {
+    type ServerSendMessageStream = ServerSendMessageStream;
+
     async fn player_join(
         &self,
         request: Request<crate::bridge::PlayerJoinRequest>,
@@ -271,5 +319,69 @@ impl Bridge for BridgeService {
         request: Request<crate::bridge::PlayerKillRequest>,
     ) -> Result<Response<crate::bridge::PlayerKillResponse>, Status> {
         self.handle_player_kill(request).await
+    }
+
+    async fn proxy_startup(
+        &self,
+        request: Request<crate::bridge::ProxyStartupRequest>,
+    ) -> Result<Response<crate::bridge::ProxyStartupResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn proxy_shutdown(
+        &self,
+        request: Request<crate::bridge::ProxyShutdownRequest>,
+    ) -> Result<Response<crate::bridge::ProxyShutdownResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn survival_startup(
+        &self,
+        request: Request<crate::bridge::SurvivalStartupRequest>,
+    ) -> Result<Response<crate::bridge::SurvivalStartupResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn survival_shutdown(
+        &self,
+        request: Request<crate::bridge::SurvivalShutdownRequest>,
+    ) -> Result<Response<crate::bridge::SurvivalShutdownResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn lobby_startup(
+        &self,
+        request: Request<crate::bridge::LobbyStartupRequest>,
+    ) -> Result<Response<crate::bridge::LobbyStartupResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn lobby_shutdown(
+        &self,
+        request: Request<crate::bridge::LobbyShutdownRequest>,
+    ) -> Result<Response<crate::bridge::LobbyShutdownResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn report_player(
+        &self,
+        request: Request<crate::bridge::ReportPlayerRequest>,
+    ) -> Result<Response<crate::bridge::ReportPlayerResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn server_send_message(
+        &self,
+        request: Request<crate::bridge::ServerSendMessageRequest>,
+    ) -> Result<Response<Self::ServerSendMessageStream>, Status> {
+        let client_id = request.into_inner().client_id;
+        let (tx, rx) = mpsc::channel(32);
+
+        self.cache.clients.insert(client_id.clone(), tx);
+        info!("✅ Client {client_id} connected to ServerSendMessage stream");
+
+        Ok(Response::new(
+            Box::pin(ReceiverStream::new(rx)) as Self::ServerSendMessageStream
+        ))
     }
 }
