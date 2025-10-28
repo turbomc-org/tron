@@ -55,7 +55,7 @@ message ServerSendMessageResponse {
     uint64 timestamp = 4;
 }
 
-message SenderSubscribeRequest {
+message ServerSubscribeRequest {
     uint64 client_id = 1;
 }
 
@@ -71,6 +71,20 @@ message ServerSendTitleResponse {
     string sub_title = 3;
     Type title_type = 4;
     uint64 timestamp = 5;
+}
+
+message MessageRequest {
+    string username = 1;
+    string message = 2;
+}
+
+message MessageResponse {
+    string username = 1;
+    string message = 2;
+    string prefix = 3;
+    string badges = 4;
+    string team = 5;
+    uint64 timestamp = 6;
 }
 
 message ServerKickPlayerRequest {

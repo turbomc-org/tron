@@ -1,78 +1,33 @@
 use crate::BridgeService;
-use crate::bridge::{Prefix as GrpcPrefix, SendMessageRequest, SendMessageResponse};
-use censor::{Censor, Sex, Standard, Zealous};
+use crate::MessageStream;
+use crate::bridge::MessageRequest;
+use async_stream::try_stream;
+use futures::StreamExt;
 use tonic::{Request, Response, Status};
-use tracing::error;
 
 impl BridgeService {
-    pub async fn handle_send_message(
+    pub async fn handle_message(
         &self,
-        request: Request<SendMessageRequest>,
-    ) -> Result<Response<SendMessageResponse>, Status> {
-        let inner_request = request.into_inner();
-        let censor: Censor = Sex + Standard + Zealous;
-        let username = inner_request.username;
-        let message = censor.replace(&inner_request.message, "#");
-        let players_cache = &self.cache.active_players.clone();
+        request: Request<tonic::Streaming<MessageRequest>>,
+    ) -> Result<Response<MessageStream>, Status> {
+        let mut inbound = request.into_inner();
 
-        if !players_cache.contains_key(&username) {
-            error!("Player {} not found in cache", username);
-            return Err(Status::not_found(format!(
-                "Player {} not found in cache",
-                username
-            )));
-        }
+        let stream = try_stream! {
+            while let Some(req) = inbound.next().await {
+                let req = req?;
+                let filtered = Self::filter_message(&req.message);
 
-        let player = self
-            .cache
-            .get_player(&username)
-            .await
-            .map_err(|e| {
-                error!(
-                    "Failed to fetch player {} from cache: {}",
-                    username,
-                    e.to_string()
-                );
-
-                Status::internal(format!("Failed to fetch player {} from cache", username))
-            })?
-            .ok_or_else(|| {
-                error!("Player {} not found in active players cache", username);
-
-                Status::data_loss(format!(
-                    "Player {} not found in active players cache",
-                    username
-                ))
-            })?;
-
-        let mut grpc_prefix: Option<GrpcPrefix> = None;
-
-        if let Some(prefix_id) = player.selected_prefix {
-            match self.cache.get_prefix(&prefix_id).await {
-                Ok(Some(prefix_from_cache)) => {
-                    grpc_prefix = Some(GrpcPrefix {
-                        text: prefix_from_cache.text,
-                        color: prefix_from_cache.display_color_hex,
-                    });
-                }
-                Ok(None) => {
-                    error!(
-                        "Player {} has selected_prefix ID {} but it was not found in cache.",
-                        username, prefix_id
-                    );
-                }
-                Err(err) => {
-                    error!("Failed to fetch prefix {} from cache: {}", prefix_id, err);
-                }
+                yield crate::bridge::MessageResponse {
+                    username: "Harihar".to_string(),
+                    message: filtered,
+                    prefix: "123".to_string(),
+                    badges: "548".to_string(),
+                    team: "Decep".to_string(),
+                    timestamp: 0
+                };
             }
-        }
-
-        let response = SendMessageResponse {
-            prefix: grpc_prefix,
-            username,
-            message,
         };
 
-        Ok(Response::new(response))
+        Ok(Response::new(Box::pin(stream) as MessageStream))
     }
 }

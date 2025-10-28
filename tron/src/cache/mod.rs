@@ -1,4 +1,4 @@
-use crate::bridge::ServerSendMessageResponse;
+use crate::bridge::{MessageResponse, ServerSendMessageResponse, ServerSendTitleResponse};
 use crate::collections::Collections;
 use crate::models::leaderboards::Leaderboards;
 use crate::models::player::Player;
@@ -27,7 +27,11 @@ pub struct Cache {
     pub team_indexes: Arc<DashMap<String, u64>>,
     pub leaderboards: Leaderboards,
     pub servers: Servers,
-    pub clients: Arc<DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>>,
+    pub message_clients: Arc<DashMap<u64, mpsc::Sender<Result<MessageResponse, Status>>>>,
+    pub send_message_clients:
+        Arc<DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>>,
+    pub send_title_clients:
+        Arc<DashMap<u64, mpsc::Sender<Result<ServerSendTitleResponse, Status>>>>,
 }
 
 impl Cache {
@@ -41,7 +45,9 @@ impl Cache {
             team_indexes: Arc::new(DashMap::new()),
             leaderboards: Leaderboards::new(),
             servers: Servers::new(),
-            clients: Arc::new(DashMap::new()),
+            send_message_clients: Arc::new(DashMap::new()),
+            send_title_clients: Arc::new(DashMap::new()),
+            message_clients: Arc::new(DashMap::new()),
         }
     }
 

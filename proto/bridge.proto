@@ -34,7 +34,6 @@ service Bridge {
     rpc KillsLeaderboard (KillsLeaderboardRequest) returns (KillsLeaderboardResponse);
 
     // Messaging
-    rpc SendMessage (SendMessageRequest) returns (SendMessageResponse);
 
     // Friends
     rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
@@ -85,7 +84,8 @@ service Bridge {
     rpc LobbyStartup(LobbyStartupRequest) returns (LobbyStartupResponse);
     rpc LobbyShutdown(LobbyShutdownRequest) returns (LobbyShutdownResponse);
     rpc ServerSendMessage(ServerSubscribeRequest) returns (stream ServerSendMessageResponse);
-    rpc ServerSendTitle(ServerSubscribeRequest) returns (ServerSendTitleResponse);
+    rpc ServerSendTitle(ServerSubscribeRequest) returns (stream ServerSendTitleResponse);
+    rpc Message(stream MessageRequest) returns (stream MessageResponse);
 
     // Security
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);
