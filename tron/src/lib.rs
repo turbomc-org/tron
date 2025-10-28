@@ -1,7 +1,5 @@
 use crate::cache::Cache;
-use crate::models::databases::Databases;
-use crate::utils::mongodb::MongoDB;
-use crate::utils::redis::Redis;
+use crate::collections::Collections;
 use bridge::bridge_server::Bridge;
 use futures::Stream;
 use once_cell::sync::Lazy;
@@ -16,9 +14,11 @@ use tonic::{Request, Response, Status};
 use tracing::info;
 
 pub mod cache;
+pub mod collections;
 pub mod grpc;
 pub mod logger;
 pub mod models;
+pub mod modules;
 pub mod requests;
 pub mod utils;
 
@@ -44,26 +44,16 @@ pub mod bridge {
 
 pub struct BridgeService {
     cache: Cache,
-    #[allow(unused)]
-    mongodb: MongoDB,
-    databases: Databases,
-    #[allow(unused)]
-    redis: Redis,
+    collections: Collections,
 }
 
 impl BridgeService {
-    pub async fn new() -> Self {
-        let mongodb = MongoDB::new().await.expect("failed to connect to MongoDB");
-        let databases = Databases::new(&mongodb.database);
-        let cache = Cache::init(&databases).await.expect("failed to load cache");
-        let redis = Redis::new();
+    pub async fn new(collections: Collections) -> Self {
+        let cache = Cache::init(&collections)
+            .await
+            .expect("failed to load cache");
 
-        Self {
-            cache,
-            mongodb,
-            databases,
-            redis,
-        }
+        Self { cache, collections }
     }
 
     pub async fn broadcast_message(&self, msg: bridge::ServerSendMessageResponse) {
@@ -116,6 +106,20 @@ impl Bridge for BridgeService {
         request: Request<crate::bridge::PlayerLeaveRequest>,
     ) -> Result<Response<crate::bridge::PlayerLeaveResponse>, Status> {
         self.handle_player_leave(request).await
+    }
+
+    async fn player_place_block(
+        &self,
+        _request: Request<crate::bridge::PlayerPlaceBlockRequest>,
+    ) -> Result<Response<crate::bridge::PlayerPlaceBlockResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn player_break_block(
+        &self,
+        _request: Request<crate::bridge::PlayerBreakBlockRequest>,
+    ) -> Result<Response<crate::bridge::PlayerBreakBlockResponse>, Status> {
+        unimplemented!()
     }
 
     async fn get_balance(
@@ -286,6 +290,13 @@ impl Bridge for BridgeService {
         self.handle_promote_team_member(request).await
     }
 
+    async fn get_open_teams(
+        &self,
+        _request: Request<crate::bridge::GetOpenTeamsRequest>,
+    ) -> Result<Response<crate::bridge::GetOpenTeamsResponse>, Status> {
+        unimplemented!()
+    }
+
     async fn buy_item(
         &self,
         request: Request<crate::bridge::BuyItemRequest>,
@@ -323,49 +334,49 @@ impl Bridge for BridgeService {
 
     async fn proxy_startup(
         &self,
-        request: Request<crate::bridge::ProxyStartupRequest>,
+        _request: Request<crate::bridge::ProxyStartupRequest>,
     ) -> Result<Response<crate::bridge::ProxyStartupResponse>, Status> {
         unimplemented!()
     }
 
     async fn proxy_shutdown(
         &self,
-        request: Request<crate::bridge::ProxyShutdownRequest>,
+        _request: Request<crate::bridge::ProxyShutdownRequest>,
     ) -> Result<Response<crate::bridge::ProxyShutdownResponse>, Status> {
         unimplemented!()
     }
 
     async fn survival_startup(
         &self,
-        request: Request<crate::bridge::SurvivalStartupRequest>,
+        _request: Request<crate::bridge::SurvivalStartupRequest>,
     ) -> Result<Response<crate::bridge::SurvivalStartupResponse>, Status> {
         unimplemented!()
     }
 
     async fn survival_shutdown(
         &self,
-        request: Request<crate::bridge::SurvivalShutdownRequest>,
+        _request: Request<crate::bridge::SurvivalShutdownRequest>,
     ) -> Result<Response<crate::bridge::SurvivalShutdownResponse>, Status> {
         unimplemented!()
     }
 
     async fn lobby_startup(
         &self,
-        request: Request<crate::bridge::LobbyStartupRequest>,
+        _request: Request<crate::bridge::LobbyStartupRequest>,
     ) -> Result<Response<crate::bridge::LobbyStartupResponse>, Status> {
         unimplemented!()
     }
 
     async fn lobby_shutdown(
         &self,
-        request: Request<crate::bridge::LobbyShutdownRequest>,
+        _request: Request<crate::bridge::LobbyShutdownRequest>,
     ) -> Result<Response<crate::bridge::LobbyShutdownResponse>, Status> {
         unimplemented!()
     }
 
     async fn report_player(
         &self,
-        request: Request<crate::bridge::ReportPlayerRequest>,
+        _request: Request<crate::bridge::ReportPlayerRequest>,
     ) -> Result<Response<crate::bridge::ReportPlayerResponse>, Status> {
         unimplemented!()
     }
@@ -383,5 +394,42 @@ impl Bridge for BridgeService {
         Ok(Response::new(
             Box::pin(ReceiverStream::new(rx)) as Self::ServerSendMessageStream
         ))
+    }
+
+    // Prefixes
+
+    async fn get_all_prefix(
+        &self,
+        _request: Request<crate::bridge::GetAllPrefixRequest>,
+    ) -> Result<Response<crate::bridge::GetAllPrefixResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn buy_prefix(
+        &self,
+        _request: Request<crate::bridge::BuyPrefixRequest>,
+    ) -> Result<Response<crate::bridge::BuyPrefixResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn get_owned_prefix(
+        &self,
+        _request: Request<crate::bridge::GetOwnedPrefixRequest>,
+    ) -> Result<Response<crate::bridge::GetOwnedPrefixResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn delete_prefix(
+        &self,
+        _request: Request<crate::bridge::DeletePrefixRequest>,
+    ) -> Result<Response<crate::bridge::DeletePrefixResponse>, Status> {
+        unimplemented!()
+    }
+
+    async fn create_prefix(
+        &self,
+        _request: Request<crate::bridge::CreatePrefixRequest>,
+    ) -> Result<Response<crate::bridge::CreatePrefixResponse>, Status> {
+        unimplemented!()
     }
 }

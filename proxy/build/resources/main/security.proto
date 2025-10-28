@@ -1,0 +1,11 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+message ReportPlayerRequest {
+    string username = 1;
+    string target = 2;
+}
+
+message ReportPlayerResponse {}

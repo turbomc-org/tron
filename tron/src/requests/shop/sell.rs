@@ -40,7 +40,7 @@ impl BridgeService {
                 .sell(
                     sell_item.quantity,
                     &mut player,
-                    &self.databases.players,
+                    &self.collections.players,
                     &self.cache.active_players,
                 )
                 .await

@@ -13,7 +13,9 @@ import io.grpc.Status.UNIMPLEMENTED
 import io.grpc.StatusException
 import io.grpc.kotlin.AbstractCoroutineServerImpl
 import io.grpc.kotlin.AbstractCoroutineStub
+import io.grpc.kotlin.ClientCalls.serverStreamingRpc
 import io.grpc.kotlin.ClientCalls.unaryRpc
+import io.grpc.kotlin.ServerCalls.serverStreamingServerMethodDefinition
 import io.grpc.kotlin.ServerCalls.unaryServerMethodDefinition
 import io.grpc.kotlin.StubFor
 import kotlin.String
@@ -21,6 +23,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Holder for Kotlin coroutine-based client and server APIs for bridge.Bridge.
@@ -179,6 +182,46 @@ public object BridgeGrpcKt {
   public val playerKillMethod: MethodDescriptor<Player.PlayerKillRequest, Player.PlayerKillResponse>
     @JvmStatic
     get() = BridgeGrpc.getPlayerKillMethod()
+
+  public val proxyStartupMethod:
+      MethodDescriptor<Server.ProxyStartupRequest, Server.ProxyStartupResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getProxyStartupMethod()
+
+  public val proxyShutdownMethod:
+      MethodDescriptor<Server.ProxyShutdownRequest, Server.ProxyShutdownResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getProxyShutdownMethod()
+
+  public val survivalStartupMethod:
+      MethodDescriptor<Server.SurvivalStartupRequest, Server.SurvivalStartupResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getSurvivalStartupMethod()
+
+  public val survivalShutdownMethod:
+      MethodDescriptor<Server.SurvivalShutdownRequest, Server.SurvivalShutdownResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getSurvivalShutdownMethod()
+
+  public val lobbyStartupMethod:
+      MethodDescriptor<Server.LobbyStartupRequest, Server.LobbyStartupResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getLobbyStartupMethod()
+
+  public val lobbyShutdownMethod:
+      MethodDescriptor<Server.LobbyShutdownRequest, Server.LobbyShutdownResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getLobbyShutdownMethod()
+
+  public val serverSendMessageMethod:
+      MethodDescriptor<Server.ServerSendMessageRequest, Server.ServerSendMessageResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getServerSendMessageMethod()
+
+  public val reportPlayerMethod:
+      MethodDescriptor<Security.ReportPlayerRequest, Security.ReportPlayerResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getReportPlayerMethod()
 
   /**
    * A stub for issuing RPCs to a(n) bridge.Bridge service as suspending coroutines.
@@ -872,6 +915,182 @@ public object BridgeGrpcKt {
       callOptions,
       headers
     )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun proxyStartup(request: Server.ProxyStartupRequest, headers: Metadata =
+        Metadata()): Server.ProxyStartupResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getProxyStartupMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun proxyShutdown(request: Server.ProxyShutdownRequest, headers: Metadata =
+        Metadata()): Server.ProxyShutdownResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getProxyShutdownMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun survivalStartup(request: Server.SurvivalStartupRequest, headers: Metadata =
+        Metadata()): Server.SurvivalStartupResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getSurvivalStartupMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun survivalShutdown(request: Server.SurvivalShutdownRequest, headers: Metadata =
+        Metadata()): Server.SurvivalShutdownResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getSurvivalShutdownMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun lobbyStartup(request: Server.LobbyStartupRequest, headers: Metadata =
+        Metadata()): Server.LobbyStartupResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getLobbyStartupMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun lobbyShutdown(request: Server.LobbyShutdownRequest, headers: Metadata =
+        Metadata()): Server.LobbyShutdownResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getLobbyShutdownMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Returns a [Flow] that, when collected, executes this RPC and emits responses from the
+     * server as they arrive.  That flow finishes normally if the server closes its response with
+     * [`Status.OK`][io.grpc.Status], and fails by throwing a [StatusException] otherwise.  If
+     * collecting the flow downstream fails exceptionally (including via cancellation), the RPC
+     * is cancelled with that exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return A flow that, when collected, emits the responses from the server.
+     */
+    public fun serverSendMessage(request: Server.ServerSendMessageRequest, headers: Metadata =
+        Metadata()): Flow<Server.ServerSendMessageResponse> = serverStreamingRpc(
+      channel,
+      BridgeGrpc.getServerSendMessageMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun reportPlayer(request: Security.ReportPlayerRequest, headers: Metadata =
+        Metadata()): Security.ReportPlayerResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getReportPlayerMethod(),
+      request,
+      callOptions,
+      headers
+    )
   }
 
   /**
@@ -1341,6 +1560,127 @@ public object BridgeGrpcKt {
         = throw
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.PlayerKill is unimplemented"))
 
+    /**
+     * Returns the response to an RPC for bridge.Bridge.ProxyStartup.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun proxyStartup(request: Server.ProxyStartupRequest):
+        Server.ProxyStartupResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ProxyStartup is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.ProxyShutdown.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun proxyShutdown(request: Server.ProxyShutdownRequest):
+        Server.ProxyShutdownResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ProxyShutdown is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.SurvivalStartup.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun survivalStartup(request: Server.SurvivalStartupRequest):
+        Server.SurvivalStartupResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.SurvivalStartup is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.SurvivalShutdown.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun survivalShutdown(request: Server.SurvivalShutdownRequest):
+        Server.SurvivalShutdownResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.SurvivalShutdown is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.LobbyStartup.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun lobbyStartup(request: Server.LobbyStartupRequest):
+        Server.LobbyStartupResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.LobbyStartup is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.LobbyShutdown.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun lobbyShutdown(request: Server.LobbyShutdownRequest):
+        Server.LobbyShutdownResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.LobbyShutdown is unimplemented"))
+
+    /**
+     * Returns a [Flow] of responses to an RPC for bridge.Bridge.ServerSendMessage.
+     *
+     * If creating or collecting the returned flow fails with a [StatusException], the RPC
+     * will fail with the corresponding [io.grpc.Status].  If it fails with a
+     * [java.util.concurrent.CancellationException], the RPC will fail with status
+     * `Status.CANCELLED`.  If creating
+     * or collecting the returned flow fails for any other reason, the RPC will fail with
+     * `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open fun serverSendMessage(request: Server.ServerSendMessageRequest):
+        Flow<Server.ServerSendMessageResponse> = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ServerSendMessage is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.ReportPlayer.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun reportPlayer(request: Security.ReportPlayerRequest):
+        Security.ReportPlayerResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ReportPlayer is unimplemented"))
+
     final override fun bindService(): ServerServiceDefinition = builder(getServiceDescriptor())
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
@@ -1496,6 +1836,46 @@ public object BridgeGrpcKt {
       context = this.context,
       descriptor = BridgeGrpc.getPlayerKillMethod(),
       implementation = ::playerKill
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getProxyStartupMethod(),
+      implementation = ::proxyStartup
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getProxyShutdownMethod(),
+      implementation = ::proxyShutdown
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getSurvivalStartupMethod(),
+      implementation = ::survivalStartup
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getSurvivalShutdownMethod(),
+      implementation = ::survivalShutdown
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getLobbyStartupMethod(),
+      implementation = ::lobbyStartup
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getLobbyShutdownMethod(),
+      implementation = ::lobbyShutdown
+    ))
+      .addMethod(serverStreamingServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getServerSendMessageMethod(),
+      implementation = ::serverSendMessage
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getReportPlayerMethod(),
+      implementation = ::reportPlayer
     )).build()
   }
 }

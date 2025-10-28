@@ -36,3 +36,9 @@ enum ItemType {
   MISC = 4;
   CONTAINER = 5;
 }
+
+message Prefix {
+    string text = 1;
+    string color = 2;
+    string price = 3;
+}

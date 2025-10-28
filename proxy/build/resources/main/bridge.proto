@@ -1,5 +1,5 @@
 syntax = "proto3";
-option java_package = "com.tron.bridge";  // Or whatever base pkg you want
+option java_package = "com.tron.bridge";
 option java_outer_classname = "BridgeProto";
 
 package bridge;
@@ -12,6 +12,8 @@ import "friends.proto";
 import "teams.proto";
 import "shop.proto";
 import "player.proto";
+import "server.proto";
+import "security.proto";
 
 service Bridge {
     // Session
@@ -60,4 +62,18 @@ service Bridge {
     // Player
     rpc PlayerDeath(PlayerDeathRequest) returns (PlayerDeathResponse);
     rpc PlayerKill(PlayerKillRequest) returns (PlayerKillResponse);
+
+    // Server
+    rpc ProxyStartup(ProxyStartupRequest) returns (ProxyStartupResponse);
+    rpc ProxyShutdown(ProxyShutdownRequest) returns (ProxyShutdownResponse);
+    rpc SurvivalStartup(SurvivalStartupRequest) returns (SurvivalStartupResponse);
+    rpc SurvivalShutdown(SurvivalShutdownRequest) returns (SurvivalShutdownResponse);
+    rpc LobbyStartup(LobbyStartupRequest) returns (LobbyStartupResponse);
+    rpc LobbyShutdown(LobbyShutdownRequest) returns (LobbyShutdownResponse);
+
+    // Proxy
+    rpc ServerSendMessage(ServerSendMessageRequest) returns (stream ServerSendMessageResponse);
+
+    // Security
+    rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);
 }

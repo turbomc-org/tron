@@ -1,0 +1,56 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+import "common.proto";
+
+message GetAllPrefixRequest {}
+message GetAllPrefixResponse {
+    repeated Prefix prefixes = 1;
+}
+
+message GetOwnedPrefixRequest {
+    string username = 1;
+}
+message GetOwnedPrefixResponse {
+    repeated Prefix prefixes = 1;
+}
+
+message BuyPrefixRequest {
+    string username = 1;
+    string prefix = 2;
+}
+message BuyPrefixResponse {
+    bool success = 1;
+}
+
+message SelectPrefixRequest {
+    string username = 1;
+    string prefix = 2;
+}
+message SelectPrefixResponse {
+    bool success = 1;
+}
+
+message GetCurrentPrefixRequest {
+    string username = 1;
+}
+message GetCurrentPrefixResponse {
+    bool success = 1;
+}
+
+message CreatePrefixRequest {
+    string username = 1;
+    Prefix prefix = 2;
+}
+message CreatePrefixResponse {
+    bool success = 1;
+}
+
+message DeletePrefixRequest {
+    string username = 1;
+    string prefix = 2;
+}
+message DeletePrefixResponse {
+    bool success = 1;
+}

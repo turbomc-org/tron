@@ -21,7 +21,11 @@ impl BridgeService {
         let team_id = self.cache.check_team_request(&player, &target).await?;
 
         player
-            .reject_team_request(team_id, &self.databases.players, &self.cache.active_players)
+            .reject_team_request(
+                team_id,
+                &self.collections.players,
+                &self.cache.active_players,
+            )
             .await
             .map_err(|err| {
                 error!(

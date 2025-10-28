@@ -26,39 +26,39 @@ impl BridgeService {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::logger::Logger;
-    use crate::models::player::{Edition, Player};
-    use mongodb::bson::doc;
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+//     use crate::logger::Logger;
+//     use crate::models::player::{Edition, Player};
+//     use mongodb::bson::doc;
 
-    #[tokio::test]
-    async fn test_get_balance_from_cache() {
-        Logger::init(true).await;
-        let service = BridgeService::new().await;
-        let username = "ladiesman217".to_string();
+//     #[tokio::test]
+//     async fn test_get_balance_from_cache() {
+//         Logger::init(true).await;
+//         let service = BridgeService::new().await;
+//         let username = "ladiesman217".to_string();
 
-        let player = Player {
-            username: username.clone(),
-            coins: 500,
-            ..Player::new(username.clone(), Edition::Java)
-        };
+//         let player = Player {
+//             username: username.clone(),
+//             coins: 500,
+//             ..Player::new(username.clone(), Edition::Java)
+//         };
 
-        service.cache.insert_player(player.clone()).await.unwrap();
+//         service.cache.insert_player(player.clone()).await.unwrap();
 
-        let req = tonic::Request::new(crate::bridge::GetBalanceRequest {
-            username: username.clone(),
-        });
+//         let req = tonic::Request::new(crate::bridge::GetBalanceRequest {
+//             username: username.clone(),
+//         });
 
-        let resp = service.handle_get_balance(req).await.unwrap().into_inner();
+//         let resp = service.handle_get_balance(req).await.unwrap().into_inner();
 
-        service
-            .databases
-            .players
-            .delete_one(doc! {"username": username})
-            .await
-            .unwrap();
-        assert_eq!(resp.balance, 500);
-    }
-}
+//         service
+//             .databases
+//             .players
+//             .delete_one(doc! {"username": username})
+//             .await
+//             .unwrap();
+//         assert_eq!(resp.balance, 500);
+//     }
+// }

@@ -1,4 +1,4 @@
-pub mod databases;
+pub mod achievements;
 pub mod leaderboards;
 pub mod message;
 pub mod player;

@@ -2,11 +2,7 @@ syntax = "proto3";
 option java_package = "com.tron.bridge";
 
 package bridge;
-
-message Prefix {
-    string text = 1;
-    string color = 2;
-}
+import "common.proto";
 
 message SendMessageRequest {
     string username = 1;

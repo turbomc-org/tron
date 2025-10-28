@@ -14,6 +14,7 @@ import "shop.proto";
 import "player.proto";
 import "server.proto";
 import "security.proto";
+import "prefix.proto";
 
 service Bridge {
     // Session
@@ -45,6 +46,7 @@ service Bridge {
 
     // Teams
     rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
+    rpc DeleteTeam (DeleteTeamRequest) returns (DeleteTeamResponse);
     rpc LeaveTeam (LeaveTeamRequest) returns (LeaveTeamResponse);
     rpc JoinTeam (JoinTeamRequest) returns (JoinTeamResponse);
     rpc SendTeamInvite (SendTeamInviteRequest) returns (SendTeamInviteResponse);
@@ -53,15 +55,27 @@ service Bridge {
     rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
     rpc RemoveTeamMember (RemoveTeamMemberRequest) returns (RemoveTeamMemberResponse);
     rpc PromoteTeamMember (PromoteTeamMemberRequest) returns (PromoteTeamMemberResponse);
+    rpc GetOpenTeams (GetOpenTeamsRequest) returns (GetOpenTeamsResponse);
 
     // Shop
     rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
     rpc SellItem (SellItemRequest) returns (SellItemResponse);
     rpc GetItems (GetItemsRequest) returns (GetItemsResponse);
 
+    // Prefix
+    rpc BuyPrefix(BuyPrefixRequest) returns (BuyPrefixResponse);
+    rpc SelectPrefix(SelectPrefixRequest) returns (SelectPrefixResponse);
+    rpc GetAllPrefix(GetAllPrefixRequest) returns (GetAllPrefixResponse);
+    rpc GetOwnedPrefix(GetOwnedPrefixRequest) returns (GetOwnedPrefixResponse);
+    rpc GetCurrentPrefix(GetCurrentPrefixRequest) returns (GetCurrentPrefixResponse);
+    rpc CreatePrefix(CreatePrefixRequest) returns (CreatePrefixResponse);
+    rpc DeletePrefix(DeletePrefixRequest) returns (DeletePrefixResponse);
+
     // Player
     rpc PlayerDeath(PlayerDeathRequest) returns (PlayerDeathResponse);
     rpc PlayerKill(PlayerKillRequest) returns (PlayerKillResponse);
+    rpc PlayerPlaceBlock(PlayerPlaceBlockRequest) returns (PlayerPlaceBlockResponse);
+    rpc PlayerBreakBlock(PlayerBreakBlockRequest) returns (PlayerBreakBlockResponse);
 
     // Server
     rpc ProxyStartup(ProxyStartupRequest) returns (ProxyStartupResponse);
@@ -70,9 +84,8 @@ service Bridge {
     rpc SurvivalShutdown(SurvivalShutdownRequest) returns (SurvivalShutdownResponse);
     rpc LobbyStartup(LobbyStartupRequest) returns (LobbyStartupResponse);
     rpc LobbyShutdown(LobbyShutdownRequest) returns (LobbyShutdownResponse);
-
-    // Proxy
-    rpc ServerSendMessage(ServerSendMessageRequest) returns (stream ServerSendMessageResponse);
+    rpc ServerSendMessage(ServerSubscribeRequest) returns (stream ServerSendMessageResponse);
+    rpc ServerSendTitle(ServerSubscribeRequest) returns (ServerSendTitleResponse);
 
     // Security
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);

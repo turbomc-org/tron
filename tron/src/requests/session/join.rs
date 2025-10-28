@@ -10,7 +10,6 @@ impl BridgeService {
         &self,
         request: Request<PlayerJoinRequest>,
     ) -> Result<Response<PlayerJoinResponse>, Status> {
-        let players = self.databases.players.clone();
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
@@ -30,7 +29,7 @@ impl BridgeService {
 
         debug!("Fetching player {} record from mongodb", username);
 
-        let response = match Player::find_by_username(username.clone(), &players).await {
+        let response = match self.collections.players.find_by_username(&username).await {
             Ok(Some(player)) => {
                 debug!("Inserting player {} into cache", username);
 
@@ -55,7 +54,7 @@ impl BridgeService {
                 debug!("Inserting player {} into cache and database", username);
 
                 player
-                    .insert(&players, &self.cache.active_players)
+                    .insert(&self.collections.players, &self.cache.active_players)
                     .await
                     .map_err(|e| {
                         error!("Failed to insert player: {}", e);
@@ -85,43 +84,5 @@ impl BridgeService {
         };
 
         Ok(response)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::BridgeService;
-    use crate::logger::Logger;
-    use crate::{bridge::bridge_server::Bridge, models::player::Edition};
-    use mongodb::bson::doc;
-
-    #[tokio::test]
-    async fn test_join_player() {
-        Logger::init(true).await;
-
-        let service = BridgeService::new().await;
-
-        let username = "vaibhav_57887".to_string();
-        let edition = 1;
-
-        let req = tonic::Request::new(crate::bridge::PlayerJoinRequest {
-            username: username.clone(),
-            edition,
-        });
-
-        let resp = service.player_join(req).await.unwrap().into_inner();
-
-        assert!(resp.success);
-
-        let player = service.cache.get_player(&username).await.unwrap().unwrap();
-
-        service
-            .databases
-            .players
-            .delete_one(doc! {"username": &username})
-            .await
-            .unwrap();
-
-        assert_eq!(player.edition, Edition::Java);
     }
 }

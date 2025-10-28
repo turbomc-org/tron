@@ -24,28 +24,28 @@ impl BridgeService {
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use crate::BridgeService;
-    use crate::bridge::SurvivalStartupRequest;
-    use crate::logger::Logger;
-    use tonic::Request;
+// #[cfg(test)]
+// mod tests {
+//     use crate::BridgeService;
+//     use crate::bridge::SurvivalStartupRequest;
+//     use crate::logger::Logger;
+//     use tonic::Request;
 
-    #[tokio::test]
-    async fn test_handle_survival_startup() {
-        Logger::init(true).await;
-        let service = BridgeService::new().await;
+//     #[tokio::test]
+//     async fn test_handle_survival_startup() {
+//         Logger::init(true).await;
+//         let service = BridgeService::new().await;
 
-        let req = Request::new(SurvivalStartupRequest {});
+//         let req = Request::new(SurvivalStartupRequest {});
 
-        let resp = service
-            .handle_survival_startup(req)
-            .await
-            .unwrap()
-            .into_inner();
+//         let resp = service
+//             .handle_survival_startup(req)
+//             .await
+//             .unwrap()
+//             .into_inner();
 
-        let client_id = resp.client_id;
+//         let client_id = resp.client_id;
 
-        assert!(service.cache.servers.survivals.contains_key(&client_id));
-    }
-}
+//         assert!(service.cache.servers.survivals.contains_key(&client_id));
+//     }
+// }

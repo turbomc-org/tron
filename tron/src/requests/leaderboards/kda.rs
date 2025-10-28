@@ -1,6 +1,5 @@
 use crate::BridgeService;
 use crate::bridge::{KdaLeaderboardRequest, KdaLeaderboardResponse};
-use crate::models::leaderboards::Leaderboards;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::error;
@@ -10,7 +9,10 @@ impl BridgeService {
         &self,
         _request: Request<KdaLeaderboardRequest>,
     ) -> Result<Response<KdaLeaderboardResponse>, Status> {
-        let filtered_players = Leaderboards::get_players_kd(&self.databases.players, Some(10))
+        let filtered_players = self
+            .collections
+            .players
+            .get_leaderboard_kda(Some(10))
             .await
             .map_err(|err| {
                 error!("Failed to fetch the leaderboard: {}", err);

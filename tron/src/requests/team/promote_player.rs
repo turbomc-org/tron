@@ -27,7 +27,7 @@ impl BridgeService {
             ));
         }
 
-        team.promote_player(player.id, &self.databases.teams, &self.cache.teams)
+        team.promote_player(player.id, &self.collections.teams, &self.cache.teams)
             .await
             .map_err(|err| {
                 error!(

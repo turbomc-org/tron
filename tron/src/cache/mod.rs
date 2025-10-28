@@ -1,16 +1,13 @@
 use crate::bridge::ServerSendMessageResponse;
+use crate::collections::Collections;
+use crate::models::leaderboards::Leaderboards;
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
 use crate::models::servers::Servers;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
-use crate::models::{databases::Databases, leaderboards::Leaderboards};
 use dashmap::DashMap;
-use futures::TryStreamExt;
-use mongodb::Collection;
-use mongodb::bson::doc;
-use mongodb::options::FindOptions;
-use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::mpsc;
 use tonic::Status;
@@ -27,6 +24,7 @@ pub struct Cache {
     pub teams: Arc<DashMap<u64, Team>>,
     pub prefixes: Arc<DashMap<u64, Prefix>>,
     pub player_indexes: Arc<DashMap<u64, String>>,
+    pub team_indexes: Arc<DashMap<String, u64>>,
     pub leaderboards: Leaderboards,
     pub servers: Servers,
     pub clients: Arc<DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>>,
@@ -40,54 +38,41 @@ impl Cache {
             teams: Arc::new(DashMap::new()),
             prefixes: Arc::new(DashMap::new()),
             player_indexes: Arc::new(DashMap::new()),
+            team_indexes: Arc::new(DashMap::new()),
             leaderboards: Leaderboards::new(),
             servers: Servers::new(),
             clients: Arc::new(DashMap::new()),
         }
     }
 
-    pub async fn init(db: &Databases) -> anyhow::Result<Self> {
+    pub async fn init(cols: &Collections) -> anyhow::Result<Self> {
         let cache = Self::new();
 
         info!("Populating shop items to cache from mongodb");
-        let mut shop_cursor = db.shop_items.find(doc! {}).await?;
-        while let Some(doc) = shop_cursor.try_next().await? {
-            cache.shop_items.insert(doc.id, doc);
+        let shop_items: Vec<ShopItem> = cols.shop_items.all().await?;
+        for item in shop_items {
+            cache.shop_items.insert(item.id, item);
         }
 
         info!("Populating teams to cache from mongodb");
-        let mut team_cursor = db.teams.find(doc! {}).await?;
-        while let Some(doc) = team_cursor.try_next().await? {
-            cache.teams.insert(doc.id, doc);
+        let teams: Vec<Team> = cols.teams.all().await?;
+        for team in teams {
+            cache.teams.insert(team.id, team);
         }
 
         info!("Populating prefixes to cache from mongodb");
-        let mut prefix_cursor = db.prefixes.find(doc! {}).await?;
-        while let Some(doc) = prefix_cursor.try_next().await? {
-            cache.prefixes.insert(doc.id, doc);
+        let prefixes: Vec<Prefix> = cols.prefixes.all().await?;
+        for prefix in prefixes {
+            cache.prefixes.insert(prefix.id, prefix);
         }
 
         info!("Populating players indexes from mongodb");
-
-        #[derive(Serialize, Deserialize)]
-        struct PartialResponse {
-            #[serde(rename = "_id")]
-            id: u64,
-            username: String,
+        let indexes: HashMap<String, u64> = cols.teams.indexes().await?;
+        for (name, id) in indexes {
+            cache.team_indexes.insert(name, id);
         }
 
-        let partial_players: Collection<PartialResponse> = db.players.clone_with_type();
-        let projection = doc! { "_id": 1, "username": 1  };
-        let find_options = FindOptions::builder().projection(projection).build();
-
-        let mut user_cursor = partial_players
-            .find(doc! {})
-            .with_options(find_options)
-            .await?;
-
-        while let Some(doc) = user_cursor.try_next().await? {
-            cache.player_indexes.insert(doc.id, doc.username);
-        }
+        info!("Populating teams indexes from mongodb");
 
         Ok(cache)
     }

@@ -28,8 +28,8 @@ impl BridgeService {
 
         team.remove_member(
             &mut player,
-            &self.databases.players,
-            &self.databases.teams,
+            &self.collections.players,
+            &self.collections.teams,
             &self.cache.active_players,
             &self.cache.teams,
         )

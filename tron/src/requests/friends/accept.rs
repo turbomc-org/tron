@@ -22,7 +22,7 @@ impl BridgeService {
         }
 
         let mut player = self.cache.get_player_with_handling(&username).await?;
-        let players = &self.databases.players.clone();
+        let players = &self.collections.players.clone();
 
         debug!(
             "Checking if {} has a friend request from {}",

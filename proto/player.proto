@@ -18,3 +18,19 @@ message PlayerKillRequest {
 message PlayerKillResponse {
     bool success = 1;
 }
+
+message PlayerPlaceBlockRequest {
+    string username = 1;
+}
+
+message PlayerPlaceBlockResponse {
+    bool success = 1;
+}
+
+message PlayerBreakBlockRequest {
+    string username = 1;
+}
+
+message PlayerBreakBlockResponse {
+    bool success = 1;
+}

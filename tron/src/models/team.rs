@@ -1,9 +1,10 @@
+use crate::collections::player::PlayerCollection;
+use crate::collections::team::TeamCollection;
 use crate::models::player::Player;
 use anyhow::Result;
 use bincode::{Decode, Encode};
 use chrono::Utc;
 use dashmap::DashMap;
-use mongodb::Collection;
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -55,8 +56,9 @@ impl Team {
 
     pub async fn insert(
         &self,
-        col: &Collection<Self>,
-        cache: &Arc<DashMap<u64, Self>>,
+        col: &Arc<dyn TeamCollection>,
+        t_cache: &Arc<DashMap<u64, Self>>,
+        i_cache: &Arc<DashMap<String, u64>>,
     ) -> Result<()> {
         let team_col = col.clone();
         let team = self.clone();
@@ -64,7 +66,7 @@ impl Team {
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                 let team = team.clone();
-                team_col.insert_one(team).await.map_err(|e| {
+                team_col.insert_one(&team).await.map_err(|e| {
                     error!("Retrying team update due to: {}", e);
                     e
                 })
@@ -76,7 +78,8 @@ impl Team {
             }
         });
 
-        cache.insert(self.id, self.clone());
+        t_cache.insert(self.id, self.clone());
+        i_cache.insert(self.name.clone(), self.id);
 
         Ok(())
     }
@@ -100,8 +103,8 @@ impl Team {
         &mut self,
         player: &mut Player,
         now: u64,
-        p_col: &Collection<Player>,
-        t_col: &Collection<Team>,
+        p_col: &Arc<dyn PlayerCollection>,
+        t_col: &Arc<dyn TeamCollection>,
         p_cache: &Arc<DashMap<String, Player>>,
         t_cache: &Arc<DashMap<u64, Team>>,
     ) -> Result<()> {
@@ -112,16 +115,10 @@ impl Team {
 
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
-                p_col
-                    .update_one(
-                        doc! { "_id": player_id as i64 },
-                        doc! { "$set": { "team": team_id as i64 }},
-                    )
-                    .await
-                    .map_err(|e| {
-                        error!("Retrying player update due to: {}", e);
-                        e
-                    })
+                p_col.set_team(player_id, team_id).await.map_err(|e| {
+                    error!("Retrying player update due to: {}", e);
+                    e
+                })
             })
             .await;
 
@@ -133,12 +130,7 @@ impl Team {
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                 t_col
-                    .update_one(
-                        doc! { "_id": team_id as i64 },
-                        doc! {
-                            "$set": { format!("members.{}", player_id as i64): now as i64 },
-                        },
-                    )
+                    .add_member(team_id, player_id, now)
                     .await
                     .map_err(|e| {
                         error!("Retrying team update due to: {}", e);
@@ -164,8 +156,8 @@ impl Team {
     pub async fn remove_member(
         &mut self,
         player: &mut Player,
-        p_col: &Collection<Player>,
-        t_col: &Collection<Team>,
+        p_col: &Arc<dyn PlayerCollection>,
+        t_col: &Arc<dyn TeamCollection>,
         p_cache: &Arc<DashMap<String, Player>>,
         t_cache: &Arc<DashMap<u64, Team>>,
     ) -> Result<()> {
@@ -176,16 +168,10 @@ impl Team {
 
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
-                p_col
-                    .update_one(
-                        doc! { "_id": player_id as i64 },
-                        doc! { "$unset": { "team": "" }},
-                    )
-                    .await
-                    .map_err(|e| {
-                        error!("Retrying player update due to: {}", e);
-                        e
-                    })
+                p_col.unset_team(player_id, team_id).await.map_err(|e| {
+                    error!("Retrying player update due to: {}", e);
+                    e
+                })
             })
             .await;
 
@@ -196,16 +182,10 @@ impl Team {
 
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
-                t_col
-                    .update_one(
-                        doc! { "_id": team_id as i64 },
-                        doc! { "$pull": { "members": player_id as i64 }},
-                    )
-                    .await
-                    .map_err(|e| {
-                        error!("Retrying team update due to: {}", e);
-                        e
-                    })
+                t_col.remove_member(team_id, player_id).await.map_err(|e| {
+                    error!("Retrying team update due to: {}", e);
+                    e
+                })
             })
             .await;
 
@@ -226,7 +206,7 @@ impl Team {
     pub async fn promote_player(
         &mut self,
         id: u64,
-        col: &Collection<Self>,
+        col: &Arc<dyn TeamCollection>,
         cache: &Arc<DashMap<u64, Team>>,
     ) -> Result<()> {
         let team_id = self.id.clone();
@@ -235,16 +215,10 @@ impl Team {
 
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
-                team_col
-                    .update_one(
-                        doc! { "_id": team_id as i64 },
-                        doc! { "$set": { "leader": player_id as i64 }},
-                    )
-                    .await
-                    .map_err(|e| {
-                        error!("Retrying team update due to: {}", e);
-                        e
-                    })
+                team_col.set_leader(team_id, player_id).await.map_err(|e| {
+                    error!("Retrying team update due to: {}", e);
+                    e
+                })
             })
             .await;
 
@@ -263,25 +237,18 @@ impl Team {
     pub async fn set_open(
         &mut self,
         open: bool,
-        col: &Collection<Self>,
+        col: &Arc<dyn TeamCollection>,
         cache: &Arc<DashMap<u64, Self>>,
     ) -> Result<()> {
         let team_col = col.clone();
         let team_id = self.id.clone();
-        let value = open.clone();
 
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
-                team_col
-                    .update_one(
-                        doc! { "_id": team_id as i64 },
-                        doc! { "$set": { "open": value}},
-                    )
-                    .await
-                    .map_err(|e| {
-                        error!("Retrying team update due to: {}", e);
-                        e
-                    })
+                team_col.set_open(team_id, open).await.map_err(|e| {
+                    error!("Retrying team update due to: {}", e);
+                    e
+                })
             })
             .await;
 

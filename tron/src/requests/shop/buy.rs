@@ -20,7 +20,7 @@ impl BridgeService {
 
         item.buy(
             &mut player,
-            &self.databases.players,
+            &self.collections.players,
             &self.cache.active_players,
         )
         .await

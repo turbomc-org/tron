@@ -1,5 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::bridge_server::BridgeServer;
+use crate::collections::Collections;
+use crate::utils::mongodb::MongoDB;
 use tonic::transport::Server;
 use tracing::info;
 
@@ -12,7 +14,14 @@ impl GRPCService {
             .expect("failed to parse the address");
         info!("🟩 Listener running on {}", addr);
 
-        let bs = BridgeService::new().await;
+        let mongodb = MongoDB::new()
+            .await
+            .expect("Failed to establish MongoDB connection");
+
+        let database = mongodb.database;
+        let collections = Collections::new(&database);
+
+        let bs = BridgeService::new(collections).await;
 
         let svc = BridgeServer::new(bs);
         Server::builder()

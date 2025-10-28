@@ -976,6 +976,254 @@ public final class BridgeGrpc {
     return getPlayerKillMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.ProxyStartupRequest,
+      com.tron.bridge.Server.ProxyStartupResponse> getProxyStartupMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ProxyStartup",
+      requestType = com.tron.bridge.Server.ProxyStartupRequest.class,
+      responseType = com.tron.bridge.Server.ProxyStartupResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.ProxyStartupRequest,
+      com.tron.bridge.Server.ProxyStartupResponse> getProxyStartupMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.ProxyStartupRequest, com.tron.bridge.Server.ProxyStartupResponse> getProxyStartupMethod;
+    if ((getProxyStartupMethod = BridgeGrpc.getProxyStartupMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getProxyStartupMethod = BridgeGrpc.getProxyStartupMethod) == null) {
+          BridgeGrpc.getProxyStartupMethod = getProxyStartupMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.ProxyStartupRequest, com.tron.bridge.Server.ProxyStartupResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ProxyStartup"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.ProxyStartupRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.ProxyStartupResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ProxyStartup"))
+              .build();
+        }
+      }
+    }
+    return getProxyStartupMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.ProxyShutdownRequest,
+      com.tron.bridge.Server.ProxyShutdownResponse> getProxyShutdownMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ProxyShutdown",
+      requestType = com.tron.bridge.Server.ProxyShutdownRequest.class,
+      responseType = com.tron.bridge.Server.ProxyShutdownResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.ProxyShutdownRequest,
+      com.tron.bridge.Server.ProxyShutdownResponse> getProxyShutdownMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.ProxyShutdownRequest, com.tron.bridge.Server.ProxyShutdownResponse> getProxyShutdownMethod;
+    if ((getProxyShutdownMethod = BridgeGrpc.getProxyShutdownMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getProxyShutdownMethod = BridgeGrpc.getProxyShutdownMethod) == null) {
+          BridgeGrpc.getProxyShutdownMethod = getProxyShutdownMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.ProxyShutdownRequest, com.tron.bridge.Server.ProxyShutdownResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ProxyShutdown"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.ProxyShutdownRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.ProxyShutdownResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ProxyShutdown"))
+              .build();
+        }
+      }
+    }
+    return getProxyShutdownMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.SurvivalStartupRequest,
+      com.tron.bridge.Server.SurvivalStartupResponse> getSurvivalStartupMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SurvivalStartup",
+      requestType = com.tron.bridge.Server.SurvivalStartupRequest.class,
+      responseType = com.tron.bridge.Server.SurvivalStartupResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.SurvivalStartupRequest,
+      com.tron.bridge.Server.SurvivalStartupResponse> getSurvivalStartupMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.SurvivalStartupRequest, com.tron.bridge.Server.SurvivalStartupResponse> getSurvivalStartupMethod;
+    if ((getSurvivalStartupMethod = BridgeGrpc.getSurvivalStartupMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getSurvivalStartupMethod = BridgeGrpc.getSurvivalStartupMethod) == null) {
+          BridgeGrpc.getSurvivalStartupMethod = getSurvivalStartupMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.SurvivalStartupRequest, com.tron.bridge.Server.SurvivalStartupResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SurvivalStartup"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.SurvivalStartupRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.SurvivalStartupResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("SurvivalStartup"))
+              .build();
+        }
+      }
+    }
+    return getSurvivalStartupMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.SurvivalShutdownRequest,
+      com.tron.bridge.Server.SurvivalShutdownResponse> getSurvivalShutdownMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SurvivalShutdown",
+      requestType = com.tron.bridge.Server.SurvivalShutdownRequest.class,
+      responseType = com.tron.bridge.Server.SurvivalShutdownResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.SurvivalShutdownRequest,
+      com.tron.bridge.Server.SurvivalShutdownResponse> getSurvivalShutdownMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.SurvivalShutdownRequest, com.tron.bridge.Server.SurvivalShutdownResponse> getSurvivalShutdownMethod;
+    if ((getSurvivalShutdownMethod = BridgeGrpc.getSurvivalShutdownMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getSurvivalShutdownMethod = BridgeGrpc.getSurvivalShutdownMethod) == null) {
+          BridgeGrpc.getSurvivalShutdownMethod = getSurvivalShutdownMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.SurvivalShutdownRequest, com.tron.bridge.Server.SurvivalShutdownResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SurvivalShutdown"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.SurvivalShutdownRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.SurvivalShutdownResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("SurvivalShutdown"))
+              .build();
+        }
+      }
+    }
+    return getSurvivalShutdownMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.LobbyStartupRequest,
+      com.tron.bridge.Server.LobbyStartupResponse> getLobbyStartupMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "LobbyStartup",
+      requestType = com.tron.bridge.Server.LobbyStartupRequest.class,
+      responseType = com.tron.bridge.Server.LobbyStartupResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.LobbyStartupRequest,
+      com.tron.bridge.Server.LobbyStartupResponse> getLobbyStartupMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.LobbyStartupRequest, com.tron.bridge.Server.LobbyStartupResponse> getLobbyStartupMethod;
+    if ((getLobbyStartupMethod = BridgeGrpc.getLobbyStartupMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getLobbyStartupMethod = BridgeGrpc.getLobbyStartupMethod) == null) {
+          BridgeGrpc.getLobbyStartupMethod = getLobbyStartupMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.LobbyStartupRequest, com.tron.bridge.Server.LobbyStartupResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "LobbyStartup"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.LobbyStartupRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.LobbyStartupResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("LobbyStartup"))
+              .build();
+        }
+      }
+    }
+    return getLobbyStartupMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.LobbyShutdownRequest,
+      com.tron.bridge.Server.LobbyShutdownResponse> getLobbyShutdownMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "LobbyShutdown",
+      requestType = com.tron.bridge.Server.LobbyShutdownRequest.class,
+      responseType = com.tron.bridge.Server.LobbyShutdownResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.LobbyShutdownRequest,
+      com.tron.bridge.Server.LobbyShutdownResponse> getLobbyShutdownMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.LobbyShutdownRequest, com.tron.bridge.Server.LobbyShutdownResponse> getLobbyShutdownMethod;
+    if ((getLobbyShutdownMethod = BridgeGrpc.getLobbyShutdownMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getLobbyShutdownMethod = BridgeGrpc.getLobbyShutdownMethod) == null) {
+          BridgeGrpc.getLobbyShutdownMethod = getLobbyShutdownMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.LobbyShutdownRequest, com.tron.bridge.Server.LobbyShutdownResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "LobbyShutdown"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.LobbyShutdownRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.LobbyShutdownResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("LobbyShutdown"))
+              .build();
+        }
+      }
+    }
+    return getLobbyShutdownMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.ServerSendMessageRequest,
+      com.tron.bridge.Server.ServerSendMessageResponse> getServerSendMessageMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ServerSendMessage",
+      requestType = com.tron.bridge.Server.ServerSendMessageRequest.class,
+      responseType = com.tron.bridge.Server.ServerSendMessageResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.ServerSendMessageRequest,
+      com.tron.bridge.Server.ServerSendMessageResponse> getServerSendMessageMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.ServerSendMessageRequest, com.tron.bridge.Server.ServerSendMessageResponse> getServerSendMessageMethod;
+    if ((getServerSendMessageMethod = BridgeGrpc.getServerSendMessageMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getServerSendMessageMethod = BridgeGrpc.getServerSendMessageMethod) == null) {
+          BridgeGrpc.getServerSendMessageMethod = getServerSendMessageMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.ServerSendMessageRequest, com.tron.bridge.Server.ServerSendMessageResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ServerSendMessage"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.ServerSendMessageRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.ServerSendMessageResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ServerSendMessage"))
+              .build();
+        }
+      }
+    }
+    return getServerSendMessageMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Security.ReportPlayerRequest,
+      com.tron.bridge.Security.ReportPlayerResponse> getReportPlayerMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ReportPlayer",
+      requestType = com.tron.bridge.Security.ReportPlayerRequest.class,
+      responseType = com.tron.bridge.Security.ReportPlayerResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Security.ReportPlayerRequest,
+      com.tron.bridge.Security.ReportPlayerResponse> getReportPlayerMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Security.ReportPlayerRequest, com.tron.bridge.Security.ReportPlayerResponse> getReportPlayerMethod;
+    if ((getReportPlayerMethod = BridgeGrpc.getReportPlayerMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getReportPlayerMethod = BridgeGrpc.getReportPlayerMethod) == null) {
+          BridgeGrpc.getReportPlayerMethod = getReportPlayerMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Security.ReportPlayerRequest, com.tron.bridge.Security.ReportPlayerResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ReportPlayer"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Security.ReportPlayerRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Security.ReportPlayerResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ReportPlayer"))
+              .build();
+        }
+      }
+    }
+    return getReportPlayerMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -1263,6 +1511,71 @@ public final class BridgeGrpc {
     default void playerKill(com.tron.bridge.Player.PlayerKillRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Player.PlayerKillResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPlayerKillMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * Server
+     * </pre>
+     */
+    default void proxyStartup(com.tron.bridge.Server.ProxyStartupRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.ProxyStartupResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getProxyStartupMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void proxyShutdown(com.tron.bridge.Server.ProxyShutdownRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.ProxyShutdownResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getProxyShutdownMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void survivalStartup(com.tron.bridge.Server.SurvivalStartupRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.SurvivalStartupResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSurvivalStartupMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void survivalShutdown(com.tron.bridge.Server.SurvivalShutdownRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.SurvivalShutdownResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSurvivalShutdownMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void lobbyStartup(com.tron.bridge.Server.LobbyStartupRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.LobbyStartupResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLobbyStartupMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void lobbyShutdown(com.tron.bridge.Server.LobbyShutdownRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.LobbyShutdownResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLobbyShutdownMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * Proxy
+     * </pre>
+     */
+    default void serverSendMessage(com.tron.bridge.Server.ServerSendMessageRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.ServerSendMessageResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getServerSendMessageMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * Security
+     * </pre>
+     */
+    default void reportPlayer(com.tron.bridge.Security.ReportPlayerRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Security.ReportPlayerResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReportPlayerMethod(), responseObserver);
     }
   }
 
@@ -1564,6 +1877,79 @@ public final class BridgeGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getPlayerKillMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * Server
+     * </pre>
+     */
+    public void proxyStartup(com.tron.bridge.Server.ProxyStartupRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.ProxyStartupResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getProxyStartupMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void proxyShutdown(com.tron.bridge.Server.ProxyShutdownRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.ProxyShutdownResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getProxyShutdownMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void survivalStartup(com.tron.bridge.Server.SurvivalStartupRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.SurvivalStartupResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSurvivalStartupMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void survivalShutdown(com.tron.bridge.Server.SurvivalShutdownRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.SurvivalShutdownResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSurvivalShutdownMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void lobbyStartup(com.tron.bridge.Server.LobbyStartupRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.LobbyStartupResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getLobbyStartupMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void lobbyShutdown(com.tron.bridge.Server.LobbyShutdownRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.LobbyShutdownResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getLobbyShutdownMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * Proxy
+     * </pre>
+     */
+    public void serverSendMessage(com.tron.bridge.Server.ServerSendMessageRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.ServerSendMessageResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getServerSendMessageMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * Security
+     * </pre>
+     */
+    public void reportPlayer(com.tron.bridge.Security.ReportPlayerRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Security.ReportPlayerResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getReportPlayerMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -1821,6 +2207,72 @@ public final class BridgeGrpc {
     public com.tron.bridge.Player.PlayerKillResponse playerKill(com.tron.bridge.Player.PlayerKillRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getPlayerKillMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Server
+     * </pre>
+     */
+    public com.tron.bridge.Server.ProxyStartupResponse proxyStartup(com.tron.bridge.Server.ProxyStartupRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getProxyStartupMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Server.ProxyShutdownResponse proxyShutdown(com.tron.bridge.Server.ProxyShutdownRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getProxyShutdownMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Server.SurvivalStartupResponse survivalStartup(com.tron.bridge.Server.SurvivalStartupRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSurvivalStartupMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Server.SurvivalShutdownResponse survivalShutdown(com.tron.bridge.Server.SurvivalShutdownRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSurvivalShutdownMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Server.LobbyStartupResponse lobbyStartup(com.tron.bridge.Server.LobbyStartupRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getLobbyStartupMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Server.LobbyShutdownResponse lobbyShutdown(com.tron.bridge.Server.LobbyShutdownRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getLobbyShutdownMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Proxy
+     * </pre>
+     */
+    public java.util.Iterator<com.tron.bridge.Server.ServerSendMessageResponse> serverSendMessage(
+        com.tron.bridge.Server.ServerSendMessageRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getServerSendMessageMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Security
+     * </pre>
+     */
+    public com.tron.bridge.Security.ReportPlayerResponse reportPlayer(com.tron.bridge.Security.ReportPlayerRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getReportPlayerMethod(), getCallOptions(), request);
     }
   }
 
@@ -2111,6 +2563,68 @@ public final class BridgeGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getPlayerKillMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * Server
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.ProxyStartupResponse> proxyStartup(
+        com.tron.bridge.Server.ProxyStartupRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getProxyStartupMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.ProxyShutdownResponse> proxyShutdown(
+        com.tron.bridge.Server.ProxyShutdownRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getProxyShutdownMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.SurvivalStartupResponse> survivalStartup(
+        com.tron.bridge.Server.SurvivalStartupRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSurvivalStartupMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.SurvivalShutdownResponse> survivalShutdown(
+        com.tron.bridge.Server.SurvivalShutdownRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSurvivalShutdownMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.LobbyStartupResponse> lobbyStartup(
+        com.tron.bridge.Server.LobbyStartupRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getLobbyStartupMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.LobbyShutdownResponse> lobbyShutdown(
+        com.tron.bridge.Server.LobbyShutdownRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getLobbyShutdownMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * Security
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Security.ReportPlayerResponse> reportPlayer(
+        com.tron.bridge.Security.ReportPlayerRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getReportPlayerMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_PLAYER_JOIN = 0;
@@ -2144,6 +2658,14 @@ public final class BridgeGrpc {
   private static final int METHODID_GET_ITEMS = 28;
   private static final int METHODID_PLAYER_DEATH = 29;
   private static final int METHODID_PLAYER_KILL = 30;
+  private static final int METHODID_PROXY_STARTUP = 31;
+  private static final int METHODID_PROXY_SHUTDOWN = 32;
+  private static final int METHODID_SURVIVAL_STARTUP = 33;
+  private static final int METHODID_SURVIVAL_SHUTDOWN = 34;
+  private static final int METHODID_LOBBY_STARTUP = 35;
+  private static final int METHODID_LOBBY_SHUTDOWN = 36;
+  private static final int METHODID_SERVER_SEND_MESSAGE = 37;
+  private static final int METHODID_REPORT_PLAYER = 38;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -2285,6 +2807,38 @@ public final class BridgeGrpc {
         case METHODID_PLAYER_KILL:
           serviceImpl.playerKill((com.tron.bridge.Player.PlayerKillRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Player.PlayerKillResponse>) responseObserver);
+          break;
+        case METHODID_PROXY_STARTUP:
+          serviceImpl.proxyStartup((com.tron.bridge.Server.ProxyStartupRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.ProxyStartupResponse>) responseObserver);
+          break;
+        case METHODID_PROXY_SHUTDOWN:
+          serviceImpl.proxyShutdown((com.tron.bridge.Server.ProxyShutdownRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.ProxyShutdownResponse>) responseObserver);
+          break;
+        case METHODID_SURVIVAL_STARTUP:
+          serviceImpl.survivalStartup((com.tron.bridge.Server.SurvivalStartupRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.SurvivalStartupResponse>) responseObserver);
+          break;
+        case METHODID_SURVIVAL_SHUTDOWN:
+          serviceImpl.survivalShutdown((com.tron.bridge.Server.SurvivalShutdownRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.SurvivalShutdownResponse>) responseObserver);
+          break;
+        case METHODID_LOBBY_STARTUP:
+          serviceImpl.lobbyStartup((com.tron.bridge.Server.LobbyStartupRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.LobbyStartupResponse>) responseObserver);
+          break;
+        case METHODID_LOBBY_SHUTDOWN:
+          serviceImpl.lobbyShutdown((com.tron.bridge.Server.LobbyShutdownRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.LobbyShutdownResponse>) responseObserver);
+          break;
+        case METHODID_SERVER_SEND_MESSAGE:
+          serviceImpl.serverSendMessage((com.tron.bridge.Server.ServerSendMessageRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.ServerSendMessageResponse>) responseObserver);
+          break;
+        case METHODID_REPORT_PLAYER:
+          serviceImpl.reportPlayer((com.tron.bridge.Security.ReportPlayerRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Security.ReportPlayerResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -2521,6 +3075,62 @@ public final class BridgeGrpc {
               com.tron.bridge.Player.PlayerKillRequest,
               com.tron.bridge.Player.PlayerKillResponse>(
                 service, METHODID_PLAYER_KILL)))
+        .addMethod(
+          getProxyStartupMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.ProxyStartupRequest,
+              com.tron.bridge.Server.ProxyStartupResponse>(
+                service, METHODID_PROXY_STARTUP)))
+        .addMethod(
+          getProxyShutdownMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.ProxyShutdownRequest,
+              com.tron.bridge.Server.ProxyShutdownResponse>(
+                service, METHODID_PROXY_SHUTDOWN)))
+        .addMethod(
+          getSurvivalStartupMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.SurvivalStartupRequest,
+              com.tron.bridge.Server.SurvivalStartupResponse>(
+                service, METHODID_SURVIVAL_STARTUP)))
+        .addMethod(
+          getSurvivalShutdownMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.SurvivalShutdownRequest,
+              com.tron.bridge.Server.SurvivalShutdownResponse>(
+                service, METHODID_SURVIVAL_SHUTDOWN)))
+        .addMethod(
+          getLobbyStartupMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.LobbyStartupRequest,
+              com.tron.bridge.Server.LobbyStartupResponse>(
+                service, METHODID_LOBBY_STARTUP)))
+        .addMethod(
+          getLobbyShutdownMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.LobbyShutdownRequest,
+              com.tron.bridge.Server.LobbyShutdownResponse>(
+                service, METHODID_LOBBY_SHUTDOWN)))
+        .addMethod(
+          getServerSendMessageMethod(),
+          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.ServerSendMessageRequest,
+              com.tron.bridge.Server.ServerSendMessageResponse>(
+                service, METHODID_SERVER_SEND_MESSAGE)))
+        .addMethod(
+          getReportPlayerMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Security.ReportPlayerRequest,
+              com.tron.bridge.Security.ReportPlayerResponse>(
+                service, METHODID_REPORT_PLAYER)))
         .build();
   }
 
@@ -2600,6 +3210,14 @@ public final class BridgeGrpc {
               .addMethod(getGetItemsMethod())
               .addMethod(getPlayerDeathMethod())
               .addMethod(getPlayerKillMethod())
+              .addMethod(getProxyStartupMethod())
+              .addMethod(getProxyShutdownMethod())
+              .addMethod(getSurvivalStartupMethod())
+              .addMethod(getSurvivalShutdownMethod())
+              .addMethod(getLobbyStartupMethod())
+              .addMethod(getLobbyShutdownMethod())
+              .addMethod(getServerSendMessageMethod())
+              .addMethod(getReportPlayerMethod())
               .build();
         }
       }
