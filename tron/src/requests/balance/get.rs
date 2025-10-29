@@ -13,7 +13,7 @@ impl BridgeService {
 
         debug!("Get Balance request for player {} received", username);
 
-        let player = self.cache.get_player_with_handling(&username).await?;
+        let player = self.state.get_player_with_handling(&username).await?;
 
         info!(
             "Successfully responded to Get Balance request for player {}",

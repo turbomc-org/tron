@@ -15,25 +15,21 @@ impl BridgeService {
 
         info!("Buy item request from player {} received", username);
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
-        let item = self.cache.get_shop_item(&item_id).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
+        let item = self.state.get_shop_item(&item_id).await?;
 
-        item.buy(
-            &mut player,
-            &self.collections.players,
-            &self.cache.active_players,
-        )
-        .await
-        .map_err(|err| {
-            error!(
-                "Failed to buy item {} requested by {} due to: {}",
-                item_id,
-                username,
-                err.to_string()
-            );
+        item.buy(&mut player, &self.collections.players, &self.state)
+            .await
+            .map_err(|err| {
+                error!(
+                    "Failed to buy item {} requested by {} due to: {}",
+                    item_id,
+                    username,
+                    err.to_string()
+                );
 
-            Status::internal(format!("Failed to buy item {}", item_id))
-        })?;
+                Status::internal(format!("Failed to buy item {}", item_id))
+            })?;
 
         Ok(Response::new(BuyItemResponse {
             item: Some(ShopItem::convert_shop_item(item)),

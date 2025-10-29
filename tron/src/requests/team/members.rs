@@ -1,6 +1,5 @@
 use crate::BridgeService;
 use crate::bridge::{GetTeamMembersRequest, GetTeamMembersResponse};
-use crate::models::team::Team;
 use futures::future::join_all;
 use tonic::{Request, Response, Status};
 use tracing::info;
@@ -15,20 +14,35 @@ impl BridgeService {
 
         info!("Get team members request for player {} received", username);
 
-        let player = self.cache.get_player_with_handling(&username).await?;
-        let team = Team::get_team(&player, &self.cache.teams).await?;
+        let player = self.state.get_player_with_handling(&username).await?;
 
-        let members: Result<Vec<String>, Status> = {
-            let futures = team.members.iter().map(|member| async move {
-                self.cache
-                    .get_player_username(member.0.clone())
-                    .await
-                    .map_err(|e| Status::internal(format!("Failed to get player username: {}", e)))
-            });
-            let results = join_all(futures).await;
-            results.into_iter().collect()
-        };
+        if player.team.is_none() {
+            return Err(Status::not_found("You are not in a team"));
+        }
 
-        Ok(Response::new(GetTeamMembersResponse { members: members? }))
+        let team = self
+            .state
+            .get_team_with_handling(player.team.unwrap())
+            .await?;
+
+        let futures = team.members.iter().map(|member| async move {
+            self.state
+                .get_player_username(&member.0.clone())
+                .await
+                .map_err(|e| Status::internal(format!("Failed to get player username: {}", e)))
+        });
+
+        let results = join_all(futures).await;
+
+        let mut members = Vec::new();
+        for res in results {
+            match res {
+                Ok(Some(username)) => members.push(username),
+                Ok(None) => continue,
+                Err(status) => return Err(status),
+            }
+        }
+
+        Ok(Response::new(GetTeamMembersResponse { members: members }))
     }
 }

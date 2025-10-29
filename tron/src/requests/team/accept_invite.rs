@@ -19,9 +19,9 @@ impl BridgeService {
         );
 
         debug!("Fetching the player from cache");
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
         debug!("Fetching the team id");
-        let team_id = self.cache.check_team_request(&player, &target).await?;
+        let team_id = self.state.check_team_request(&player, &target).await?;
         let now = Utc::now().timestamp() as u64;
 
         debug!("Accepting the team request");
@@ -31,8 +31,7 @@ impl BridgeService {
                 now,
                 &self.collections.players,
                 &self.collections.teams,
-                &self.cache.active_players,
-                &self.cache.teams,
+                &self.state,
             )
             .await
             .map_err(|err| {

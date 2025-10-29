@@ -54,6 +54,8 @@ pub trait PlayerCollection: Send + Sync {
         limit: Option<u64>,
     ) -> Result<Vec<(Team, f64)>, Error>;
     async fn get_members(&self, members_id: &Vec<i64>) -> Result<Vec<Player>, Error>;
+    async fn add_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error>;
+    async fn select_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error>;
 }
 
 pub struct MongoPlayerCollection {
@@ -485,5 +487,37 @@ impl PlayerCollection for MongoPlayerCollection {
         leaderboard.truncate(limit);
 
         Ok(leaderboard)
+    }
+
+    async fn add_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error> {
+        self.collection
+            .update_one(
+                doc! {
+                    "_id": player_id as i64,
+                },
+                doc! {
+                    "$addToSet": {
+                        "prefixes": prefix_id as i64
+                    }
+                },
+            )
+            .await?;
+
+        Ok(())
+    }
+
+    async fn select_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error> {
+        self.collection
+            .update_one(
+                doc! {"_id": player_id as i64},
+                doc! {
+                    "$set": {
+                        "selected_prefix": prefix_id as i64
+                    }
+                },
+            )
+            .await?;
+
+        Ok(())
     }
 }

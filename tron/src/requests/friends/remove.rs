@@ -20,16 +20,11 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
-        let target_id = self.cache.get_friend_id(&player, &target).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
+        let target_id = self.state.get_friend_id(&player, &target).await?;
 
         player
-            .remove_friend(
-                target_id,
-                &self.collections.players,
-                &self.cache.active_players,
-                &self.cache.player_indexes,
-            )
+            .remove_friend(target_id, &self.collections.players, &self.state)
             .await
             .map_err(|err| {
                 error!(

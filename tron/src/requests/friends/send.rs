@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::bridge::{SendFriendRequestRequest, SendFriendRequestResponse};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_send_friend_request(
@@ -29,21 +29,16 @@ impl BridgeService {
             ));
         }
 
-        let player = self.cache.get_player_with_handling(&username).await?;
+        let player = self.state.get_player_with_handling(&username).await?;
         let mut target = self
-            .cache
+            .state
             .get_player_with_handling(&target_username)
             .await?;
 
         let now = Utc::now().timestamp() as u64;
 
         player
-            .add_friend_request(
-                &mut target,
-                now.clone(),
-                &players,
-                &self.cache.active_players,
-            )
+            .add_friend_request(&mut target, now.clone(), &players, &self.state)
             .await
             .map_err(|err| {
                 error!(
@@ -56,14 +51,6 @@ impl BridgeService {
                     target_username
                 ))
             })?;
-
-        debug!("Checking if player {} is online", target_username);
-        if self.cache.active_players.contains_key(&target_username) {
-            debug!("Adding request to player {}", target_username);
-            self.cache
-                .add_friend_request(target_username.clone(), player.id, now)
-                .await?;
-        }
 
         info!(
             "Player {} send a friend request to {}",

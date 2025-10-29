@@ -21,11 +21,11 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
         let players = &self.collections.players.clone();
-        let sender_id = self.cache.check_friend_request(&player, &sender).await?;
+        let sender_id = self.state.check_friend_request(&player, &sender).await?;
 
-        Player::reject_friend_request(&mut player, sender_id, &players, &self.cache.active_players)
+        Player::reject_friend_request(&mut player, sender_id, &players, &self.state)
             .await
             .map_err(|err| {
                 error!("Failed to reject friend request from {}: {}", sender, err);

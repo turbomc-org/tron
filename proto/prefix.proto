@@ -13,7 +13,7 @@ message GetOwnedPrefixRequest {
     string username = 1;
 }
 message GetOwnedPrefixResponse {
-    repeated Prefix prefixes = 1;
+    repeated string prefixes = 1;
 }
 
 message BuyPrefixRequest {
@@ -36,7 +36,7 @@ message GetCurrentPrefixRequest {
     string username = 1;
 }
 message GetCurrentPrefixResponse {
-    bool success = 1;
+    Prefix prefix = 1;
 }
 
 message CreatePrefixRequest {

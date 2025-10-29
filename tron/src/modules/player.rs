@@ -3,21 +3,16 @@ use crate::collections::player::PlayerCollection;
 use crate::collections::team::TeamCollection;
 use crate::models::player::{Player, Rank};
 use crate::models::team::Team;
+use crate::state::State;
 use anyhow::Result;
-use dashmap::DashMap;
-use mongodb::Collection;
-use mongodb::bson::doc;
+use anyhow::anyhow;
 use std::sync::Arc;
 use tokio::task;
 use tokio_retry::Retry;
-use tracing::{debug, error};
+use tracing::error;
 
 impl Player {
-    pub async fn insert(
-        &self,
-        col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
-    ) -> Result<()> {
+    pub async fn insert(&self, col: &Arc<dyn PlayerCollection>, state: &Arc<State>) -> Result<()> {
         let player = self.clone();
 
         task::spawn({
@@ -37,28 +32,7 @@ impl Player {
             }
         });
 
-        cache.insert(self.username.clone(), self.clone());
-
-        Ok(())
-    }
-
-    pub async fn find_by_username(
-        username: &str,
-        col: &Arc<dyn PlayerCollection>,
-    ) -> anyhow::Result<Option<Self>> {
-        col.find_by_username(username)
-            .await
-            .map_err(|_| anyhow::anyhow!("Failed to find player by username"))
-    }
-
-    pub async fn inc_coins(id: u64, coins: i64, col: &Collection<Self>) -> Result<()> {
-        col.update_one(
-            doc! { "_id": id as i64 },
-            doc! {
-                "$inc": { "coins": coins },
-            },
-        )
-        .await?;
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -68,9 +42,10 @@ impl Player {
         target: &mut Self,
         amount: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let player_id = self.id.clone();
+        let target_id = target.id.clone();
 
         task::spawn({
             let col = col.clone();
@@ -91,8 +66,6 @@ impl Player {
             }
         });
 
-        let target_id = target.id.clone();
-
         task::spawn({
             let col = col.clone();
             async move {
@@ -112,8 +85,8 @@ impl Player {
 
         self.coins -= amount;
         target.coins += amount;
-        cache.insert(self.username.clone(), self.clone());
-        cache.insert(target.username.clone(), target.clone());
+        state.insert_player(self.clone());
+        state.insert_player(target.clone());
 
         Ok(())
     }
@@ -123,7 +96,7 @@ impl Player {
         target: &mut Self,
         now: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Player>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let player_id = self.id.clone();
         let target_id = target.id.clone();
@@ -148,7 +121,7 @@ impl Player {
         });
 
         target.incoming_friend_requests.insert(player_id, now);
-        cache.insert(target.username.clone(), target.clone());
+        state.insert_player(target.clone());
 
         Ok(())
     }
@@ -157,7 +130,7 @@ impl Player {
         &mut self,
         sender: (u64, String),
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let player_id = self.id.clone();
 
@@ -200,12 +173,12 @@ impl Player {
         self.incoming_friend_requests.remove(&sender.0);
         self.friends.insert(sender.0.clone());
 
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
-        if cache.contains_key(&sender.1) {
-            let mut sender_player = cache.get(&sender.1).unwrap().clone();
+        if state.active_players.contains_key(&sender.1) {
+            let mut sender_player = state.get_active_player(&sender.1).await?.unwrap().clone();
             sender_player.friends.insert(self.id.clone());
-            cache.insert(sender_player.username.clone(), sender_player);
+            state.insert_player(sender_player);
         }
 
         Ok(())
@@ -215,7 +188,7 @@ impl Player {
         &mut self,
         sender: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let player_id = self.id.clone();
         let sender_id = sender.clone();
@@ -240,7 +213,7 @@ impl Player {
         });
 
         self.incoming_friend_requests.remove(&sender_id);
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -249,8 +222,7 @@ impl Player {
         &mut self,
         target: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
-        index: &Arc<DashMap<u64, String>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let target = target.clone();
         let player_id = target.clone();
@@ -290,14 +262,18 @@ impl Player {
         });
 
         self.friends.remove(&target);
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
-        let target_username = index.get(&target).unwrap().clone();
+        let target_username = state.get_player_username(&target).await?.unwrap().clone();
 
-        if cache.contains_key(&target_username) {
-            let mut target_player = cache.get(&target_username).unwrap().clone();
+        if state.active_players.contains_key(&target_username) {
+            let mut target_player = state
+                .get_active_player(&target_username)
+                .await?
+                .unwrap()
+                .clone();
             target_player.friends.remove(&self.id);
-            cache.insert(target_player.username.clone(), target_player);
+            state.insert_player(target_player);
         }
 
         Ok(())
@@ -309,17 +285,12 @@ impl Player {
         now: u64,
         p_col: &Arc<dyn PlayerCollection>,
         t_col: &Arc<dyn TeamCollection>,
-        p_cache: &Arc<DashMap<String, Self>>,
-        t_cache: &Arc<DashMap<u64, Team>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let t_col = t_col.clone();
         let player_id = self.id.clone();
         let team_id = team_id.clone();
 
-        debug!(
-            "Spawning a task to remove the incoming team request from player {}",
-            self.username
-        );
         task::spawn({
             let p_col = p_col.clone();
             async move {
@@ -357,11 +328,6 @@ impl Player {
             }
         });
 
-        debug!(
-            "Spawning a task to add player {} into team's members",
-            self.username
-        );
-
         task::spawn(async move {
             let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                 t_col
@@ -379,18 +345,16 @@ impl Player {
             }
         });
 
-        debug!("Updating the cache");
-
         self.incoming_team_requests.remove(&team_id);
-        p_cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
-        debug!("Updating the team");
+        let mut team: Team = state.get_team(team_id).await?.ok_or_else(|| {
+            error!("Team not found");
+            anyhow!("Team not found")
+        })?;
 
-        let mut team: Team = t_cache.get(&team_id).unwrap().clone();
         team.members.insert(self.id.clone(), now.clone());
-        t_cache.insert(team_id, team);
-
-        debug!("Successfully updated team");
+        state.insert_team(team).await?;
 
         Ok(())
     }
@@ -399,7 +363,7 @@ impl Player {
         &mut self,
         team_id: u64,
         p_col: &Arc<dyn PlayerCollection>,
-        p_cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let p_col = p_col.clone();
         let player_id = self.id.clone();
@@ -419,7 +383,7 @@ impl Player {
         });
 
         self.team = Some(team_id);
-        p_cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -428,7 +392,7 @@ impl Player {
         &mut self,
         team_id: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> anyhow::Result<()> {
         let player_id = self.id;
         let team_id = team_id.clone();
@@ -453,7 +417,7 @@ impl Player {
         });
 
         self.incoming_team_requests.remove(&team_id);
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -463,7 +427,7 @@ impl Player {
         team_id: u64,
         now: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let player_id = self.id.clone();
         let team_id = team_id.clone();
@@ -489,7 +453,7 @@ impl Player {
 
         self.incoming_team_requests
             .insert(team_id.clone(), now.clone());
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -498,7 +462,7 @@ impl Player {
         &mut self,
         kills: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let player_id = self.id.clone();
@@ -520,7 +484,7 @@ impl Player {
         });
 
         self.kills += kills;
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -529,7 +493,7 @@ impl Player {
         &mut self,
         deaths: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let player_id = self.id.clone();
@@ -551,7 +515,7 @@ impl Player {
         });
 
         self.deaths += deaths;
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -560,7 +524,7 @@ impl Player {
         &mut self,
         blocks_placed: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let player_id = self.id.clone();
@@ -584,7 +548,7 @@ impl Player {
         });
 
         self.blocks_placed += blocks_placed;
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }
@@ -593,7 +557,7 @@ impl Player {
         &mut self,
         blocks_broken: u64,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let player_id = self.id.clone();
@@ -617,7 +581,7 @@ impl Player {
         });
 
         self.blocks_broken += blocks_broken;
-        cache.insert(self.username.clone(), self.clone());
+        state.insert_player(self.clone());
 
         Ok(())
     }

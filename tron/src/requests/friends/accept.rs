@@ -21,7 +21,7 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
         let players = &self.collections.players.clone();
 
         debug!(
@@ -29,13 +29,13 @@ impl BridgeService {
             username, sender
         );
 
-        let sender_id = self.cache.check_friend_request(&player, &sender).await?;
+        let sender_id = self.state.check_friend_request(&player, &sender).await?;
 
         Player::accept_friend_request(
             &mut player,
             (sender_id, sender.clone()),
             players,
-            &self.cache.active_players,
+            &self.state,
         )
         .await
         .map_err(|err| {

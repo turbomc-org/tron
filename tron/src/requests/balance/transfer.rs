@@ -27,8 +27,8 @@ impl BridgeService {
             )));
         }
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
-        let mut target = self.cache.get_player_with_handling(&receiver).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut target = self.state.get_player_with_handling(&receiver).await?;
 
         if player.coins < amount {
             error!("Player {} does not have enough coins", player.username);
@@ -48,7 +48,7 @@ impl BridgeService {
             &mut target,
             amount,
             &self.collections.players,
-            &self.cache.active_players,
+            &self.state,
         )
         .await
         .map_err(|e| {

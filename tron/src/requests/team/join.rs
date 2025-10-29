@@ -15,7 +15,7 @@ impl BridgeService {
 
         info!("Join team request for player {} received", username);
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
 
         if player.team.is_some() {
             error!("Player {} is already in a team", username);
@@ -25,7 +25,15 @@ impl BridgeService {
             ));
         }
 
-        let mut team = self.cache.get_team_by_name(&team_name).await?;
+        let mut team = self
+            .state
+            .get_team_by_name(team_name.clone())
+            .await
+            .map_err(|err| {
+                error!("Failed to find team: {}", err);
+                Status::internal(format!("Failed to find team {}", team_name))
+            })?
+            .ok_or_else(|| Status::not_found(format!("Team {} not found", team_name)))?;
 
         if !team.open {
             error!("Player {} tried to join a closed team", username);
@@ -42,8 +50,7 @@ impl BridgeService {
             now,
             &self.collections.players,
             &self.collections.teams,
-            &self.cache.active_players,
-            &self.cache.teams,
+            &self.state,
         )
         .await
         .map_err(|err| {

@@ -13,10 +13,10 @@ pub struct Player {
     #[serde(rename = "_id")]
     pub id: u64,
     pub username: String,
-    pub discord_id: Option<String>,
+    pub discord_id: Option<u64>,
     pub edition: Edition,
     pub coins: u64,
-    pub prefixes: HashSet<String>,
+    pub prefixes: HashSet<u64>,
     pub selected_prefix: Option<u64>,
     pub team: Option<u64>,
     pub friends: HashSet<u64>,

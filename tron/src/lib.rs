@@ -1,5 +1,5 @@
-use crate::cache::Cache;
 use crate::collections::Collections;
+use crate::state::State;
 use bridge::bridge_server::Bridge;
 use futures::Stream;
 
@@ -7,17 +7,18 @@ use once_cell::sync::Lazy;
 use snowflaked::sync::Generator;
 use std::iter::Take;
 use std::pin::Pin;
+use std::sync::Arc;
 use std::time::Duration;
 use tokio_retry::strategy::ExponentialBackoff;
 use tonic::Status;
 
-pub mod cache;
 pub mod collections;
 pub mod grpc;
 pub mod logger;
 pub mod models;
 pub mod modules;
 pub mod requests;
+pub mod state;
 pub mod utils;
 
 pub type ServerSendMessageStream = Pin<
@@ -48,23 +49,25 @@ pub mod bridge {
 }
 
 pub struct BridgeService {
-    cache: Cache,
+    state: Arc<State>,
     collections: Collections,
 }
 
 impl BridgeService {
     pub async fn new(collections: Collections) -> Self {
-        let cache = Cache::init(&collections)
-            .await
-            .expect("failed to load cache");
+        let state = Arc::new(
+            State::init(&collections)
+                .await
+                .expect("failed to load cache"),
+        );
 
-        Self { cache, collections }
+        Self { state, collections }
     }
 
     pub async fn broadcast_message(&self, msg: bridge::ServerSendMessageResponse) {
         let mut dead_clients = Vec::new();
 
-        for entry in self.cache.send_message_clients.iter() {
+        for entry in self.state.send_message_clients.iter() {
             let client_id = *entry.key();
             let tx = entry.value();
 
@@ -74,7 +77,7 @@ impl BridgeService {
         }
 
         for id in dead_clients {
-            self.cache.message_clients.remove(&id);
+            self.state.message_clients.remove(&id);
         }
     }
 
@@ -83,7 +86,7 @@ impl BridgeService {
         client_id: u64,
         msg: bridge::ServerSendMessageResponse,
     ) -> Result<(), Status> {
-        if let Some(entry) = self.cache.send_message_clients.get(&client_id) {
+        if let Some(entry) = self.state.send_message_clients.get(&client_id) {
             let tx = entry.value();
             tx.send(Ok(msg))
                 .await

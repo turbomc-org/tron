@@ -12,10 +12,10 @@ impl BridgeService {
     ) -> Result<Response<PlayerPlaceBlockResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
 
         player
-            .add_blocks_placed(1, &self.collections.players, &self.cache.active_players)
+            .add_blocks_placed(1, &self.collections.players, &self.state)
             .await
             .map_err(|err| {
                 error!(

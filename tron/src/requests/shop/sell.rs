@@ -1,8 +1,5 @@
-use std::collections::HashSet;
-
 use crate::BridgeService;
 use crate::bridge::{SellItemRequest, SellItemResponse};
-use crate::models::shop_item::ShopItem;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -17,31 +14,22 @@ impl BridgeService {
 
         info!("Sell item request from player {} received", username);
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
         let mut sum: u64 = 0;
 
         for sell_item in sell_items {
-            let set: HashSet<String> = sell_item.enchantments.into_iter().collect();
-            let item = ShopItem::find_shop_item_by_id_and_enchantments(
-                &self.cache.shop_items,
-                &sell_item.item_type,
-                &set,
-            )
-            .ok_or_else(|| {
-                error!(
-                    "Item: {} which player {} is trying to sell not found in database",
-                    sell_item.item_type, username,
-                );
-
-                Status::not_found("Item not found")
-            })?;
+            let set: Vec<String> = sell_item.enchantments.into_iter().collect();
+            let item = self
+                .state
+                .get_by_typeid_and_enchantments(&sell_item.item_type, &set)
+                .await?;
 
             let price = item
                 .sell(
                     sell_item.quantity,
                     &mut player,
                     &self.collections.players,
-                    &self.cache.active_players,
+                    &self.state,
                 )
                 .await
                 .map_err(|err| {

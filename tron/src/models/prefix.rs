@@ -1,3 +1,4 @@
+use crate::bridge::Prefix as CompiledPrefix;
 use bincode::{Decode, Encode};
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
@@ -20,6 +21,23 @@ impl Prefix {
             text,
             color: color,
             price,
+        }
+    }
+
+    pub fn decompile(complied_prefix: CompiledPrefix) -> Self {
+        Self {
+            id: GENERATOR.generate(),
+            text: complied_prefix.text.clone(),
+            color: complied_prefix.color.clone(),
+            price: complied_prefix.price.clone(),
+        }
+    }
+
+    pub fn compile(&self) -> CompiledPrefix {
+        CompiledPrefix {
+            text: self.text.clone(),
+            color: self.color.clone(),
+            price: self.price,
         }
     }
 }

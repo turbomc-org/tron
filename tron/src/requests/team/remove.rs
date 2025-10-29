@@ -1,6 +1,5 @@
 use crate::BridgeService;
 use crate::bridge::{RemoveTeamMemberRequest, RemoveTeamMemberResponse};
-use crate::models::team::Team;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -18,8 +17,16 @@ impl BridgeService {
             username
         );
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
-        let mut team = Team::get_team(&player, &self.cache.teams).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
+
+        if player.team.is_none() {
+            return Err(Status::not_found("Player is not in a team"));
+        }
+
+        let mut team = self
+            .state
+            .get_team_with_handling(player.team.unwrap())
+            .await?;
 
         if team.leader != player.id {
             return Err(Status::permission_denied(
@@ -31,8 +38,7 @@ impl BridgeService {
             &mut player,
             &self.collections.players,
             &self.collections.teams,
-            &self.cache.active_players,
-            &self.cache.teams,
+            &self.state,
         )
         .await
         .map_err(|err| {

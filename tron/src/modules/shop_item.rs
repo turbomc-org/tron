@@ -3,9 +3,8 @@ use crate::collections::player::PlayerCollection;
 use crate::collections::shop_item::ShopItemCollection;
 use crate::models::player::Player;
 use crate::models::shop_item::ShopItem;
+use crate::state::State;
 use anyhow::Result;
-use dashmap::DashMap;
-use std::collections::HashSet;
 use std::sync::Arc;
 use tokio::task;
 use tokio_retry::Retry;
@@ -15,7 +14,7 @@ impl ShopItem {
     pub async fn insert(
         &self,
         col: &Arc<dyn ShopItemCollection>,
-        cache: &Arc<DashMap<u64, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let shop_item = self.clone();
@@ -35,7 +34,7 @@ impl ShopItem {
             }
         });
 
-        cache.insert(self.id, self.clone());
+        state.insert_shop_item(self.clone()).await?;
 
         Ok(())
     }
@@ -43,7 +42,7 @@ impl ShopItem {
     pub async fn remove(
         &self,
         col: &Arc<dyn ShopItemCollection>,
-        cache: &Arc<DashMap<u64, Self>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let item_id = self.id;
@@ -63,7 +62,7 @@ impl ShopItem {
             }
         });
 
-        cache.remove(&self.id);
+        state.remove_shop_item(&self).await?;
 
         Ok(())
     }
@@ -72,7 +71,7 @@ impl ShopItem {
         &self,
         player: &mut Player,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Player>>,
+        state: &Arc<State>,
     ) -> Result<()> {
         let col = col.clone();
         let player_id = player.id.clone();
@@ -95,7 +94,7 @@ impl ShopItem {
         });
 
         player.coins -= price;
-        cache.insert(player.username.clone(), player.clone());
+        state.insert_player(player.clone()).await?;
 
         Ok(())
     }
@@ -105,7 +104,7 @@ impl ShopItem {
         quantity: u64,
         player: &mut Player,
         col: &Arc<dyn PlayerCollection>,
-        cache: &Arc<DashMap<String, Player>>,
+        state: &Arc<State>,
     ) -> Result<u64> {
         let col = col.clone();
         let player_id = player.id.clone();
@@ -126,22 +125,8 @@ impl ShopItem {
         });
 
         player.coins += price;
-        cache.insert(player.username.clone(), player.clone());
+        state.insert_player(player.clone());
 
         Ok(price)
-    }
-
-    pub fn find_shop_item_by_id_and_enchantments(
-        cache: &Arc<DashMap<u64, ShopItem>>,
-        item_id: &str,
-        enchantments: &HashSet<String>,
-    ) -> Option<Self> {
-        cache
-            .iter()
-            .find(|entry| {
-                let shop_item = entry.value();
-                shop_item.item.id == item_id && enchantments.is_subset(&shop_item.item.enchantments)
-            })
-            .map(|entry| entry.value().clone())
     }
 }

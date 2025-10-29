@@ -1,9 +1,8 @@
 use crate::BridgeService;
 use crate::bridge::{SendTeamInviteRequest, SendTeamInviteResponse};
-use crate::models::team::Team;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{info, warn};
+use tracing::{error, info, warn};
 
 impl BridgeService {
     pub async fn handle_send_team_invite(
@@ -16,8 +15,17 @@ impl BridgeService {
 
         info!("Send invite request from player {} received", username);
 
-        let player = self.cache.get_player_with_handling(&username).await?;
-        let team = Team::get_team(&player, &self.cache.teams).await?;
+        let player = self.state.get_player_with_handling(&username).await?;
+
+        if player.team.is_none() {
+            error!("Player {} is not in a team", username);
+            return Err(Status::not_found("You are not in a team"));
+        }
+
+        let team = self
+            .state
+            .get_team_with_handling(player.team.unwrap())
+            .await?;
 
         if team.leader != player.id {
             return Err(Status::permission_denied(
@@ -25,7 +33,7 @@ impl BridgeService {
             ));
         }
 
-        let mut target_player = self.cache.get_player_with_handling(&target).await?;
+        let mut target_player = self.state.get_player_with_handling(&target).await?;
 
         if target_player.team.is_some() {
             return Err(Status::already_exists("Target player is already in a team"));
@@ -34,12 +42,7 @@ impl BridgeService {
         let now = Utc::now().timestamp() as u64;
 
         target_player
-            .add_team_invite(
-                team.id,
-                now,
-                &self.collections.players,
-                &self.cache.active_players,
-            )
+            .add_team_invite(team.id, now, &self.collections.players, &self.state)
             .await
             .map_err(|err| {
                 warn!("Failed to send team invite to {}: {}", target, err);

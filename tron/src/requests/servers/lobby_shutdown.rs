@@ -17,13 +17,13 @@ impl BridgeService {
 
         warn!("Lobby shutdown requested by client {}", client_id);
 
-        let client = Client::get(&self.cache.servers.lobbies, client_id).await?;
+        let client = Client::get(&self.state.servers.lobbies, client_id).await?;
 
         if !client {
             return Err(Status::not_found("Lobby server is not active"));
         }
 
-        self.cache.servers.lobbies.remove(&client_id);
+        self.state.servers.lobbies.remove(&client_id);
 
         warn!("Lobby shutdown request by client {} completed", client_id);
 

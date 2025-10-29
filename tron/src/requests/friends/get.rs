@@ -1,7 +1,8 @@
 use crate::BridgeService;
 use crate::bridge::{GetFriendsRequest, GetFriendsResponse};
+use futures::future::join_all;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::debug;
 
 impl BridgeService {
     pub async fn handle_get_friends(
@@ -10,29 +11,31 @@ impl BridgeService {
     ) -> Result<Response<GetFriendsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
-        let player = self.cache.get_player_with_handling(&username).await?;
 
         debug!("Get friends request for player {} received", username);
 
-        let friends = self
-            .cache
-            .get_friend_usernames(&player)
-            .await
-            .map_err(|err| {
-                error!(
-                    "Failed to fetch friend usernames for player {}: {}",
-                    username, err
-                );
-                Status::internal(format!(
-                    "Failed to fetch friend usernames for player {}",
-                    username
-                ))
-            })?;
+        let player = self.state.get_player_with_handling(&username).await?;
 
-        info!(
-            "Get friends request received for player {} completed",
-            username
-        );
+        let friend_futures = player.friends.iter().map(|friend_id| {
+            let state = self.state.clone();
+            async move {
+                state
+                    .get_player_username(friend_id)
+                    .await
+                    .map_err(|_| Status::internal("Failed to fetch friend username"))
+            }
+        });
+
+        let results = join_all(friend_futures).await;
+
+        let mut friends = Vec::new();
+        for res in results {
+            match res {
+                Ok(Some(username)) => friends.push(username),
+                Ok(None) => continue,
+                Err(status) => return Err(status),
+            }
+        }
 
         Ok(Response::new(GetFriendsResponse { friends }))
     }

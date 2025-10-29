@@ -316,7 +316,7 @@ impl Bridge for BridgeService {
         let client_id = request.into_inner().client_id;
         let (tx, rx) = mpsc::channel(32);
 
-        self.cache
+        self.state
             .send_message_clients
             .insert(client_id.clone(), tx);
         info!("✅ Client {client_id} connected to ServerSendMessage stream");
@@ -333,7 +333,7 @@ impl Bridge for BridgeService {
         let client_id = request.into_inner().client_id;
         let (tx, rx) = mpsc::channel(32);
 
-        self.cache.send_title_clients.insert(client_id.clone(), tx);
+        self.state.send_title_clients.insert(client_id.clone(), tx);
         info!("✅ Client {client_id} connected to ServerSendTitle stream");
 
         Ok(Response::new(
@@ -352,50 +352,50 @@ impl Bridge for BridgeService {
 
     async fn get_all_prefix(
         &self,
-        _request: Request<crate::bridge::GetAllPrefixRequest>,
+        request: Request<crate::bridge::GetAllPrefixRequest>,
     ) -> Result<Response<crate::bridge::GetAllPrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_get_all_prefixes(request).await
     }
 
     async fn buy_prefix(
         &self,
-        _request: Request<crate::bridge::BuyPrefixRequest>,
+        request: Request<crate::bridge::BuyPrefixRequest>,
     ) -> Result<Response<crate::bridge::BuyPrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_buy_prefix(request).await
     }
 
     async fn get_owned_prefix(
         &self,
-        _request: Request<crate::bridge::GetOwnedPrefixRequest>,
+        request: Request<crate::bridge::GetOwnedPrefixRequest>,
     ) -> Result<Response<crate::bridge::GetOwnedPrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_get_owned_prefix(request).await
     }
 
     async fn delete_prefix(
         &self,
-        _request: Request<crate::bridge::DeletePrefixRequest>,
+        request: Request<crate::bridge::DeletePrefixRequest>,
     ) -> Result<Response<crate::bridge::DeletePrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_delete_prefix(request).await
     }
 
     async fn create_prefix(
         &self,
-        _request: Request<crate::bridge::CreatePrefixRequest>,
+        request: Request<crate::bridge::CreatePrefixRequest>,
     ) -> Result<Response<crate::bridge::CreatePrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_create_prefix(request).await
     }
 
     async fn select_prefix(
         &self,
-        _request: Request<crate::bridge::SelectPrefixRequest>,
+        request: Request<crate::bridge::SelectPrefixRequest>,
     ) -> Result<Response<crate::bridge::SelectPrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_select_prefix(request).await
     }
 
     async fn get_current_prefix(
         &self,
         _request: Request<crate::bridge::GetCurrentPrefixRequest>,
     ) -> Result<Response<crate::bridge::GetCurrentPrefixResponse>, Status> {
-        unimplemented!()
+        self.handle_get_current_prefix(_request).await
     }
 }

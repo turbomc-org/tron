@@ -13,8 +13,8 @@ impl BridgeService {
 
         debug!("Leave request for player {} received", username);
 
-        let player = self.cache.get_player_with_handling(&username).await?;
-        self.cache.active_players.remove(&player.username);
+        let player = self.state.get_player_with_handling(&username).await?;
+        self.state.active_players.remove(&player.username);
 
         info!("Player {} left the game", username);
 

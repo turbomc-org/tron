@@ -17,7 +17,7 @@ impl BridgeService {
 
         debug!("Create team request from player {} received", username);
 
-        let mut player = self.cache.get_player_with_handling(&username).await?;
+        let mut player = self.state.get_player_with_handling(&username).await?;
 
         if player.team.is_some() {
             error!("Player {} is already in a team", username);
@@ -26,7 +26,7 @@ impl BridgeService {
             ));
         }
 
-        if self.cache.team_indexes.contains_key(&team_name) {
+        if self.state.team_indexes.contains_key(&team_name) {
             error!("Team already exists with this name");
             return Err(Status::already_exists(format!(
                 "Team already exists with name {}",
@@ -36,23 +36,15 @@ impl BridgeService {
 
         let team = Team::new(team_name.clone(), player.id.clone(), open, color);
 
-        team.insert(
-            &self.collections.teams,
-            &self.cache.teams,
-            &self.cache.team_indexes,
-        )
-        .await
-        .map_err(|e| {
-            error!("Failed to create team: {}", e);
-            Status::internal("Failed to create team")
-        })?;
+        team.insert(&self.collections.teams, &self.state)
+            .await
+            .map_err(|e| {
+                error!("Failed to create team: {}", e);
+                Status::internal("Failed to create team")
+            })?;
 
         player
-            .set_team(
-                team.id,
-                &self.collections.players,
-                &self.cache.active_players,
-            )
+            .set_team(team.id, &self.collections.players, &self.state)
             .await
             .map_err(|err| {
                 error!("Failed to set team for player: {}", err);
