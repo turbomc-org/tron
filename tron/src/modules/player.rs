@@ -32,7 +32,7 @@ impl Player {
             }
         });
 
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -85,8 +85,8 @@ impl Player {
 
         self.coins -= amount;
         target.coins += amount;
-        state.insert_player(self.clone());
-        state.insert_player(target.clone());
+        state.insert_player(self.clone()).await?;
+        state.insert_player(target.clone()).await?;
 
         Ok(())
     }
@@ -121,7 +121,7 @@ impl Player {
         });
 
         target.incoming_friend_requests.insert(player_id, now);
-        state.insert_player(target.clone());
+        state.insert_player(target.clone()).await?;
 
         Ok(())
     }
@@ -173,12 +173,12 @@ impl Player {
         self.incoming_friend_requests.remove(&sender.0);
         self.friends.insert(sender.0.clone());
 
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         if state.active_players.contains_key(&sender.1) {
             let mut sender_player = state.get_active_player(&sender.1).await?.unwrap().clone();
             sender_player.friends.insert(self.id.clone());
-            state.insert_player(sender_player);
+            state.insert_player(sender_player).await?;
         }
 
         Ok(())
@@ -213,7 +213,7 @@ impl Player {
         });
 
         self.incoming_friend_requests.remove(&sender_id);
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -262,7 +262,7 @@ impl Player {
         });
 
         self.friends.remove(&target);
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         let target_username = state.get_player_username(&target).await?.unwrap().clone();
 
@@ -273,7 +273,7 @@ impl Player {
                 .unwrap()
                 .clone();
             target_player.friends.remove(&self.id);
-            state.insert_player(target_player);
+            state.insert_player(target_player).await?;
         }
 
         Ok(())
@@ -346,7 +346,7 @@ impl Player {
         });
 
         self.incoming_team_requests.remove(&team_id);
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         let mut team: Team = state.get_team(team_id).await?.ok_or_else(|| {
             error!("Team not found");
@@ -383,7 +383,7 @@ impl Player {
         });
 
         self.team = Some(team_id);
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -417,7 +417,7 @@ impl Player {
         });
 
         self.incoming_team_requests.remove(&team_id);
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -453,7 +453,7 @@ impl Player {
 
         self.incoming_team_requests
             .insert(team_id.clone(), now.clone());
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -484,7 +484,7 @@ impl Player {
         });
 
         self.kills += kills;
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -515,7 +515,7 @@ impl Player {
         });
 
         self.deaths += deaths;
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -548,7 +548,7 @@ impl Player {
         });
 
         self.blocks_placed += blocks_placed;
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }
@@ -581,7 +581,7 @@ impl Player {
         });
 
         self.blocks_broken += blocks_broken;
-        state.insert_player(self.clone());
+        state.insert_player(self.clone()).await?;
 
         Ok(())
     }

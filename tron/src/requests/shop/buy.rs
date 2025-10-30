@@ -5,6 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_buy_item(
         &self,
         request: Request<BuyItemRequest>,

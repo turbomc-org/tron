@@ -2,13 +2,16 @@ use crate::BridgeService;
 use crate::bridge::{TeamsLeaderboardRequest, TeamsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_teams_leaderboard(
         &self,
         _request: Request<TeamsLeaderboardRequest>,
     ) -> Result<Response<TeamsLeaderboardResponse>, Status> {
+        debug!("Team leaderboard request received");
+
         let teams = self
             .collections
             .players
@@ -23,6 +26,8 @@ impl BridgeService {
             .into_iter()
             .map(|(team, score)| (team.name, score.round() as u64))
             .collect();
+
+        debug!("Team leaderboard request completed");
 
         Ok(Response::new(TeamsLeaderboardResponse { leaderboard }))
     }

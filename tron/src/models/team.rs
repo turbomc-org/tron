@@ -1,4 +1,3 @@
-use bincode::{Decode, Encode};
 use chrono::Utc;
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
@@ -6,7 +5,7 @@ use std::collections::HashMap;
 
 use crate::GENERATOR;
 
-#[derive(Serialize, Deserialize, Encode, Decode, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Team {
     #[serde(rename = "_id")]
     pub id: u64,

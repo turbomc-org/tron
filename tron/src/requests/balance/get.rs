@@ -1,9 +1,10 @@
 use crate::BridgeService;
 use crate::bridge::{GetBalanceRequest, GetBalanceResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, info};
+use tracing::debug;
 
 impl BridgeService {
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_get_balance(
         &self,
         request: Request<GetBalanceRequest>,
@@ -15,7 +16,7 @@ impl BridgeService {
 
         let player = self.state.get_player_with_handling(&username).await?;
 
-        info!(
+        debug!(
             "Successfully responded to Get Balance request for player {}",
             username
         );

@@ -4,6 +4,7 @@ use tonic::{Request, Response, Status};
 use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_remove_friend(
         &self,
         request: Request<RemoveFriendRequest>,
@@ -39,6 +40,8 @@ impl BridgeService {
                     target
                 ))
             })?;
+
+        debug!("Remove friend request from player {} completed", username);
 
         Ok(Response::new(RemoveFriendResponse { success: true }))
     }

@@ -1,20 +1,22 @@
 use anyhow::Result;
 use dashmap::DashMap;
+use dashmap::DashSet;
 use std::sync::Arc;
 use tonic::Status;
 
+#[derive(Debug)]
 pub struct Servers {
-    pub proxies: Arc<DashMap<u64, bool>>,
-    pub lobbies: Arc<DashMap<u64, bool>>,
-    pub survivals: Arc<DashMap<u64, bool>>,
+    pub proxies: DashSet<u64>,
+    pub lobbies: DashSet<u64>,
+    pub survivals: DashSet<u64>,
 }
 
 impl Servers {
     pub fn new() -> Self {
         Self {
-            proxies: Arc::new(DashMap::new()),
-            lobbies: Arc::new(DashMap::new()),
-            survivals: Arc::new(DashMap::new()),
+            proxies: DashSet::new(),
+            lobbies: DashSet::new(),
+            survivals: DashSet::new(),
         }
     }
 }

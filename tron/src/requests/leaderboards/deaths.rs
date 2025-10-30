@@ -2,13 +2,16 @@ use crate::BridgeService;
 use crate::bridge::{DeathsLeaderboardRequest, DeathsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_deaths_leaderboard(
         &self,
         _request: Request<DeathsLeaderboardRequest>,
     ) -> Result<Response<DeathsLeaderboardResponse>, Status> {
+        debug!("Deaths leaderboard request received");
+
         let filtered_players = self
             .collections
             .players
@@ -23,6 +26,8 @@ impl BridgeService {
             .into_iter()
             .map(|player| (player.username, player.deaths))
             .collect();
+
+        debug!("Deaths leaderboard request completed");
 
         Ok(Response::new(DeathsLeaderboardResponse {
             leaderboard: players,

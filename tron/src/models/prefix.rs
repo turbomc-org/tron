@@ -1,11 +1,10 @@
-use crate::bridge::Prefix as CompiledPrefix;
-use bincode::{Decode, Encode};
+use crate::bridge::PartialPrefix as CompiledPrefix;
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 
 use crate::GENERATOR;
 
-#[derive(Serialize, Deserialize, Encode, Decode, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Prefix {
     #[serde(rename = "_id")]
     pub id: u64,

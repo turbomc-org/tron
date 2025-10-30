@@ -8,6 +8,7 @@ use crate::{
 };
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_proxy_startup(
         &self,
         _request: Request<ProxyStartupRequest>,
@@ -15,7 +16,7 @@ impl BridgeService {
         warn!("Proxy startup request received");
 
         let client_id = GENERATOR.generate();
-        self.cache.servers.proxies.insert(client_id, true);
+        self.state.servers.proxies.insert(client_id);
 
         info!("New proxy client registered {}", client_id);
         warn!("Proxy startup request completed");

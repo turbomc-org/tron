@@ -2,6 +2,7 @@ use crate::bridge::{MessageResponse, ServerSendMessageResponse, ServerSendTitleR
 use crate::collections::Collections;
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
+use crate::models::servers::Servers;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
 use dashmap::DashMap;
@@ -15,11 +16,13 @@ pub mod prefix;
 pub mod shop_item;
 pub mod team;
 
+#[derive(Debug)]
 pub struct State {
     pub active_players: DashMap<String, Player>,
     pub shop_items: DashMap<u64, ShopItem>,
     pub teams: DashMap<u64, Team>,
     pub prefixes: DashMap<u64, Prefix>,
+    pub servers: Servers,
     pub player_indexes: DashMap<u64, String>,
     pub team_indexes: DashMap<String, u64>,
     pub prefix_indexes: DashMap<String, u64>,
@@ -36,6 +39,7 @@ impl State {
             shop_items: DashMap::new(),
             teams: DashMap::new(),
             prefixes: DashMap::new(),
+            servers: Servers::new(),
             player_indexes: DashMap::new(),
             team_indexes: DashMap::new(),
             prefix_indexes: DashMap::new(),

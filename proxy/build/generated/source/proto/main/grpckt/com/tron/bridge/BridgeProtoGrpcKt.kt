@@ -13,8 +13,10 @@ import io.grpc.Status.UNIMPLEMENTED
 import io.grpc.StatusException
 import io.grpc.kotlin.AbstractCoroutineServerImpl
 import io.grpc.kotlin.AbstractCoroutineStub
+import io.grpc.kotlin.ClientCalls.bidiStreamingRpc
 import io.grpc.kotlin.ClientCalls.serverStreamingRpc
 import io.grpc.kotlin.ClientCalls.unaryRpc
+import io.grpc.kotlin.ServerCalls.bidiStreamingServerMethodDefinition
 import io.grpc.kotlin.ServerCalls.serverStreamingServerMethodDefinition
 import io.grpc.kotlin.ServerCalls.unaryServerMethodDefinition
 import io.grpc.kotlin.StubFor
@@ -85,11 +87,6 @@ public object BridgeGrpcKt {
     @JvmStatic
     get() = BridgeGrpc.getKillsLeaderboardMethod()
 
-  public val sendMessageMethod:
-      MethodDescriptor<Messaging.SendMessageRequest, Messaging.SendMessageResponse>
-    @JvmStatic
-    get() = BridgeGrpc.getSendMessageMethod()
-
   public val getFriendsMethod:
       MethodDescriptor<Friends.GetFriendsRequest, Friends.GetFriendsResponse>
     @JvmStatic
@@ -123,6 +120,10 @@ public object BridgeGrpcKt {
   public val createTeamMethod: MethodDescriptor<Teams.CreateTeamRequest, Teams.CreateTeamResponse>
     @JvmStatic
     get() = BridgeGrpc.getCreateTeamMethod()
+
+  public val deleteTeamMethod: MethodDescriptor<Teams.DeleteTeamRequest, Teams.DeleteTeamResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getDeleteTeamMethod()
 
   public val leaveTeamMethod: MethodDescriptor<Teams.LeaveTeamRequest, Teams.LeaveTeamResponse>
     @JvmStatic
@@ -162,6 +163,11 @@ public object BridgeGrpcKt {
     @JvmStatic
     get() = BridgeGrpc.getPromoteTeamMemberMethod()
 
+  public val getOpenTeamsMethod:
+      MethodDescriptor<Teams.GetOpenTeamsRequest, Teams.GetOpenTeamsResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getGetOpenTeamsMethod()
+
   public val buyItemMethod: MethodDescriptor<Shop.BuyItemRequest, Shop.BuyItemResponse>
     @JvmStatic
     get() = BridgeGrpc.getBuyItemMethod()
@@ -174,6 +180,40 @@ public object BridgeGrpcKt {
     @JvmStatic
     get() = BridgeGrpc.getGetItemsMethod()
 
+  public val buyPrefixMethod: MethodDescriptor<Prefix.BuyPrefixRequest, Prefix.BuyPrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getBuyPrefixMethod()
+
+  public val selectPrefixMethod:
+      MethodDescriptor<Prefix.SelectPrefixRequest, Prefix.SelectPrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getSelectPrefixMethod()
+
+  public val getAllPrefixMethod:
+      MethodDescriptor<Prefix.GetAllPrefixRequest, Prefix.GetAllPrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getGetAllPrefixMethod()
+
+  public val getOwnedPrefixMethod:
+      MethodDescriptor<Prefix.GetOwnedPrefixRequest, Prefix.GetOwnedPrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getGetOwnedPrefixMethod()
+
+  public val getCurrentPrefixMethod:
+      MethodDescriptor<Prefix.GetCurrentPrefixRequest, Prefix.GetCurrentPrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getGetCurrentPrefixMethod()
+
+  public val createPrefixMethod:
+      MethodDescriptor<Prefix.CreatePrefixRequest, Prefix.CreatePrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getCreatePrefixMethod()
+
+  public val deletePrefixMethod:
+      MethodDescriptor<Prefix.DeletePrefixRequest, Prefix.DeletePrefixResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getDeletePrefixMethod()
+
   public val playerDeathMethod:
       MethodDescriptor<Player.PlayerDeathRequest, Player.PlayerDeathResponse>
     @JvmStatic
@@ -182,6 +222,16 @@ public object BridgeGrpcKt {
   public val playerKillMethod: MethodDescriptor<Player.PlayerKillRequest, Player.PlayerKillResponse>
     @JvmStatic
     get() = BridgeGrpc.getPlayerKillMethod()
+
+  public val playerPlaceBlockMethod:
+      MethodDescriptor<Player.PlayerPlaceBlockRequest, Player.PlayerPlaceBlockResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getPlayerPlaceBlockMethod()
+
+  public val playerBreakBlockMethod:
+      MethodDescriptor<Player.PlayerBreakBlockRequest, Player.PlayerBreakBlockResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getPlayerBreakBlockMethod()
 
   public val proxyStartupMethod:
       MethodDescriptor<Server.ProxyStartupRequest, Server.ProxyStartupResponse>
@@ -214,9 +264,18 @@ public object BridgeGrpcKt {
     get() = BridgeGrpc.getLobbyShutdownMethod()
 
   public val serverSendMessageMethod:
-      MethodDescriptor<Server.ServerSendMessageRequest, Server.ServerSendMessageResponse>
+      MethodDescriptor<Server.ServerSubscribeRequest, Server.ServerSendMessageResponse>
     @JvmStatic
     get() = BridgeGrpc.getServerSendMessageMethod()
+
+  public val serverSendTitleMethod:
+      MethodDescriptor<Server.ServerSubscribeRequest, Server.ServerSendTitleResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getServerSendTitleMethod()
+
+  public val messageMethod: MethodDescriptor<Server.MessageRequest, Server.MessageResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getMessageMethod()
 
   public val reportPlayerMethod:
       MethodDescriptor<Security.ReportPlayerRequest, Security.ReportPlayerResponse>
@@ -467,28 +526,6 @@ public object BridgeGrpcKt {
      *
      * @return The single response from the server.
      */
-    public suspend fun sendMessage(request: Messaging.SendMessageRequest, headers: Metadata =
-        Metadata()): Messaging.SendMessageResponse = unaryRpc(
-      channel,
-      BridgeGrpc.getSendMessageMethod(),
-      request,
-      callOptions,
-      headers
-    )
-
-    /**
-     * Executes this RPC and returns the response message, suspending until the RPC completes
-     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
-     * corresponding
-     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
-     * with the corresponding exception as a cause.
-     *
-     * @param request The request message to send to the server.
-     *
-     * @param headers Metadata to attach to the request.  Most users will not need this.
-     *
-     * @return The single response from the server.
-     */
     public suspend fun getFriends(request: Friends.GetFriendsRequest, headers: Metadata =
         Metadata()): Friends.GetFriendsResponse = unaryRpc(
       channel,
@@ -625,6 +662,28 @@ public object BridgeGrpcKt {
         Teams.CreateTeamResponse = unaryRpc(
       channel,
       BridgeGrpc.getCreateTeamMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun deleteTeam(request: Teams.DeleteTeamRequest, headers: Metadata = Metadata()):
+        Teams.DeleteTeamResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getDeleteTeamMethod(),
       request,
       callOptions,
       headers
@@ -819,6 +878,28 @@ public object BridgeGrpcKt {
      *
      * @return The single response from the server.
      */
+    public suspend fun getOpenTeams(request: Teams.GetOpenTeamsRequest, headers: Metadata =
+        Metadata()): Teams.GetOpenTeamsResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getGetOpenTeamsMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
     public suspend fun buyItem(request: Shop.BuyItemRequest, headers: Metadata = Metadata()):
         Shop.BuyItemResponse = unaryRpc(
       channel,
@@ -885,6 +966,160 @@ public object BridgeGrpcKt {
      *
      * @return The single response from the server.
      */
+    public suspend fun buyPrefix(request: Prefix.BuyPrefixRequest, headers: Metadata = Metadata()):
+        Prefix.BuyPrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getBuyPrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun selectPrefix(request: Prefix.SelectPrefixRequest, headers: Metadata =
+        Metadata()): Prefix.SelectPrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getSelectPrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun getAllPrefix(request: Prefix.GetAllPrefixRequest, headers: Metadata =
+        Metadata()): Prefix.GetAllPrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getGetAllPrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun getOwnedPrefix(request: Prefix.GetOwnedPrefixRequest, headers: Metadata =
+        Metadata()): Prefix.GetOwnedPrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getGetOwnedPrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun getCurrentPrefix(request: Prefix.GetCurrentPrefixRequest, headers: Metadata =
+        Metadata()): Prefix.GetCurrentPrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getGetCurrentPrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun createPrefix(request: Prefix.CreatePrefixRequest, headers: Metadata =
+        Metadata()): Prefix.CreatePrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getCreatePrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun deletePrefix(request: Prefix.DeletePrefixRequest, headers: Metadata =
+        Metadata()): Prefix.DeletePrefixResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getDeletePrefixMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
     public suspend fun playerDeath(request: Player.PlayerDeathRequest, headers: Metadata =
         Metadata()): Player.PlayerDeathResponse = unaryRpc(
       channel,
@@ -911,6 +1146,50 @@ public object BridgeGrpcKt {
         Metadata()): Player.PlayerKillResponse = unaryRpc(
       channel,
       BridgeGrpc.getPlayerKillMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun playerPlaceBlock(request: Player.PlayerPlaceBlockRequest, headers: Metadata =
+        Metadata()): Player.PlayerPlaceBlockResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getPlayerPlaceBlockMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun playerBreakBlock(request: Player.PlayerBreakBlockRequest, headers: Metadata =
+        Metadata()): Player.PlayerBreakBlockResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getPlayerBreakBlockMethod(),
       request,
       callOptions,
       headers
@@ -1061,11 +1340,62 @@ public object BridgeGrpcKt {
      *
      * @return A flow that, when collected, emits the responses from the server.
      */
-    public fun serverSendMessage(request: Server.ServerSendMessageRequest, headers: Metadata =
+    public fun serverSendMessage(request: Server.ServerSubscribeRequest, headers: Metadata =
         Metadata()): Flow<Server.ServerSendMessageResponse> = serverStreamingRpc(
       channel,
       BridgeGrpc.getServerSendMessageMethod(),
       request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Returns a [Flow] that, when collected, executes this RPC and emits responses from the
+     * server as they arrive.  That flow finishes normally if the server closes its response with
+     * [`Status.OK`][io.grpc.Status], and fails by throwing a [StatusException] otherwise.  If
+     * collecting the flow downstream fails exceptionally (including via cancellation), the RPC
+     * is cancelled with that exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return A flow that, when collected, emits the responses from the server.
+     */
+    public fun serverSendTitle(request: Server.ServerSubscribeRequest, headers: Metadata =
+        Metadata()): Flow<Server.ServerSendTitleResponse> = serverStreamingRpc(
+      channel,
+      BridgeGrpc.getServerSendTitleMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Returns a [Flow] that, when collected, executes this RPC and emits responses from the
+     * server as they arrive.  That flow finishes normally if the server closes its response with
+     * [`Status.OK`][io.grpc.Status], and fails by throwing a [StatusException] otherwise.  If
+     * collecting the flow downstream fails exceptionally (including via cancellation), the RPC
+     * is cancelled with that exception as a cause.
+     *
+     * The [Flow] of requests is collected once each time the [Flow] of responses is
+     * collected. If collection of the [Flow] of responses completes normally or
+     * exceptionally before collection of `requests` completes, the collection of
+     * `requests` is cancelled.  If the collection of `requests` completes
+     * exceptionally for any other reason, then the collection of the [Flow] of responses
+     * completes exceptionally for the same reason and the RPC is cancelled with that reason.
+     *
+     * @param requests A [Flow] of request messages.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return A flow that, when collected, emits the responses from the server.
+     */
+    public fun message(requests: Flow<Server.MessageRequest>, headers: Metadata = Metadata()):
+        Flow<Server.MessageResponse> = bidiStreamingRpc(
+      channel,
+      BridgeGrpc.getMessageMethod(),
+      requests,
       callOptions,
       headers
     )
@@ -1250,21 +1580,6 @@ public object BridgeGrpcKt {
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.KillsLeaderboard is unimplemented"))
 
     /**
-     * Returns the response to an RPC for bridge.Bridge.SendMessage.
-     *
-     * If this method fails with a [StatusException], the RPC will fail with the corresponding
-     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
-     * the RPC will fail
-     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
-     * fail with `Status.UNKNOWN` with the exception as a cause.
-     *
-     * @param request The request from the client.
-     */
-    public open suspend fun sendMessage(request: Messaging.SendMessageRequest):
-        Messaging.SendMessageResponse = throw
-        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.SendMessage is unimplemented"))
-
-    /**
      * Returns the response to an RPC for bridge.Bridge.GetFriends.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
@@ -1368,6 +1683,21 @@ public object BridgeGrpcKt {
     public open suspend fun createTeam(request: Teams.CreateTeamRequest): Teams.CreateTeamResponse =
         throw
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.CreateTeam is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.DeleteTeam.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun deleteTeam(request: Teams.DeleteTeamRequest): Teams.DeleteTeamResponse =
+        throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.DeleteTeam is unimplemented"))
 
     /**
      * Returns the response to an RPC for bridge.Bridge.LeaveTeam.
@@ -1489,6 +1819,21 @@ public object BridgeGrpcKt {
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.PromoteTeamMember is unimplemented"))
 
     /**
+     * Returns the response to an RPC for bridge.Bridge.GetOpenTeams.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun getOpenTeams(request: Teams.GetOpenTeamsRequest):
+        Teams.GetOpenTeamsResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetOpenTeams is unimplemented"))
+
+    /**
      * Returns the response to an RPC for bridge.Bridge.BuyItem.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
@@ -1531,6 +1876,111 @@ public object BridgeGrpcKt {
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetItems is unimplemented"))
 
     /**
+     * Returns the response to an RPC for bridge.Bridge.BuyPrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun buyPrefix(request: Prefix.BuyPrefixRequest): Prefix.BuyPrefixResponse =
+        throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.BuyPrefix is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.SelectPrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun selectPrefix(request: Prefix.SelectPrefixRequest):
+        Prefix.SelectPrefixResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.SelectPrefix is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.GetAllPrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun getAllPrefix(request: Prefix.GetAllPrefixRequest):
+        Prefix.GetAllPrefixResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetAllPrefix is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.GetOwnedPrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun getOwnedPrefix(request: Prefix.GetOwnedPrefixRequest):
+        Prefix.GetOwnedPrefixResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetOwnedPrefix is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.GetCurrentPrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun getCurrentPrefix(request: Prefix.GetCurrentPrefixRequest):
+        Prefix.GetCurrentPrefixResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetCurrentPrefix is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.CreatePrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun createPrefix(request: Prefix.CreatePrefixRequest):
+        Prefix.CreatePrefixResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.CreatePrefix is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.DeletePrefix.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun deletePrefix(request: Prefix.DeletePrefixRequest):
+        Prefix.DeletePrefixResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.DeletePrefix is unimplemented"))
+
+    /**
      * Returns the response to an RPC for bridge.Bridge.PlayerDeath.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
@@ -1559,6 +2009,36 @@ public object BridgeGrpcKt {
     public open suspend fun playerKill(request: Player.PlayerKillRequest): Player.PlayerKillResponse
         = throw
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.PlayerKill is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.PlayerPlaceBlock.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun playerPlaceBlock(request: Player.PlayerPlaceBlockRequest):
+        Player.PlayerPlaceBlockResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.PlayerPlaceBlock is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.PlayerBreakBlock.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun playerBreakBlock(request: Player.PlayerBreakBlockRequest):
+        Player.PlayerBreakBlockResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.PlayerBreakBlock is unimplemented"))
 
     /**
      * Returns the response to an RPC for bridge.Bridge.ProxyStartup.
@@ -1662,9 +2142,44 @@ public object BridgeGrpcKt {
      *
      * @param request The request from the client.
      */
-    public open fun serverSendMessage(request: Server.ServerSendMessageRequest):
+    public open fun serverSendMessage(request: Server.ServerSubscribeRequest):
         Flow<Server.ServerSendMessageResponse> = throw
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ServerSendMessage is unimplemented"))
+
+    /**
+     * Returns a [Flow] of responses to an RPC for bridge.Bridge.ServerSendTitle.
+     *
+     * If creating or collecting the returned flow fails with a [StatusException], the RPC
+     * will fail with the corresponding [io.grpc.Status].  If it fails with a
+     * [java.util.concurrent.CancellationException], the RPC will fail with status
+     * `Status.CANCELLED`.  If creating
+     * or collecting the returned flow fails for any other reason, the RPC will fail with
+     * `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open fun serverSendTitle(request: Server.ServerSubscribeRequest):
+        Flow<Server.ServerSendTitleResponse> = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ServerSendTitle is unimplemented"))
+
+    /**
+     * Returns a [Flow] of responses to an RPC for bridge.Bridge.Message.
+     *
+     * If creating or collecting the returned flow fails with a [StatusException], the RPC
+     * will fail with the corresponding [io.grpc.Status].  If it fails with a
+     * [java.util.concurrent.CancellationException], the RPC will fail with status
+     * `Status.CANCELLED`.  If creating
+     * or collecting the returned flow fails for any other reason, the RPC will fail with
+     * `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param requests A [Flow] of requests from the client.  This flow can be
+     *        collected only once and throws [java.lang.IllegalStateException] on attempts to
+     * collect
+     *        it more than once.
+     */
+    public open fun message(requests: Flow<Server.MessageRequest>): Flow<Server.MessageResponse> =
+        throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.Message is unimplemented"))
 
     /**
      * Returns the response to an RPC for bridge.Bridge.ReportPlayer.
@@ -1734,11 +2249,6 @@ public object BridgeGrpcKt {
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
-      descriptor = BridgeGrpc.getSendMessageMethod(),
-      implementation = ::sendMessage
-    ))
-      .addMethod(unaryServerMethodDefinition(
-      context = this.context,
       descriptor = BridgeGrpc.getGetFriendsMethod(),
       implementation = ::getFriends
     ))
@@ -1771,6 +2281,11 @@ public object BridgeGrpcKt {
       context = this.context,
       descriptor = BridgeGrpc.getCreateTeamMethod(),
       implementation = ::createTeam
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getDeleteTeamMethod(),
+      implementation = ::deleteTeam
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
@@ -1814,6 +2329,11 @@ public object BridgeGrpcKt {
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
+      descriptor = BridgeGrpc.getGetOpenTeamsMethod(),
+      implementation = ::getOpenTeams
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
       descriptor = BridgeGrpc.getBuyItemMethod(),
       implementation = ::buyItem
     ))
@@ -1829,6 +2349,41 @@ public object BridgeGrpcKt {
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
+      descriptor = BridgeGrpc.getBuyPrefixMethod(),
+      implementation = ::buyPrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getSelectPrefixMethod(),
+      implementation = ::selectPrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getGetAllPrefixMethod(),
+      implementation = ::getAllPrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getGetOwnedPrefixMethod(),
+      implementation = ::getOwnedPrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getGetCurrentPrefixMethod(),
+      implementation = ::getCurrentPrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getCreatePrefixMethod(),
+      implementation = ::createPrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getDeletePrefixMethod(),
+      implementation = ::deletePrefix
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
       descriptor = BridgeGrpc.getPlayerDeathMethod(),
       implementation = ::playerDeath
     ))
@@ -1836,6 +2391,16 @@ public object BridgeGrpcKt {
       context = this.context,
       descriptor = BridgeGrpc.getPlayerKillMethod(),
       implementation = ::playerKill
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getPlayerPlaceBlockMethod(),
+      implementation = ::playerPlaceBlock
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getPlayerBreakBlockMethod(),
+      implementation = ::playerBreakBlock
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
@@ -1871,6 +2436,16 @@ public object BridgeGrpcKt {
       context = this.context,
       descriptor = BridgeGrpc.getServerSendMessageMethod(),
       implementation = ::serverSendMessage
+    ))
+      .addMethod(serverStreamingServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getServerSendTitleMethod(),
+      implementation = ::serverSendTitle
+    ))
+      .addMethod(bidiStreamingServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getMessageMethod(),
+      implementation = ::message
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,

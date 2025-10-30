@@ -5,6 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::debug;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_get_friends(
         &self,
         request: Request<GetFriendsRequest>,
@@ -36,6 +37,8 @@ impl BridgeService {
                 Err(status) => return Err(status),
             }
         }
+
+        debug!("Get friends request for player {} completed", username);
 
         Ok(Response::new(GetFriendsResponse { friends }))
     }

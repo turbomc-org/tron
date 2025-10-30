@@ -5,6 +5,7 @@ use tracing::debug;
 use tracing::error;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_select_prefix(
         &self,
         request: Request<SelectPrefixRequest>,

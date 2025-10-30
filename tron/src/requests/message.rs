@@ -6,6 +6,7 @@ use futures::StreamExt;
 use tonic::{Request, Response, Status};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_message(
         &self,
         request: Request<tonic::Streaming<MessageRequest>>,

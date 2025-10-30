@@ -2,14 +2,21 @@ use crate::BridgeService;
 use crate::bridge::{GetOwnedPrefixRequest, GetOwnedPrefixResponse};
 use futures::future::join_all;
 use tonic::{Request, Response, Status};
+use tracing::debug;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_get_owned_prefix(
         &self,
         request: Request<GetOwnedPrefixRequest>,
     ) -> Result<Response<GetOwnedPrefixResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        debug!(
+            "Get owned prefixes request from player {} received",
+            username
+        );
 
         let player = self.state.get_player_with_handling(&username).await?;
 
@@ -34,6 +41,11 @@ impl BridgeService {
                 Err(status) => return Err(status),
             }
         }
+
+        debug!(
+            "Get owned prefixes request from player {} completed",
+            username
+        );
 
         Ok(Response::new(GetOwnedPrefixResponse { prefixes }))
     }

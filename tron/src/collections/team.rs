@@ -8,10 +8,11 @@ use mongodb::error::Error;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fmt::Debug;
 
 #[automock]
 #[async_trait]
-pub trait TeamCollection: Send + Sync {
+pub trait TeamCollection: Send + Sync + Debug {
     async fn all(&self) -> Result<Vec<Team>, Error>;
     async fn indexes(&self) -> Result<HashMap<String, u64>, Error>;
     async fn find_by_id(&self, id: u64) -> Result<Option<Team>, Error>;
@@ -23,6 +24,7 @@ pub trait TeamCollection: Send + Sync {
     async fn set_open(&self, team_id: u64, open: bool) -> Result<(), Error>;
 }
 
+#[derive(Debug)]
 pub struct MongoTeamCollection {
     pub collection: Collection<Team>,
 }

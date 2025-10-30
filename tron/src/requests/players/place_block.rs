@@ -1,17 +1,21 @@
 use crate::bridge::{PlayerPlaceBlockRequest, PlayerPlaceBlockResponse};
 use anyhow::Result;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{debug, error};
 
 use crate::BridgeService;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_player_place_block(
         &self,
         request: Request<PlayerPlaceBlockRequest>,
     ) -> Result<Response<PlayerPlaceBlockResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        debug!("Place Block request of player {} received", username);
+
         let mut player = self.state.get_player_with_handling(&username).await?;
 
         player
@@ -24,6 +28,8 @@ impl BridgeService {
                 );
                 Status::internal("Failed to add death")
             })?;
+
+        debug!("Place Block request of player {} completed", username);
 
         Ok(Response::new(PlayerPlaceBlockResponse { success: true }))
     }

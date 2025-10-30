@@ -12,11 +12,12 @@ use mongodb::options::AggregateOptions;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fmt::Debug;
 use std::sync::Arc;
 
 #[automock]
 #[async_trait]
-pub trait PlayerCollection: Send + Sync {
+pub trait PlayerCollection: Send + Sync + Debug {
     async fn all(&self) -> Result<Vec<Player>, Error>;
     async fn indexes(&self) -> Result<HashMap<u64, String>, Error>;
     async fn find_by_username(&self, username: &str) -> Result<Option<Player>, Error>;
@@ -58,6 +59,7 @@ pub trait PlayerCollection: Send + Sync {
     async fn select_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error>;
 }
 
+#[derive(Debug)]
 pub struct MongoPlayerCollection {
     pub collection: Collection<Player>,
 }

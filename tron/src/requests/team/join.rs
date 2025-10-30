@@ -2,9 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{JoinTeamRequest, JoinTeamResponse};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_join_team(
         &self,
         request: Request<JoinTeamRequest>,
@@ -13,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let team_name = inner_request.team;
 
-        info!("Join team request for player {} received", username);
+        debug!("Join team request for player {} received", username);
 
         let mut player = self.state.get_player_with_handling(&username).await?;
 
@@ -58,7 +59,7 @@ impl BridgeService {
             Status::internal("Failed to join team")
         })?;
 
-        info!("Join team request for player {} completed", username);
+        debug!("Join team request for player {} completed", username);
 
         Ok(Response::new(JoinTeamResponse { success: true }))
     }

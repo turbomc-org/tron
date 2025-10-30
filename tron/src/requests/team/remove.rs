@@ -4,6 +4,7 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_remove_team_member(
         &self,
         request: Request<RemoveTeamMemberRequest>,
@@ -50,6 +51,11 @@ impl BridgeService {
 
             Status::internal("Failed to remove player from team")
         })?;
+
+        info!(
+            "Remove team member request from player {} completed",
+            username
+        );
 
         Ok(Response::new(RemoveTeamMemberResponse { success: true }))
     }

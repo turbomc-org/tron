@@ -1,17 +1,21 @@
 use crate::bridge::{PlayerDeathRequest, PlayerDeathResponse};
 use anyhow::Result;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{debug, error};
 
 use crate::BridgeService;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_player_death(
         &self,
         request: Request<PlayerDeathRequest>,
     ) -> Result<Response<PlayerDeathResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        debug!("Death request of player {} received", username);
+
         let mut player = self.state.get_player_with_handling(&username).await?;
 
         player
@@ -21,6 +25,8 @@ impl BridgeService {
                 error!("Failed to add death of player {}: {}", username, err);
                 Status::internal("Failed to add death")
             })?;
+
+        debug!("Death request of player {} completed", username);
 
         Ok(Response::new(PlayerDeathResponse { success: true }))
     }

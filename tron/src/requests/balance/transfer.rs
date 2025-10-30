@@ -2,9 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{TransferBalanceRequest, TransferBalanceResponse};
 use crate::models::player::Player;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_transfer_balance(
         &self,
         request: Request<TransferBalanceRequest>,
@@ -14,7 +15,7 @@ impl BridgeService {
         let receiver = inner_request.receiver;
         let amount = inner_request.amount;
 
-        info!(
+        debug!(
             "Transfer Balance request for player {} to {} received",
             username, receiver
         );
@@ -65,9 +66,9 @@ impl BridgeService {
             ))
         })?;
 
-        info!(
-            "Successfully transferred coins from player {} to player {}",
-            player.username, target.username
+        debug!(
+            "Transfer Balance request for player {} to {} completed",
+            username, receiver
         );
 
         Ok(Response::new(TransferBalanceResponse { success: true }))

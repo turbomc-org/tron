@@ -4,10 +4,10 @@ use tracing::warn;
 use crate::{
     BridgeService,
     bridge::{SurvivalShutdownRequest, SurvivalShutdownResponse},
-    models::servers::Client,
 };
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_survival_shutdown(
         &self,
         request: Request<SurvivalShutdownRequest>,
@@ -17,13 +17,7 @@ impl BridgeService {
 
         warn!("Survival shutdown requested by client {}", client_id);
 
-        let client = Client::get(&self.cache.servers.survivals, client_id).await?;
-
-        if !client {
-            return Err(Status::not_found("Survival server is not active"));
-        }
-
-        self.cache.servers.survivals.remove(&client_id);
+        self.state.servers.survivals.remove(&client_id);
 
         warn!(
             "Survival shutdown request by client {} completed",

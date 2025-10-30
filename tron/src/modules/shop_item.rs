@@ -125,7 +125,7 @@ impl ShopItem {
         });
 
         player.coins += price;
-        state.insert_player(player.clone());
+        state.insert_player(player.clone()).await?;
 
         Ok(price)
     }

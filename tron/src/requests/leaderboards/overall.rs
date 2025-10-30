@@ -3,13 +3,16 @@ use crate::bridge::{OverallLeaderboardRequest, OverallLeaderboardResponse};
 use crate::models::player::Player;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_overall_leaderboard(
         &self,
         _request: Request<OverallLeaderboardRequest>,
     ) -> Result<Response<OverallLeaderboardResponse>, Status> {
+        debug!("Overall leaderboard request received");
+
         let filtered_players = self
             .collections
             .players
@@ -38,6 +41,8 @@ impl BridgeService {
                 (player.username, score.round() as u64)
             })
             .collect();
+
+        debug!("Overall leaderboard request completed");
 
         Ok(Response::new(OverallLeaderboardResponse {
             leaderboard: players,

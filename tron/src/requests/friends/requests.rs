@@ -3,9 +3,10 @@ use crate::bridge::{GetFriendRequestsRequest, GetFriendRequestsResponse};
 use futures::future::join_all;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{debug, info};
+use tracing::debug;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_get_friend_requests(
         &self,
         request: Request<GetFriendRequestsRequest>,
@@ -49,7 +50,7 @@ impl BridgeService {
             }
         }
 
-        info!("Get friend requests for player {} completed", username);
+        debug!("Get friend requests for player {} completed", username);
 
         Ok(Response::new(GetFriendRequestsResponse {
             incoming_friend_requests,

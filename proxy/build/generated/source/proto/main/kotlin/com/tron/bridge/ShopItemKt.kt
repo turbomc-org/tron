@@ -45,31 +45,94 @@ public object ShopItemKt {
     }
 
     /**
-     * `.bridge.Item item = 2;`
+     * `string type_id = 2;`
      */
-    public var item: com.tron.bridge.Common.Item
-      @JvmName("getItem")
-      get() = _builder.getItem()
-      @JvmName("setItem")
+    public var typeId: kotlin.String
+      @JvmName("getTypeId")
+      get() = _builder.getTypeId()
+      @JvmName("setTypeId")
       set(value) {
-        _builder.setItem(value)
+        _builder.setTypeId(value)
       }
     /**
-     * `.bridge.Item item = 2;`
+     * `string type_id = 2;`
      */
-    public fun clearItem() {
-      _builder.clearItem()
-    }
-    /**
-     * `.bridge.Item item = 2;`
-     * @return Whether the item field is set.
-     */
-    public fun hasItem(): kotlin.Boolean {
-      return _builder.hasItem()
+    public fun clearTypeId() {
+      _builder.clearTypeId()
     }
 
     /**
-     * `string name = 3;`
+     * An uninstantiable, behaviorless type to represent the field in
+     * generics.
+     */
+    @kotlin.OptIn(com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode::class)
+    public class EnchantmentsProxy private constructor() : com.google.protobuf.kotlin.DslProxy()
+    /**
+     * `repeated string enchantments = 3;`
+     * @return A list containing the enchantments.
+     */
+    public val enchantments: com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>
+      @kotlin.jvm.JvmSynthetic
+      get() = com.google.protobuf.kotlin.DslList(
+        _builder.getEnchantmentsList()
+      )
+    /**
+     * `repeated string enchantments = 3;`
+     * @param value The enchantments to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addEnchantments")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>.add(value: kotlin.String) {
+      _builder.addEnchantments(value)
+    }
+    /**
+     * `repeated string enchantments = 3;`
+     * @param value The enchantments to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignEnchantments")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>.plusAssign(value: kotlin.String) {
+      add(value)
+    }
+    /**
+     * `repeated string enchantments = 3;`
+     * @param values The enchantments to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("addAllEnchantments")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>.addAll(values: kotlin.collections.Iterable<kotlin.String>) {
+      _builder.addAllEnchantments(values)
+    }
+    /**
+     * `repeated string enchantments = 3;`
+     * @param values The enchantments to add.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("plusAssignAllEnchantments")
+    @Suppress("NOTHING_TO_INLINE")
+    public inline operator fun com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>.plusAssign(values: kotlin.collections.Iterable<kotlin.String>) {
+      addAll(values)
+    }
+    /**
+     * `repeated string enchantments = 3;`
+     * @param index The index to set the value at.
+     * @param value The enchantments to set.
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("setEnchantments")
+    public operator fun com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>.set(index: kotlin.Int, value: kotlin.String) {
+      _builder.setEnchantments(index, value)
+    }/**
+     * `repeated string enchantments = 3;`
+     */
+    @kotlin.jvm.JvmSynthetic
+    @kotlin.jvm.JvmName("clearEnchantments")
+    public fun com.google.protobuf.kotlin.DslList<kotlin.String, EnchantmentsProxy>.clear() {
+      _builder.clearEnchantments()
+    }
+    /**
+     * `string name = 4;`
      */
     public var name: kotlin.String
       @JvmName("getName")
@@ -79,14 +142,14 @@ public object ShopItemKt {
         _builder.setName(value)
       }
     /**
-     * `string name = 3;`
+     * `string name = 4;`
      */
     public fun clearName() {
       _builder.clearName()
     }
 
     /**
-     * `string description = 4;`
+     * `string description = 5;`
      */
     public var description: kotlin.String
       @JvmName("getDescription")
@@ -96,14 +159,14 @@ public object ShopItemKt {
         _builder.setDescription(value)
       }
     /**
-     * `string description = 4;`
+     * `string description = 5;`
      */
     public fun clearDescription() {
       _builder.clearDescription()
     }
 
     /**
-     * `string category = 5;`
+     * `string category = 6;`
      */
     public var category: kotlin.String
       @JvmName("getCategory")
@@ -113,14 +176,14 @@ public object ShopItemKt {
         _builder.setCategory(value)
       }
     /**
-     * `string category = 5;`
+     * `string category = 6;`
      */
     public fun clearCategory() {
       _builder.clearCategory()
     }
 
     /**
-     * `uint64 buy_price = 6;`
+     * `uint64 buy_price = 7;`
      */
     public var buyPrice: kotlin.Long
       @JvmName("getBuyPrice")
@@ -130,14 +193,14 @@ public object ShopItemKt {
         _builder.setBuyPrice(value)
       }
     /**
-     * `uint64 buy_price = 6;`
+     * `uint64 buy_price = 7;`
      */
     public fun clearBuyPrice() {
       _builder.clearBuyPrice()
     }
 
     /**
-     * `uint64 sell_price = 7;`
+     * `uint64 sell_price = 8;`
      */
     public var sellPrice: kotlin.Long
       @JvmName("getSellPrice")
@@ -147,14 +210,14 @@ public object ShopItemKt {
         _builder.setSellPrice(value)
       }
     /**
-     * `uint64 sell_price = 7;`
+     * `uint64 sell_price = 8;`
      */
     public fun clearSellPrice() {
       _builder.clearSellPrice()
     }
 
     /**
-     * `.bridge.Rarity rarity = 8;`
+     * `.bridge.Rarity rarity = 9;`
      */
     public var rarity: com.tron.bridge.Common.Rarity
       @JvmName("getRarity")
@@ -171,7 +234,7 @@ public object ShopItemKt {
         _builder.setRarityValue(value)
       }
     /**
-     * `.bridge.Rarity rarity = 8;`
+     * `.bridge.Rarity rarity = 9;`
      */
     public fun clearRarity() {
       _builder.clearRarity()
@@ -181,7 +244,4 @@ public object ShopItemKt {
 @kotlin.jvm.JvmSynthetic
 public inline fun com.tron.bridge.Common.ShopItem.copy(block: `com.tron.bridge`.ShopItemKt.Dsl.() -> kotlin.Unit): com.tron.bridge.Common.ShopItem =
   `com.tron.bridge`.ShopItemKt.Dsl._create(this.toBuilder()).apply { block() }._build()
-
-public val com.tron.bridge.Common.ShopItemOrBuilder.itemOrNull: com.tron.bridge.Common.Item?
-  get() = if (hasItem()) getItem() else null
 

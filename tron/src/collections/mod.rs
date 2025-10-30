@@ -14,6 +14,7 @@ use crate::models::team::Team;
 use mongodb::Database;
 use std::sync::Arc;
 
+#[derive(Debug)]
 pub struct Collections {
     pub players: Arc<dyn PlayerCollection>,
     pub shop_items: Arc<dyn ShopItemCollection>,

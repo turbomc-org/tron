@@ -1,7 +1,6 @@
 syntax = "proto3";
 option java_package = "com.tron.bridge";
 
-
 package bridge;
 
 message GetTeamLeaderboardRequest {
@@ -81,5 +80,19 @@ message PromoteTeamMemberRequest {
 }
 
 message PromoteTeamMemberResponse {
+    bool success = 1;
+}
+
+message GetOpenTeamsRequest {}
+
+message GetOpenTeamsResponse {
+    repeated string teams = 1;
+}
+
+message DeleteTeamRequest {
+    string team_name = 1;
+}
+
+message DeleteTeamResponse {
     bool success = 1;
 }

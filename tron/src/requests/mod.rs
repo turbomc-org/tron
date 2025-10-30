@@ -6,7 +6,6 @@ use tracing::info;
 
 pub mod balance;
 pub mod friends;
-pub mod leaderboard;
 pub mod leaderboards;
 pub mod message;
 pub mod players;

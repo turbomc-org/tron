@@ -2,9 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{GetTeamMembersRequest, GetTeamMembersResponse};
 use futures::future::join_all;
 use tonic::{Request, Response, Status};
-use tracing::info;
+use tracing::debug;
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_get_team_members(
         &self,
         request: Request<GetTeamMembersRequest>,
@@ -12,7 +13,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        info!("Get team members request for player {} received", username);
+        debug!("Get team members request for player {} received", username);
 
         let player = self.state.get_player_with_handling(&username).await?;
 
@@ -42,6 +43,8 @@ impl BridgeService {
                 Err(status) => return Err(status),
             }
         }
+
+        debug!("Get team members request for player {} completed", username);
 
         Ok(Response::new(GetTeamMembersResponse { members: members }))
     }

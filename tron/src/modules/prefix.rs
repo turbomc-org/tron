@@ -8,7 +8,6 @@ use anyhow::Result;
 use std::sync::Arc;
 use tokio::task;
 use tokio_retry::Retry;
-use tonic::Status;
 use tracing::error;
 
 impl Prefix {
@@ -32,16 +31,12 @@ impl Prefix {
             }
         });
 
-        state.insert_prefix(self.clone());
+        state.insert_prefix(self.clone()).await?;
 
         Ok(())
     }
 
-    pub async fn delete(
-        &self,
-        col: &Arc<dyn PrefixCollection>,
-        state: &Arc<State>,
-    ) -> Result<(), Status> {
+    pub async fn delete(&self, col: &Arc<dyn PrefixCollection>, state: &Arc<State>) -> Result<()> {
         let prefix_id = self.id.clone();
 
         task::spawn({
@@ -61,7 +56,7 @@ impl Prefix {
             }
         });
 
-        state.remove_prefix(&self.id, &self.text);
+        state.remove_prefix(&self.id, &self.text).await?;
 
         Ok(())
     }
@@ -71,7 +66,7 @@ impl Prefix {
         player: &mut Player,
         player_col: &Arc<dyn PlayerCollection>,
         state: &Arc<State>,
-    ) -> Result<(), Status> {
+    ) -> Result<()> {
         let player_id = player.id.clone();
         let price = self.price.clone();
         let prefix_id = self.id.clone();
@@ -118,7 +113,7 @@ impl Prefix {
 
         player.coins -= price;
         player.prefixes.insert(self.id.clone());
-        state.insert_player(player.clone());
+        state.insert_player(player.clone()).await?;
 
         Ok(())
     }
@@ -152,7 +147,7 @@ impl Prefix {
         });
 
         player.selected_prefix = Some(prefix_id.clone());
-        state.insert_player(player.clone());
+        state.insert_player(player.clone()).await?;
 
         Ok(())
     }

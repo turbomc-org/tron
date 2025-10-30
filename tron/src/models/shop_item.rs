@@ -1,11 +1,10 @@
 use crate::GENERATOR;
 use crate::bridge::{Rarity as CompiledRarity, ShopItem as CompiledShopItem};
-use bincode::{Decode, Encode};
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 
-#[derive(Serialize, Deserialize, Encode, Decode, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct ShopItem {
     #[serde(rename = "_id")]
     pub id: u64,
@@ -19,7 +18,7 @@ pub struct ShopItem {
     pub rarity: Rarity,
 }
 
-#[derive(Serialize, Deserialize, Encode, Decode, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Rarity {
     Common,
     Uncommon,

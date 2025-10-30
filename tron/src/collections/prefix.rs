@@ -8,10 +8,11 @@ use mongodb::error::Error;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::fmt::Debug;
 
 #[async_trait]
 #[automock]
-pub trait PrefixCollection: Send + Sync {
+pub trait PrefixCollection: Send + Sync + Debug {
     async fn all(&self) -> Result<Vec<Prefix>, Error>;
     async fn indexes(&self) -> Result<HashMap<String, u64>, Error>;
     async fn find_by_id(&self, id: u64) -> Result<Option<Prefix>, Error>;
@@ -19,6 +20,7 @@ pub trait PrefixCollection: Send + Sync {
     async fn delete_one(&self, prefix: u64) -> Result<(), Error>;
 }
 
+#[derive(Debug)]
 pub struct MongoPrefixCollection {
     pub collection: Collection<Prefix>,
 }

@@ -150,150 +150,6 @@ public final class Common {
     // @@protoc_insertion_point(enum_scope:bridge.Rarity)
   }
 
-  /**
-   * Protobuf enum {@code bridge.ItemType}
-   */
-  public enum ItemType
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>TOOL = 0;</code>
-     */
-    TOOL(0),
-    /**
-     * <code>BLOCK = 1;</code>
-     */
-    BLOCK(1),
-    /**
-     * <code>ARMOR = 2;</code>
-     */
-    ARMOR(2),
-    /**
-     * <code>FOOD = 3;</code>
-     */
-    FOOD(3),
-    /**
-     * <code>MISC = 4;</code>
-     */
-    MISC(4),
-    /**
-     * <code>CONTAINER = 5;</code>
-     */
-    CONTAINER(5),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>TOOL = 0;</code>
-     */
-    public static final int TOOL_VALUE = 0;
-    /**
-     * <code>BLOCK = 1;</code>
-     */
-    public static final int BLOCK_VALUE = 1;
-    /**
-     * <code>ARMOR = 2;</code>
-     */
-    public static final int ARMOR_VALUE = 2;
-    /**
-     * <code>FOOD = 3;</code>
-     */
-    public static final int FOOD_VALUE = 3;
-    /**
-     * <code>MISC = 4;</code>
-     */
-    public static final int MISC_VALUE = 4;
-    /**
-     * <code>CONTAINER = 5;</code>
-     */
-    public static final int CONTAINER_VALUE = 5;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static ItemType valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static ItemType forNumber(int value) {
-      switch (value) {
-        case 0: return TOOL;
-        case 1: return BLOCK;
-        case 2: return ARMOR;
-        case 3: return FOOD;
-        case 4: return MISC;
-        case 5: return CONTAINER;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<ItemType>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ItemType> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ItemType>() {
-            public ItemType findValueByNumber(int number) {
-              return ItemType.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
-      }
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return com.tron.bridge.Common.getDescriptor().getEnumTypes().get(1);
-    }
-
-    private static final ItemType[] VALUES = values();
-
-    public static ItemType valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private ItemType(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:bridge.ItemType)
-  }
-
   public interface ShopItemOrBuilder extends
       // @@protoc_insertion_point(interface_extends:bridge.ShopItem)
       com.google.protobuf.MessageOrBuilder {
@@ -305,75 +161,97 @@ public final class Common {
     long getId();
 
     /**
-     * <code>.bridge.Item item = 2;</code>
-     * @return Whether the item field is set.
+     * <code>string type_id = 2;</code>
+     * @return The typeId.
      */
-    boolean hasItem();
+    java.lang.String getTypeId();
     /**
-     * <code>.bridge.Item item = 2;</code>
-     * @return The item.
+     * <code>string type_id = 2;</code>
+     * @return The bytes for typeId.
      */
-    com.tron.bridge.Common.Item getItem();
-    /**
-     * <code>.bridge.Item item = 2;</code>
-     */
-    com.tron.bridge.Common.ItemOrBuilder getItemOrBuilder();
+    com.google.protobuf.ByteString
+        getTypeIdBytes();
 
     /**
-     * <code>string name = 3;</code>
+     * <code>repeated string enchantments = 3;</code>
+     * @return A list containing the enchantments.
+     */
+    java.util.List<java.lang.String>
+        getEnchantmentsList();
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @return The count of enchantments.
+     */
+    int getEnchantmentsCount();
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @param index The index of the element to return.
+     * @return The enchantments at the given index.
+     */
+    java.lang.String getEnchantments(int index);
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the enchantments at the given index.
+     */
+    com.google.protobuf.ByteString
+        getEnchantmentsBytes(int index);
+
+    /**
+     * <code>string name = 4;</code>
      * @return The name.
      */
     java.lang.String getName();
     /**
-     * <code>string name = 3;</code>
+     * <code>string name = 4;</code>
      * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
-     * <code>string description = 4;</code>
+     * <code>string description = 5;</code>
      * @return The description.
      */
     java.lang.String getDescription();
     /**
-     * <code>string description = 4;</code>
+     * <code>string description = 5;</code>
      * @return The bytes for description.
      */
     com.google.protobuf.ByteString
         getDescriptionBytes();
 
     /**
-     * <code>string category = 5;</code>
+     * <code>string category = 6;</code>
      * @return The category.
      */
     java.lang.String getCategory();
     /**
-     * <code>string category = 5;</code>
+     * <code>string category = 6;</code>
      * @return The bytes for category.
      */
     com.google.protobuf.ByteString
         getCategoryBytes();
 
     /**
-     * <code>uint64 buy_price = 6;</code>
+     * <code>uint64 buy_price = 7;</code>
      * @return The buyPrice.
      */
     long getBuyPrice();
 
     /**
-     * <code>uint64 sell_price = 7;</code>
+     * <code>uint64 sell_price = 8;</code>
      * @return The sellPrice.
      */
     long getSellPrice();
 
     /**
-     * <code>.bridge.Rarity rarity = 8;</code>
+     * <code>.bridge.Rarity rarity = 9;</code>
      * @return The enum numeric value on the wire for rarity.
      */
     int getRarityValue();
     /**
-     * <code>.bridge.Rarity rarity = 8;</code>
+     * <code>.bridge.Rarity rarity = 9;</code>
      * @return The rarity.
      */
     com.tron.bridge.Common.Rarity getRarity();
@@ -391,6 +269,9 @@ public final class Common {
       super(builder);
     }
     private ShopItem() {
+      typeId_ = "";
+      enchantments_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
       name_ = "";
       description_ = "";
       category_ = "";
@@ -417,7 +298,6 @@ public final class Common {
               com.tron.bridge.Common.ShopItem.class, com.tron.bridge.Common.ShopItem.Builder.class);
     }
 
-    private int bitField0_;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_ = 0L;
     /**
@@ -429,37 +309,87 @@ public final class Common {
       return id_;
     }
 
-    public static final int ITEM_FIELD_NUMBER = 2;
-    private com.tron.bridge.Common.Item item_;
+    public static final int TYPE_ID_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object typeId_ = "";
     /**
-     * <code>.bridge.Item item = 2;</code>
-     * @return Whether the item field is set.
+     * <code>string type_id = 2;</code>
+     * @return The typeId.
      */
     @java.lang.Override
-    public boolean hasItem() {
-      return ((bitField0_ & 0x00000001) != 0);
+    public java.lang.String getTypeId() {
+      java.lang.Object ref = typeId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        typeId_ = s;
+        return s;
+      }
     }
     /**
-     * <code>.bridge.Item item = 2;</code>
-     * @return The item.
+     * <code>string type_id = 2;</code>
+     * @return The bytes for typeId.
      */
     @java.lang.Override
-    public com.tron.bridge.Common.Item getItem() {
-      return item_ == null ? com.tron.bridge.Common.Item.getDefaultInstance() : item_;
-    }
-    /**
-     * <code>.bridge.Item item = 2;</code>
-     */
-    @java.lang.Override
-    public com.tron.bridge.Common.ItemOrBuilder getItemOrBuilder() {
-      return item_ == null ? com.tron.bridge.Common.Item.getDefaultInstance() : item_;
+    public com.google.protobuf.ByteString
+        getTypeIdBytes() {
+      java.lang.Object ref = typeId_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        typeId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
-    public static final int NAME_FIELD_NUMBER = 3;
+    public static final int ENCHANTMENTS_FIELD_NUMBER = 3;
+    @SuppressWarnings("serial")
+    private com.google.protobuf.LazyStringArrayList enchantments_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @return A list containing the enchantments.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getEnchantmentsList() {
+      return enchantments_;
+    }
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @return The count of enchantments.
+     */
+    public int getEnchantmentsCount() {
+      return enchantments_.size();
+    }
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @param index The index of the element to return.
+     * @return The enchantments at the given index.
+     */
+    public java.lang.String getEnchantments(int index) {
+      return enchantments_.get(index);
+    }
+    /**
+     * <code>repeated string enchantments = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the enchantments at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getEnchantmentsBytes(int index) {
+      return enchantments_.getByteString(index);
+    }
+
+    public static final int NAME_FIELD_NUMBER = 4;
     @SuppressWarnings("serial")
     private volatile java.lang.Object name_ = "";
     /**
-     * <code>string name = 3;</code>
+     * <code>string name = 4;</code>
      * @return The name.
      */
     @java.lang.Override
@@ -476,7 +406,7 @@ public final class Common {
       }
     }
     /**
-     * <code>string name = 3;</code>
+     * <code>string name = 4;</code>
      * @return The bytes for name.
      */
     @java.lang.Override
@@ -494,11 +424,11 @@ public final class Common {
       }
     }
 
-    public static final int DESCRIPTION_FIELD_NUMBER = 4;
+    public static final int DESCRIPTION_FIELD_NUMBER = 5;
     @SuppressWarnings("serial")
     private volatile java.lang.Object description_ = "";
     /**
-     * <code>string description = 4;</code>
+     * <code>string description = 5;</code>
      * @return The description.
      */
     @java.lang.Override
@@ -515,7 +445,7 @@ public final class Common {
       }
     }
     /**
-     * <code>string description = 4;</code>
+     * <code>string description = 5;</code>
      * @return The bytes for description.
      */
     @java.lang.Override
@@ -533,11 +463,11 @@ public final class Common {
       }
     }
 
-    public static final int CATEGORY_FIELD_NUMBER = 5;
+    public static final int CATEGORY_FIELD_NUMBER = 6;
     @SuppressWarnings("serial")
     private volatile java.lang.Object category_ = "";
     /**
-     * <code>string category = 5;</code>
+     * <code>string category = 6;</code>
      * @return The category.
      */
     @java.lang.Override
@@ -554,7 +484,7 @@ public final class Common {
       }
     }
     /**
-     * <code>string category = 5;</code>
+     * <code>string category = 6;</code>
      * @return The bytes for category.
      */
     @java.lang.Override
@@ -572,10 +502,10 @@ public final class Common {
       }
     }
 
-    public static final int BUY_PRICE_FIELD_NUMBER = 6;
+    public static final int BUY_PRICE_FIELD_NUMBER = 7;
     private long buyPrice_ = 0L;
     /**
-     * <code>uint64 buy_price = 6;</code>
+     * <code>uint64 buy_price = 7;</code>
      * @return The buyPrice.
      */
     @java.lang.Override
@@ -583,10 +513,10 @@ public final class Common {
       return buyPrice_;
     }
 
-    public static final int SELL_PRICE_FIELD_NUMBER = 7;
+    public static final int SELL_PRICE_FIELD_NUMBER = 8;
     private long sellPrice_ = 0L;
     /**
-     * <code>uint64 sell_price = 7;</code>
+     * <code>uint64 sell_price = 8;</code>
      * @return The sellPrice.
      */
     @java.lang.Override
@@ -594,17 +524,17 @@ public final class Common {
       return sellPrice_;
     }
 
-    public static final int RARITY_FIELD_NUMBER = 8;
+    public static final int RARITY_FIELD_NUMBER = 9;
     private int rarity_ = 0;
     /**
-     * <code>.bridge.Rarity rarity = 8;</code>
+     * <code>.bridge.Rarity rarity = 9;</code>
      * @return The enum numeric value on the wire for rarity.
      */
     @java.lang.Override public int getRarityValue() {
       return rarity_;
     }
     /**
-     * <code>.bridge.Rarity rarity = 8;</code>
+     * <code>.bridge.Rarity rarity = 9;</code>
      * @return The rarity.
      */
     @java.lang.Override public com.tron.bridge.Common.Rarity getRarity() {
@@ -629,26 +559,29 @@ public final class Common {
       if (id_ != 0L) {
         output.writeUInt64(1, id_);
       }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(2, getItem());
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(typeId_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, typeId_);
+      }
+      for (int i = 0; i < enchantments_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, enchantments_.getRaw(i));
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, name_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, name_);
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, description_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, description_);
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(category_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, category_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, category_);
       }
       if (buyPrice_ != 0L) {
-        output.writeUInt64(6, buyPrice_);
+        output.writeUInt64(7, buyPrice_);
       }
       if (sellPrice_ != 0L) {
-        output.writeUInt64(7, sellPrice_);
+        output.writeUInt64(8, sellPrice_);
       }
       if (rarity_ != com.tron.bridge.Common.Rarity.COMMON.getNumber()) {
-        output.writeEnum(8, rarity_);
+        output.writeEnum(9, rarity_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -663,30 +596,37 @@ public final class Common {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, id_);
       }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getItem());
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(typeId_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, typeId_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < enchantments_.size(); i++) {
+          dataSize += computeStringSizeNoTag(enchantments_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getEnchantmentsList().size();
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, name_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, name_);
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(description_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, description_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, description_);
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(category_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, category_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, category_);
       }
       if (buyPrice_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(6, buyPrice_);
+          .computeUInt64Size(7, buyPrice_);
       }
       if (sellPrice_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeUInt64Size(7, sellPrice_);
+          .computeUInt64Size(8, sellPrice_);
       }
       if (rarity_ != com.tron.bridge.Common.Rarity.COMMON.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(8, rarity_);
+          .computeEnumSize(9, rarity_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -705,11 +645,10 @@ public final class Common {
 
       if (getId()
           != other.getId()) return false;
-      if (hasItem() != other.hasItem()) return false;
-      if (hasItem()) {
-        if (!getItem()
-            .equals(other.getItem())) return false;
-      }
+      if (!getTypeId()
+          .equals(other.getTypeId())) return false;
+      if (!getEnchantmentsList()
+          .equals(other.getEnchantmentsList())) return false;
       if (!getName()
           .equals(other.getName())) return false;
       if (!getDescription()
@@ -735,9 +674,11 @@ public final class Common {
       hash = (37 * hash) + ID_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getId());
-      if (hasItem()) {
-        hash = (37 * hash) + ITEM_FIELD_NUMBER;
-        hash = (53 * hash) + getItem().hashCode();
+      hash = (37 * hash) + TYPE_ID_FIELD_NUMBER;
+      hash = (53 * hash) + getTypeId().hashCode();
+      if (getEnchantmentsCount() > 0) {
+        hash = (37 * hash) + ENCHANTMENTS_FIELD_NUMBER;
+        hash = (53 * hash) + getEnchantmentsList().hashCode();
       }
       hash = (37 * hash) + NAME_FIELD_NUMBER;
       hash = (53 * hash) + getName().hashCode();
@@ -872,30 +813,22 @@ public final class Common {
 
       // Construct using com.tron.bridge.Common.ShopItem.newBuilder()
       private Builder() {
-        maybeForceBuilderInitialization();
+
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-          getItemFieldBuilder();
-        }
+
       }
       @java.lang.Override
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
         id_ = 0L;
-        item_ = null;
-        if (itemBuilder_ != null) {
-          itemBuilder_.dispose();
-          itemBuilder_ = null;
-        }
+        typeId_ = "";
+        enchantments_ =
+            com.google.protobuf.LazyStringArrayList.emptyList();
         name_ = "";
         description_ = "";
         category_ = "";
@@ -938,32 +871,31 @@ public final class Common {
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.id_ = id_;
         }
-        int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.item_ = itemBuilder_ == null
-              ? item_
-              : itemBuilder_.build();
-          to_bitField0_ |= 0x00000001;
+          result.typeId_ = typeId_;
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.name_ = name_;
+          enchantments_.makeImmutable();
+          result.enchantments_ = enchantments_;
         }
         if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.description_ = description_;
+          result.name_ = name_;
         }
         if (((from_bitField0_ & 0x00000010) != 0)) {
-          result.category_ = category_;
+          result.description_ = description_;
         }
         if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.buyPrice_ = buyPrice_;
+          result.category_ = category_;
         }
         if (((from_bitField0_ & 0x00000040) != 0)) {
-          result.sellPrice_ = sellPrice_;
+          result.buyPrice_ = buyPrice_;
         }
         if (((from_bitField0_ & 0x00000080) != 0)) {
+          result.sellPrice_ = sellPrice_;
+        }
+        if (((from_bitField0_ & 0x00000100) != 0)) {
           result.rarity_ = rarity_;
         }
-        result.bitField0_ |= to_bitField0_;
       }
 
       @java.lang.Override
@@ -1013,22 +945,34 @@ public final class Common {
         if (other.getId() != 0L) {
           setId(other.getId());
         }
-        if (other.hasItem()) {
-          mergeItem(other.getItem());
+        if (!other.getTypeId().isEmpty()) {
+          typeId_ = other.typeId_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (!other.enchantments_.isEmpty()) {
+          if (enchantments_.isEmpty()) {
+            enchantments_ = other.enchantments_;
+            bitField0_ |= 0x00000004;
+          } else {
+            ensureEnchantmentsIsMutable();
+            enchantments_.addAll(other.enchantments_);
+          }
+          onChanged();
         }
         if (!other.getName().isEmpty()) {
           name_ = other.name_;
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000008;
           onChanged();
         }
         if (!other.getDescription().isEmpty()) {
           description_ = other.description_;
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000010;
           onChanged();
         }
         if (!other.getCategory().isEmpty()) {
           category_ = other.category_;
-          bitField0_ |= 0x00000010;
+          bitField0_ |= 0x00000020;
           onChanged();
         }
         if (other.getBuyPrice() != 0L) {
@@ -1072,42 +1016,46 @@ public final class Common {
                 break;
               } // case 8
               case 18: {
-                input.readMessage(
-                    getItemFieldBuilder().getBuilder(),
-                    extensionRegistry);
+                typeId_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000002;
                 break;
               } // case 18
               case 26: {
-                name_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000004;
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureEnchantmentsIsMutable();
+                enchantments_.add(s);
                 break;
               } // case 26
               case 34: {
-                description_ = input.readStringRequireUtf8();
+                name_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000008;
                 break;
               } // case 34
               case 42: {
-                category_ = input.readStringRequireUtf8();
+                description_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000010;
                 break;
               } // case 42
-              case 48: {
-                buyPrice_ = input.readUInt64();
+              case 50: {
+                category_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000020;
                 break;
-              } // case 48
+              } // case 50
               case 56: {
-                sellPrice_ = input.readUInt64();
+                buyPrice_ = input.readUInt64();
                 bitField0_ |= 0x00000040;
                 break;
               } // case 56
               case 64: {
-                rarity_ = input.readEnum();
+                sellPrice_ = input.readUInt64();
                 bitField0_ |= 0x00000080;
                 break;
               } // case 64
+              case 72: {
+                rarity_ = input.readEnum();
+                bitField0_ |= 0x00000100;
+                break;
+              } // case 72
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1157,1216 +1105,74 @@ public final class Common {
         return this;
       }
 
-      private com.tron.bridge.Common.Item item_;
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.tron.bridge.Common.Item, com.tron.bridge.Common.Item.Builder, com.tron.bridge.Common.ItemOrBuilder> itemBuilder_;
+      private java.lang.Object typeId_ = "";
       /**
-       * <code>.bridge.Item item = 2;</code>
-       * @return Whether the item field is set.
+       * <code>string type_id = 2;</code>
+       * @return The typeId.
        */
-      public boolean hasItem() {
-        return ((bitField0_ & 0x00000002) != 0);
-      }
-      /**
-       * <code>.bridge.Item item = 2;</code>
-       * @return The item.
-       */
-      public com.tron.bridge.Common.Item getItem() {
-        if (itemBuilder_ == null) {
-          return item_ == null ? com.tron.bridge.Common.Item.getDefaultInstance() : item_;
+      public java.lang.String getTypeId() {
+        java.lang.Object ref = typeId_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          typeId_ = s;
+          return s;
         } else {
-          return itemBuilder_.getMessage();
+          return (java.lang.String) ref;
         }
       }
       /**
-       * <code>.bridge.Item item = 2;</code>
+       * <code>string type_id = 2;</code>
+       * @return The bytes for typeId.
        */
-      public Builder setItem(com.tron.bridge.Common.Item value) {
-        if (itemBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          item_ = value;
+      public com.google.protobuf.ByteString
+          getTypeIdBytes() {
+        java.lang.Object ref = typeId_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          typeId_ = b;
+          return b;
         } else {
-          itemBuilder_.setMessage(value);
+          return (com.google.protobuf.ByteString) ref;
         }
+      }
+      /**
+       * <code>string type_id = 2;</code>
+       * @param value The typeId to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTypeId(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        typeId_ = value;
         bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
       /**
-       * <code>.bridge.Item item = 2;</code>
+       * <code>string type_id = 2;</code>
+       * @return This builder for chaining.
        */
-      public Builder setItem(
-          com.tron.bridge.Common.Item.Builder builderForValue) {
-        if (itemBuilder_ == null) {
-          item_ = builderForValue.build();
-        } else {
-          itemBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.Item item = 2;</code>
-       */
-      public Builder mergeItem(com.tron.bridge.Common.Item value) {
-        if (itemBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0) &&
-            item_ != null &&
-            item_ != com.tron.bridge.Common.Item.getDefaultInstance()) {
-            getItemBuilder().mergeFrom(value);
-          } else {
-            item_ = value;
-          }
-        } else {
-          itemBuilder_.mergeFrom(value);
-        }
-        if (item_ != null) {
-          bitField0_ |= 0x00000002;
-          onChanged();
-        }
-        return this;
-      }
-      /**
-       * <code>.bridge.Item item = 2;</code>
-       */
-      public Builder clearItem() {
+      public Builder clearTypeId() {
+        typeId_ = getDefaultInstance().getTypeId();
         bitField0_ = (bitField0_ & ~0x00000002);
-        item_ = null;
-        if (itemBuilder_ != null) {
-          itemBuilder_.dispose();
-          itemBuilder_ = null;
-        }
         onChanged();
         return this;
       }
       /**
-       * <code>.bridge.Item item = 2;</code>
+       * <code>string type_id = 2;</code>
+       * @param value The bytes for typeId to set.
+       * @return This builder for chaining.
        */
-      public com.tron.bridge.Common.Item.Builder getItemBuilder() {
+      public Builder setTypeIdBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        typeId_ = value;
         bitField0_ |= 0x00000002;
-        onChanged();
-        return getItemFieldBuilder().getBuilder();
-      }
-      /**
-       * <code>.bridge.Item item = 2;</code>
-       */
-      public com.tron.bridge.Common.ItemOrBuilder getItemOrBuilder() {
-        if (itemBuilder_ != null) {
-          return itemBuilder_.getMessageOrBuilder();
-        } else {
-          return item_ == null ?
-              com.tron.bridge.Common.Item.getDefaultInstance() : item_;
-        }
-      }
-      /**
-       * <code>.bridge.Item item = 2;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilderV3<
-          com.tron.bridge.Common.Item, com.tron.bridge.Common.Item.Builder, com.tron.bridge.Common.ItemOrBuilder> 
-          getItemFieldBuilder() {
-        if (itemBuilder_ == null) {
-          itemBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.tron.bridge.Common.Item, com.tron.bridge.Common.Item.Builder, com.tron.bridge.Common.ItemOrBuilder>(
-                  getItem(),
-                  getParentForChildren(),
-                  isClean());
-          item_ = null;
-        }
-        return itemBuilder_;
-      }
-
-      private java.lang.Object name_ = "";
-      /**
-       * <code>string name = 3;</code>
-       * @return The name.
-       */
-      public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          name_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string name = 3;</code>
-       * @return The bytes for name.
-       */
-      public com.google.protobuf.ByteString
-          getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string name = 3;</code>
-       * @param value The name to set.
-       * @return This builder for chaining.
-       */
-      public Builder setName(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        name_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string name = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearName() {
-        name_ = getDefaultInstance().getName();
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string name = 3;</code>
-       * @param value The bytes for name to set.
-       * @return This builder for chaining.
-       */
-      public Builder setNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        name_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object description_ = "";
-      /**
-       * <code>string description = 4;</code>
-       * @return The description.
-       */
-      public java.lang.String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          description_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string description = 4;</code>
-       * @return The bytes for description.
-       */
-      public com.google.protobuf.ByteString
-          getDescriptionBytes() {
-        java.lang.Object ref = description_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          description_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string description = 4;</code>
-       * @param value The description to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDescription(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        description_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string description = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearDescription() {
-        description_ = getDefaultInstance().getDescription();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string description = 4;</code>
-       * @param value The bytes for description to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDescriptionBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        description_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object category_ = "";
-      /**
-       * <code>string category = 5;</code>
-       * @return The category.
-       */
-      public java.lang.String getCategory() {
-        java.lang.Object ref = category_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          category_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string category = 5;</code>
-       * @return The bytes for category.
-       */
-      public com.google.protobuf.ByteString
-          getCategoryBytes() {
-        java.lang.Object ref = category_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          category_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string category = 5;</code>
-       * @param value The category to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCategory(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        category_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string category = 5;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCategory() {
-        category_ = getDefaultInstance().getCategory();
-        bitField0_ = (bitField0_ & ~0x00000010);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string category = 5;</code>
-       * @param value The bytes for category to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCategoryBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        category_ = value;
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return this;
-      }
-
-      private long buyPrice_ ;
-      /**
-       * <code>uint64 buy_price = 6;</code>
-       * @return The buyPrice.
-       */
-      @java.lang.Override
-      public long getBuyPrice() {
-        return buyPrice_;
-      }
-      /**
-       * <code>uint64 buy_price = 6;</code>
-       * @param value The buyPrice to set.
-       * @return This builder for chaining.
-       */
-      public Builder setBuyPrice(long value) {
-
-        buyPrice_ = value;
-        bitField0_ |= 0x00000020;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>uint64 buy_price = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearBuyPrice() {
-        bitField0_ = (bitField0_ & ~0x00000020);
-        buyPrice_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private long sellPrice_ ;
-      /**
-       * <code>uint64 sell_price = 7;</code>
-       * @return The sellPrice.
-       */
-      @java.lang.Override
-      public long getSellPrice() {
-        return sellPrice_;
-      }
-      /**
-       * <code>uint64 sell_price = 7;</code>
-       * @param value The sellPrice to set.
-       * @return This builder for chaining.
-       */
-      public Builder setSellPrice(long value) {
-
-        sellPrice_ = value;
-        bitField0_ |= 0x00000040;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>uint64 sell_price = 7;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearSellPrice() {
-        bitField0_ = (bitField0_ & ~0x00000040);
-        sellPrice_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private int rarity_ = 0;
-      /**
-       * <code>.bridge.Rarity rarity = 8;</code>
-       * @return The enum numeric value on the wire for rarity.
-       */
-      @java.lang.Override public int getRarityValue() {
-        return rarity_;
-      }
-      /**
-       * <code>.bridge.Rarity rarity = 8;</code>
-       * @param value The enum numeric value on the wire for rarity to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRarityValue(int value) {
-        rarity_ = value;
-        bitField0_ |= 0x00000080;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.Rarity rarity = 8;</code>
-       * @return The rarity.
-       */
-      @java.lang.Override
-      public com.tron.bridge.Common.Rarity getRarity() {
-        com.tron.bridge.Common.Rarity result = com.tron.bridge.Common.Rarity.forNumber(rarity_);
-        return result == null ? com.tron.bridge.Common.Rarity.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.bridge.Rarity rarity = 8;</code>
-       * @param value The rarity to set.
-       * @return This builder for chaining.
-       */
-      public Builder setRarity(com.tron.bridge.Common.Rarity value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000080;
-        rarity_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.Rarity rarity = 8;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearRarity() {
-        bitField0_ = (bitField0_ & ~0x00000080);
-        rarity_ = 0;
-        onChanged();
-        return this;
-      }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:bridge.ShopItem)
-    }
-
-    // @@protoc_insertion_point(class_scope:bridge.ShopItem)
-    private static final com.tron.bridge.Common.ShopItem DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new com.tron.bridge.Common.ShopItem();
-    }
-
-    public static com.tron.bridge.Common.ShopItem getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<ShopItem>
-        PARSER = new com.google.protobuf.AbstractParser<ShopItem>() {
-      @java.lang.Override
-      public ShopItem parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        Builder builder = newBuilder();
-        try {
-          builder.mergeFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.setUnfinishedMessage(builder.buildPartial());
-        } catch (com.google.protobuf.UninitializedMessageException e) {
-          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-        } catch (java.io.IOException e) {
-          throw new com.google.protobuf.InvalidProtocolBufferException(e)
-              .setUnfinishedMessage(builder.buildPartial());
-        }
-        return builder.buildPartial();
-      }
-    };
-
-    public static com.google.protobuf.Parser<ShopItem> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ShopItem> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.tron.bridge.Common.ShopItem getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ItemOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:bridge.Item)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>string id = 1;</code>
-     * @return The id.
-     */
-    java.lang.String getId();
-    /**
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
-
-    /**
-     * <code>.bridge.ItemType item_type = 2;</code>
-     * @return The enum numeric value on the wire for itemType.
-     */
-    int getItemTypeValue();
-    /**
-     * <code>.bridge.ItemType item_type = 2;</code>
-     * @return The itemType.
-     */
-    com.tron.bridge.Common.ItemType getItemType();
-
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @return A list containing the enchantments.
-     */
-    java.util.List<java.lang.String>
-        getEnchantmentsList();
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @return The count of enchantments.
-     */
-    int getEnchantmentsCount();
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @param index The index of the element to return.
-     * @return The enchantments at the given index.
-     */
-    java.lang.String getEnchantments(int index);
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the enchantments at the given index.
-     */
-    com.google.protobuf.ByteString
-        getEnchantmentsBytes(int index);
-  }
-  /**
-   * Protobuf type {@code bridge.Item}
-   */
-  public static final class Item extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:bridge.Item)
-      ItemOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use Item.newBuilder() to construct.
-    private Item(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Item() {
-      id_ = "";
-      itemType_ = 0;
-      enchantments_ =
-          com.google.protobuf.LazyStringArrayList.emptyList();
-    }
-
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Item();
-    }
-
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return com.tron.bridge.Common.internal_static_bridge_Item_descriptor;
-    }
-
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return com.tron.bridge.Common.internal_static_bridge_Item_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              com.tron.bridge.Common.Item.class, com.tron.bridge.Common.Item.Builder.class);
-    }
-
-    public static final int ID_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object id_ = "";
-    /**
-     * <code>string id = 1;</code>
-     * @return The id.
-     */
-    @java.lang.Override
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string id = 1;</code>
-     * @return The bytes for id.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int ITEM_TYPE_FIELD_NUMBER = 2;
-    private int itemType_ = 0;
-    /**
-     * <code>.bridge.ItemType item_type = 2;</code>
-     * @return The enum numeric value on the wire for itemType.
-     */
-    @java.lang.Override public int getItemTypeValue() {
-      return itemType_;
-    }
-    /**
-     * <code>.bridge.ItemType item_type = 2;</code>
-     * @return The itemType.
-     */
-    @java.lang.Override public com.tron.bridge.Common.ItemType getItemType() {
-      com.tron.bridge.Common.ItemType result = com.tron.bridge.Common.ItemType.forNumber(itemType_);
-      return result == null ? com.tron.bridge.Common.ItemType.UNRECOGNIZED : result;
-    }
-
-    public static final int ENCHANTMENTS_FIELD_NUMBER = 3;
-    @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringArrayList enchantments_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @return A list containing the enchantments.
-     */
-    public com.google.protobuf.ProtocolStringList
-        getEnchantmentsList() {
-      return enchantments_;
-    }
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @return The count of enchantments.
-     */
-    public int getEnchantmentsCount() {
-      return enchantments_.size();
-    }
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @param index The index of the element to return.
-     * @return The enchantments at the given index.
-     */
-    public java.lang.String getEnchantments(int index) {
-      return enchantments_.get(index);
-    }
-    /**
-     * <code>repeated string enchantments = 3;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the enchantments at the given index.
-     */
-    public com.google.protobuf.ByteString
-        getEnchantmentsBytes(int index) {
-      return enchantments_.getByteString(index);
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @java.lang.Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @java.lang.Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, id_);
-      }
-      if (itemType_ != com.tron.bridge.Common.ItemType.TOOL.getNumber()) {
-        output.writeEnum(2, itemType_);
-      }
-      for (int i = 0; i < enchantments_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, enchantments_.getRaw(i));
-      }
-      getUnknownFields().writeTo(output);
-    }
-
-    @java.lang.Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(id_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, id_);
-      }
-      if (itemType_ != com.tron.bridge.Common.ItemType.TOOL.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, itemType_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < enchantments_.size(); i++) {
-          dataSize += computeStringSizeNoTag(enchantments_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getEnchantmentsList().size();
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof com.tron.bridge.Common.Item)) {
-        return super.equals(obj);
-      }
-      com.tron.bridge.Common.Item other = (com.tron.bridge.Common.Item) obj;
-
-      if (!getId()
-          .equals(other.getId())) return false;
-      if (itemType_ != other.itemType_) return false;
-      if (!getEnchantmentsList()
-          .equals(other.getEnchantmentsList())) return false;
-      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-      return true;
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + ID_FIELD_NUMBER;
-      hash = (53 * hash) + getId().hashCode();
-      hash = (37 * hash) + ITEM_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + itemType_;
-      if (getEnchantmentsCount() > 0) {
-        hash = (37 * hash) + ENCHANTMENTS_FIELD_NUMBER;
-        hash = (53 * hash) + getEnchantmentsList().hashCode();
-      }
-      hash = (29 * hash) + getUnknownFields().hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static com.tron.bridge.Common.Item parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    public static com.tron.bridge.Common.Item parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-
-    public static com.tron.bridge.Common.Item parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static com.tron.bridge.Common.Item parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @java.lang.Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(com.tron.bridge.Common.Item prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code bridge.Item}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:bridge.Item)
-        com.tron.bridge.Common.ItemOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return com.tron.bridge.Common.internal_static_bridge_Item_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return com.tron.bridge.Common.internal_static_bridge_Item_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                com.tron.bridge.Common.Item.class, com.tron.bridge.Common.Item.Builder.class);
-      }
-
-      // Construct using com.tron.bridge.Common.Item.newBuilder()
-      private Builder() {
-
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
-        super(parent);
-
-      }
-      @java.lang.Override
-      public Builder clear() {
-        super.clear();
-        bitField0_ = 0;
-        id_ = "";
-        itemType_ = 0;
-        enchantments_ =
-            com.google.protobuf.LazyStringArrayList.emptyList();
-        return this;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return com.tron.bridge.Common.internal_static_bridge_Item_descriptor;
-      }
-
-      @java.lang.Override
-      public com.tron.bridge.Common.Item getDefaultInstanceForType() {
-        return com.tron.bridge.Common.Item.getDefaultInstance();
-      }
-
-      @java.lang.Override
-      public com.tron.bridge.Common.Item build() {
-        com.tron.bridge.Common.Item result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @java.lang.Override
-      public com.tron.bridge.Common.Item buildPartial() {
-        com.tron.bridge.Common.Item result = new com.tron.bridge.Common.Item(this);
-        if (bitField0_ != 0) { buildPartial0(result); }
-        onBuilt();
-        return result;
-      }
-
-      private void buildPartial0(com.tron.bridge.Common.Item result) {
-        int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.itemType_ = itemType_;
-        }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          enchantments_.makeImmutable();
-          result.enchantments_ = enchantments_;
-        }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.tron.bridge.Common.Item) {
-          return mergeFrom((com.tron.bridge.Common.Item)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(com.tron.bridge.Common.Item other) {
-        if (other == com.tron.bridge.Common.Item.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (other.itemType_ != 0) {
-          setItemTypeValue(other.getItemTypeValue());
-        }
-        if (!other.enchantments_.isEmpty()) {
-          if (enchantments_.isEmpty()) {
-            enchantments_ = other.enchantments_;
-            bitField0_ |= 0x00000004;
-          } else {
-            ensureEnchantmentsIsMutable();
-            enchantments_.addAll(other.enchantments_);
-          }
-          onChanged();
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        onChanged();
-        return this;
-      }
-
-      @java.lang.Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @java.lang.Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        if (extensionRegistry == null) {
-          throw new java.lang.NullPointerException();
-        }
-        try {
-          boolean done = false;
-          while (!done) {
-            int tag = input.readTag();
-            switch (tag) {
-              case 0:
-                done = true;
-                break;
-              case 10: {
-                id_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 10
-              case 16: {
-                itemType_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-              case 26: {
-                java.lang.String s = input.readStringRequireUtf8();
-                ensureEnchantmentsIsMutable();
-                enchantments_.add(s);
-                break;
-              } // case 26
-              default: {
-                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                  done = true; // was an endgroup tag
-                }
-                break;
-              } // default:
-            } // switch (tag)
-          } // while (!done)
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          throw e.unwrapIOException();
-        } finally {
-          onChanged();
-        } // finally
-        return this;
-      }
-      private int bitField0_;
-
-      private java.lang.Object id_ = "";
-      /**
-       * <code>string id = 1;</code>
-       * @return The id.
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string id = 1;</code>
-       * @return The bytes for id.
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string id = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearId() {
-        id_ = getDefaultInstance().getId();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string id = 1;</code>
-       * @param value The bytes for id to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        id_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-
-      private int itemType_ = 0;
-      /**
-       * <code>.bridge.ItemType item_type = 2;</code>
-       * @return The enum numeric value on the wire for itemType.
-       */
-      @java.lang.Override public int getItemTypeValue() {
-        return itemType_;
-      }
-      /**
-       * <code>.bridge.ItemType item_type = 2;</code>
-       * @param value The enum numeric value on the wire for itemType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setItemTypeValue(int value) {
-        itemType_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.ItemType item_type = 2;</code>
-       * @return The itemType.
-       */
-      @java.lang.Override
-      public com.tron.bridge.Common.ItemType getItemType() {
-        com.tron.bridge.Common.ItemType result = com.tron.bridge.Common.ItemType.forNumber(itemType_);
-        return result == null ? com.tron.bridge.Common.ItemType.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.bridge.ItemType item_type = 2;</code>
-       * @param value The itemType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setItemType(com.tron.bridge.Common.ItemType value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        itemType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.ItemType item_type = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearItemType() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        itemType_ = 0;
         onChanged();
         return this;
       }
@@ -2481,6 +1287,339 @@ public final class Common {
         onChanged();
         return this;
       }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>string name = 4;</code>
+       * @return The name.
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string name = 4;</code>
+       * @return The bytes for name.
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string name = 4;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        name_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearName() {
+        name_ = getDefaultInstance().getName();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string name = 4;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        name_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object description_ = "";
+      /**
+       * <code>string description = 5;</code>
+       * @return The description.
+       */
+      public java.lang.String getDescription() {
+        java.lang.Object ref = description_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          description_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string description = 5;</code>
+       * @return The bytes for description.
+       */
+      public com.google.protobuf.ByteString
+          getDescriptionBytes() {
+        java.lang.Object ref = description_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          description_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string description = 5;</code>
+       * @param value The description to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDescription(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        description_ = value;
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string description = 5;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearDescription() {
+        description_ = getDefaultInstance().getDescription();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string description = 5;</code>
+       * @param value The bytes for description to set.
+       * @return This builder for chaining.
+       */
+      public Builder setDescriptionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        description_ = value;
+        bitField0_ |= 0x00000010;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object category_ = "";
+      /**
+       * <code>string category = 6;</code>
+       * @return The category.
+       */
+      public java.lang.String getCategory() {
+        java.lang.Object ref = category_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          category_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string category = 6;</code>
+       * @return The bytes for category.
+       */
+      public com.google.protobuf.ByteString
+          getCategoryBytes() {
+        java.lang.Object ref = category_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          category_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string category = 6;</code>
+       * @param value The category to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCategory(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        category_ = value;
+        bitField0_ |= 0x00000020;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string category = 6;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCategory() {
+        category_ = getDefaultInstance().getCategory();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string category = 6;</code>
+       * @param value The bytes for category to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCategoryBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        category_ = value;
+        bitField0_ |= 0x00000020;
+        onChanged();
+        return this;
+      }
+
+      private long buyPrice_ ;
+      /**
+       * <code>uint64 buy_price = 7;</code>
+       * @return The buyPrice.
+       */
+      @java.lang.Override
+      public long getBuyPrice() {
+        return buyPrice_;
+      }
+      /**
+       * <code>uint64 buy_price = 7;</code>
+       * @param value The buyPrice to set.
+       * @return This builder for chaining.
+       */
+      public Builder setBuyPrice(long value) {
+
+        buyPrice_ = value;
+        bitField0_ |= 0x00000040;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 buy_price = 7;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearBuyPrice() {
+        bitField0_ = (bitField0_ & ~0x00000040);
+        buyPrice_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long sellPrice_ ;
+      /**
+       * <code>uint64 sell_price = 8;</code>
+       * @return The sellPrice.
+       */
+      @java.lang.Override
+      public long getSellPrice() {
+        return sellPrice_;
+      }
+      /**
+       * <code>uint64 sell_price = 8;</code>
+       * @param value The sellPrice to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSellPrice(long value) {
+
+        sellPrice_ = value;
+        bitField0_ |= 0x00000080;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 sell_price = 8;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSellPrice() {
+        bitField0_ = (bitField0_ & ~0x00000080);
+        sellPrice_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private int rarity_ = 0;
+      /**
+       * <code>.bridge.Rarity rarity = 9;</code>
+       * @return The enum numeric value on the wire for rarity.
+       */
+      @java.lang.Override public int getRarityValue() {
+        return rarity_;
+      }
+      /**
+       * <code>.bridge.Rarity rarity = 9;</code>
+       * @param value The enum numeric value on the wire for rarity to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRarityValue(int value) {
+        rarity_ = value;
+        bitField0_ |= 0x00000100;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.bridge.Rarity rarity = 9;</code>
+       * @return The rarity.
+       */
+      @java.lang.Override
+      public com.tron.bridge.Common.Rarity getRarity() {
+        com.tron.bridge.Common.Rarity result = com.tron.bridge.Common.Rarity.forNumber(rarity_);
+        return result == null ? com.tron.bridge.Common.Rarity.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.bridge.Rarity rarity = 9;</code>
+       * @param value The rarity to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRarity(com.tron.bridge.Common.Rarity value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000100;
+        rarity_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.bridge.Rarity rarity = 9;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRarity() {
+        bitField0_ = (bitField0_ & ~0x00000100);
+        rarity_ = 0;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -2494,23 +1633,23 @@ public final class Common {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:bridge.Item)
+      // @@protoc_insertion_point(builder_scope:bridge.ShopItem)
     }
 
-    // @@protoc_insertion_point(class_scope:bridge.Item)
-    private static final com.tron.bridge.Common.Item DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:bridge.ShopItem)
+    private static final com.tron.bridge.Common.ShopItem DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.tron.bridge.Common.Item();
+      DEFAULT_INSTANCE = new com.tron.bridge.Common.ShopItem();
     }
 
-    public static com.tron.bridge.Common.Item getDefaultInstance() {
+    public static com.tron.bridge.Common.ShopItem getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Item>
-        PARSER = new com.google.protobuf.AbstractParser<Item>() {
+    private static final com.google.protobuf.Parser<ShopItem>
+        PARSER = new com.google.protobuf.AbstractParser<ShopItem>() {
       @java.lang.Override
-      public Item parsePartialFrom(
+      public ShopItem parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2529,17 +1668,790 @@ public final class Common {
       }
     };
 
-    public static com.google.protobuf.Parser<Item> parser() {
+    public static com.google.protobuf.Parser<ShopItem> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Item> getParserForType() {
+    public com.google.protobuf.Parser<ShopItem> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.tron.bridge.Common.Item getDefaultInstanceForType() {
+    public com.tron.bridge.Common.ShopItem getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PartialPrefixOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.PartialPrefix)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string text = 1;</code>
+     * @return The text.
+     */
+    java.lang.String getText();
+    /**
+     * <code>string text = 1;</code>
+     * @return The bytes for text.
+     */
+    com.google.protobuf.ByteString
+        getTextBytes();
+
+    /**
+     * <code>string color = 2;</code>
+     * @return The color.
+     */
+    java.lang.String getColor();
+    /**
+     * <code>string color = 2;</code>
+     * @return The bytes for color.
+     */
+    com.google.protobuf.ByteString
+        getColorBytes();
+
+    /**
+     * <code>uint64 price = 3;</code>
+     * @return The price.
+     */
+    long getPrice();
+  }
+  /**
+   * Protobuf type {@code bridge.PartialPrefix}
+   */
+  public static final class PartialPrefix extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.PartialPrefix)
+      PartialPrefixOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use PartialPrefix.newBuilder() to construct.
+    private PartialPrefix(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private PartialPrefix() {
+      text_ = "";
+      color_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new PartialPrefix();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Common.internal_static_bridge_PartialPrefix_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Common.internal_static_bridge_PartialPrefix_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Common.PartialPrefix.class, com.tron.bridge.Common.PartialPrefix.Builder.class);
+    }
+
+    public static final int TEXT_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object text_ = "";
+    /**
+     * <code>string text = 1;</code>
+     * @return The text.
+     */
+    @java.lang.Override
+    public java.lang.String getText() {
+      java.lang.Object ref = text_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        text_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string text = 1;</code>
+     * @return The bytes for text.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getTextBytes() {
+      java.lang.Object ref = text_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        text_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int COLOR_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object color_ = "";
+    /**
+     * <code>string color = 2;</code>
+     * @return The color.
+     */
+    @java.lang.Override
+    public java.lang.String getColor() {
+      java.lang.Object ref = color_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        color_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string color = 2;</code>
+     * @return The bytes for color.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getColorBytes() {
+      java.lang.Object ref = color_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        color_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PRICE_FIELD_NUMBER = 3;
+    private long price_ = 0L;
+    /**
+     * <code>uint64 price = 3;</code>
+     * @return The price.
+     */
+    @java.lang.Override
+    public long getPrice() {
+      return price_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, text_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(color_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, color_);
+      }
+      if (price_ != 0L) {
+        output.writeUInt64(3, price_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(text_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, text_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(color_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, color_);
+      }
+      if (price_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt64Size(3, price_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Common.PartialPrefix)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Common.PartialPrefix other = (com.tron.bridge.Common.PartialPrefix) obj;
+
+      if (!getText()
+          .equals(other.getText())) return false;
+      if (!getColor()
+          .equals(other.getColor())) return false;
+      if (getPrice()
+          != other.getPrice()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TEXT_FIELD_NUMBER;
+      hash = (53 * hash) + getText().hashCode();
+      hash = (37 * hash) + COLOR_FIELD_NUMBER;
+      hash = (53 * hash) + getColor().hashCode();
+      hash = (37 * hash) + PRICE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getPrice());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Common.PartialPrefix parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Common.PartialPrefix parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Common.PartialPrefix parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Common.PartialPrefix prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.PartialPrefix}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.PartialPrefix)
+        com.tron.bridge.Common.PartialPrefixOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Common.internal_static_bridge_PartialPrefix_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Common.internal_static_bridge_PartialPrefix_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Common.PartialPrefix.class, com.tron.bridge.Common.PartialPrefix.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Common.PartialPrefix.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        text_ = "";
+        color_ = "";
+        price_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Common.internal_static_bridge_PartialPrefix_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Common.PartialPrefix getDefaultInstanceForType() {
+        return com.tron.bridge.Common.PartialPrefix.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Common.PartialPrefix build() {
+        com.tron.bridge.Common.PartialPrefix result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Common.PartialPrefix buildPartial() {
+        com.tron.bridge.Common.PartialPrefix result = new com.tron.bridge.Common.PartialPrefix(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Common.PartialPrefix result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.text_ = text_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.color_ = color_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.price_ = price_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Common.PartialPrefix) {
+          return mergeFrom((com.tron.bridge.Common.PartialPrefix)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Common.PartialPrefix other) {
+        if (other == com.tron.bridge.Common.PartialPrefix.getDefaultInstance()) return this;
+        if (!other.getText().isEmpty()) {
+          text_ = other.text_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        if (!other.getColor().isEmpty()) {
+          color_ = other.color_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getPrice() != 0L) {
+          setPrice(other.getPrice());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                text_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              case 18: {
+                color_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                price_ = input.readUInt64();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object text_ = "";
+      /**
+       * <code>string text = 1;</code>
+       * @return The text.
+       */
+      public java.lang.String getText() {
+        java.lang.Object ref = text_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          text_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string text = 1;</code>
+       * @return The bytes for text.
+       */
+      public com.google.protobuf.ByteString
+          getTextBytes() {
+        java.lang.Object ref = text_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          text_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string text = 1;</code>
+       * @param value The text to set.
+       * @return This builder for chaining.
+       */
+      public Builder setText(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        text_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string text = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearText() {
+        text_ = getDefaultInstance().getText();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string text = 1;</code>
+       * @param value The bytes for text to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTextBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        text_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object color_ = "";
+      /**
+       * <code>string color = 2;</code>
+       * @return The color.
+       */
+      public java.lang.String getColor() {
+        java.lang.Object ref = color_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          color_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string color = 2;</code>
+       * @return The bytes for color.
+       */
+      public com.google.protobuf.ByteString
+          getColorBytes() {
+        java.lang.Object ref = color_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          color_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string color = 2;</code>
+       * @param value The color to set.
+       * @return This builder for chaining.
+       */
+      public Builder setColor(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        color_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string color = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearColor() {
+        color_ = getDefaultInstance().getColor();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string color = 2;</code>
+       * @param value The bytes for color to set.
+       * @return This builder for chaining.
+       */
+      public Builder setColorBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        color_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private long price_ ;
+      /**
+       * <code>uint64 price = 3;</code>
+       * @return The price.
+       */
+      @java.lang.Override
+      public long getPrice() {
+        return price_;
+      }
+      /**
+       * <code>uint64 price = 3;</code>
+       * @param value The price to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPrice(long value) {
+
+        price_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint64 price = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPrice() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        price_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.PartialPrefix)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.PartialPrefix)
+    private static final com.tron.bridge.Common.PartialPrefix DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Common.PartialPrefix();
+    }
+
+    public static com.tron.bridge.Common.PartialPrefix getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PartialPrefix>
+        PARSER = new com.google.protobuf.AbstractParser<PartialPrefix>() {
+      @java.lang.Override
+      public PartialPrefix parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<PartialPrefix> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PartialPrefix> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Common.PartialPrefix getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2551,10 +2463,10 @@ public final class Common {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_bridge_ShopItem_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_bridge_Item_descriptor;
+    internal_static_bridge_PartialPrefix_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_bridge_Item_fieldAccessorTable;
+      internal_static_bridge_PartialPrefix_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2564,18 +2476,16 @@ public final class Common {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\014common.proto\022\006bridge\"\256\001\n\010ShopItem\022\n\n\002i" +
-      "d\030\001 \001(\004\022\032\n\004item\030\002 \001(\0132\014.bridge.Item\022\014\n\004n" +
-      "ame\030\003 \001(\t\022\023\n\013description\030\004 \001(\t\022\020\n\010catego" +
-      "ry\030\005 \001(\t\022\021\n\tbuy_price\030\006 \001(\004\022\022\n\nsell_pric" +
-      "e\030\007 \001(\004\022\036\n\006rarity\030\010 \001(\0162\016.bridge.Rarity\"" +
-      "M\n\004Item\022\n\n\002id\030\001 \001(\t\022#\n\titem_type\030\002 \001(\0162\020" +
-      ".bridge.ItemType\022\024\n\014enchantments\030\003 \003(\t*E" +
-      "\n\006Rarity\022\n\n\006COMMON\020\000\022\014\n\010UNCOMMON\020\001\022\010\n\004RA" +
-      "RE\020\002\022\010\n\004EPIC\020\003\022\r\n\tLEGENDARY\020\004*M\n\010ItemTyp" +
-      "e\022\010\n\004TOOL\020\000\022\t\n\005BLOCK\020\001\022\t\n\005ARMOR\020\002\022\010\n\004FOO" +
-      "D\020\003\022\010\n\004MISC\020\004\022\r\n\tCONTAINER\020\005B\021\n\017com.tron" +
-      ".bridgeb\006proto3"
+      "\n\014common.proto\022\006bridge\"\271\001\n\010ShopItem\022\n\n\002i" +
+      "d\030\001 \001(\004\022\017\n\007type_id\030\002 \001(\t\022\024\n\014enchantments" +
+      "\030\003 \003(\t\022\014\n\004name\030\004 \001(\t\022\023\n\013description\030\005 \001(" +
+      "\t\022\020\n\010category\030\006 \001(\t\022\021\n\tbuy_price\030\007 \001(\004\022\022" +
+      "\n\nsell_price\030\010 \001(\004\022\036\n\006rarity\030\t \001(\0162\016.bri" +
+      "dge.Rarity\";\n\rPartialPrefix\022\014\n\004text\030\001 \001(" +
+      "\t\022\r\n\005color\030\002 \001(\t\022\r\n\005price\030\003 \001(\004*E\n\006Rarit" +
+      "y\022\n\n\006COMMON\020\000\022\014\n\010UNCOMMON\020\001\022\010\n\004RARE\020\002\022\010\n" +
+      "\004EPIC\020\003\022\r\n\tLEGENDARY\020\004B\021\n\017com.tron.bridg" +
+      "eb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -2586,13 +2496,13 @@ public final class Common {
     internal_static_bridge_ShopItem_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ShopItem_descriptor,
-        new java.lang.String[] { "Id", "Item", "Name", "Description", "Category", "BuyPrice", "SellPrice", "Rarity", });
-    internal_static_bridge_Item_descriptor =
+        new java.lang.String[] { "Id", "TypeId", "Enchantments", "Name", "Description", "Category", "BuyPrice", "SellPrice", "Rarity", });
+    internal_static_bridge_PartialPrefix_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_bridge_Item_fieldAccessorTable = new
+    internal_static_bridge_PartialPrefix_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_bridge_Item_descriptor,
-        new java.lang.String[] { "Id", "ItemType", "Enchantments", });
+        internal_static_bridge_PartialPrefix_descriptor,
+        new java.lang.String[] { "Text", "Color", "Price", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

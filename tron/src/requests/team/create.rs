@@ -2,9 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{CreateTeamRequest, CreateTeamResponse};
 use crate::models::team::Team;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_create_team(
         &self,
         request: Request<CreateTeamRequest>,
@@ -52,7 +53,7 @@ impl BridgeService {
             })?;
 
         debug!("Create team request from player {} completed", username);
-        info!("Created team {} for player {}", team_name, username);
+        debug!("Created team {} for player {}", team_name, username);
 
         Ok(Response::new(CreateTeamResponse { success: true }))
     }

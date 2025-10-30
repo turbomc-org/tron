@@ -2,9 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{AcceptTeamInviteRequest, AcceptTeamInviteResponse};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_accept_team_invite(
         &self,
         request: Request<AcceptTeamInviteRequest>,
@@ -13,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let target = inner_request.team;
 
-        info!(
+        debug!(
             "Accept team invite request from player {} received",
             username
         );
@@ -42,7 +43,7 @@ impl BridgeService {
                 Status::internal("Failed to accept team invite request")
             })?;
 
-        info!(
+        debug!(
             "Accept team invite request from player {} completed",
             username
         );

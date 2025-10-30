@@ -7,7 +7,6 @@ package bridge;
 import "session.proto";
 import "balance.proto";
 import "leaderboard.proto";
-import "messaging.proto";
 import "friends.proto";
 import "teams.proto";
 import "shop.proto";

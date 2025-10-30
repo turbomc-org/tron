@@ -1,6 +1,5 @@
-use crate::models::servers::Client;
 use tonic::{Request, Response, Status};
-use tracing::warn;
+use tracing::{error, warn};
 
 use crate::{
     BridgeService,
@@ -8,6 +7,7 @@ use crate::{
 };
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_proxy_shutdown(
         &self,
         request: Request<ProxyShutdownRequest>,
@@ -17,13 +17,12 @@ impl BridgeService {
 
         warn!("Proxy shutdown request from client {} received", client_id);
 
-        let client = Client::get(&self.cache.servers.proxies, client_id).await?;
-
-        if !client {
-            return Err(Status::unavailable("Proxy is not active"));
+        if !self.state.servers.proxies.contains(&client_id) {
+            error!("Client {} is not in a lobby", client_id);
+            return Err(Status::not_found("Client is not in a lobby"));
         }
 
-        self.cache.servers.proxies.remove(&client_id);
+        self.state.servers.proxies.remove(&client_id);
 
         warn!("Proxy shutdown request from client {} completed", client_id);
 

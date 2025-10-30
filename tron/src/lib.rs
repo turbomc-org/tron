@@ -48,6 +48,7 @@ pub mod bridge {
     tonic::include_proto!("bridge");
 }
 
+#[derive(Debug)]
 pub struct BridgeService {
     state: Arc<State>,
     collections: Collections,

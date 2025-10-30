@@ -4,6 +4,7 @@ use tonic::{Request, Response, Status};
 use tracing::{debug, info};
 
 impl BridgeService {
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_player_leave(
         &self,
         request: Request<PlayerLeaveRequest>,

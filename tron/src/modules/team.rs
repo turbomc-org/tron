@@ -30,7 +30,7 @@ impl Team {
             }
         });
 
-        state.insert_team(self.clone());
+        state.insert_team(self.clone()).await?;
 
         Ok(())
     }
@@ -82,8 +82,8 @@ impl Team {
         self.members.insert(player.id.clone(), now);
         player.team = Some(self.id);
 
-        state.insert_team(self.clone());
-        state.insert_player(player.clone());
+        state.insert_team(self.clone()).await?;
+        state.insert_player(player.clone()).await?;
 
         Ok(())
     }
@@ -131,8 +131,8 @@ impl Team {
         self.members.remove(&player.id);
         player.team = None;
 
-        state.insert_team(self.clone());
-        state.insert_player(player.clone());
+        state.insert_team(self.clone()).await?;
+        state.insert_player(player.clone()).await?;
 
         Ok(())
     }
@@ -163,7 +163,7 @@ impl Team {
 
         self.leader = id;
 
-        state.insert_team(self.clone());
+        state.insert_team(self.clone()).await?;
 
         Ok(())
     }
@@ -193,7 +193,7 @@ impl Team {
 
         self.open = open;
 
-        state.insert_team(self.clone());
+        state.insert_team(self.clone()).await?;
 
         Ok(())
     }

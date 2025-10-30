@@ -1,9 +1,10 @@
 use crate::BridgeService;
 use crate::bridge::{LeaveTeamRequest, LeaveTeamResponse};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::{debug, error};
 
 impl BridgeService {
+    #[tracing::instrument]
     pub async fn handle_leave_team(
         &self,
         request: Request<LeaveTeamRequest>,
@@ -11,7 +12,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        info!("Leave team request for player {} received", username);
+        debug!("Leave team request for player {} received", username);
 
         let mut player = self.state.get_player_with_handling(&username).await?;
 
@@ -41,7 +42,7 @@ impl BridgeService {
             Status::internal("Failed to leave team")
         })?;
 
-        info!("Leave team request for player {} completed", username);
+        debug!("Leave team request for player {} completed", username);
 
         Ok(Response::new(LeaveTeamResponse { success: true }))
     }
