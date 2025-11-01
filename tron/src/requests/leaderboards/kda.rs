@@ -2,32 +2,35 @@ use crate::BridgeService;
 use crate::bridge::{KdaLeaderboardRequest, KdaLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_kda_leaderboard(
         &self,
-        _request: Request<KdaLeaderboardRequest>,
+        request: Request<KdaLeaderboardRequest>,
     ) -> Result<Response<KdaLeaderboardResponse>, Status> {
-        debug!("Kda leaderboard request received");
+        info!("Kda leaderboard request received");
 
-        let filtered_players = self
-            .collections
-            .players
-            .get_leaderboard_kda(Some(10))
-            .await
-            .map_err(|err| {
-                error!("Failed to fetch the leaderboard: {}", err);
-                Status::internal("Failed to fetch the leaderboard")
-            })?;
+        let mut leaderboard_with_names: HashMap<String, f32> = HashMap::new();
+        let leaderboard = self.state.leaderboards.kd.get(10).await;
 
-        let players: HashMap<String, f32> = filtered_players
-            .into_iter()
-            .map(|player| (player.username, player.kills as f32 / player.deaths as f32))
-            .collect();
+        for player in leaderboard {
+            let username = self
+                .state
+                .get_player_username(&player.0)
+                .await
+                .map_err(|err| {
+                    error!("Failed to get player username: {}", err);
+                    Status::internal("Failed to get player username")
+                })?
+                .ok_or_else(|| Status::not_found("Player not found"))?;
+            leaderboard_with_names.insert(username, player.1 as f32);
+        }
 
-        debug!("Kda leaderboard request completed");
+        let players = leaderboard_with_names.into_iter().collect();
+
+        info!("Kda leaderboard request completed");
 
         Ok(Response::new(KdaLeaderboardResponse {
             leaderboard: players,

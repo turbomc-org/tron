@@ -5,7 +5,7 @@ use tracing::debug;
 use tracing::error;
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_select_prefix(
         &self,
         request: Request<SelectPrefixRequest>,

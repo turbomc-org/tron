@@ -1,10 +1,10 @@
 use crate::BridgeService;
 use crate::bridge::{RemoveFriendRequest, RemoveFriendResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_remove_friend(
         &self,
         request: Request<RemoveFriendRequest>,
@@ -13,7 +13,7 @@ impl BridgeService {
         let username = inner_request.username;
         let target = inner_request.target;
 
-        debug!("Remove friend request from player {} received", username);
+        info!("Remove friend request from player {} received", username);
 
         if username == target {
             return Err(Status::invalid_argument(
@@ -41,7 +41,7 @@ impl BridgeService {
                 ))
             })?;
 
-        debug!("Remove friend request from player {} completed", username);
+        info!("Remove friend request from player {} completed", username);
 
         Ok(Response::new(RemoveFriendResponse { success: true }))
     }

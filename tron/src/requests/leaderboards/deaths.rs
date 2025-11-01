@@ -2,32 +2,35 @@ use crate::BridgeService;
 use crate::bridge::{DeathsLeaderboardRequest, DeathsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_deaths_leaderboard(
         &self,
-        _request: Request<DeathsLeaderboardRequest>,
+        request: Request<DeathsLeaderboardRequest>,
     ) -> Result<Response<DeathsLeaderboardResponse>, Status> {
-        debug!("Deaths leaderboard request received");
+        info!("Deaths leaderboard request received");
 
-        let filtered_players = self
-            .collections
-            .players
-            .get_leaderboard("deaths", Some(10))
-            .await
-            .map_err(|err| {
-                error!("Failed to fetch the leaderboard: {}", err);
-                Status::internal("Failed to fetch the leaderboard")
-            })?;
+        let mut leaderboard_with_names: HashMap<String, u64> = HashMap::new();
+        let leaderboard = self.state.leaderboards.deaths.get(10).await;
 
-        let players: HashMap<String, u64> = filtered_players
-            .into_iter()
-            .map(|player| (player.username, player.deaths))
-            .collect();
+        for player in leaderboard {
+            let username = self
+                .state
+                .get_player_username(&player.0)
+                .await
+                .map_err(|err| {
+                    error!("Failed to get player username: {}", err);
+                    Status::internal("Failed to get player username")
+                })?
+                .ok_or_else(|| Status::not_found("Player not found"))?;
+            leaderboard_with_names.insert(username, player.1);
+        }
 
-        debug!("Deaths leaderboard request completed");
+        let players = leaderboard_with_names.into_iter().collect();
+
+        info!("Deaths leaderboard request completed");
 
         Ok(Response::new(DeathsLeaderboardResponse {
             leaderboard: players,

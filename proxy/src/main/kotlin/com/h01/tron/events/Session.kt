@@ -22,6 +22,7 @@ import kotlin.system.measureTimeMillis
 import com.h01.tron.animations.welcome
 import com.velocitypowered.api.event.connection.PostLoginEvent
 import kotlinx.coroutines.delay
+import net.kyori.adventure.text.minimessage.MiniMessage
 
 class SessionEvents(private val connection: BridgeCoroutineStub, private val logger: Logger) {
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -29,6 +30,14 @@ class SessionEvents(private val connection: BridgeCoroutineStub, private val log
     @Subscribe
     fun onPostLogin(event: PostLoginEvent) {
         val player = event.player;
+
+        val mm: MiniMessage = MiniMessage.miniMessage();
+        val msg1 : Component = mm.deserialize("<red>\uD83C\uDF96</red> <blue>⚒IX</blue> <red><i>Deceptions</i></red> <bold>batman</bold> <color:#750085><st>=</st></color> Hey there how are you?")
+        player.sendMessage(msg1)
+        val msg2 : Component = mm.deserialize("<red>\uD83C\uDF96</red> <green>⛏IX</green> <red><i>Deceptions</i></red> <bold>batman</bold> <color:#750085><st>=</st></color> Hey there how are you?")
+        player.sendMessage(msg2)
+        val msg3: Component = mm.deserialize("<gray>\uD83C\uDF96</gray> <color:#fa5300>⚔III</color> <red><i>Deceptions</i></red> <bold>batman</bold> <color:#750085><st>=</st></color> Hey there how are you?")
+        player.sendMessage(msg3)
         scope.launch {
             welcome(player, scope)
         }

@@ -2,33 +2,38 @@ use crate::BridgeService;
 use crate::bridge::{TeamsLeaderboardRequest, TeamsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_teams_leaderboard(
         &self,
-        _request: Request<TeamsLeaderboardRequest>,
+        request: Request<TeamsLeaderboardRequest>,
     ) -> Result<Response<TeamsLeaderboardResponse>, Status> {
-        debug!("Team leaderboard request received");
+        info!("Team leaderboard request received");
 
-        let teams = self
-            .collections
-            .players
-            .get_leaderboard_team(&self.collections.teams, Some(10))
-            .await
-            .map_err(|err| {
-                error!("Failed to fetch team overall leaderboard: {}", err);
-                Status::internal("Failed to fetch team overall leaderboard")
-            })?;
+        let mut leaderboard_with_names: HashMap<String, u64> = HashMap::new();
+        let leaderboard = self.state.leaderboards.overall.get(10).await;
 
-        let leaderboard: HashMap<String, u64> = teams
-            .into_iter()
-            .map(|(team, score)| (team.name, score.round() as u64))
-            .collect();
+        for player in leaderboard {
+            let username = self
+                .state
+                .get_player_username(&player.0)
+                .await
+                .map_err(|err| {
+                    error!("Failed to get player username: {}", err);
+                    Status::internal("Failed to get player username")
+                })?
+                .ok_or_else(|| Status::not_found("Player not found"))?;
+            leaderboard_with_names.insert(username, player.1);
+        }
 
-        debug!("Team leaderboard request completed");
+        let players = leaderboard_with_names.into_iter().collect();
 
-        Ok(Response::new(TeamsLeaderboardResponse { leaderboard }))
+        info!("Team leaderboard request completed");
+
+        Ok(Response::new(TeamsLeaderboardResponse {
+            leaderboard: players,
+        }))
     }
 }

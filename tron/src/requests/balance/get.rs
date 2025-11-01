@@ -1,7 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{GetBalanceRequest, GetBalanceResponse};
 use tonic::{Request, Response, Status};
-use tracing::debug;
+use tracing::info;
 
 impl BridgeService {
     #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
@@ -12,11 +12,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        debug!("Get Balance request for player {} received", username);
+        info!("Get Balance request for player {} received", username);
 
         let player = self.state.get_player_with_handling(&username).await?;
 
-        debug!(
+        info!(
             "Successfully responded to Get Balance request for player {}",
             username
         );

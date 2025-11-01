@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::{debug, error};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_accept_team_invite(
         &self,
         request: Request<AcceptTeamInviteRequest>,

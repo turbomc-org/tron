@@ -20,6 +20,9 @@ use std::sync::Arc;
 pub trait PlayerCollection: Send + Sync + Debug {
     async fn all(&self) -> Result<Vec<Player>, Error>;
     async fn indexes(&self) -> Result<HashMap<u64, String>, Error>;
+    async fn kill_indexes(&self) -> Result<HashMap<u64, u64>, Error>;
+    async fn death_indexes(&self) -> Result<HashMap<u64, u64>, Error>;
+    async fn coin_indexes(&self) -> Result<HashMap<u64, u64>, Error>;
     async fn find_by_username(&self, username: &str) -> Result<Option<Player>, Error>;
     async fn find_by_discord_id(&self, discord_id: u64) -> Result<Option<Player>, Error>;
     async fn insert_one(&self, player: &Player) -> Result<(), Error>;
@@ -90,6 +93,81 @@ impl PlayerCollection for MongoPlayerCollection {
         let mut indexes = HashMap::new();
         while let Some(user) = user_cursor.try_next().await? {
             indexes.insert(user.id, user.username);
+        }
+
+        Ok(indexes)
+    }
+
+    async fn coin_indexes(&self) -> Result<HashMap<u64, u64>, Error> {
+        #[derive(Serialize, Deserialize)]
+        struct PartialResponse {
+            #[serde(rename = "_id")]
+            id: u64,
+            coins: u64,
+        }
+
+        let partial_players: Collection<PartialResponse> = self.collection.clone_with_type();
+        let projection = doc! { "_id": 1, "coins": 1  };
+        let find_options = FindOptions::builder().projection(projection).build();
+
+        let mut user_cursor = partial_players
+            .find(doc! {})
+            .with_options(find_options)
+            .await?;
+
+        let mut indexes = HashMap::new();
+        while let Some(user) = user_cursor.try_next().await? {
+            indexes.insert(user.id, user.coins);
+        }
+
+        Ok(indexes)
+    }
+
+    async fn death_indexes(&self) -> Result<HashMap<u64, u64>, Error> {
+        #[derive(Serialize, Deserialize)]
+        struct PartialResponse {
+            #[serde(rename = "_id")]
+            id: u64,
+            deaths: u64,
+        }
+
+        let partial_players: Collection<PartialResponse> = self.collection.clone_with_type();
+        let projection = doc! { "_id": 1, "deaths": 1  };
+        let find_options = FindOptions::builder().projection(projection).build();
+
+        let mut user_cursor = partial_players
+            .find(doc! {})
+            .with_options(find_options)
+            .await?;
+
+        let mut indexes = HashMap::new();
+        while let Some(user) = user_cursor.try_next().await? {
+            indexes.insert(user.id, user.deaths);
+        }
+
+        Ok(indexes)
+    }
+
+    async fn kill_indexes(&self) -> Result<HashMap<u64, u64>, Error> {
+        #[derive(Serialize, Deserialize)]
+        struct PartialResponse {
+            #[serde(rename = "_id")]
+            id: u64,
+            kills: u64,
+        }
+
+        let partial_players: Collection<PartialResponse> = self.collection.clone_with_type();
+        let projection = doc! { "_id": 1, "kills": 1  };
+        let find_options = FindOptions::builder().projection(projection).build();
+
+        let mut user_cursor = partial_players
+            .find(doc! {})
+            .with_options(find_options)
+            .await?;
+
+        let mut indexes = HashMap::new();
+        while let Some(user) = user_cursor.try_next().await? {
+            indexes.insert(user.id, user.kills);
         }
 
         Ok(indexes)

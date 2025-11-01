@@ -1,48 +1,36 @@
 use crate::BridgeService;
 use crate::bridge::{OverallLeaderboardRequest, OverallLeaderboardResponse};
-use crate::models::player::Player;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_overall_leaderboard(
         &self,
-        _request: Request<OverallLeaderboardRequest>,
+        request: Request<OverallLeaderboardRequest>,
     ) -> Result<Response<OverallLeaderboardResponse>, Status> {
-        debug!("Overall leaderboard request received");
+        info!("Overall leaderboard request received");
 
-        let filtered_players = self
-            .collections
-            .players
-            .get_leaderboard_overall(Some(10))
-            .await
-            .map_err(|err| {
-                error!("Failed to fetch the leaderboard: {}", err);
-                Status::internal("Failed to fetch the leaderboard")
-            })?;
+        let mut leaderboard_with_names: HashMap<String, u64> = HashMap::new();
+        let leaderboard = self.state.leaderboards.overall.get(10).await;
 
-        let players: HashMap<String, u64> = filtered_players
-            .into_iter()
-            .map(|player| {
-                let kd_ratio = if player.deaths == 0 {
-                    player.kills as f64
-                } else {
-                    player.kills as f64 / player.deaths as f64
-                };
+        for player in leaderboard {
+            let username = self
+                .state
+                .get_player_username(&player.0)
+                .await
+                .map_err(|err| {
+                    error!("Failed to get player username: {}", err);
+                    Status::internal("Failed to get player username")
+                })?
+                .ok_or_else(|| Status::not_found("Player not found"))?;
+            leaderboard_with_names.insert(username, player.1);
+        }
 
-                let score = player.kills as f64
-                    + (kd_ratio * 100.0)
-                    + player.coins as f64
-                    + (Player::get_rank_value(&player.rank) as f64 * 1000.0)
-                    + player.vault_count as f64;
+        let players = leaderboard_with_names.into_iter().collect();
 
-                (player.username, score.round() as u64)
-            })
-            .collect();
-
-        debug!("Overall leaderboard request completed");
+        info!("Overall leaderboard request completed");
 
         Ok(Response::new(OverallLeaderboardResponse {
             leaderboard: players,

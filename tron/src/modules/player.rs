@@ -85,8 +85,8 @@ impl Player {
 
         self.coins -= amount;
         target.coins += amount;
-        state.insert_player(self.clone()).await?;
-        state.insert_player(target.clone()).await?;
+        state.inc_coins(player_id, -(amount as i64)).await?;
+        state.inc_coins(target_id, amount as i64).await?;
 
         Ok(())
     }
@@ -484,7 +484,7 @@ impl Player {
         });
 
         self.kills += kills;
-        state.insert_player(self.clone()).await?;
+        state.inc_kills(player_id, kills).await?;
 
         Ok(())
     }
@@ -515,7 +515,7 @@ impl Player {
         });
 
         self.deaths += deaths;
-        state.insert_player(self.clone()).await?;
+        state.inc_deaths(player_id, deaths).await?;
 
         Ok(())
     }

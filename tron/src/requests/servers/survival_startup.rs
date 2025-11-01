@@ -8,10 +8,10 @@ use tracing::{info, warn};
 use crate::BridgeService;
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_survival_startup(
         &self,
-        _request: Request<SurvivalStartupRequest>,
+        request: Request<SurvivalStartupRequest>,
     ) -> Result<Response<SurvivalStartupResponse>, Status> {
         warn!("Survival startup request received");
 

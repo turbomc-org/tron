@@ -212,9 +212,9 @@ impl Bridge for BridgeService {
 
     async fn get_open_teams(
         &self,
-        _request: Request<crate::bridge::GetOpenTeamsRequest>,
+        request: Request<crate::bridge::GetOpenTeamsRequest>,
     ) -> Result<Response<crate::bridge::GetOpenTeamsResponse>, Status> {
-        unimplemented!()
+        self.handle_get_open_teams(request).await
     }
 
     async fn delete_team(

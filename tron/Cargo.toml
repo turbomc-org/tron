@@ -28,6 +28,7 @@ tokio-stream = "0.1.17"
 async-trait = "0.1.89"
 mockall = "0.13.1"
 async-stream = "0.3.6"
+indexset = "0.12.3"
 
 [build-dependencies]
 tonic-build = "0.14.2"

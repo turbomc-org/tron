@@ -1,12 +1,12 @@
 use crate::bridge::{PlayerBreakBlockRequest, PlayerBreakBlockResponse};
 use anyhow::Result;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 use crate::BridgeService;
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_player_break_block(
         &self,
         request: Request<PlayerBreakBlockRequest>,
@@ -14,7 +14,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        debug!("Break block request of player {} received", username);
+        info!("Break block request of player {} received", username);
 
         let mut player = self.state.get_player_with_handling(&username).await?;
 
@@ -29,7 +29,7 @@ impl BridgeService {
                 Status::internal("Failed to add death")
             })?;
 
-        debug!("Break block request of player {} completed", username);
+        info!("Break block request of player {} completed", username);
 
         Ok(Response::new(PlayerBreakBlockResponse { success: true }))
     }

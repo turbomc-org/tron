@@ -1278,6 +1278,1176 @@ public final class Teams {
 
   }
 
+  public interface GetTeamInviteRequestsRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.GetTeamInviteRequestsRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
+  }
+  /**
+   * Protobuf type {@code bridge.GetTeamInviteRequestsRequest}
+   */
+  public static final class GetTeamInviteRequestsRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.GetTeamInviteRequestsRequest)
+      GetTeamInviteRequestsRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GetTeamInviteRequestsRequest.newBuilder() to construct.
+    private GetTeamInviteRequestsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GetTeamInviteRequestsRequest() {
+      username_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetTeamInviteRequestsRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Teams.GetTeamInviteRequestsRequest.class, com.tron.bridge.Teams.GetTeamInviteRequestsRequest.Builder.class);
+    }
+
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object username_ = "";
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Teams.GetTeamInviteRequestsRequest)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Teams.GetTeamInviteRequestsRequest other = (com.tron.bridge.Teams.GetTeamInviteRequestsRequest) obj;
+
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Teams.GetTeamInviteRequestsRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.GetTeamInviteRequestsRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.GetTeamInviteRequestsRequest)
+        com.tron.bridge.Teams.GetTeamInviteRequestsRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Teams.GetTeamInviteRequestsRequest.class, com.tron.bridge.Teams.GetTeamInviteRequestsRequest.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Teams.GetTeamInviteRequestsRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        username_ = "";
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Teams.GetTeamInviteRequestsRequest getDefaultInstanceForType() {
+        return com.tron.bridge.Teams.GetTeamInviteRequestsRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Teams.GetTeamInviteRequestsRequest build() {
+        com.tron.bridge.Teams.GetTeamInviteRequestsRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Teams.GetTeamInviteRequestsRequest buildPartial() {
+        com.tron.bridge.Teams.GetTeamInviteRequestsRequest result = new com.tron.bridge.Teams.GetTeamInviteRequestsRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Teams.GetTeamInviteRequestsRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.username_ = username_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Teams.GetTeamInviteRequestsRequest) {
+          return mergeFrom((com.tron.bridge.Teams.GetTeamInviteRequestsRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Teams.GetTeamInviteRequestsRequest other) {
+        if (other == com.tron.bridge.Teams.GetTeamInviteRequestsRequest.getDefaultInstance()) return this;
+        if (!other.getUsername().isEmpty()) {
+          username_ = other.username_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                username_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object username_ = "";
+      /**
+       * <code>string username = 1;</code>
+       * @return The username.
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return The bytes for username.
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        username_ = getDefaultInstance().getUsername();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.GetTeamInviteRequestsRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.GetTeamInviteRequestsRequest)
+    private static final com.tron.bridge.Teams.GetTeamInviteRequestsRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Teams.GetTeamInviteRequestsRequest();
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GetTeamInviteRequestsRequest>
+        PARSER = new com.google.protobuf.AbstractParser<GetTeamInviteRequestsRequest>() {
+      @java.lang.Override
+      public GetTeamInviteRequestsRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<GetTeamInviteRequestsRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetTeamInviteRequestsRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Teams.GetTeamInviteRequestsRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GetTeamInviteRequestsResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.GetTeamInviteRequestsResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @return A list containing the requests.
+     */
+    java.util.List<java.lang.String>
+        getRequestsList();
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @return The count of requests.
+     */
+    int getRequestsCount();
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @param index The index of the element to return.
+     * @return The requests at the given index.
+     */
+    java.lang.String getRequests(int index);
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the requests at the given index.
+     */
+    com.google.protobuf.ByteString
+        getRequestsBytes(int index);
+  }
+  /**
+   * Protobuf type {@code bridge.GetTeamInviteRequestsResponse}
+   */
+  public static final class GetTeamInviteRequestsResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.GetTeamInviteRequestsResponse)
+      GetTeamInviteRequestsResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use GetTeamInviteRequestsResponse.newBuilder() to construct.
+    private GetTeamInviteRequestsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private GetTeamInviteRequestsResponse() {
+      requests_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new GetTeamInviteRequestsResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Teams.GetTeamInviteRequestsResponse.class, com.tron.bridge.Teams.GetTeamInviteRequestsResponse.Builder.class);
+    }
+
+    public static final int REQUESTS_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private com.google.protobuf.LazyStringArrayList requests_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @return A list containing the requests.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getRequestsList() {
+      return requests_;
+    }
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @return The count of requests.
+     */
+    public int getRequestsCount() {
+      return requests_.size();
+    }
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @param index The index of the element to return.
+     * @return The requests at the given index.
+     */
+    public java.lang.String getRequests(int index) {
+      return requests_.get(index);
+    }
+    /**
+     * <code>repeated string requests = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the requests at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getRequestsBytes(int index) {
+      return requests_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < requests_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, requests_.getRaw(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      {
+        int dataSize = 0;
+        for (int i = 0; i < requests_.size(); i++) {
+          dataSize += computeStringSizeNoTag(requests_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getRequestsList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Teams.GetTeamInviteRequestsResponse)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Teams.GetTeamInviteRequestsResponse other = (com.tron.bridge.Teams.GetTeamInviteRequestsResponse) obj;
+
+      if (!getRequestsList()
+          .equals(other.getRequestsList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getRequestsCount() > 0) {
+        hash = (37 * hash) + REQUESTS_FIELD_NUMBER;
+        hash = (53 * hash) + getRequestsList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Teams.GetTeamInviteRequestsResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.GetTeamInviteRequestsResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.GetTeamInviteRequestsResponse)
+        com.tron.bridge.Teams.GetTeamInviteRequestsResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Teams.GetTeamInviteRequestsResponse.class, com.tron.bridge.Teams.GetTeamInviteRequestsResponse.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Teams.GetTeamInviteRequestsResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        requests_ =
+            com.google.protobuf.LazyStringArrayList.emptyList();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Teams.internal_static_bridge_GetTeamInviteRequestsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Teams.GetTeamInviteRequestsResponse getDefaultInstanceForType() {
+        return com.tron.bridge.Teams.GetTeamInviteRequestsResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Teams.GetTeamInviteRequestsResponse build() {
+        com.tron.bridge.Teams.GetTeamInviteRequestsResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Teams.GetTeamInviteRequestsResponse buildPartial() {
+        com.tron.bridge.Teams.GetTeamInviteRequestsResponse result = new com.tron.bridge.Teams.GetTeamInviteRequestsResponse(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Teams.GetTeamInviteRequestsResponse result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          requests_.makeImmutable();
+          result.requests_ = requests_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Teams.GetTeamInviteRequestsResponse) {
+          return mergeFrom((com.tron.bridge.Teams.GetTeamInviteRequestsResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Teams.GetTeamInviteRequestsResponse other) {
+        if (other == com.tron.bridge.Teams.GetTeamInviteRequestsResponse.getDefaultInstance()) return this;
+        if (!other.requests_.isEmpty()) {
+          if (requests_.isEmpty()) {
+            requests_ = other.requests_;
+            bitField0_ |= 0x00000001;
+          } else {
+            ensureRequestsIsMutable();
+            requests_.addAll(other.requests_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureRequestsIsMutable();
+                requests_.add(s);
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private com.google.protobuf.LazyStringArrayList requests_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
+      private void ensureRequestsIsMutable() {
+        if (!requests_.isModifiable()) {
+          requests_ = new com.google.protobuf.LazyStringArrayList(requests_);
+        }
+        bitField0_ |= 0x00000001;
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @return A list containing the requests.
+       */
+      public com.google.protobuf.ProtocolStringList
+          getRequestsList() {
+        requests_.makeImmutable();
+        return requests_;
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @return The count of requests.
+       */
+      public int getRequestsCount() {
+        return requests_.size();
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @param index The index of the element to return.
+       * @return The requests at the given index.
+       */
+      public java.lang.String getRequests(int index) {
+        return requests_.get(index);
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the requests at the given index.
+       */
+      public com.google.protobuf.ByteString
+          getRequestsBytes(int index) {
+        return requests_.getByteString(index);
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @param index The index to set the value at.
+       * @param value The requests to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRequests(
+          int index, java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensureRequestsIsMutable();
+        requests_.set(index, value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @param value The requests to add.
+       * @return This builder for chaining.
+       */
+      public Builder addRequests(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensureRequestsIsMutable();
+        requests_.add(value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @param values The requests to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllRequests(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureRequestsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, requests_);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRequests() {
+        requests_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string requests = 1;</code>
+       * @param value The bytes of the requests to add.
+       * @return This builder for chaining.
+       */
+      public Builder addRequestsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        ensureRequestsIsMutable();
+        requests_.add(value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.GetTeamInviteRequestsResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.GetTeamInviteRequestsResponse)
+    private static final com.tron.bridge.Teams.GetTeamInviteRequestsResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Teams.GetTeamInviteRequestsResponse();
+    }
+
+    public static com.tron.bridge.Teams.GetTeamInviteRequestsResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<GetTeamInviteRequestsResponse>
+        PARSER = new com.google.protobuf.AbstractParser<GetTeamInviteRequestsResponse>() {
+      @java.lang.Override
+      public GetTeamInviteRequestsResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<GetTeamInviteRequestsResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetTeamInviteRequestsResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Teams.GetTeamInviteRequestsResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface CreateTeamRequestOrBuilder extends
       // @@protoc_insertion_point(interface_extends:bridge.CreateTeamRequest)
       com.google.protobuf.MessageOrBuilder {
@@ -11780,12 +12950,24 @@ public final class Teams {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string team_name = 1;</code>
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
+
+    /**
+     * <code>string team_name = 2;</code>
      * @return The teamName.
      */
     java.lang.String getTeamName();
     /**
-     * <code>string team_name = 1;</code>
+     * <code>string team_name = 2;</code>
      * @return The bytes for teamName.
      */
     com.google.protobuf.ByteString
@@ -11804,6 +12986,7 @@ public final class Teams {
       super(builder);
     }
     private DeleteTeamRequest() {
+      username_ = "";
       teamName_ = "";
     }
 
@@ -11827,11 +13010,50 @@ public final class Teams {
               com.tron.bridge.Teams.DeleteTeamRequest.class, com.tron.bridge.Teams.DeleteTeamRequest.Builder.class);
     }
 
-    public static final int TEAM_NAME_FIELD_NUMBER = 1;
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object username_ = "";
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TEAM_NAME_FIELD_NUMBER = 2;
     @SuppressWarnings("serial")
     private volatile java.lang.Object teamName_ = "";
     /**
-     * <code>string team_name = 1;</code>
+     * <code>string team_name = 2;</code>
      * @return The teamName.
      */
     @java.lang.Override
@@ -11848,7 +13070,7 @@ public final class Teams {
       }
     }
     /**
-     * <code>string team_name = 1;</code>
+     * <code>string team_name = 2;</code>
      * @return The bytes for teamName.
      */
     @java.lang.Override
@@ -11880,8 +13102,11 @@ public final class Teams {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
+      }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(teamName_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, teamName_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, teamName_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -11892,8 +13117,11 @@ public final class Teams {
       if (size != -1) return size;
 
       size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
+      }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(teamName_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, teamName_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, teamName_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -11910,6 +13138,8 @@ public final class Teams {
       }
       com.tron.bridge.Teams.DeleteTeamRequest other = (com.tron.bridge.Teams.DeleteTeamRequest) obj;
 
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
       if (!getTeamName()
           .equals(other.getTeamName())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -11923,6 +13153,8 @@ public final class Teams {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
       hash = (37 * hash) + TEAM_NAME_FIELD_NUMBER;
       hash = (53 * hash) + getTeamName().hashCode();
       hash = (29 * hash) + getUnknownFields().hashCode();
@@ -12056,6 +13288,7 @@ public final class Teams {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
+        username_ = "";
         teamName_ = "";
         return this;
       }
@@ -12091,6 +13324,9 @@ public final class Teams {
       private void buildPartial0(com.tron.bridge.Teams.DeleteTeamRequest result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.username_ = username_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
           result.teamName_ = teamName_;
         }
       }
@@ -12139,9 +13375,14 @@ public final class Teams {
 
       public Builder mergeFrom(com.tron.bridge.Teams.DeleteTeamRequest other) {
         if (other == com.tron.bridge.Teams.DeleteTeamRequest.getDefaultInstance()) return this;
+        if (!other.getUsername().isEmpty()) {
+          username_ = other.username_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
         if (!other.getTeamName().isEmpty()) {
           teamName_ = other.teamName_;
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000002;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -12171,10 +13412,15 @@ public final class Teams {
                 done = true;
                 break;
               case 10: {
-                teamName_ = input.readStringRequireUtf8();
+                username_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000001;
                 break;
               } // case 10
+              case 18: {
+                teamName_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -12192,9 +13438,81 @@ public final class Teams {
       }
       private int bitField0_;
 
+      private java.lang.Object username_ = "";
+      /**
+       * <code>string username = 1;</code>
+       * @return The username.
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return The bytes for username.
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        username_ = getDefaultInstance().getUsername();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object teamName_ = "";
       /**
-       * <code>string team_name = 1;</code>
+       * <code>string team_name = 2;</code>
        * @return The teamName.
        */
       public java.lang.String getTeamName() {
@@ -12210,7 +13528,7 @@ public final class Teams {
         }
       }
       /**
-       * <code>string team_name = 1;</code>
+       * <code>string team_name = 2;</code>
        * @return The bytes for teamName.
        */
       public com.google.protobuf.ByteString
@@ -12227,7 +13545,7 @@ public final class Teams {
         }
       }
       /**
-       * <code>string team_name = 1;</code>
+       * <code>string team_name = 2;</code>
        * @param value The teamName to set.
        * @return This builder for chaining.
        */
@@ -12235,22 +13553,22 @@ public final class Teams {
           java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
         teamName_ = value;
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
       /**
-       * <code>string team_name = 1;</code>
+       * <code>string team_name = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearTeamName() {
         teamName_ = getDefaultInstance().getTeamName();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
       /**
-       * <code>string team_name = 1;</code>
+       * <code>string team_name = 2;</code>
        * @param value The bytes for teamName to set.
        * @return This builder for chaining.
        */
@@ -12259,7 +13577,7 @@ public final class Teams {
         if (value == null) { throw new NullPointerException(); }
         checkByteStringIsUtf8(value);
         teamName_ = value;
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -12820,6 +14138,16 @@ public final class Teams {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_bridge_GetTeamLeaderboardResponse_LeaderboardEntry_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_GetTeamInviteRequestsRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_GetTeamInviteRequestsRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_GetTeamInviteRequestsResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_GetTeamInviteRequestsResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_bridge_CreateTeamRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -12933,31 +14261,34 @@ public final class Teams {
       "LeaderboardResponse\022H\n\013leaderboard\030\001 \003(\013" +
       "23.bridge.GetTeamLeaderboardResponse.Lea" +
       "derboardEntry\0322\n\020LeaderboardEntry\022\013\n\003key" +
-      "\030\001 \001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\"P\n\021CreateTeamR" +
-      "equest\022\020\n\010username\030\001 \001(\t\022\014\n\004team\030\002 \001(\t\022\r" +
-      "\n\005color\030\003 \001(\t\022\014\n\004open\030\004 \001(\010\"%\n\022CreateTea" +
-      "mResponse\022\017\n\007success\030\001 \001(\010\"$\n\020LeaveTeamR" +
-      "equest\022\020\n\010username\030\001 \001(\t\"$\n\021LeaveTeamRes" +
-      "ponse\022\017\n\007success\030\001 \001(\010\"1\n\017JoinTeamReques" +
-      "t\022\020\n\010username\030\001 \001(\t\022\014\n\004team\030\002 \001(\t\"#\n\020Joi" +
-      "nTeamResponse\022\017\n\007success\030\001 \001(\010\"9\n\025SendTe" +
-      "amInviteRequest\022\020\n\010username\030\001 \001(\t\022\016\n\006tar" +
-      "get\030\002 \001(\t\")\n\026SendTeamInviteResponse\022\017\n\007s" +
-      "uccess\030\001 \001(\010\"9\n\027AcceptTeamInviteRequest\022" +
-      "\020\n\010username\030\001 \001(\t\022\014\n\004team\030\002 \001(\t\"+\n\030Accep" +
-      "tTeamInviteResponse\022\017\n\007success\030\001 \001(\010\"9\n\027" +
-      "RejectTeamInviteRequest\022\020\n\010username\030\001 \001(" +
-      "\t\022\014\n\004team\030\002 \001(\t\"+\n\030RejectTeamInviteRespo" +
-      "nse\022\017\n\007success\030\001 \001(\010\")\n\025GetTeamMembersRe" +
-      "quest\022\020\n\010username\030\001 \001(\t\")\n\026GetTeamMember" +
-      "sResponse\022\017\n\007members\030\001 \003(\t\"<\n\030PromoteTea" +
-      "mMemberRequest\022\020\n\010username\030\001 \001(\t\022\016\n\006targ" +
-      "et\030\002 \001(\t\",\n\031PromoteTeamMemberResponse\022\017\n" +
-      "\007success\030\001 \001(\010\"\025\n\023GetOpenTeamsRequest\"%\n" +
-      "\024GetOpenTeamsResponse\022\r\n\005teams\030\001 \003(\t\"&\n\021" +
-      "DeleteTeamRequest\022\021\n\tteam_name\030\001 \001(\t\"%\n\022" +
-      "DeleteTeamResponse\022\017\n\007success\030\001 \001(\010B\021\n\017c" +
-      "om.tron.bridgeb\006proto3"
+      "\030\001 \001(\t\022\r\n\005value\030\002 \001(\004:\0028\001\"0\n\034GetTeamInvi" +
+      "teRequestsRequest\022\020\n\010username\030\001 \001(\t\"1\n\035G" +
+      "etTeamInviteRequestsResponse\022\020\n\010requests" +
+      "\030\001 \003(\t\"P\n\021CreateTeamRequest\022\020\n\010username\030" +
+      "\001 \001(\t\022\014\n\004team\030\002 \001(\t\022\r\n\005color\030\003 \001(\t\022\014\n\004op" +
+      "en\030\004 \001(\010\"%\n\022CreateTeamResponse\022\017\n\007succes" +
+      "s\030\001 \001(\010\"$\n\020LeaveTeamRequest\022\020\n\010username\030" +
+      "\001 \001(\t\"$\n\021LeaveTeamResponse\022\017\n\007success\030\001 " +
+      "\001(\010\"1\n\017JoinTeamRequest\022\020\n\010username\030\001 \001(\t" +
+      "\022\014\n\004team\030\002 \001(\t\"#\n\020JoinTeamResponse\022\017\n\007su" +
+      "ccess\030\001 \001(\010\"9\n\025SendTeamInviteRequest\022\020\n\010" +
+      "username\030\001 \001(\t\022\016\n\006target\030\002 \001(\t\")\n\026SendTe" +
+      "amInviteResponse\022\017\n\007success\030\001 \001(\010\"9\n\027Acc" +
+      "eptTeamInviteRequest\022\020\n\010username\030\001 \001(\t\022\014" +
+      "\n\004team\030\002 \001(\t\"+\n\030AcceptTeamInviteResponse" +
+      "\022\017\n\007success\030\001 \001(\010\"9\n\027RejectTeamInviteReq" +
+      "uest\022\020\n\010username\030\001 \001(\t\022\014\n\004team\030\002 \001(\t\"+\n\030" +
+      "RejectTeamInviteResponse\022\017\n\007success\030\001 \001(" +
+      "\010\")\n\025GetTeamMembersRequest\022\020\n\010username\030\001" +
+      " \001(\t\")\n\026GetTeamMembersResponse\022\017\n\007member" +
+      "s\030\001 \003(\t\"<\n\030PromoteTeamMemberRequest\022\020\n\010u" +
+      "sername\030\001 \001(\t\022\016\n\006target\030\002 \001(\t\",\n\031Promote" +
+      "TeamMemberResponse\022\017\n\007success\030\001 \001(\010\"\025\n\023G" +
+      "etOpenTeamsRequest\"%\n\024GetOpenTeamsRespon" +
+      "se\022\r\n\005teams\030\001 \003(\t\"8\n\021DeleteTeamRequest\022\020" +
+      "\n\010username\030\001 \001(\t\022\021\n\tteam_name\030\002 \001(\t\"%\n\022D" +
+      "eleteTeamResponse\022\017\n\007success\030\001 \001(\010B\021\n\017co" +
+      "m.tron.bridgeb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -12981,122 +14312,134 @@ public final class Teams {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_GetTeamLeaderboardResponse_LeaderboardEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_bridge_CreateTeamRequest_descriptor =
+    internal_static_bridge_GetTeamInviteRequestsRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
+    internal_static_bridge_GetTeamInviteRequestsRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_GetTeamInviteRequestsRequest_descriptor,
+        new java.lang.String[] { "Username", });
+    internal_static_bridge_GetTeamInviteRequestsResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_bridge_GetTeamInviteRequestsResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_GetTeamInviteRequestsResponse_descriptor,
+        new java.lang.String[] { "Requests", });
+    internal_static_bridge_CreateTeamRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_bridge_CreateTeamRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_CreateTeamRequest_descriptor,
         new java.lang.String[] { "Username", "Team", "Color", "Open", });
     internal_static_bridge_CreateTeamResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_bridge_CreateTeamResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_CreateTeamResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_LeaveTeamRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_bridge_LeaveTeamRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_LeaveTeamRequest_descriptor,
         new java.lang.String[] { "Username", });
     internal_static_bridge_LeaveTeamResponse_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_bridge_LeaveTeamResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_LeaveTeamResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_JoinTeamRequest_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_bridge_JoinTeamRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_JoinTeamRequest_descriptor,
         new java.lang.String[] { "Username", "Team", });
     internal_static_bridge_JoinTeamResponse_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_bridge_JoinTeamResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_JoinTeamResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_SendTeamInviteRequest_descriptor =
-      getDescriptor().getMessageTypes().get(8);
+      getDescriptor().getMessageTypes().get(10);
     internal_static_bridge_SendTeamInviteRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_SendTeamInviteRequest_descriptor,
         new java.lang.String[] { "Username", "Target", });
     internal_static_bridge_SendTeamInviteResponse_descriptor =
-      getDescriptor().getMessageTypes().get(9);
+      getDescriptor().getMessageTypes().get(11);
     internal_static_bridge_SendTeamInviteResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_SendTeamInviteResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_AcceptTeamInviteRequest_descriptor =
-      getDescriptor().getMessageTypes().get(10);
+      getDescriptor().getMessageTypes().get(12);
     internal_static_bridge_AcceptTeamInviteRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_AcceptTeamInviteRequest_descriptor,
         new java.lang.String[] { "Username", "Team", });
     internal_static_bridge_AcceptTeamInviteResponse_descriptor =
-      getDescriptor().getMessageTypes().get(11);
+      getDescriptor().getMessageTypes().get(13);
     internal_static_bridge_AcceptTeamInviteResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_AcceptTeamInviteResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_RejectTeamInviteRequest_descriptor =
-      getDescriptor().getMessageTypes().get(12);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_bridge_RejectTeamInviteRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_RejectTeamInviteRequest_descriptor,
         new java.lang.String[] { "Username", "Team", });
     internal_static_bridge_RejectTeamInviteResponse_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_bridge_RejectTeamInviteResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_RejectTeamInviteResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_GetTeamMembersRequest_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_bridge_GetTeamMembersRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_GetTeamMembersRequest_descriptor,
         new java.lang.String[] { "Username", });
     internal_static_bridge_GetTeamMembersResponse_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_bridge_GetTeamMembersResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_GetTeamMembersResponse_descriptor,
         new java.lang.String[] { "Members", });
     internal_static_bridge_PromoteTeamMemberRequest_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_bridge_PromoteTeamMemberRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_PromoteTeamMemberRequest_descriptor,
         new java.lang.String[] { "Username", "Target", });
     internal_static_bridge_PromoteTeamMemberResponse_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_bridge_PromoteTeamMemberResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_PromoteTeamMemberResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_GetOpenTeamsRequest_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_bridge_GetOpenTeamsRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_GetOpenTeamsRequest_descriptor,
         new java.lang.String[] { });
     internal_static_bridge_GetOpenTeamsResponse_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_bridge_GetOpenTeamsResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_GetOpenTeamsResponse_descriptor,
         new java.lang.String[] { "Teams", });
     internal_static_bridge_DeleteTeamRequest_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_bridge_DeleteTeamRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_DeleteTeamRequest_descriptor,
-        new java.lang.String[] { "TeamName", });
+        new java.lang.String[] { "Username", "TeamName", });
     internal_static_bridge_DeleteTeamResponse_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_bridge_DeleteTeamResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_DeleteTeamResponse_descriptor,

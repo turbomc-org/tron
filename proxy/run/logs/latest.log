@@ -1,74 +1,14 @@
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Booting up Velocity 3.4.0-SNAPSHOT (git-b6b6b20f-b555)...
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading localizations...
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Connections will use epoll channels, libdeflate (Linux x86_64) compression, OpenSSL 3.x.x (Linux x86_64) ciphers
-[22:40:25] [main/WARN] [com.velocitypowered.proxy.config.VelocityConfiguration]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading plugins...
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.plugin.VelocityPluginManager]: Loaded plugin proxy 1.0-SNAPSHOT by Harihar Nautiyal
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loaded 2 plugins
-[22:40:25] [proxy - Task Executor #0/INFO] [proxy]: Commands registered
-[22:40:25] [proxy - Task Executor #0/INFO] [proxy]: Registering SessionEvents listener...
-[22:40:25] [proxy - Task Executor #0/INFO] [proxy]: Registered SessionEvents!
-[22:40:25] [Netty epoll Boss #0/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Listening on /[0:0:0:0:0:0:0:0]:25565
-[22:40:25] [main/INFO] [com.velocitypowered.proxy.Velocity]: Done (0.64s)!
-[22:43:17] [Netty epoll Worker #2/INFO] [com.velocitypowered.proxy.connection.client.AuthSessionHandler]: [connected player] batman (/[0:0:0:0:0:0:0:1]:38108) has connected
-[22:43:17] [proxy - Task Executor #1/INFO] [proxy]: Sending join request to main server
-[22:43:17] [Netty epoll Worker #2/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] batman -> lobby has connected
-[22:43:17] [DefaultDispatcher-worker-2/INFO] [proxy]: Join response for batman: success=false
-[22:43:17] [Netty epoll Worker #2/INFO] [com.velocitypowered.proxy.connection.client.ConnectedPlayer]: [connected player] batman (/[0:0:0:0:0:0:0:1]:38108) has disconnected: Failed to verify your account from main server
-[22:43:17] [DefaultDispatcher-worker-2/INFO] [proxy]: Join request for batman completed in 117ms
-[22:43:17] [proxy - Task Executor #1/INFO] [proxy]: Sending disconnection request to main server
-[22:43:17] [Netty epoll Worker #2/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] batman -> lobby has disconnected
-[22:43:17] [DefaultDispatcher-worker-2/ERROR] [proxy]: Failed to send leave request
-io.grpc.StatusException: NOT_FOUND: Player batman not found or isn't active
-	at io.grpc.Status.asException(Status.java:548) ~[?:?]
-	at io.grpc.kotlin.ClientCalls$rpcImpl$1$1$1.onClose(ClientCalls.kt:300) ~[?:?]
-	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:574) ~[?:?]
-	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:72) ~[?:?]
-	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:742) ~[?:?]
-	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723) ~[?:?]
-	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37) ~[?:?]
-	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
-[22:44:01] [Netty epoll Worker #3/INFO] [com.velocitypowered.proxy.connection.client.AuthSessionHandler]: [connected player] batman (/[0:0:0:0:0:0:0:1]:44122) has connected
-[22:44:01] [proxy - Task Executor #1/INFO] [proxy]: Sending join request to main server
-[22:44:01] [Netty epoll Worker #3/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] batman -> lobby has connected
-[22:44:01] [DefaultDispatcher-worker-1/INFO] [proxy]: Join response for batman: success=false
-[22:44:01] [DefaultDispatcher-worker-1/INFO] [proxy]: Join request for batman completed in 9ms
-[22:44:01] [Netty epoll Worker #3/INFO] [com.velocitypowered.proxy.connection.client.ConnectedPlayer]: [connected player] batman (/[0:0:0:0:0:0:0:1]:44122) has disconnected: Failed to verify your account from main server
-[22:44:01] [proxy - Task Executor #1/INFO] [proxy]: Sending disconnection request to main server
-[22:44:01] [Netty epoll Worker #3/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] batman -> lobby has disconnected
-[22:44:01] [DefaultDispatcher-worker-1/ERROR] [proxy]: Failed to send leave request
-io.grpc.StatusException: NOT_FOUND: Player batman not found or isn't active
-	at io.grpc.Status.asException(Status.java:548) ~[?:?]
-	at io.grpc.kotlin.ClientCalls$rpcImpl$1$1$1.onClose(ClientCalls.kt:300) ~[?:?]
-	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:574) ~[?:?]
-	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:72) ~[?:?]
-	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:742) ~[?:?]
-	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723) ~[?:?]
-	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37) ~[?:?]
-	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
-[22:44:54] [Netty epoll Worker #7/INFO] [com.velocitypowered.proxy.connection.client.AuthSessionHandler]: [connected player] HighwayBloss7189 (/[0:0:0:0:0:0:0:1]:55598) has connected
-[22:44:54] [proxy - Task Executor #1/INFO] [proxy]: Sending join request to main server
-[22:44:54] [DefaultDispatcher-worker-2/INFO] [proxy]: Join response for HighwayBloss7189: success=true
-[22:44:54] [DefaultDispatcher-worker-2/INFO] [proxy]: Join request for HighwayBloss7189 completed in 17ms
-[22:44:54] [Netty epoll Worker #7/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] HighwayBloss7189 -> lobby has connected
-[22:45:10] [Netty epoll Worker #7/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [connected player] HighwayBloss7189 (/[0:0:0:0:0:0:0:1]:55598) has disconnected
-[22:45:10] [proxy - Task Executor #1/INFO] [proxy]: Sending disconnection request to main server
-[22:45:10] [Netty epoll Worker #7/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] HighwayBloss7189 -> lobby has disconnected
-[22:45:10] [DefaultDispatcher-worker-2/INFO] [proxy]: Leave request for HighwayBloss7189 completed in 9ms
-[22:59:06] [Netty epoll Worker #12/INFO] [com.velocitypowered.proxy.connection.client.AuthSessionHandler]: [connected player] HighwayBloss7189 (/[0:0:0:0:0:0:0:1]:59902) has connected
-[22:59:06] [proxy - Task Executor #2/INFO] [proxy]: Sending join request to main server
-[22:59:06] [DefaultDispatcher-worker-1/INFO] [proxy]: Join response for HighwayBloss7189: success=true
-[22:59:06] [DefaultDispatcher-worker-1/INFO] [proxy]: Join request for HighwayBloss7189 completed in 7ms
-[22:59:06] [Netty epoll Worker #12/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] HighwayBloss7189 -> lobby has connected
-[22:59:32] [Netty epoll Worker #12/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [connected player] HighwayBloss7189 (/[0:0:0:0:0:0:0:1]:59902) has disconnected
-[22:59:32] [proxy - Task Executor #2/INFO] [proxy]: Sending disconnection request to main server
-[22:59:32] [Netty epoll Worker #12/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] HighwayBloss7189 -> lobby has disconnected
-[22:59:32] [DefaultDispatcher-worker-1/INFO] [proxy]: Leave request for HighwayBloss7189 completed in 5ms
-[23:00:01] [Shutdown thread/INFO] [com.velocitypowered.proxy.VelocityServer]: Shutting down the proxy...
-[23:00:01] [Shutdown thread/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Closing endpoint /0.0.0.0:25565
+[10:14:40] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Booting up Velocity 3.4.0-SNAPSHOT (git-b6b6b20f-b555)...
+[10:14:40] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading localizations...
+[10:14:41] [main/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Connections will use epoll channels, libdeflate (Linux x86_64) compression, OpenSSL 3.x.x (Linux x86_64) ciphers
+[10:14:41] [main/WARN] [com.velocitypowered.proxy.config.VelocityConfiguration]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[10:14:41] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading plugins...
+[10:14:41] [main/INFO] [com.velocitypowered.proxy.plugin.VelocityPluginManager]: Loaded plugin proxy 1.0-SNAPSHOT by Harihar Nautiyal
+[10:14:41] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loaded 2 plugins
+[10:14:41] [proxy - Task Executor #0/INFO] [proxy]: Commands registered
+[10:14:41] [proxy - Task Executor #0/INFO] [proxy]: Registering SessionEvents listener...
+[10:14:41] [proxy - Task Executor #0/INFO] [proxy]: Registered SessionEvents!
+[10:14:41] [Netty epoll Boss #0/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[10:14:41] [main/INFO] [com.velocitypowered.proxy.Velocity]: Done (0.65s)!
+[10:37:32] [Shutdown thread/INFO] [com.velocitypowered.proxy.VelocityServer]: Shutting down the proxy...
+[10:37:32] [Shutdown thread/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Closing endpoint /0.0.0.0:25565

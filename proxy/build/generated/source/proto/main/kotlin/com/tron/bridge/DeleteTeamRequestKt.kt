@@ -28,7 +28,24 @@ public object DeleteTeamRequestKt {
     internal fun _build(): com.tron.bridge.Teams.DeleteTeamRequest = _builder.build()
 
     /**
-     * `string team_name = 1;`
+     * `string username = 1;`
+     */
+    public var username: kotlin.String
+      @JvmName("getUsername")
+      get() = _builder.getUsername()
+      @JvmName("setUsername")
+      set(value) {
+        _builder.setUsername(value)
+      }
+    /**
+     * `string username = 1;`
+     */
+    public fun clearUsername() {
+      _builder.clearUsername()
+    }
+
+    /**
+     * `string team_name = 2;`
      */
     public var teamName: kotlin.String
       @JvmName("getTeamName")
@@ -38,7 +55,7 @@ public object DeleteTeamRequestKt {
         _builder.setTeamName(value)
       }
     /**
-     * `string team_name = 1;`
+     * `string team_name = 2;`
      */
     public fun clearTeamName() {
       _builder.clearTeamName()

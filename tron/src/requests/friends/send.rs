@@ -2,10 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{SendFriendRequestRequest, SendFriendRequestResponse};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_send_friend_request(
         &self,
         request: Request<SendFriendRequestRequest>,
@@ -15,7 +15,7 @@ impl BridgeService {
         let target_username = inner_request.receiver;
         let players = self.collections.players.clone();
 
-        debug!(
+        info!(
             "Send friend request request from player {} received",
             username
         );
@@ -53,7 +53,7 @@ impl BridgeService {
                 ))
             })?;
 
-        debug!(
+        info!(
             "Send friend request request from player {} completed",
             username
         );

@@ -1,6 +1,7 @@
 use crate::models::player::Player;
 use crate::state::State;
 use anyhow::Result;
+use anyhow::anyhow;
 use tonic::Status;
 
 impl State {
@@ -69,5 +70,89 @@ impl State {
             "Player {} is not your friend yet",
             target
         )))
+    }
+
+    pub async fn inc_coins(&self, player_id: u64, amount: i64) -> Result<()> {
+        let Some(username) = self.get_player_username(&player_id).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        let Some(mut player) = self.get_active_player(&username).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        if amount >= 0 {
+            player.coins = player.coins.saturating_add(amount as u64);
+        } else {
+            let sub_amount = (-amount) as u64;
+            if player.coins < sub_amount {
+                return Err(anyhow!("Insufficient coins"));
+            }
+            player.coins -= sub_amount;
+        }
+
+        self.insert_player(player.clone()).await?;
+        self.update_leaderboard(player).await?;
+
+        Ok(())
+    }
+
+    pub async fn inc_kills(&self, player_id: u64, amount: u64) -> Result<()> {
+        let Some(username) = self.get_player_username(&player_id).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        let Some(mut player) = self.get_active_player(&username).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        player.kills = player.kills.saturating_add(amount);
+
+        self.insert_player(player.clone()).await?;
+        self.update_leaderboard(player).await?;
+
+        Ok(())
+    }
+
+    pub async fn inc_deaths(&self, player_id: u64, amount: u64) -> Result<()> {
+        let Some(username) = self.get_player_username(&player_id).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        let Some(mut player) = self.get_active_player(&username).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        player.deaths = player.deaths.saturating_add(amount);
+
+        self.insert_player(player.clone()).await?;
+        self.update_leaderboard(player).await?;
+
+        Ok(())
+    }
+
+    pub async fn update_leaderboard(&self, player: Player) -> Result<()> {
+        self.leaderboards
+            .coins
+            .update_score(player.id.clone(), player.coins.clone())
+            .await;
+
+        let overall =
+            crate::utils::math::calculate_overall(player.kills, player.deaths, player.coins);
+
+        self.leaderboards
+            .overall
+            .update_score(player.id.clone(), overall as u64)
+            .await;
+
+        if let Some(team) = player.team {
+            let Some(team) = self.get_team(team).await? else {
+                return Err(anyhow!("Team not found"));
+            };
+
+            self.update_team_score(team).await?;
+        }
+
+        Ok(())
     }
 }

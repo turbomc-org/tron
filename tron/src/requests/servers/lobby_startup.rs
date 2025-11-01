@@ -8,10 +8,10 @@ use crate::{
 };
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_lobby_startup(
         &self,
-        _request: Request<LobbyStartupRequest>,
+        request: Request<LobbyStartupRequest>,
     ) -> Result<Response<LobbyStartupResponse>, Status> {
         warn!("Lobby startup request received");
 

@@ -11,6 +11,14 @@ message GetTeamLeaderboardResponse {
     map<string, uint64> leaderboard = 1;
 }
 
+message GetTeamInviteRequestsRequest {
+    string username = 1;
+}
+
+message GetTeamInviteRequestsResponse {
+    repeated string requests = 1;
+}
+
 message CreateTeamRequest {
     string username = 1;
     string team = 2;
@@ -90,7 +98,8 @@ message GetOpenTeamsResponse {
 }
 
 message DeleteTeamRequest {
-    string team_name = 1;
+    string username = 1;
+    string team_name = 2;
 }
 
 message DeleteTeamResponse {

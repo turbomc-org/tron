@@ -7,7 +7,7 @@ use crate::{
 };
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_lobby_shutdown(
         &self,
         request: Request<LobbyShutdownRequest>,

@@ -20,6 +20,9 @@ repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/") { name = "papermc-repo" }
     maven("https://repo.opencollab.dev/main/") { name = "opencollab-repo" }
+    maven {
+        url = uri("https://repo.skyblocksquad.de/repo")
+    }
 }
 
 dependencies {
@@ -30,6 +33,7 @@ dependencies {
     implementation(
             "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3"
     ) // for JVM + blocking interop
+    implementation("de.timongcraft:VeloBoard:1.5.4")
 
     // gRPC + Protobuf dependencies
     implementation("io.grpc:grpc-core:1.62.2")
@@ -40,6 +44,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java-util:3.25.3")
     implementation("io.grpc:grpc-okhttp:1.62.2")
     implementation("io.grpc:grpc-util:1.62.2")
+    implementation("net.kyori:adventure-text-minimessage:4.25.0")
 
     compileOnly("org.geysermc.geyser:api:2.8.3-SNAPSHOT")
     compileOnly("org.geysermc.floodgate:api:2.2.4-SNAPSHOT")

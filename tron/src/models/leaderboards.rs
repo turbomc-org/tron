@@ -1,26 +1,45 @@
 use dashmap::DashMap;
-use std::sync::Arc;
+use indexset::BTreeMap;
+use std::cmp::Reverse;
+use tokio::sync::RwLock;
 
+#[derive(Clone, PartialEq, Eq, PartialOrd, Ord, Debug)]
+pub struct ScoreKey(pub Reverse<u64>, pub u64);
+
+#[derive(Debug)]
 pub struct Leaderboards {
-    pub overall: Arc<DashMap<u64, u64>>,
-    pub kills: Arc<DashMap<u64, u64>>,
-    pub deaths: Arc<DashMap<u64, u64>>,
-    pub assists: Arc<DashMap<u64, u64>>,
-    pub teams: Arc<DashMap<u64, u64>>,
-    pub coins: Arc<DashMap<u64, u64>>,
-    pub kda: Arc<DashMap<u64, f64>>,
+    pub overall: Leaderboard,
+    pub kills: Leaderboard,
+    pub deaths: Leaderboard,
+    pub teams: Leaderboard,
+    pub coins: Leaderboard,
+    pub kd: Leaderboard,
 }
 
 impl Leaderboards {
     pub fn new() -> Self {
         Leaderboards {
-            overall: Arc::new(DashMap::new()),
-            kills: Arc::new(DashMap::new()),
-            deaths: Arc::new(DashMap::new()),
-            assists: Arc::new(DashMap::new()),
-            teams: Arc::new(DashMap::new()),
-            coins: Arc::new(DashMap::new()),
-            kda: Arc::new(DashMap::new()),
+            overall: Leaderboard::new(),
+            kills: Leaderboard::new(),
+            deaths: Leaderboard::new(),
+            teams: Leaderboard::new(),
+            coins: Leaderboard::new(),
+            kd: Leaderboard::new(),
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct Leaderboard {
+    pub order: RwLock<BTreeMap<ScoreKey, u64>>,
+    pub index: DashMap<u64, ScoreKey>,
+}
+
+impl Leaderboard {
+    pub fn new() -> Self {
+        Leaderboard {
+            order: RwLock::new(BTreeMap::new()),
+            index: DashMap::new(),
         }
     }
 }

@@ -1,10 +1,10 @@
 use crate::BridgeService;
 use crate::bridge::{DeletePrefixRequest, DeletePrefixResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument()]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_delete_prefix(
         &self,
         request: Request<DeletePrefixRequest>,
@@ -13,7 +13,7 @@ impl BridgeService {
         let username = inner_request.username;
         let prefix_name = inner_request.prefix;
 
-        debug!("Delete request from player {} received", username);
+        info!("Delete request from player {} received", username);
 
         let _ = self.state.get_player_with_handling(&username).await?;
         let prefix = self.state.get_prefix_with_handling(&prefix_name).await?;
@@ -26,7 +26,7 @@ impl BridgeService {
                 Status::internal("Failed to delete prefix")
             })?;
 
-        debug!("Delete request from player {} completed", username);
+        info!("Delete request from player {} completed", username);
 
         Ok(Response::new(DeletePrefixResponse { success: true }))
     }

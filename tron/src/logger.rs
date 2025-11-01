@@ -9,7 +9,7 @@ impl Logger {
         let (non_blocking_file, _guard) = tracing_appender::non_blocking(file_appender);
 
         let level = if trace {
-            LevelFilter::TRACE
+            LevelFilter::DEBUG
         } else {
             LevelFilter::INFO
         };

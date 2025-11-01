@@ -8,12 +8,14 @@ use mongodb::error::Error;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::collections::HashSet;
 use std::fmt::Debug;
 
 #[automock]
 #[async_trait]
 pub trait TeamCollection: Send + Sync + Debug {
     async fn all(&self) -> Result<Vec<Team>, Error>;
+    async fn open_indexes(&self) -> Result<HashSet<u64>, Error>;
     async fn indexes(&self) -> Result<HashMap<String, u64>, Error>;
     async fn find_by_id(&self, id: u64) -> Result<Option<Team>, Error>;
     async fn insert_one(&self, team: &Team) -> Result<(), Error>;
@@ -56,6 +58,31 @@ impl TeamCollection for MongoTeamCollection {
 
         while let Some(team) = team_cursor.try_next().await? {
             indexes.insert(team.name, team.id);
+        }
+
+        Ok(indexes)
+    }
+
+    async fn open_indexes(&self) -> Result<HashSet<u64>, Error> {
+        let mut indexes = HashSet::new();
+
+        #[derive(Serialize, Deserialize)]
+        struct PartialResponse {
+            #[serde(rename = "_id")]
+            id: u64,
+        }
+
+        let partial_teams: Collection<PartialResponse> = self.collection.clone_with_type();
+        let projection = doc! { "_id": 1 };
+        let find_options = FindOptions::builder().projection(projection).build();
+
+        let mut team_cursor = partial_teams
+            .find(doc! {"open": true})
+            .with_options(find_options)
+            .await?;
+
+        while let Some(team) = team_cursor.try_next().await? {
+            indexes.insert(team.id);
         }
 
         Ok(indexes)

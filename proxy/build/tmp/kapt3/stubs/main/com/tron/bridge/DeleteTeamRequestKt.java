@@ -12,7 +12,7 @@ public final class DeleteTeamRequestKt {
         super();
     }
     
-    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000(\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0006\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0002\b\u0002\b\u0007\u0018\u0000 \u00102\u00020\u0001:\u0001\u0010B\u000f\b\u0002\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\b\u0010\f\u001a\u00020\rH\u0001J\u0006\u0010\u000e\u001a\u00020\u000fR\u000e\u0010\u0002\u001a\u00020\u0003X\u0082\u0004\u00a2\u0006\u0002\n\u0000R$\u0010\u0007\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\b\u0010\t\"\u0004\b\n\u0010\u000b\u00a8\u0006\u0011"}, d2 = {"Lcom/tron/bridge/DeleteTeamRequestKt$Dsl;", "", "_builder", "Lcom/tron/bridge/Teams$DeleteTeamRequest$Builder;", "(Lcom/tron/bridge/Teams$DeleteTeamRequest$Builder;)V", "value", "", "teamName", "getTeamName", "()Ljava/lang/String;", "setTeamName", "(Ljava/lang/String;)V", "_build", "Lcom/tron/bridge/Teams$DeleteTeamRequest;", "clearTeamName", "", "Companion", "proxy"})
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000(\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\t\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0002\b\u0003\b\u0007\u0018\u0000 \u00142\u00020\u0001:\u0001\u0014B\u000f\b\u0002\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\b\u0010\u000f\u001a\u00020\u0010H\u0001J\u0006\u0010\u0011\u001a\u00020\u0012J\u0006\u0010\u0013\u001a\u00020\u0012R\u000e\u0010\u0002\u001a\u00020\u0003X\u0082\u0004\u00a2\u0006\u0002\n\u0000R$\u0010\u0007\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\b\u0010\t\"\u0004\b\n\u0010\u000bR$\u0010\f\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\r\u0010\t\"\u0004\b\u000e\u0010\u000b\u00a8\u0006\u0015"}, d2 = {"Lcom/tron/bridge/DeleteTeamRequestKt$Dsl;", "", "_builder", "Lcom/tron/bridge/Teams$DeleteTeamRequest$Builder;", "(Lcom/tron/bridge/Teams$DeleteTeamRequest$Builder;)V", "value", "", "teamName", "getTeamName", "()Ljava/lang/String;", "setTeamName", "(Ljava/lang/String;)V", "username", "getUsername", "setUsername", "_build", "Lcom/tron/bridge/Teams$DeleteTeamRequest;", "clearTeamName", "", "clearUsername", "Companion", "proxy"})
     @kotlin.OptIn(markerClass = {com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode.class})
     @com.google.protobuf.kotlin.ProtoDslMarker()
     public static final class Dsl {
@@ -23,6 +23,23 @@ public final class DeleteTeamRequestKt {
         
         private Dsl(com.tron.bridge.Teams.DeleteTeamRequest.Builder _builder) {
             super();
+        }
+        
+        @kotlin.jvm.JvmName(name = "getUsername")
+        @org.jetbrains.annotations.NotNull()
+        public final java.lang.String getUsername() {
+            return null;
+        }
+        
+        @kotlin.jvm.JvmName(name = "setUsername")
+        public final void setUsername(@org.jetbrains.annotations.NotNull()
+        java.lang.String value) {
+        }
+        
+        /**
+         * `string username = 1;`
+         */
+        public final void clearUsername() {
         }
         
         @kotlin.jvm.JvmName(name = "getTeamName")
@@ -37,7 +54,7 @@ public final class DeleteTeamRequestKt {
         }
         
         /**
-         * `string team_name = 1;`
+         * `string team_name = 2;`
          */
         public final void clearTeamName() {
         }

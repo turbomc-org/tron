@@ -10,6 +10,12 @@ impl State {
         Ok(self.teams.get(&id).map(|entry| entry.value().clone()))
     }
 
+    pub async fn delete_team(&self, team_id: u64, team_name: &String) -> Result<()> {
+        self.teams.remove(&team_id);
+        self.team_indexes.remove(team_name);
+        Ok(())
+    }
+
     pub async fn get_team_by_name(&self, name: String) -> Result<Option<Team>> {
         let id = match self.team_indexes.get(&name) {
             Some(entry) => *entry.value(),
@@ -39,6 +45,11 @@ impl State {
 
     pub async fn insert_team(&self, team: Team) -> Result<()> {
         self.teams.insert(team.id, team.clone());
+
+        if team.open {
+            self.open_team_indexes.insert(team.id);
+        }
+
         self.team_indexes.insert(team.name, team.id);
         Ok(())
     }
@@ -62,5 +73,27 @@ impl State {
             "Player {} has no team request from team {}",
             player.username, team_name
         )))
+    }
+
+    pub async fn update_team_score(&self, team: Team) -> Result<()> {
+        let mut team_overall = 0;
+
+        for member in team.members {
+            let member_id = member.0;
+            let overall_score = self
+                .leaderboards
+                .overall
+                .get_score(member_id)
+                .await?
+                .unwrap_or(0);
+            team_overall += overall_score;
+        }
+
+        self.leaderboards
+            .teams
+            .update_score(team.id, team_overall)
+            .await;
+
+        Ok(())
     }
 }

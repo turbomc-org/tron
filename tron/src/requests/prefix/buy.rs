@@ -1,10 +1,10 @@
 use crate::BridgeService;
 use crate::bridge::{BuyPrefixRequest, BuyPrefixResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_buy_prefix(
         &self,
         request: Request<BuyPrefixRequest>,
@@ -13,7 +13,7 @@ impl BridgeService {
         let username = inner_request.username;
         let prefix_name = inner_request.prefix;
 
-        debug!("Buy prefix request from player {} received", username);
+        info!("Buy prefix request from player {} received", username);
 
         let mut player = self.state.get_player_with_handling(&username).await?;
         let prefix = self.state.get_prefix_with_handling(&prefix_name).await?;
@@ -36,7 +36,7 @@ impl BridgeService {
                 Status::internal("Failed to buy prefix")
             })?;
 
-        debug!("Buy prefix request from player {} completed", username);
+        info!("Buy prefix request from player {} completed", username);
 
         Ok(Response::new(BuyPrefixResponse { success: true }))
     }

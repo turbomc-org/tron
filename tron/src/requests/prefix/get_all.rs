@@ -1,15 +1,15 @@
 use crate::BridgeService;
 use crate::bridge::{GetAllPrefixRequest, GetAllPrefixResponse, PartialPrefix as CompiledPrefix};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_get_all_prefixes(
         &self,
-        _request: Request<GetAllPrefixRequest>,
+        request: Request<GetAllPrefixRequest>,
     ) -> Result<Response<GetAllPrefixResponse>, Status> {
-        debug!("Get all prefix request received");
+        info!("Get all prefix request received");
 
         let prefixes = self.state.get_prefixes().await.map_err(|err| {
             error!("Failed to get all prefixes: {}", err);
@@ -18,7 +18,7 @@ impl BridgeService {
         let complied_prefixes: Vec<CompiledPrefix> =
             prefixes.iter().map(|prefix| prefix.compile()).collect();
 
-        debug!("Get all prefix request completed");
+        info!("Get all prefix request completed");
 
         Ok(Response::new(GetAllPrefixResponse {
             prefixes: complied_prefixes,

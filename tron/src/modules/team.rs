@@ -197,4 +197,31 @@ impl Team {
 
         Ok(())
     }
+
+    pub async fn delete(
+        &mut self,
+        col: &Arc<dyn TeamCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        let team_id = self.id.clone();
+        let col = col.clone();
+
+        task::spawn(async move {
+            let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                col.delete_one(team_id).await.map_err(|e| {
+                    error!("Retrying team update due to: {}", e);
+                    e
+                })
+            })
+            .await;
+
+            if let Err(e) = retry_result {
+                error!("Team update permanently failed: {}", e);
+            }
+        });
+
+        state.delete_team(team_id, &self.name.clone()).await?;
+
+        Ok(())
+    }
 }

@@ -1,5 +1,8 @@
 pub mod accept_invite;
 pub mod create;
+pub mod delete;
+pub mod get_open;
+pub mod get_requests;
 pub mod join;
 pub mod leave;
 pub mod members;

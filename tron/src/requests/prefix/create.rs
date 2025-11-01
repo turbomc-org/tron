@@ -2,10 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{CreatePrefixRequest, CreatePrefixResponse};
 use crate::models::prefix::Prefix;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_create_prefix(
         &self,
         request: Request<CreatePrefixRequest>,
@@ -14,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let prefix = inner_request.prefix;
 
-        debug!("Create prefix request from player {} received", username);
+        info!("Create prefix request from player {} received", username);
 
         if prefix.is_none() {
             error!(
@@ -50,7 +50,7 @@ impl BridgeService {
                 Status::internal("Failed to insert prefix")
             })?;
 
-        debug!("Create prefix request from player {} completed", username);
+        info!("Create prefix request from player {} completed", username);
 
         Ok(Response::new(CreatePrefixResponse { success: true }))
     }

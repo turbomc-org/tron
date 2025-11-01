@@ -94,7 +94,7 @@ impl ShopItem {
         });
 
         player.coins -= price;
-        state.insert_player(player.clone()).await?;
+        state.inc_coins(player_id, -(price as i64)).await?;
 
         Ok(())
     }
@@ -125,7 +125,7 @@ impl ShopItem {
         });
 
         player.coins += price;
-        state.insert_player(player.clone()).await?;
+        state.inc_coins(player_id, price as i64).await?;
 
         Ok(price)
     }

@@ -8,10 +8,10 @@ use crate::{
 };
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_proxy_startup(
         &self,
-        _request: Request<ProxyStartupRequest>,
+        request: Request<ProxyStartupRequest>,
     ) -> Result<Response<ProxyStartupResponse>, Status> {
         warn!("Proxy startup request received");
 

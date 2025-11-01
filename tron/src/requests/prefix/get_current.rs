@@ -1,10 +1,10 @@
 use crate::BridgeService;
 use crate::bridge::{GetCurrentPrefixRequest, GetCurrentPrefixResponse};
 use tonic::{Request, Response, Status};
-use tracing::debug;
+use tracing::info;
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_get_current_prefix(
         &self,
         request: Request<GetCurrentPrefixRequest>,
@@ -12,7 +12,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        debug!(
+        info!(
             "Get current prefix request from player {} received",
             username
         );
@@ -29,7 +29,7 @@ impl BridgeService {
             .await
             .map_err(|err| Status::internal(format!("Failed to get prefix text: {}", err)))?;
 
-        debug!(
+        info!(
             "Get current prefix request from player {} completed",
             username
         );

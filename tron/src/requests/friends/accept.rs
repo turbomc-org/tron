@@ -2,10 +2,10 @@ use crate::BridgeService;
 use crate::bridge::{AcceptFriendRequestRequest, AcceptFriendRequestResponse};
 use crate::models::player::Player;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{debug, error, info};
 
 impl BridgeService {
-    #[tracing::instrument]
+    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
     pub async fn handle_accept_friend_request(
         &self,
         request: Request<AcceptFriendRequestRequest>,
@@ -14,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let sender = inner_request.sender;
 
-        debug!("Accept friend request from player {} received", username);
+        info!("Accept friend request from player {} received", username);
 
         if username == sender {
             return Err(Status::invalid_argument(
@@ -45,7 +45,7 @@ impl BridgeService {
             Status::internal(format!("Failed to accept friend request from {}", sender))
         })?;
 
-        debug!("Accept friend request from player {} completed", username);
+        info!("Accept friend request from player {} completed", username);
 
         Ok(Response::new(AcceptFriendRequestResponse { success: true }))
     }
