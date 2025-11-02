@@ -1,3 +1,4 @@
+use crate::models::achievements::Achievements;
 use crate::models::player::Player;
 use crate::state::State;
 use anyhow::Result;
@@ -29,6 +30,7 @@ impl State {
             .insert(player.username.clone(), player.clone());
         self.player_indexes
             .insert(player.id.clone(), player.username.clone());
+
         Ok(())
     }
 
@@ -152,6 +154,22 @@ impl State {
 
             self.update_team_score(team).await?;
         }
+
+        Ok(())
+    }
+
+    pub async fn add_achievement(&self, player_id: u64, achievement: Achievements) -> Result<()> {
+        let Some(username) = self.get_player_username(&player_id).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        let Some(mut player) = self.get_active_player(&username).await? else {
+            return Err(anyhow!("Player not found"));
+        };
+
+        player.achievements.insert(achievement);
+
+        self.insert_player(player.clone()).await?;
 
         Ok(())
     }

@@ -62,30 +62,6 @@ public object ServerSendMessageResponseKt {
     }
 
     /**
-     * `.bridge.ServerSendMessageResponse.Type message_type = 3;`
-     */
-    public var messageType: com.tron.bridge.Server.ServerSendMessageResponse.Type
-      @JvmName("getMessageType")
-      get() = _builder.getMessageType()
-      @JvmName("setMessageType")
-      set(value) {
-        _builder.setMessageType(value)
-      }
-    public var messageTypeValue: kotlin.Int
-      @JvmName("getMessageTypeValue")
-      get() = _builder.getMessageTypeValue()
-      @JvmName("setMessageTypeValue")
-      set(value) {
-        _builder.setMessageTypeValue(value)
-      }
-    /**
-     * `.bridge.ServerSendMessageResponse.Type message_type = 3;`
-     */
-    public fun clearMessageType() {
-      _builder.clearMessageType()
-    }
-
-    /**
      * `uint64 timestamp = 4;`
      */
     public var timestamp: kotlin.Long

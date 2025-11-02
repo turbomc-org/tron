@@ -1,5 +1,5 @@
 use crate::BridgeService;
-use crate::bridge::{PlayerJoinRequest, PlayerJoinResponse};
+use crate::bridge::{PlayerJoinRequest, PlayerJoinResponse, ServerSendMessageResponse};
 use crate::models::player::Edition;
 use crate::models::player::Player;
 use tonic::{Request, Response, Status};
@@ -34,12 +34,22 @@ impl BridgeService {
             Ok(Some(player)) => {
                 debug!("Inserting player {} into cache", username);
 
-                self.state.insert_player(player).await.map_err(|err| {
-                    error!("Failed to insert player into cache: {}", err);
-                    Status::internal(format!("Failed to insert player into cache: {}", err))
-                })?;
+                self.state
+                    .insert_player(player.clone())
+                    .await
+                    .map_err(|err| {
+                        error!("Failed to insert player into cache: {}", err);
+                        Status::internal(format!("Failed to insert player into cache: {}", err))
+                    })?;
 
                 debug!("Successfully inserted player {} into cache", username);
+
+                self.broadcast_message(ServerSendMessageResponse {
+                    username: player.username,
+                    timestamp: 0,
+                    message: format!("Welcome, <rainbow>{}</rainbow>!", username),
+                })
+                .await;
 
                 info!("Player {} joined the server", username);
                 Response::new(PlayerJoinResponse { success: true })

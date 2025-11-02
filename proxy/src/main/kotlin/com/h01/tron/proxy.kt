@@ -6,8 +6,9 @@ import com.h01.tron.commands.FriendsCommand
 import com.h01.tron.commands.PayCommand
 import com.h01.tron.commands.TeamsCommand
 import com.h01.tron.events.SessionEvents
-import com.h01.tron.leaderboard.LeaderboardManager
+import com.h01.tron.listeners.ServerMessageListener
 import com.tron.bridge.BridgeGrpcKt
+import com.tron.bridge.proxyStartupRequest
 import com.velocitypowered.api.command.CommandManager
 import com.velocitypowered.api.event.Subscribe
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
@@ -16,7 +17,9 @@ import com.velocitypowered.api.proxy.ProxyServer
 import de.timongcraft.veloboard.VeloBoardRegistry
 import io.grpc.ManagedChannel
 import io.grpc.okhttp.OkHttpChannelBuilder
+import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
+import kotlin.properties.Delegates
 
 @Plugin(
     id = "proxy",
@@ -32,12 +35,12 @@ class ProxyPlugin @Inject constructor(
 ) {
     private lateinit var bridgeClient: BridgeGrpcKt.BridgeCoroutineStub
     private lateinit var sessionEvents: SessionEvents
-    private lateinit var leaderboardManager: LeaderboardManager
 
     private lateinit var payCommand: PayCommand
     private lateinit var balanceCommand: BalanceCommand
     private lateinit var friendsCommand: FriendsCommand
     private lateinit var teamsCommand: TeamsCommand
+    private var clientId by Delegates.notNull<Long>()
 
     @Subscribe
     fun onProxyInitialization(event: ProxyInitializeEvent) {
@@ -49,8 +52,13 @@ class ProxyPlugin @Inject constructor(
             .build()
 
         bridgeClient = BridgeGrpcKt.BridgeCoroutineStub(channel)
+
+        runBlocking {
+            val response = bridgeClient.proxyStartup(proxyStartupRequest { })
+            clientId = response.clientId
+        }
+
         sessionEvents = SessionEvents(bridgeClient, logger)
-        leaderboardManager = LeaderboardManager(server, bridgeClient, logger)
 
         payCommand = PayCommand(bridgeClient, server)
         balanceCommand = BalanceCommand(bridgeClient)
@@ -59,10 +67,13 @@ class ProxyPlugin @Inject constructor(
 
         registerCommands()
         server.eventManager.register(this, sessionEvents)
-        leaderboardManager.startRotation()
 
-        logger.info("✅ Proxy initialized successfully with Leaderboards")
+        val serverMessageListener = ServerMessageListener(bridgeClient, server, clientId, logger)
+        serverMessageListener.startListening()
+
+        logger.info("✅ Proxy initialized successfully with Leaderboards and message subscription")
     }
+
 
     private fun registerCommands() {
         val manager: CommandManager = server.commandManager

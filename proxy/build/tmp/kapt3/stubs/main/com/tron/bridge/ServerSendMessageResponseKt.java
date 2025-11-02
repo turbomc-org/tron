@@ -12,7 +12,7 @@ public final class ServerSendMessageResponseKt {
         super();
     }
     
-    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000@\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\b\n\u0002\b\u0005\n\u0002\u0010\t\n\u0002\b\t\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0002\b\u0005\b\u0007\u0018\u0000 (2\u00020\u0001:\u0001(B\u000f\b\u0002\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\b\u0010!\u001a\u00020\"H\u0001J\u0006\u0010#\u001a\u00020$J\u0006\u0010%\u001a\u00020$J\u0006\u0010&\u001a\u00020$J\u0006\u0010\'\u001a\u00020$R\u000e\u0010\u0002\u001a\u00020\u0003X\u0082\u0004\u00a2\u0006\u0002\n\u0000R$\u0010\u0007\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\b\u0010\t\"\u0004\b\n\u0010\u000bR$\u0010\r\u001a\u00020\f2\u0006\u0010\u0005\u001a\u00020\f8G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\u000e\u0010\u000f\"\u0004\b\u0010\u0010\u0011R$\u0010\u0013\u001a\u00020\u00122\u0006\u0010\u0005\u001a\u00020\u00128G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\u0014\u0010\u0015\"\u0004\b\u0016\u0010\u0017R$\u0010\u0019\u001a\u00020\u00182\u0006\u0010\u0005\u001a\u00020\u00188G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\u001a\u0010\u001b\"\u0004\b\u001c\u0010\u001dR$\u0010\u001e\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\u001f\u0010\t\"\u0004\b \u0010\u000b\u00a8\u0006)"}, d2 = {"Lcom/tron/bridge/ServerSendMessageResponseKt$Dsl;", "", "_builder", "Lcom/tron/bridge/Server$ServerSendMessageResponse$Builder;", "(Lcom/tron/bridge/Server$ServerSendMessageResponse$Builder;)V", "value", "", "message", "getMessage", "()Ljava/lang/String;", "setMessage", "(Ljava/lang/String;)V", "Lcom/tron/bridge/Server$ServerSendMessageResponse$Type;", "messageType", "getMessageType", "()Lcom/tron/bridge/Server$ServerSendMessageResponse$Type;", "setMessageType", "(Lcom/tron/bridge/Server$ServerSendMessageResponse$Type;)V", "", "messageTypeValue", "getMessageTypeValue", "()I", "setMessageTypeValue", "(I)V", "", "timestamp", "getTimestamp", "()J", "setTimestamp", "(J)V", "username", "getUsername", "setUsername", "_build", "Lcom/tron/bridge/Server$ServerSendMessageResponse;", "clearMessage", "", "clearMessageType", "clearTimestamp", "clearUsername", "Companion", "proxy"})
+    @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u00000\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u000e\n\u0002\b\u0005\n\u0002\u0010\t\n\u0002\b\t\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\u0002\n\u0002\b\u0004\b\u0007\u0018\u0000 \u001b2\u00020\u0001:\u0001\u001bB\u000f\b\u0002\u0012\u0006\u0010\u0002\u001a\u00020\u0003\u00a2\u0006\u0002\u0010\u0004J\b\u0010\u0015\u001a\u00020\u0016H\u0001J\u0006\u0010\u0017\u001a\u00020\u0018J\u0006\u0010\u0019\u001a\u00020\u0018J\u0006\u0010\u001a\u001a\u00020\u0018R\u000e\u0010\u0002\u001a\u00020\u0003X\u0082\u0004\u00a2\u0006\u0002\n\u0000R$\u0010\u0007\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\b\u0010\t\"\u0004\b\n\u0010\u000bR$\u0010\r\u001a\u00020\f2\u0006\u0010\u0005\u001a\u00020\f8G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\u000e\u0010\u000f\"\u0004\b\u0010\u0010\u0011R$\u0010\u0012\u001a\u00020\u00062\u0006\u0010\u0005\u001a\u00020\u00068G@GX\u0086\u000e\u00a2\u0006\f\u001a\u0004\b\u0013\u0010\t\"\u0004\b\u0014\u0010\u000b\u00a8\u0006\u001c"}, d2 = {"Lcom/tron/bridge/ServerSendMessageResponseKt$Dsl;", "", "_builder", "Lcom/tron/bridge/Server$ServerSendMessageResponse$Builder;", "(Lcom/tron/bridge/Server$ServerSendMessageResponse$Builder;)V", "value", "", "message", "getMessage", "()Ljava/lang/String;", "setMessage", "(Ljava/lang/String;)V", "", "timestamp", "getTimestamp", "()J", "setTimestamp", "(J)V", "username", "getUsername", "setUsername", "_build", "Lcom/tron/bridge/Server$ServerSendMessageResponse;", "clearMessage", "", "clearTimestamp", "clearUsername", "Companion", "proxy"})
     @kotlin.OptIn(markerClass = {com.google.protobuf.kotlin.OnlyForUseByGeneratedProtoCode.class})
     @com.google.protobuf.kotlin.ProtoDslMarker()
     public static final class Dsl {
@@ -57,32 +57,6 @@ public final class ServerSendMessageResponseKt {
          * `string message = 2;`
          */
         public final void clearMessage() {
-        }
-        
-        @kotlin.jvm.JvmName(name = "getMessageType")
-        @org.jetbrains.annotations.NotNull()
-        public final com.tron.bridge.Server.ServerSendMessageResponse.Type getMessageType() {
-            return null;
-        }
-        
-        @kotlin.jvm.JvmName(name = "setMessageType")
-        public final void setMessageType(@org.jetbrains.annotations.NotNull()
-        com.tron.bridge.Server.ServerSendMessageResponse.Type value) {
-        }
-        
-        @kotlin.jvm.JvmName(name = "getMessageTypeValue")
-        public final int getMessageTypeValue() {
-            return 0;
-        }
-        
-        @kotlin.jvm.JvmName(name = "setMessageTypeValue")
-        public final void setMessageTypeValue(int value) {
-        }
-        
-        /**
-         * `.bridge.ServerSendMessageResponse.Type message_type = 3;`
-         */
-        public final void clearMessageType() {
         }
         
         @kotlin.jvm.JvmName(name = "getTimestamp")

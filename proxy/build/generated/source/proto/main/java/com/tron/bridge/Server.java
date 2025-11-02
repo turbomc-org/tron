@@ -5528,17 +5528,6 @@ public final class Server {
         getMessageBytes();
 
     /**
-     * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-     * @return The enum numeric value on the wire for messageType.
-     */
-    int getMessageTypeValue();
-    /**
-     * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-     * @return The messageType.
-     */
-    com.tron.bridge.Server.ServerSendMessageResponse.Type getMessageType();
-
-    /**
      * <code>uint64 timestamp = 4;</code>
      * @return The timestamp.
      */
@@ -5559,7 +5548,6 @@ public final class Server {
     private ServerSendMessageResponse() {
       username_ = "";
       message_ = "";
-      messageType_ = 0;
     }
 
     @java.lang.Override
@@ -5580,132 +5568,6 @@ public final class Server {
       return com.tron.bridge.Server.internal_static_bridge_ServerSendMessageResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.tron.bridge.Server.ServerSendMessageResponse.class, com.tron.bridge.Server.ServerSendMessageResponse.Builder.class);
-    }
-
-    /**
-     * Protobuf enum {@code bridge.ServerSendMessageResponse.Type}
-     */
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <code>INFO = 0;</code>
-       */
-      INFO(0),
-      /**
-       * <code>WARNING = 1;</code>
-       */
-      WARNING(1),
-      /**
-       * <code>ERROR = 2;</code>
-       */
-      ERROR(2),
-      /**
-       * <code>ANNOUNCEMENT = 3;</code>
-       */
-      ANNOUNCEMENT(3),
-      UNRECOGNIZED(-1),
-      ;
-
-      /**
-       * <code>INFO = 0;</code>
-       */
-      public static final int INFO_VALUE = 0;
-      /**
-       * <code>WARNING = 1;</code>
-       */
-      public static final int WARNING_VALUE = 1;
-      /**
-       * <code>ERROR = 2;</code>
-       */
-      public static final int ERROR_VALUE = 2;
-      /**
-       * <code>ANNOUNCEMENT = 3;</code>
-       */
-      public static final int ANNOUNCEMENT_VALUE = 3;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static Type valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static Type forNumber(int value) {
-        switch (value) {
-          case 0: return INFO;
-          case 1: return WARNING;
-          case 2: return ERROR;
-          case 3: return ANNOUNCEMENT;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Type> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
-        }
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return com.tron.bridge.Server.ServerSendMessageResponse.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Type[] VALUES = values();
-
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private Type(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:bridge.ServerSendMessageResponse.Type)
     }
 
     public static final int USERNAME_FIELD_NUMBER = 1;
@@ -5786,24 +5648,6 @@ public final class Server {
       }
     }
 
-    public static final int MESSAGE_TYPE_FIELD_NUMBER = 3;
-    private int messageType_ = 0;
-    /**
-     * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-     * @return The enum numeric value on the wire for messageType.
-     */
-    @java.lang.Override public int getMessageTypeValue() {
-      return messageType_;
-    }
-    /**
-     * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-     * @return The messageType.
-     */
-    @java.lang.Override public com.tron.bridge.Server.ServerSendMessageResponse.Type getMessageType() {
-      com.tron.bridge.Server.ServerSendMessageResponse.Type result = com.tron.bridge.Server.ServerSendMessageResponse.Type.forNumber(messageType_);
-      return result == null ? com.tron.bridge.Server.ServerSendMessageResponse.Type.UNRECOGNIZED : result;
-    }
-
     public static final int TIMESTAMP_FIELD_NUMBER = 4;
     private long timestamp_ = 0L;
     /**
@@ -5835,9 +5679,6 @@ public final class Server {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, message_);
       }
-      if (messageType_ != com.tron.bridge.Server.ServerSendMessageResponse.Type.INFO.getNumber()) {
-        output.writeEnum(3, messageType_);
-      }
       if (timestamp_ != 0L) {
         output.writeUInt64(4, timestamp_);
       }
@@ -5855,10 +5696,6 @@ public final class Server {
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(message_)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, message_);
-      }
-      if (messageType_ != com.tron.bridge.Server.ServerSendMessageResponse.Type.INFO.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(3, messageType_);
       }
       if (timestamp_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -5883,7 +5720,6 @@ public final class Server {
           .equals(other.getUsername())) return false;
       if (!getMessage()
           .equals(other.getMessage())) return false;
-      if (messageType_ != other.messageType_) return false;
       if (getTimestamp()
           != other.getTimestamp()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -5901,8 +5737,6 @@ public final class Server {
       hash = (53 * hash) + getUsername().hashCode();
       hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
       hash = (53 * hash) + getMessage().hashCode();
-      hash = (37 * hash) + MESSAGE_TYPE_FIELD_NUMBER;
-      hash = (53 * hash) + messageType_;
       hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
           getTimestamp());
@@ -6039,7 +5873,6 @@ public final class Server {
         bitField0_ = 0;
         username_ = "";
         message_ = "";
-        messageType_ = 0;
         timestamp_ = 0L;
         return this;
       }
@@ -6081,9 +5914,6 @@ public final class Server {
           result.message_ = message_;
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.messageType_ = messageType_;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
           result.timestamp_ = timestamp_;
         }
       }
@@ -6142,9 +5972,6 @@ public final class Server {
           bitField0_ |= 0x00000002;
           onChanged();
         }
-        if (other.messageType_ != 0) {
-          setMessageTypeValue(other.getMessageTypeValue());
-        }
         if (other.getTimestamp() != 0L) {
           setTimestamp(other.getTimestamp());
         }
@@ -6184,14 +6011,9 @@ public final class Server {
                 bitField0_ |= 0x00000002;
                 break;
               } // case 18
-              case 24: {
-                messageType_ = input.readEnum();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
               case 32: {
                 timestamp_ = input.readUInt64();
-                bitField0_ |= 0x00000008;
+                bitField0_ |= 0x00000004;
                 break;
               } // case 32
               default: {
@@ -6355,59 +6177,6 @@ public final class Server {
         return this;
       }
 
-      private int messageType_ = 0;
-      /**
-       * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-       * @return The enum numeric value on the wire for messageType.
-       */
-      @java.lang.Override public int getMessageTypeValue() {
-        return messageType_;
-      }
-      /**
-       * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-       * @param value The enum numeric value on the wire for messageType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMessageTypeValue(int value) {
-        messageType_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-       * @return The messageType.
-       */
-      @java.lang.Override
-      public com.tron.bridge.Server.ServerSendMessageResponse.Type getMessageType() {
-        com.tron.bridge.Server.ServerSendMessageResponse.Type result = com.tron.bridge.Server.ServerSendMessageResponse.Type.forNumber(messageType_);
-        return result == null ? com.tron.bridge.Server.ServerSendMessageResponse.Type.UNRECOGNIZED : result;
-      }
-      /**
-       * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-       * @param value The messageType to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMessageType(com.tron.bridge.Server.ServerSendMessageResponse.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000004;
-        messageType_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>.bridge.ServerSendMessageResponse.Type message_type = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMessageType() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        messageType_ = 0;
-        onChanged();
-        return this;
-      }
-
       private long timestamp_ ;
       /**
        * <code>uint64 timestamp = 4;</code>
@@ -6425,7 +6194,7 @@ public final class Server {
       public Builder setTimestamp(long value) {
 
         timestamp_ = value;
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         onChanged();
         return this;
       }
@@ -6434,7 +6203,7 @@ public final class Server {
        * @return This builder for chaining.
        */
       public Builder clearTimestamp() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         timestamp_ = 0L;
         onChanged();
         return this;
@@ -12520,29 +12289,25 @@ public final class Server {
       ")\n\024LobbyStartupResponse\022\021\n\tclient_id\030\001 \001" +
       "(\004\")\n\024LobbyShutdownRequest\022\021\n\tclient_id\030" +
       "\001 \001(\004\"(\n\025LobbyShutdownResponse\022\017\n\007succes" +
-      "s\030\001 \001(\010\"\313\001\n\031ServerSendMessageResponse\022\020\n" +
-      "\010username\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022<\n\014mess" +
-      "age_type\030\003 \001(\0162&.bridge.ServerSendMessag" +
-      "eResponse.Type\022\021\n\ttimestamp\030\004 \001(\004\":\n\004Typ" +
-      "e\022\010\n\004INFO\020\000\022\013\n\007WARNING\020\001\022\t\n\005ERROR\020\002\022\020\n\014A" +
-      "NNOUNCEMENT\020\003\"+\n\026ServerSubscribeRequest\022" +
-      "\021\n\tclient_id\030\001 \001(\004\"\313\001\n\027ServerSendTitleRe" +
-      "sponse\022\020\n\010username\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022" +
-      "\021\n\tsub_title\030\003 \001(\t\0228\n\ntitle_type\030\004 \001(\0162$" +
-      ".bridge.ServerSendTitleResponse.Type\022\021\n\t" +
-      "timestamp\030\005 \001(\004\"/\n\004Type\022\017\n\013ACHIEVEMENT\020\000" +
-      "\022\013\n\007WARNING\020\001\022\t\n\005AWARD\020\002\"3\n\016MessageReque" +
-      "st\022\020\n\010username\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\"u\n" +
-      "\017MessageResponse\022\020\n\010username\030\001 \001(\t\022\017\n\007me" +
-      "ssage\030\002 \001(\t\022\016\n\006prefix\030\003 \001(\t\022\016\n\006badges\030\004 " +
-      "\001(\t\022\014\n\004team\030\005 \001(\t\022\021\n\ttimestamp\030\006 \001(\004\",\n\027" +
-      "ServerKickPlayerRequest\022\021\n\tclient_id\030\001 \001" +
-      "(\t\"?\n\030ServerKickPlayerResponse\022\020\n\010userna" +
-      "me\030\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\"+\n\026ServerBan" +
-      "PlayerRequest\022\021\n\tclient_id\030\001 \001(\t\">\n\027Serv" +
-      "erBanPlayerResponse\022\020\n\010username\030\001 \001(\t\022\021\n" +
-      "\ttimestamp\030\003 \001(\004B\021\n\017com.tron.bridgeb\006pro" +
-      "to3"
+      "s\030\001 \001(\010\"Q\n\031ServerSendMessageResponse\022\020\n\010" +
+      "username\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022\021\n\ttimes" +
+      "tamp\030\004 \001(\004\"+\n\026ServerSubscribeRequest\022\021\n\t" +
+      "client_id\030\001 \001(\004\"\313\001\n\027ServerSendTitleRespo" +
+      "nse\022\020\n\010username\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022\021\n\t" +
+      "sub_title\030\003 \001(\t\0228\n\ntitle_type\030\004 \001(\0162$.br" +
+      "idge.ServerSendTitleResponse.Type\022\021\n\ttim" +
+      "estamp\030\005 \001(\004\"/\n\004Type\022\017\n\013ACHIEVEMENT\020\000\022\013\n" +
+      "\007WARNING\020\001\022\t\n\005AWARD\020\002\"3\n\016MessageRequest\022" +
+      "\020\n\010username\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\"u\n\017Me" +
+      "ssageResponse\022\020\n\010username\030\001 \001(\t\022\017\n\007messa" +
+      "ge\030\002 \001(\t\022\016\n\006prefix\030\003 \001(\t\022\016\n\006badges\030\004 \001(\t" +
+      "\022\014\n\004team\030\005 \001(\t\022\021\n\ttimestamp\030\006 \001(\004\",\n\027Ser" +
+      "verKickPlayerRequest\022\021\n\tclient_id\030\001 \001(\t\"" +
+      "?\n\030ServerKickPlayerResponse\022\020\n\010username\030" +
+      "\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\"+\n\026ServerBanPla" +
+      "yerRequest\022\021\n\tclient_id\030\001 \001(\t\">\n\027ServerB" +
+      "anPlayerResponse\022\020\n\010username\030\001 \001(\t\022\021\n\tti" +
+      "mestamp\030\003 \001(\004B\021\n\017com.tron.bridgeb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -12625,7 +12390,7 @@ public final class Server {
     internal_static_bridge_ServerSendMessageResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerSendMessageResponse_descriptor,
-        new java.lang.String[] { "Username", "Message", "MessageType", "Timestamp", });
+        new java.lang.String[] { "Username", "Message", "Timestamp", });
     internal_static_bridge_ServerSubscribeRequest_descriptor =
       getDescriptor().getMessageTypes().get(13);
     internal_static_bridge_ServerSubscribeRequest_fieldAccessorTable = new

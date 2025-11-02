@@ -1,4 +1,5 @@
 use crate::collections::team::TeamCollection;
+use crate::models::achievements::Achievements;
 use crate::models::player::Player;
 use crate::models::team::Team;
 use async_trait::async_trait;
@@ -7,6 +8,7 @@ use mockall::automock;
 use mongodb::Collection;
 use mongodb::bson::doc;
 use mongodb::bson::from_document;
+use mongodb::bson::to_bson;
 use mongodb::error::Error;
 use mongodb::options::AggregateOptions;
 use mongodb::options::FindOptions;
@@ -43,6 +45,7 @@ pub trait PlayerCollection: Send + Sync + Debug {
     async fn add_kill(&self, id: u64, n: u64) -> Result<(), Error>;
     async fn add_blocks_placed(&self, id: u64, n: u64) -> Result<(), Error>;
     async fn add_block_broken(&self, id: u64, n: u64) -> Result<(), Error>;
+    async fn add_achievement(&self, id: u64, achievement: Achievements) -> Result<(), Error>;
     async fn set_team(&self, id: u64, team: u64) -> Result<(), Error>;
     async fn unset_team(&self, id: u64, team: u64) -> Result<(), Error>;
     async fn get_leaderboard(
@@ -578,6 +581,27 @@ impl PlayerCollection for MongoPlayerCollection {
                 doc! {
                     "$addToSet": {
                         "prefixes": prefix_id as i64
+                    }
+                },
+            )
+            .await?;
+
+        Ok(())
+    }
+
+    async fn add_achievement(
+        &self,
+        player_id: u64,
+        achievement: Achievements,
+    ) -> Result<(), Error> {
+        let achievement_doc = to_bson(&achievement)?;
+
+        self.collection
+            .update_one(
+                doc! {"_id": player_id as i64},
+                doc! {
+                    "$addToSet": {
+                        "achievements": achievement_doc
                     }
                 },
             )

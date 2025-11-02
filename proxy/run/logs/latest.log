@@ -1,14 +1,161 @@
-[10:14:40] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Booting up Velocity 3.4.0-SNAPSHOT (git-b6b6b20f-b555)...
-[10:14:40] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading localizations...
-[10:14:41] [main/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Connections will use epoll channels, libdeflate (Linux x86_64) compression, OpenSSL 3.x.x (Linux x86_64) ciphers
-[10:14:41] [main/WARN] [com.velocitypowered.proxy.config.VelocityConfiguration]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
-[10:14:41] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading plugins...
-[10:14:41] [main/INFO] [com.velocitypowered.proxy.plugin.VelocityPluginManager]: Loaded plugin proxy 1.0-SNAPSHOT by Harihar Nautiyal
-[10:14:41] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loaded 2 plugins
-[10:14:41] [proxy - Task Executor #0/INFO] [proxy]: Commands registered
-[10:14:41] [proxy - Task Executor #0/INFO] [proxy]: Registering SessionEvents listener...
-[10:14:41] [proxy - Task Executor #0/INFO] [proxy]: Registered SessionEvents!
-[10:14:41] [Netty epoll Boss #0/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Listening on /[0:0:0:0:0:0:0:0]:25565
-[10:14:41] [main/INFO] [com.velocitypowered.proxy.Velocity]: Done (0.65s)!
-[10:37:32] [Shutdown thread/INFO] [com.velocitypowered.proxy.VelocityServer]: Shutting down the proxy...
-[10:37:32] [Shutdown thread/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Closing endpoint /0.0.0.0:25565
+[10:02:36] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Booting up Velocity 3.4.0-SNAPSHOT (git-b6b6b20f-b555)...
+[10:02:36] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading localizations...
+[10:02:36] [main/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Connections will use epoll channels, libdeflate (Linux x86_64) compression, OpenSSL 3.x.x (Linux x86_64) ciphers
+[10:02:36] [main/WARN] [com.velocitypowered.proxy.config.VelocityConfiguration]: The proxy is running in offline mode! This is a security risk and you will NOT receive any support!
+[10:02:36] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loading plugins...
+[10:02:36] [main/INFO] [com.velocitypowered.proxy.plugin.VelocityPluginManager]: Loaded plugin proxy 1.0-SNAPSHOT by Harihar Nautiyal
+[10:02:36] [main/INFO] [com.velocitypowered.proxy.VelocityServer]: Loaded 2 plugins
+[10:02:37] [proxy - Task Executor #0/INFO] [proxy]: Commands registered successfully
+[10:02:37] [proxy - Task Executor #0/INFO] [proxy]: ✅ Proxy initialized successfully with Leaderboards and message subscription
+[10:02:37] [DefaultDispatcher-worker-1/INFO] [proxy]: 🔌 Connecting to ServerSendMessage stream...
+[10:02:37] [Netty epoll Boss #0/INFO] [com.velocitypowered.proxy.network.ConnectionManager]: Listening on /[0:0:0:0:0:0:0:0]:25565
+[10:02:37] [main/INFO] [com.velocitypowered.proxy.Velocity]: Done (0.75s)!
+[10:02:37] [DefaultDispatcher-worker-1/ERROR] [proxy]: ⚠️ gRPC stream exception: Status{code=UNAVAILABLE, description=End of stream or IOException, cause=null}
+io.grpc.StatusException: UNAVAILABLE: End of stream or IOException
+	at io.grpc.Status.asException(Status.java:548) ~[?:?]
+	at io.grpc.kotlin.ClientCalls$rpcImpl$1$1$1.onClose(ClientCalls.kt:300) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:574) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:72) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:742) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723) ~[?:?]
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37) ~[?:?]
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
+[10:02:42] [DefaultDispatcher-worker-1/INFO] [proxy]: 🔌 Connecting to ServerSendMessage stream...
+[10:02:42] [DefaultDispatcher-worker-3/ERROR] [proxy]: ⚠️ gRPC stream exception: Status{code=UNAVAILABLE, description=null, cause=java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method)
+	at java.base/sun.nio.ch.Net.connect(Net.java:579)
+	at java.base/sun.nio.ch.Net.connect(Net.java:568)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:593)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/java.net.Socket.connect(Socket.java:583)
+	at java.base/java.net.Socket.<init>(Socket.java:507)
+	at java.base/java.net.Socket.<init>(Socket.java:319)
+	at java.base/javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:277)
+	at io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:536)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+}
+io.grpc.StatusException: UNAVAILABLE
+	at io.grpc.Status.asException(Status.java:548) ~[?:?]
+	at io.grpc.kotlin.ClientCalls$rpcImpl$1$1$1.onClose(ClientCalls.kt:300) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:574) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:72) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:742) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723) ~[?:?]
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37) ~[?:?]
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[?:?]
+	at java.base/sun.nio.ch.Net.connect(Net.java:579) ~[?:?]
+	at java.base/sun.nio.ch.Net.connect(Net.java:568) ~[?:?]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:593) ~[?:?]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[?:?]
+	at java.base/java.net.Socket.connect(Socket.java:583) ~[?:?]
+	at java.base/java.net.Socket.<init>(Socket.java:507) ~[?:?]
+	at java.base/java.net.Socket.<init>(Socket.java:319) ~[?:?]
+	at java.base/javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:277) ~[?:?]
+	at io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:536) ~[?:?]
+	... 4 more
+[10:02:47] [DefaultDispatcher-worker-3/INFO] [proxy]: 🔌 Connecting to ServerSendMessage stream...
+[10:02:47] [DefaultDispatcher-worker-3/ERROR] [proxy]: ⚠️ gRPC stream exception: Status{code=UNAVAILABLE, description=null, cause=java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method)
+	at java.base/sun.nio.ch.Net.connect(Net.java:579)
+	at java.base/sun.nio.ch.Net.connect(Net.java:568)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:593)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/java.net.Socket.connect(Socket.java:583)
+	at java.base/java.net.Socket.<init>(Socket.java:507)
+	at java.base/java.net.Socket.<init>(Socket.java:319)
+	at java.base/javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:277)
+	at io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:536)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+}
+io.grpc.StatusException: UNAVAILABLE
+	at io.grpc.Status.asException(Status.java:548) ~[?:?]
+	at io.grpc.kotlin.ClientCalls$rpcImpl$1$1$1.onClose(ClientCalls.kt:300) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:574) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:72) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:742) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723) ~[?:?]
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37) ~[?:?]
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[?:?]
+	at java.base/sun.nio.ch.Net.connect(Net.java:579) ~[?:?]
+	at java.base/sun.nio.ch.Net.connect(Net.java:568) ~[?:?]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:593) ~[?:?]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[?:?]
+	at java.base/java.net.Socket.connect(Socket.java:583) ~[?:?]
+	at java.base/java.net.Socket.<init>(Socket.java:507) ~[?:?]
+	at java.base/java.net.Socket.<init>(Socket.java:319) ~[?:?]
+	at java.base/javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:277) ~[?:?]
+	at io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:536) ~[?:?]
+	... 4 more
+[10:02:52] [DefaultDispatcher-worker-3/INFO] [proxy]: 🔌 Connecting to ServerSendMessage stream...
+[10:02:52] [DefaultDispatcher-worker-1/ERROR] [proxy]: ⚠️ gRPC stream exception: Status{code=UNAVAILABLE, description=null, cause=java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method)
+	at java.base/sun.nio.ch.Net.connect(Net.java:579)
+	at java.base/sun.nio.ch.Net.connect(Net.java:568)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:593)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+	at java.base/java.net.Socket.connect(Socket.java:633)
+	at java.base/java.net.Socket.connect(Socket.java:583)
+	at java.base/java.net.Socket.<init>(Socket.java:507)
+	at java.base/java.net.Socket.<init>(Socket.java:319)
+	at java.base/javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:277)
+	at io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:536)
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+}
+io.grpc.StatusException: UNAVAILABLE
+	at io.grpc.Status.asException(Status.java:548) ~[?:?]
+	at io.grpc.kotlin.ClientCalls$rpcImpl$1$1$1.onClose(ClientCalls.kt:300) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:574) ~[?:?]
+	at io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:72) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:742) ~[?:?]
+	at io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:723) ~[?:?]
+	at io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37) ~[?:?]
+	at io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:133) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:840) [?:?]
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.connect0(Native Method) ~[?:?]
+	at java.base/sun.nio.ch.Net.connect(Net.java:579) ~[?:?]
+	at java.base/sun.nio.ch.Net.connect(Net.java:568) ~[?:?]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:593) ~[?:?]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[?:?]
+	at java.base/java.net.Socket.connect(Socket.java:583) ~[?:?]
+	at java.base/java.net.Socket.<init>(Socket.java:507) ~[?:?]
+	at java.base/java.net.Socket.<init>(Socket.java:319) ~[?:?]
+	at java.base/javax.net.DefaultSocketFactory.createSocket(SocketFactory.java:277) ~[?:?]
+	at io.grpc.okhttp.OkHttpClientTransport$3.run(OkHttpClientTransport.java:536) ~[?:?]
+	... 4 more
+[10:02:57] [DefaultDispatcher-worker-1/INFO] [proxy]: 🔌 Connecting to ServerSendMessage stream...
+[10:03:00] [Netty epoll Worker #0/INFO] [com.velocitypowered.proxy.connection.client.AuthSessionHandler]: [connected player] suprobho611 (/[0:0:0:0:0:0:0:1]:45922) has connected
+[10:03:00] [proxy - Task Executor #0/INFO] [proxy]: Sending join request to main server
+[10:03:00] [DefaultDispatcher-worker-1/INFO] [proxy]: Join response for suprobho611: success=true
+[10:03:00] [DefaultDispatcher-worker-1/INFO] [proxy]: Join request for suprobho611 completed in 11ms
+[10:03:00] [DefaultDispatcher-worker-2/INFO] [proxy]: 💬 [Server] suprobho611 -> Welcome, <rainbow>suprobho611</rainbow>! (0)
+[10:03:00] [Netty epoll Worker #0/INFO] [com.velocitypowered.proxy.connection.MinecraftConnection]: [server connection] suprobho611 -> lobby has connected

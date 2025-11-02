@@ -6,6 +6,8 @@ import com.velocitypowered.api.proxy.ProxyServer
 import de.timongcraft.veloboard.VeloBoard
 import kotlinx.coroutines.*
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.slf4j.Logger
 import java.util.*
 
@@ -31,7 +33,9 @@ class LeaderboardManager(
 
                     for (player in server.allPlayers) {
                         val board = boards.computeIfAbsent(player.uniqueId) {
-                            VeloBoard(player)
+                            // The VeloBoard constructor likely sets the initial title.
+                            // We will update it in updateBoard anyway.
+                            VeloBoard(player, Component.text("Leaderboard"))
                         }
                         updateBoard(board, type, leaderboard)
                     }
@@ -68,19 +72,34 @@ class LeaderboardManager(
         }
     }
 
+    // --- REVISED FUNCTION ---
     private fun updateBoard(board: VeloBoard, type: String, leaderboard: Map<String, String>) {
+        // 1. Create and set the title using the correct method
+        val title = Component.text()
+            .content("===== $type Leaderboard =====")
+            .color(NamedTextColor.GOLD)
+            .decorate(TextDecoration.BOLD)
+            .build()
+        board.updateTitle(title)
+
+        // 2. Create the list of content lines (NO title here)
         val lines = mutableListOf<Component>()
-        lines.add(Component.text("§6§l===== $type Leaderboard ====="))
         var rank = 1
         leaderboard.entries
             .sortedByDescending { it.value.toDoubleOrNull() ?: 0.0 }
-            .take(10)
+            .take(15) // Minecraft scoreboard limit is 15 lines
             .forEach { (name, value) ->
-                lines.add(Component.text("§e#$rank §f$name §7- §b$value"))
+                val line = Component.text()
+                    .append(Component.text("#$rank ", NamedTextColor.YELLOW))
+                    .append(Component.text("$name ", NamedTextColor.WHITE))
+                    .append(Component.text("- ", NamedTextColor.GRAY))
+                    .append(Component.text(value, NamedTextColor.AQUA))
+                    .build()
+                lines.add(line)
                 rank++
             }
 
-        while (lines.size < 12) lines.add(Component.empty())
+        // 3. Update the lines. If the list is empty, this will clear the board.
         board.updateLines(*lines.toTypedArray())
     }
 }

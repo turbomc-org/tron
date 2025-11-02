@@ -261,16 +261,16 @@ impl Bridge for BridgeService {
 
     async fn proxy_startup(
         &self,
-        _request: Request<crate::bridge::ProxyStartupRequest>,
+        request: Request<crate::bridge::ProxyStartupRequest>,
     ) -> Result<Response<crate::bridge::ProxyStartupResponse>, Status> {
-        unimplemented!()
+        self.handle_proxy_startup(request).await
     }
 
     async fn proxy_shutdown(
         &self,
-        _request: Request<crate::bridge::ProxyShutdownRequest>,
+        request: Request<crate::bridge::ProxyShutdownRequest>,
     ) -> Result<Response<crate::bridge::ProxyShutdownResponse>, Status> {
-        unimplemented!()
+        self.handle_proxy_shutdown(request).await
     }
 
     async fn survival_startup(

@@ -1,6 +1,7 @@
 use crate::RETRY_STRATEGY;
 use crate::collections::player::PlayerCollection;
 use crate::collections::team::TeamCollection;
+use crate::models::achievements::Achievements;
 use crate::models::player::{Player, Rank};
 use crate::models::team::Team;
 use crate::state::State;
@@ -9,7 +10,7 @@ use anyhow::anyhow;
 use std::sync::Arc;
 use tokio::task;
 use tokio_retry::Retry;
-use tracing::error;
+use tracing::{error, info};
 
 impl Player {
     pub async fn insert(&self, col: &Arc<dyn PlayerCollection>, state: &Arc<State>) -> Result<()> {
@@ -464,10 +465,10 @@ impl Player {
         col: &Arc<dyn PlayerCollection>,
         state: &Arc<State>,
     ) -> Result<()> {
-        let col = col.clone();
         let player_id = self.id.clone();
 
         task::spawn({
+            let col = col.clone();
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.add_kill(player_id, kills).await.map_err(|e| {
@@ -485,6 +486,7 @@ impl Player {
 
         self.kills += kills;
         state.inc_kills(player_id, kills).await?;
+        self.check_achievements_after_kill(&col, state).await?;
 
         Ok(())
     }
@@ -526,10 +528,10 @@ impl Player {
         col: &Arc<dyn PlayerCollection>,
         state: &Arc<State>,
     ) -> Result<()> {
-        let col = col.clone();
         let player_id = self.id.clone();
 
         task::spawn({
+            let col = col.clone();
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.add_blocks_placed(player_id, blocks_placed)
@@ -549,6 +551,8 @@ impl Player {
 
         self.blocks_placed += blocks_placed;
         state.insert_player(self.clone()).await?;
+        self.check_achievements_after_block_placed(&col, state)
+            .await?;
 
         Ok(())
     }
@@ -559,10 +563,10 @@ impl Player {
         col: &Arc<dyn PlayerCollection>,
         state: &Arc<State>,
     ) -> Result<()> {
-        let col = col.clone();
         let player_id = self.id.clone();
 
         task::spawn({
+            let col = col.clone();
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.add_block_broken(player_id, blocks_broken)
@@ -582,6 +586,8 @@ impl Player {
 
         self.blocks_broken += blocks_broken;
         state.insert_player(self.clone()).await?;
+        self.check_achievements_after_block_broken(&col, state)
+            .await?;
 
         Ok(())
     }
@@ -594,5 +600,95 @@ impl Player {
             Rank::Elite => 4,
             Rank::Legend => 5,
         }
+    }
+
+    pub async fn check_achievements_after_kill(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        if let Some(new_achievement) = Achievements::warrior_for_kills(self.kills) {
+            if !self.achievements.contains(&new_achievement) {
+                self.achievements.insert(new_achievement.clone());
+
+                col.add_achievement(self.id, new_achievement.clone())
+                    .await?;
+                state
+                    .add_achievement(self.id, new_achievement.clone())
+                    .await?;
+
+                col.inc_coins(
+                    self.id,
+                    Achievements::reward(new_achievement.clone()) as i64,
+                )
+                .await?;
+
+                info!(
+                    "Player {} unlocked achievement {:?}",
+                    self.username, new_achievement
+                );
+            }
+        }
+        Ok(())
+    }
+
+    pub async fn check_achievements_after_block_broken(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        if let Some(new_achievement) = Achievements::miner_for_block_broken(self.blocks_broken) {
+            if !self.achievements.contains(&new_achievement) {
+                self.achievements.insert(new_achievement.clone());
+
+                col.add_achievement(self.id, new_achievement.clone())
+                    .await?;
+                state
+                    .add_achievement(self.id, new_achievement.clone())
+                    .await?;
+
+                col.inc_coins(
+                    self.id,
+                    Achievements::reward(new_achievement.clone()) as i64,
+                )
+                .await?;
+
+                info!(
+                    "Player {} unlocked achievement {:?}",
+                    self.username, new_achievement
+                );
+            }
+        }
+        Ok(())
+    }
+
+    pub async fn check_achievements_after_block_placed(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        if let Some(new_achievement) = Achievements::builder_for_blocks_placed(self.blocks_placed) {
+            if !self.achievements.contains(&new_achievement) {
+                self.achievements.insert(new_achievement.clone());
+
+                col.add_achievement(self.id, new_achievement.clone())
+                    .await?;
+                state
+                    .add_achievement(self.id, new_achievement.clone())
+                    .await?;
+
+                col.inc_coins(
+                    self.id,
+                    Achievements::reward(new_achievement.clone()) as i64,
+                )
+                .await?;
+
+                info!(
+                    "Player {} unlocked achievement {:?}",
+                    self.username, new_achievement
+                );
+            }
+        }
+        Ok(())
     }
 }
