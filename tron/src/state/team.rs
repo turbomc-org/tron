@@ -96,4 +96,16 @@ impl State {
 
         Ok(())
     }
+
+    pub fn get_member_id(&self, team: &Team, username: &str) -> Option<u64> {
+        for member in team.members.iter() {
+            if let Some(member_username) = self.get_player_username(member.0) {
+                if member_username == username {
+                    return Some(member.0.clone());
+                }
+            }
+        }
+
+        None
+    }
 }

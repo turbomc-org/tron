@@ -50,6 +50,17 @@ impl BridgeService {
                 Status::internal("Failed to insert prefix")
             })?;
 
+        self.send_message_to_player(
+            &username,
+            format!(
+                "<gradient:#C724B1:#7A00FF><bold>✅ IDENTIFIER REGISTERED</bold></gradient>\n\
+             <gray>Successfully registered the <color:{}>{}</color> identifier on the network.</gray>\n\
+             <dark_gray>»</dark_gray> <gray>It is now available for players to acquire.</gray>",
+                decompiled_prefix.color, decompiled_prefix.text
+            ),
+        )
+        .await;
+
         info!("Create prefix request from player {} completed", username);
 
         Ok(Response::new(CreatePrefixResponse { success: true }))

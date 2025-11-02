@@ -53,6 +53,29 @@ impl BridgeService {
                 ))
             })?;
 
+        self.send_message_to_player(
+            &target_username,
+            format!(
+                "<gradient:#C724B1:#7A00FF><bold>⚡ NEW FRIEND REQUEST ⚡</bold></gradient>\n\
+                <gray><white><bold>{}</bold></white> wants to connect with you on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.</gray>\n\
+                <dark_gray>»</dark_gray> <click:run_command:'/friend accept {}'><u><gradient:#8A2BE2:#C724B1>[ ACCEPT ]</gradient></u></click>  \
+                <click:run_command:'/friend deny {}'><u><gradient:#7A00FF:#4B0082>[ DENY ]</gradient></u></click>\n\
+                <dark_gray>»</dark_gray> <gray>Manage requests via <light_purple>/friends</light_purple></gray>",
+                username, username, username
+            ),
+        ).await;
+
+        self.send_message_to_player(
+            &player.username,
+            format!(
+                "<gradient:#C724B1:#7A00FF><bold>✅ FRIEND REQUEST SENT</bold></gradient>\n\
+                <gray>Your request has been transmitted to <white><bold>{}</bold></white> via the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.</gray>\n\
+                <dark_gray>»</dark_gray> <light_purple>Awaiting connection response...</light_purple>\n\
+                <dark_gray>»</dark_gray> <click:run_command:'/friends'><u><gradient:#C724B1:#7A00FF>View pending requests</gradient></u></click>",
+                target_username
+            ),
+        ).await;
+
         info!(
             "Send friend request request from player {} completed",
             username

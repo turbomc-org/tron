@@ -356,6 +356,37 @@ public final class BridgeGrpc {
     return getGetFriendsMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Friends.ListFriendsRequest,
+      com.tron.bridge.Friends.ListFriendsResponse> getListFriendsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ListFriends",
+      requestType = com.tron.bridge.Friends.ListFriendsRequest.class,
+      responseType = com.tron.bridge.Friends.ListFriendsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Friends.ListFriendsRequest,
+      com.tron.bridge.Friends.ListFriendsResponse> getListFriendsMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Friends.ListFriendsRequest, com.tron.bridge.Friends.ListFriendsResponse> getListFriendsMethod;
+    if ((getListFriendsMethod = BridgeGrpc.getListFriendsMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getListFriendsMethod = BridgeGrpc.getListFriendsMethod) == null) {
+          BridgeGrpc.getListFriendsMethod = getListFriendsMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Friends.ListFriendsRequest, com.tron.bridge.Friends.ListFriendsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ListFriends"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Friends.ListFriendsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Friends.ListFriendsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ListFriends"))
+              .build();
+        }
+      }
+    }
+    return getListFriendsMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Friends.SendFriendRequestRequest,
       com.tron.bridge.Friends.SendFriendRequestResponse> getSendFriendRequestMethod;
 
@@ -478,6 +509,37 @@ public final class BridgeGrpc {
       }
     }
     return getGetFriendRequestsMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Friends.ListFriendRequestsRequest,
+      com.tron.bridge.Friends.ListFriendRequestsResponse> getListFriendRequestsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ListFriendRequests",
+      requestType = com.tron.bridge.Friends.ListFriendRequestsRequest.class,
+      responseType = com.tron.bridge.Friends.ListFriendRequestsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Friends.ListFriendRequestsRequest,
+      com.tron.bridge.Friends.ListFriendRequestsResponse> getListFriendRequestsMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Friends.ListFriendRequestsRequest, com.tron.bridge.Friends.ListFriendRequestsResponse> getListFriendRequestsMethod;
+    if ((getListFriendRequestsMethod = BridgeGrpc.getListFriendRequestsMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getListFriendRequestsMethod = BridgeGrpc.getListFriendRequestsMethod) == null) {
+          BridgeGrpc.getListFriendRequestsMethod = getListFriendRequestsMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Friends.ListFriendRequestsRequest, com.tron.bridge.Friends.ListFriendRequestsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ListFriendRequests"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Friends.ListFriendRequestsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Friends.ListFriendRequestsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ListFriendRequests"))
+              .build();
+        }
+      }
+    }
+    return getListFriendRequestsMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Friends.RemoveFriendRequest,
@@ -1735,6 +1797,13 @@ public final class BridgeGrpc {
 
     /**
      */
+    default void listFriends(com.tron.bridge.Friends.ListFriendsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Friends.ListFriendsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListFriendsMethod(), responseObserver);
+    }
+
+    /**
+     */
     default void sendFriendRequest(com.tron.bridge.Friends.SendFriendRequestRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Friends.SendFriendRequestResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSendFriendRequestMethod(), responseObserver);
@@ -1759,6 +1828,13 @@ public final class BridgeGrpc {
     default void getFriendRequests(com.tron.bridge.Friends.GetFriendRequestsRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Friends.GetFriendRequestsResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetFriendRequestsMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void listFriendRequests(com.tron.bridge.Friends.ListFriendRequestsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Friends.ListFriendRequestsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListFriendRequestsMethod(), responseObserver);
     }
 
     /**
@@ -2161,6 +2237,14 @@ public final class BridgeGrpc {
 
     /**
      */
+    public void listFriends(com.tron.bridge.Friends.ListFriendsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Friends.ListFriendsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getListFriendsMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void sendFriendRequest(com.tron.bridge.Friends.SendFriendRequestRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Friends.SendFriendRequestResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -2189,6 +2273,14 @@ public final class BridgeGrpc {
         io.grpc.stub.StreamObserver<com.tron.bridge.Friends.GetFriendRequestsResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetFriendRequestsMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void listFriendRequests(com.tron.bridge.Friends.ListFriendRequestsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Friends.ListFriendRequestsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getListFriendRequestsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -2605,6 +2697,13 @@ public final class BridgeGrpc {
 
     /**
      */
+    public com.tron.bridge.Friends.ListFriendsResponse listFriends(com.tron.bridge.Friends.ListFriendsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListFriendsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public com.tron.bridge.Friends.SendFriendRequestResponse sendFriendRequest(com.tron.bridge.Friends.SendFriendRequestRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSendFriendRequestMethod(), getCallOptions(), request);
@@ -2629,6 +2728,13 @@ public final class BridgeGrpc {
     public com.tron.bridge.Friends.GetFriendRequestsResponse getFriendRequests(com.tron.bridge.Friends.GetFriendRequestsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetFriendRequestsMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Friends.ListFriendRequestsResponse listFriendRequests(com.tron.bridge.Friends.ListFriendRequestsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListFriendRequestsMethod(), getCallOptions(), request);
     }
 
     /**
@@ -3015,6 +3121,14 @@ public final class BridgeGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Friends.ListFriendsResponse> listFriends(
+        com.tron.bridge.Friends.ListFriendsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getListFriendsMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Friends.SendFriendRequestResponse> sendFriendRequest(
         com.tron.bridge.Friends.SendFriendRequestRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -3043,6 +3157,14 @@ public final class BridgeGrpc {
         com.tron.bridge.Friends.GetFriendRequestsRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetFriendRequestsMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Friends.ListFriendRequestsResponse> listFriendRequests(
+        com.tron.bridge.Friends.ListFriendRequestsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getListFriendRequestsMethod(), getCallOptions()), request);
     }
 
     /**
@@ -3339,46 +3461,48 @@ public final class BridgeGrpc {
   private static final int METHODID_DEATHS_LEADERBOARD = 8;
   private static final int METHODID_KILLS_LEADERBOARD = 9;
   private static final int METHODID_GET_FRIENDS = 10;
-  private static final int METHODID_SEND_FRIEND_REQUEST = 11;
-  private static final int METHODID_ACCEPT_FRIEND_REQUEST = 12;
-  private static final int METHODID_REJECT_FRIEND_REQUEST = 13;
-  private static final int METHODID_GET_FRIEND_REQUESTS = 14;
-  private static final int METHODID_REMOVE_FRIEND = 15;
-  private static final int METHODID_CREATE_TEAM = 16;
-  private static final int METHODID_DELETE_TEAM = 17;
-  private static final int METHODID_LEAVE_TEAM = 18;
-  private static final int METHODID_JOIN_TEAM = 19;
-  private static final int METHODID_SEND_TEAM_INVITE = 20;
-  private static final int METHODID_ACCEPT_TEAM_INVITE = 21;
-  private static final int METHODID_REJECT_TEAM_INVITE = 22;
-  private static final int METHODID_GET_TEAM_MEMBERS = 23;
-  private static final int METHODID_REMOVE_TEAM_MEMBER = 24;
-  private static final int METHODID_PROMOTE_TEAM_MEMBER = 25;
-  private static final int METHODID_GET_OPEN_TEAMS = 26;
-  private static final int METHODID_BUY_ITEM = 27;
-  private static final int METHODID_SELL_ITEM = 28;
-  private static final int METHODID_GET_ITEMS = 29;
-  private static final int METHODID_BUY_PREFIX = 30;
-  private static final int METHODID_SELECT_PREFIX = 31;
-  private static final int METHODID_GET_ALL_PREFIX = 32;
-  private static final int METHODID_GET_OWNED_PREFIX = 33;
-  private static final int METHODID_GET_CURRENT_PREFIX = 34;
-  private static final int METHODID_CREATE_PREFIX = 35;
-  private static final int METHODID_DELETE_PREFIX = 36;
-  private static final int METHODID_PLAYER_DEATH = 37;
-  private static final int METHODID_PLAYER_KILL = 38;
-  private static final int METHODID_PLAYER_PLACE_BLOCK = 39;
-  private static final int METHODID_PLAYER_BREAK_BLOCK = 40;
-  private static final int METHODID_PROXY_STARTUP = 41;
-  private static final int METHODID_PROXY_SHUTDOWN = 42;
-  private static final int METHODID_SURVIVAL_STARTUP = 43;
-  private static final int METHODID_SURVIVAL_SHUTDOWN = 44;
-  private static final int METHODID_LOBBY_STARTUP = 45;
-  private static final int METHODID_LOBBY_SHUTDOWN = 46;
-  private static final int METHODID_SERVER_SEND_MESSAGE = 47;
-  private static final int METHODID_SERVER_SEND_TITLE = 48;
-  private static final int METHODID_REPORT_PLAYER = 49;
-  private static final int METHODID_MESSAGE = 50;
+  private static final int METHODID_LIST_FRIENDS = 11;
+  private static final int METHODID_SEND_FRIEND_REQUEST = 12;
+  private static final int METHODID_ACCEPT_FRIEND_REQUEST = 13;
+  private static final int METHODID_REJECT_FRIEND_REQUEST = 14;
+  private static final int METHODID_GET_FRIEND_REQUESTS = 15;
+  private static final int METHODID_LIST_FRIEND_REQUESTS = 16;
+  private static final int METHODID_REMOVE_FRIEND = 17;
+  private static final int METHODID_CREATE_TEAM = 18;
+  private static final int METHODID_DELETE_TEAM = 19;
+  private static final int METHODID_LEAVE_TEAM = 20;
+  private static final int METHODID_JOIN_TEAM = 21;
+  private static final int METHODID_SEND_TEAM_INVITE = 22;
+  private static final int METHODID_ACCEPT_TEAM_INVITE = 23;
+  private static final int METHODID_REJECT_TEAM_INVITE = 24;
+  private static final int METHODID_GET_TEAM_MEMBERS = 25;
+  private static final int METHODID_REMOVE_TEAM_MEMBER = 26;
+  private static final int METHODID_PROMOTE_TEAM_MEMBER = 27;
+  private static final int METHODID_GET_OPEN_TEAMS = 28;
+  private static final int METHODID_BUY_ITEM = 29;
+  private static final int METHODID_SELL_ITEM = 30;
+  private static final int METHODID_GET_ITEMS = 31;
+  private static final int METHODID_BUY_PREFIX = 32;
+  private static final int METHODID_SELECT_PREFIX = 33;
+  private static final int METHODID_GET_ALL_PREFIX = 34;
+  private static final int METHODID_GET_OWNED_PREFIX = 35;
+  private static final int METHODID_GET_CURRENT_PREFIX = 36;
+  private static final int METHODID_CREATE_PREFIX = 37;
+  private static final int METHODID_DELETE_PREFIX = 38;
+  private static final int METHODID_PLAYER_DEATH = 39;
+  private static final int METHODID_PLAYER_KILL = 40;
+  private static final int METHODID_PLAYER_PLACE_BLOCK = 41;
+  private static final int METHODID_PLAYER_BREAK_BLOCK = 42;
+  private static final int METHODID_PROXY_STARTUP = 43;
+  private static final int METHODID_PROXY_SHUTDOWN = 44;
+  private static final int METHODID_SURVIVAL_STARTUP = 45;
+  private static final int METHODID_SURVIVAL_SHUTDOWN = 46;
+  private static final int METHODID_LOBBY_STARTUP = 47;
+  private static final int METHODID_LOBBY_SHUTDOWN = 48;
+  private static final int METHODID_SERVER_SEND_MESSAGE = 49;
+  private static final int METHODID_SERVER_SEND_TITLE = 50;
+  private static final int METHODID_REPORT_PLAYER = 51;
+  private static final int METHODID_MESSAGE = 52;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -3441,6 +3565,10 @@ public final class BridgeGrpc {
           serviceImpl.getFriends((com.tron.bridge.Friends.GetFriendsRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Friends.GetFriendsResponse>) responseObserver);
           break;
+        case METHODID_LIST_FRIENDS:
+          serviceImpl.listFriends((com.tron.bridge.Friends.ListFriendsRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Friends.ListFriendsResponse>) responseObserver);
+          break;
         case METHODID_SEND_FRIEND_REQUEST:
           serviceImpl.sendFriendRequest((com.tron.bridge.Friends.SendFriendRequestRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Friends.SendFriendRequestResponse>) responseObserver);
@@ -3456,6 +3584,10 @@ public final class BridgeGrpc {
         case METHODID_GET_FRIEND_REQUESTS:
           serviceImpl.getFriendRequests((com.tron.bridge.Friends.GetFriendRequestsRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Friends.GetFriendRequestsResponse>) responseObserver);
+          break;
+        case METHODID_LIST_FRIEND_REQUESTS:
+          serviceImpl.listFriendRequests((com.tron.bridge.Friends.ListFriendRequestsRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Friends.ListFriendRequestsResponse>) responseObserver);
           break;
         case METHODID_REMOVE_FRIEND:
           serviceImpl.removeFriend((com.tron.bridge.Friends.RemoveFriendRequest) request,
@@ -3696,6 +3828,13 @@ public final class BridgeGrpc {
               com.tron.bridge.Friends.GetFriendsResponse>(
                 service, METHODID_GET_FRIENDS)))
         .addMethod(
+          getListFriendsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Friends.ListFriendsRequest,
+              com.tron.bridge.Friends.ListFriendsResponse>(
+                service, METHODID_LIST_FRIENDS)))
+        .addMethod(
           getSendFriendRequestMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
@@ -3723,6 +3862,13 @@ public final class BridgeGrpc {
               com.tron.bridge.Friends.GetFriendRequestsRequest,
               com.tron.bridge.Friends.GetFriendRequestsResponse>(
                 service, METHODID_GET_FRIEND_REQUESTS)))
+        .addMethod(
+          getListFriendRequestsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Friends.ListFriendRequestsRequest,
+              com.tron.bridge.Friends.ListFriendRequestsResponse>(
+                service, METHODID_LIST_FRIEND_REQUESTS)))
         .addMethod(
           getRemoveFriendMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -4034,10 +4180,12 @@ public final class BridgeGrpc {
               .addMethod(getDeathsLeaderboardMethod())
               .addMethod(getKillsLeaderboardMethod())
               .addMethod(getGetFriendsMethod())
+              .addMethod(getListFriendsMethod())
               .addMethod(getSendFriendRequestMethod())
               .addMethod(getAcceptFriendRequestMethod())
               .addMethod(getRejectFriendRequestMethod())
               .addMethod(getGetFriendRequestsMethod())
+              .addMethod(getListFriendRequestsMethod())
               .addMethod(getRemoveFriendMethod())
               .addMethod(getCreateTeamMethod())
               .addMethod(getDeleteTeamMethod())

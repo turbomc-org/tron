@@ -6,12 +6,12 @@ use anyhow::anyhow;
 use tonic::Status;
 
 impl State {
-    pub async fn get_active_player(&self, username: &String) -> Result<Option<Player>> {
-        Ok(self.active_players.get(username).map(|entry| entry.clone()))
+    pub fn get_active_player(&self, username: &String) -> Option<Player> {
+        self.active_players.get(username).map(|entry| entry.clone())
     }
 
-    pub async fn get_player_username(&self, id: &u64) -> Result<Option<String>> {
-        Ok(self.player_indexes.get(id).map(|entry| entry.clone()))
+    pub fn get_player_username(&self, id: &u64) -> Option<String> {
+        self.player_indexes.get(id).map(|entry| entry.clone())
     }
 
     pub async fn get_player_with_handling(&self, username: &String) -> Result<Player, Status> {
@@ -36,10 +36,7 @@ impl State {
 
     pub async fn check_friend_request(&self, player: &Player, sender: &str) -> Result<u64, Status> {
         for (sender_id, _now) in player.incoming_friend_requests.iter() {
-            let username_opt = self
-                .get_player_username(sender_id)
-                .await
-                .map_err(|_| Status::not_found("Error fetching friend record"))?;
+            let username_opt = self.get_player_username(sender_id);
 
             if let Some(username) = username_opt {
                 if username == sender {
@@ -56,10 +53,7 @@ impl State {
 
     pub async fn get_friend_id(&self, player: &Player, target: &str) -> Result<u64, Status> {
         for friend_id in player.friends.iter() {
-            let username_opt = self
-                .get_player_username(friend_id)
-                .await
-                .map_err(|_| Status::internal("Error fetching friend username"))?;
+            let username_opt = self.get_player_username(friend_id);
 
             if let Some(username) = username_opt {
                 if username == target {
@@ -75,11 +69,11 @@ impl State {
     }
 
     pub async fn inc_coins(&self, player_id: u64, amount: i64) -> Result<()> {
-        let Some(username) = self.get_player_username(&player_id).await? else {
+        let Some(username) = self.get_player_username(&player_id) else {
             return Err(anyhow!("Player not found"));
         };
 
-        let Some(mut player) = self.get_active_player(&username).await? else {
+        let Some(mut player) = self.get_active_player(&username) else {
             return Err(anyhow!("Player not found"));
         };
 
@@ -100,11 +94,11 @@ impl State {
     }
 
     pub async fn inc_kills(&self, player_id: u64, amount: u64) -> Result<()> {
-        let Some(username) = self.get_player_username(&player_id).await? else {
+        let Some(username) = self.get_player_username(&player_id) else {
             return Err(anyhow!("Player not found"));
         };
 
-        let Some(mut player) = self.get_active_player(&username).await? else {
+        let Some(mut player) = self.get_active_player(&username) else {
             return Err(anyhow!("Player not found"));
         };
 
@@ -117,11 +111,11 @@ impl State {
     }
 
     pub async fn inc_deaths(&self, player_id: u64, amount: u64) -> Result<()> {
-        let Some(username) = self.get_player_username(&player_id).await? else {
+        let Some(username) = self.get_player_username(&player_id) else {
             return Err(anyhow!("Player not found"));
         };
 
-        let Some(mut player) = self.get_active_player(&username).await? else {
+        let Some(mut player) = self.get_active_player(&username) else {
             return Err(anyhow!("Player not found"));
         };
 
@@ -159,11 +153,11 @@ impl State {
     }
 
     pub async fn add_achievement(&self, player_id: u64, achievement: Achievements) -> Result<()> {
-        let Some(username) = self.get_player_username(&player_id).await? else {
+        let Some(username) = self.get_player_username(&player_id) else {
             return Err(anyhow!("Player not found"));
         };
 
-        let Some(mut player) = self.get_active_player(&username).await? else {
+        let Some(mut player) = self.get_active_player(&username) else {
             return Err(anyhow!("Player not found"));
         };
 

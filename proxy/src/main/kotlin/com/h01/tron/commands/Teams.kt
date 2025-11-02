@@ -94,17 +94,7 @@ class TeamsCommand(
                 .setColor(color)
                 .setOpen(isOpen)
                 .build()
-            val response = connection.createTeam(request)
-            if (response.success) {
-                player.sendMessage(Component.text("🎉 Team '$teamName' created successfully!", NamedTextColor.GREEN))
-            } else {
-                player.sendMessage(
-                    Component.text(
-                        "Failed to create team. Maybe you're already in one or name is taken.",
-                        NamedTextColor.RED
-                    )
-                )
-            }
+            connection.createTeam(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("Error: ${e.message}", NamedTextColor.RED))
         }
@@ -112,19 +102,9 @@ class TeamsCommand(
 
     private suspend fun leaveTeam(player: Player) {
         try {
-            val response = connection.leaveTeam(
+            connection.leaveTeam(
                 Teams.LeaveTeamRequest.newBuilder().setUsername(player.username).build()
             )
-            if (response.success) {
-                player.sendMessage(Component.text("You have left your team.", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(
-                    Component.text(
-                        "Failed to leave. Are you sure you're in a team?",
-                        NamedTextColor.RED
-                    )
-                )
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -137,14 +117,9 @@ class TeamsCommand(
         }
         val teamName = args[1]
         try {
-            val response = connection.joinTeam(
+            connection.joinTeam(
                 Teams.JoinTeamRequest.newBuilder().setUsername(player.username).setTeam(teamName).build()
             )
-            if (response.success) {
-                player.sendMessage(Component.text("✅ You joined team '$teamName'!", NamedTextColor.GREEN))
-            } else {
-                player.sendMessage(Component.text("Could not join. Team may be closed or full.", NamedTextColor.RED))
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -157,27 +132,9 @@ class TeamsCommand(
         }
         val targetName = args[1]
         try {
-            val response = connection.sendTeamInvite(
+            connection.sendTeamInvite(
                 Teams.SendTeamInviteRequest.newBuilder().setUsername(player.username).setTarget(targetName).build()
             )
-            if (response.success) {
-                player.sendMessage(Component.text("✅ Invite sent to $targetName!", NamedTextColor.GREEN))
-                server.getPlayer(targetName).ifPresent {
-                    it.sendMessage(
-                        Component.text(
-                            "💌 ${player.username} has invited you to their team!",
-                            NamedTextColor.YELLOW
-                        )
-                    )
-                }
-            } else {
-                player.sendMessage(
-                    Component.text(
-                        "Failed to send invite. You may not be the team leader.",
-                        NamedTextColor.RED
-                    )
-                )
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -190,19 +147,9 @@ class TeamsCommand(
         }
         val teamName = args[1]
         try {
-            val response = connection.acceptTeamInvite(
+            connection.acceptTeamInvite(
                 Teams.AcceptTeamInviteRequest.newBuilder().setUsername(player.username).setTeam(teamName).build()
             )
-            if (response.success) {
-                player.sendMessage(Component.text("🎉 You joined team '$teamName'!", NamedTextColor.GREEN))
-            } else {
-                player.sendMessage(
-                    Component.text(
-                        "Could not accept invite. Maybe it expired or you’re already in a team.",
-                        NamedTextColor.RED
-                    )
-                )
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -215,24 +162,9 @@ class TeamsCommand(
         }
         val teamName = args[1]
         try {
-            val response = connection.rejectTeamInvite(
+           connection.rejectTeamInvite(
                 Teams.RejectTeamInviteRequest.newBuilder().setUsername(player.username).setTeam(teamName).build()
             )
-            if (response.success) {
-                player.sendMessage(
-                    Component.text(
-                        "You rejected the invite from team '$teamName'.",
-                        NamedTextColor.YELLOW
-                    )
-                )
-            } else {
-                player.sendMessage(
-                    Component.text(
-                        "Failed to reject invite. It may not exist anymore.",
-                        NamedTextColor.RED
-                    )
-                )
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -240,23 +172,9 @@ class TeamsCommand(
 
     private suspend fun getTeamMembers(player: Player) {
         try {
-            val response = connection.getTeamMembers(
+            connection.getTeamMembers(
                 Teams.GetTeamMembersRequest.newBuilder().setUsername(player.username).build()
             )
-            if (response.membersList.isEmpty()) {
-                player.sendMessage(
-                    Component.text(
-                        "You’re not in a team. Use /team create or /team join.",
-                        NamedTextColor.YELLOW
-                    )
-                )
-            } else {
-                player.sendMessage(Component.text("--- Team Members ---", NamedTextColor.GREEN))
-                response.membersList.forEach { member ->
-                    val status = if (server.getPlayer(member).isPresent) "§aOnline" else "§cOffline"
-                    player.sendMessage(Component.text("- $member ($status)", NamedTextColor.YELLOW))
-                }
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -269,22 +187,9 @@ class TeamsCommand(
         }
         val target = args[1]
         try {
-            val response = connection.promoteTeamMember(
+            connection.promoteTeamMember(
                 Teams.PromoteTeamMemberRequest.newBuilder().setUsername(player.username).setTarget(target).build()
             )
-            if (response.success) {
-                player.sendMessage(Component.text("✅ $target has been promoted!", NamedTextColor.GREEN))
-                server.getPlayer(target).ifPresent {
-                    it.sendMessage(
-                        Component.text(
-                            "🎖 You’ve been promoted by ${player.username}!",
-                            NamedTextColor.YELLOW
-                        )
-                    )
-                }
-            } else {
-                player.sendMessage(Component.text("Promotion failed. You must be the leader.", NamedTextColor.RED))
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -292,15 +197,7 @@ class TeamsCommand(
 
     private suspend fun listOpenTeams(player: Player) {
         try {
-            val response = connection.getOpenTeams(Teams.GetOpenTeamsRequest.getDefaultInstance())
-            if (response.teamsList.isEmpty()) {
-                player.sendMessage(Component.text("No open teams available right now.", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("--- Open Teams ---", NamedTextColor.GREEN))
-                response.teamsList.forEach { team ->
-                    player.sendMessage(Component.text("- $team", NamedTextColor.YELLOW))
-                }
-            }
+            connection.getOpenTeams(Teams.GetOpenTeamsRequest.getDefaultInstance())
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
@@ -313,19 +210,9 @@ class TeamsCommand(
         }
         val teamName = args[1]
         try {
-            val response = connection.deleteTeam(
+            connection.deleteTeam(
                 Teams.DeleteTeamRequest.newBuilder().setTeamName(teamName).build()
             )
-            if (response.success) {
-                player.sendMessage(Component.text("🗑 Team '$teamName' deleted successfully.", NamedTextColor.RED))
-            } else {
-                player.sendMessage(
-                    Component.text(
-                        "Failed to delete team. Only the leader can delete it.",
-                        NamedTextColor.RED
-                    )
-                )
-            }
         } catch (e: Exception) {
             player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }

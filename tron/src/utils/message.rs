@@ -16,10 +16,18 @@ impl BridgeService {
         self.send_message_to_player(
             username,
             format!(
-                "<color:#00ff00><st>[</st>INFO<st>]</st></color> <color:#00ff00><i>{}<i></color>",
+                "<color:#00ff00><st>[</st>INFO<st>]</st></color> <color:#57ff57><i>{}<i></color>",
                 message
             ),
         )
+        .await;
+    }
+
+    pub async fn send_notification_to_player(&self, username: &str, message: &str) {
+        self.send_message_to_player(username, format!(
+            "<color:#12b0ff><st>[</st>NOTIFICATION<st>]</st></color> <color:#008dd4><i>{}<i></color>",
+            message
+        ))
         .await;
     }
 

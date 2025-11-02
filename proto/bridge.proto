@@ -36,10 +36,12 @@ service Bridge {
 
     // Friends
     rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
+    rpc ListFriends (ListFriendsRequest) returns (ListFriendsResponse);
     rpc SendFriendRequest (SendFriendRequestRequest) returns (SendFriendRequestResponse);
     rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse);
     rpc RejectFriendRequest (RejectFriendRequestRequest) returns (RejectFriendRequestResponse);
     rpc GetFriendRequests (GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
+    rpc ListFriendRequests (ListFriendRequestsRequest) returns (ListFriendRequestsResponse);
     rpc RemoveFriend (RemoveFriendRequest)  returns (RemoveFriendResponse);
 
     // Teams
@@ -62,12 +64,15 @@ service Bridge {
 
     // Prefix
     rpc BuyPrefix(BuyPrefixRequest) returns (BuyPrefixResponse);
-    rpc SelectPrefix(SelectPrefixRequest) returns (SelectPrefixResponse);
+    rpc EquipPrefix(EquipPrefixRequest) returns (EquipPrefixResponse);
     rpc GetAllPrefix(GetAllPrefixRequest) returns (GetAllPrefixResponse);
+    rpc ListAllPrefix(ListAllPrefixRequest) returns (ListAllPrefixResponse);
     rpc GetOwnedPrefix(GetOwnedPrefixRequest) returns (GetOwnedPrefixResponse);
+    rpc ListOwnedPrefix(ListOwnedPrefixRequest) returns (ListOwnedPrefixResponse);
     rpc GetCurrentPrefix(GetCurrentPrefixRequest) returns (GetCurrentPrefixResponse);
     rpc CreatePrefix(CreatePrefixRequest) returns (CreatePrefixResponse);
     rpc DeletePrefix(DeletePrefixRequest) returns (DeletePrefixResponse);
+    rpc UnEquipPrefix(UnEquipPrefixRequest) returns (UnEquipPrefixResponse);
 
     // Player
     rpc PlayerDeath(PlayerDeathRequest) returns (PlayerDeathResponse);

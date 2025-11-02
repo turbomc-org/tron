@@ -28,7 +28,7 @@ public final class BridgeProto {
       "alance.proto\032\021leaderboard.proto\032\rfriends" +
       ".proto\032\013teams.proto\032\nshop.proto\032\014player." +
       "proto\032\014server.proto\032\016security.proto\032\014pre" +
-      "fix.proto2\271\037\n\006Bridge\022C\n\nPlayerJoin\022\031.bri" +
+      "fix.proto2\336 \n\006Bridge\022C\n\nPlayerJoin\022\031.bri" +
       "dge.PlayerJoinRequest\032\032.bridge.PlayerJoi" +
       "nResponse\022F\n\013PlayerLeave\022\032.bridge.Player" +
       "LeaveRequest\032\033.bridge.PlayerLeaveRespons" +
@@ -50,86 +50,91 @@ public final class BridgeProto {
       "sLeaderboard\022\037.bridge.KillsLeaderboardRe" +
       "quest\032 .bridge.KillsLeaderboardResponse\022" +
       "C\n\nGetFriends\022\031.bridge.GetFriendsRequest" +
-      "\032\032.bridge.GetFriendsResponse\022X\n\021SendFrie" +
-      "ndRequest\022 .bridge.SendFriendRequestRequ" +
-      "est\032!.bridge.SendFriendRequestResponse\022^" +
-      "\n\023AcceptFriendRequest\022\".bridge.AcceptFri" +
-      "endRequestRequest\032#.bridge.AcceptFriendR" +
-      "equestResponse\022^\n\023RejectFriendRequest\022\"." +
-      "bridge.RejectFriendRequestRequest\032#.brid" +
-      "ge.RejectFriendRequestResponse\022X\n\021GetFri" +
-      "endRequests\022 .bridge.GetFriendRequestsRe" +
-      "quest\032!.bridge.GetFriendRequestsResponse" +
-      "\022I\n\014RemoveFriend\022\033.bridge.RemoveFriendRe" +
-      "quest\032\034.bridge.RemoveFriendResponse\022C\n\nC" +
-      "reateTeam\022\031.bridge.CreateTeamRequest\032\032.b" +
-      "ridge.CreateTeamResponse\022C\n\nDeleteTeam\022\031" +
-      ".bridge.DeleteTeamRequest\032\032.bridge.Delet" +
-      "eTeamResponse\022@\n\tLeaveTeam\022\030.bridge.Leav" +
-      "eTeamRequest\032\031.bridge.LeaveTeamResponse\022" +
-      "=\n\010JoinTeam\022\027.bridge.JoinTeamRequest\032\030.b" +
-      "ridge.JoinTeamResponse\022O\n\016SendTeamInvite" +
-      "\022\035.bridge.SendTeamInviteRequest\032\036.bridge" +
-      ".SendTeamInviteResponse\022U\n\020AcceptTeamInv" +
-      "ite\022\037.bridge.AcceptTeamInviteRequest\032 .b" +
-      "ridge.AcceptTeamInviteResponse\022U\n\020Reject" +
-      "TeamInvite\022\037.bridge.RejectTeamInviteRequ" +
-      "est\032 .bridge.RejectTeamInviteResponse\022O\n" +
-      "\016GetTeamMembers\022\035.bridge.GetTeamMembersR" +
-      "equest\032\036.bridge.GetTeamMembersResponse\022U" +
-      "\n\020RemoveTeamMember\022\037.bridge.RemoveTeamMe" +
-      "mberRequest\032 .bridge.RemoveTeamMemberRes" +
-      "ponse\022X\n\021PromoteTeamMember\022 .bridge.Prom" +
-      "oteTeamMemberRequest\032!.bridge.PromoteTea" +
-      "mMemberResponse\022I\n\014GetOpenTeams\022\033.bridge" +
-      ".GetOpenTeamsRequest\032\034.bridge.GetOpenTea" +
-      "msResponse\022:\n\007BuyItem\022\026.bridge.BuyItemRe" +
-      "quest\032\027.bridge.BuyItemResponse\022=\n\010SellIt" +
-      "em\022\027.bridge.SellItemRequest\032\030.bridge.Sel" +
-      "lItemResponse\022=\n\010GetItems\022\027.bridge.GetIt" +
-      "emsRequest\032\030.bridge.GetItemsResponse\022@\n\t" +
-      "BuyPrefix\022\030.bridge.BuyPrefixRequest\032\031.br" +
-      "idge.BuyPrefixResponse\022I\n\014SelectPrefix\022\033" +
-      ".bridge.SelectPrefixRequest\032\034.bridge.Sel" +
-      "ectPrefixResponse\022I\n\014GetAllPrefix\022\033.brid" +
-      "ge.GetAllPrefixRequest\032\034.bridge.GetAllPr" +
-      "efixResponse\022O\n\016GetOwnedPrefix\022\035.bridge." +
-      "GetOwnedPrefixRequest\032\036.bridge.GetOwnedP" +
-      "refixResponse\022U\n\020GetCurrentPrefix\022\037.brid" +
-      "ge.GetCurrentPrefixRequest\032 .bridge.GetC" +
-      "urrentPrefixResponse\022I\n\014CreatePrefix\022\033.b" +
-      "ridge.CreatePrefixRequest\032\034.bridge.Creat" +
-      "ePrefixResponse\022I\n\014DeletePrefix\022\033.bridge" +
-      ".DeletePrefixRequest\032\034.bridge.DeletePref" +
-      "ixResponse\022F\n\013PlayerDeath\022\032.bridge.Playe" +
-      "rDeathRequest\032\033.bridge.PlayerDeathRespon" +
-      "se\022C\n\nPlayerKill\022\031.bridge.PlayerKillRequ" +
-      "est\032\032.bridge.PlayerKillResponse\022U\n\020Playe" +
-      "rPlaceBlock\022\037.bridge.PlayerPlaceBlockReq" +
-      "uest\032 .bridge.PlayerPlaceBlockResponse\022U" +
-      "\n\020PlayerBreakBlock\022\037.bridge.PlayerBreakB" +
-      "lockRequest\032 .bridge.PlayerBreakBlockRes" +
-      "ponse\022I\n\014ProxyStartup\022\033.bridge.ProxyStar" +
-      "tupRequest\032\034.bridge.ProxyStartupResponse" +
-      "\022L\n\rProxyShutdown\022\034.bridge.ProxyShutdown" +
-      "Request\032\035.bridge.ProxyShutdownResponse\022R" +
-      "\n\017SurvivalStartup\022\036.bridge.SurvivalStart" +
-      "upRequest\032\037.bridge.SurvivalStartupRespon" +
-      "se\022U\n\020SurvivalShutdown\022\037.bridge.Survival" +
-      "ShutdownRequest\032 .bridge.SurvivalShutdow" +
-      "nResponse\022I\n\014LobbyStartup\022\033.bridge.Lobby" +
-      "StartupRequest\032\034.bridge.LobbyStartupResp" +
-      "onse\022L\n\rLobbyShutdown\022\034.bridge.LobbyShut" +
-      "downRequest\032\035.bridge.LobbyShutdownRespon" +
-      "se\022X\n\021ServerSendMessage\022\036.bridge.ServerS" +
-      "ubscribeRequest\032!.bridge.ServerSendMessa" +
-      "geResponse0\001\022T\n\017ServerSendTitle\022\036.bridge" +
-      ".ServerSubscribeRequest\032\037.bridge.ServerS" +
-      "endTitleResponse0\001\022>\n\007Message\022\026.bridge.M" +
-      "essageRequest\032\027.bridge.MessageResponse(\001" +
-      "0\001\022I\n\014ReportPlayer\022\033.bridge.ReportPlayer" +
-      "Request\032\034.bridge.ReportPlayerResponseB\036\n" +
-      "\017com.tron.bridgeB\013BridgeProtob\006proto3"
+      "\032\032.bridge.GetFriendsResponse\022F\n\013ListFrie" +
+      "nds\022\032.bridge.ListFriendsRequest\032\033.bridge" +
+      ".ListFriendsResponse\022X\n\021SendFriendReques" +
+      "t\022 .bridge.SendFriendRequestRequest\032!.br" +
+      "idge.SendFriendRequestResponse\022^\n\023Accept" +
+      "FriendRequest\022\".bridge.AcceptFriendReque" +
+      "stRequest\032#.bridge.AcceptFriendRequestRe" +
+      "sponse\022^\n\023RejectFriendRequest\022\".bridge.R" +
+      "ejectFriendRequestRequest\032#.bridge.Rejec" +
+      "tFriendRequestResponse\022X\n\021GetFriendReque" +
+      "sts\022 .bridge.GetFriendRequestsRequest\032!." +
+      "bridge.GetFriendRequestsResponse\022[\n\022List" +
+      "FriendRequests\022!.bridge.ListFriendReques" +
+      "tsRequest\032\".bridge.ListFriendRequestsRes" +
+      "ponse\022I\n\014RemoveFriend\022\033.bridge.RemoveFri" +
+      "endRequest\032\034.bridge.RemoveFriendResponse" +
+      "\022C\n\nCreateTeam\022\031.bridge.CreateTeamReques" +
+      "t\032\032.bridge.CreateTeamResponse\022C\n\nDeleteT" +
+      "eam\022\031.bridge.DeleteTeamRequest\032\032.bridge." +
+      "DeleteTeamResponse\022@\n\tLeaveTeam\022\030.bridge" +
+      ".LeaveTeamRequest\032\031.bridge.LeaveTeamResp" +
+      "onse\022=\n\010JoinTeam\022\027.bridge.JoinTeamReques" +
+      "t\032\030.bridge.JoinTeamResponse\022O\n\016SendTeamI" +
+      "nvite\022\035.bridge.SendTeamInviteRequest\032\036.b" +
+      "ridge.SendTeamInviteResponse\022U\n\020AcceptTe" +
+      "amInvite\022\037.bridge.AcceptTeamInviteReques" +
+      "t\032 .bridge.AcceptTeamInviteResponse\022U\n\020R" +
+      "ejectTeamInvite\022\037.bridge.RejectTeamInvit" +
+      "eRequest\032 .bridge.RejectTeamInviteRespon" +
+      "se\022O\n\016GetTeamMembers\022\035.bridge.GetTeamMem" +
+      "bersRequest\032\036.bridge.GetTeamMembersRespo" +
+      "nse\022U\n\020RemoveTeamMember\022\037.bridge.RemoveT" +
+      "eamMemberRequest\032 .bridge.RemoveTeamMemb" +
+      "erResponse\022X\n\021PromoteTeamMember\022 .bridge" +
+      ".PromoteTeamMemberRequest\032!.bridge.Promo" +
+      "teTeamMemberResponse\022I\n\014GetOpenTeams\022\033.b" +
+      "ridge.GetOpenTeamsRequest\032\034.bridge.GetOp" +
+      "enTeamsResponse\022:\n\007BuyItem\022\026.bridge.BuyI" +
+      "temRequest\032\027.bridge.BuyItemResponse\022=\n\010S" +
+      "ellItem\022\027.bridge.SellItemRequest\032\030.bridg" +
+      "e.SellItemResponse\022=\n\010GetItems\022\027.bridge." +
+      "GetItemsRequest\032\030.bridge.GetItemsRespons" +
+      "e\022@\n\tBuyPrefix\022\030.bridge.BuyPrefixRequest" +
+      "\032\031.bridge.BuyPrefixResponse\022I\n\014SelectPre" +
+      "fix\022\033.bridge.SelectPrefixRequest\032\034.bridg" +
+      "e.SelectPrefixResponse\022I\n\014GetAllPrefix\022\033" +
+      ".bridge.GetAllPrefixRequest\032\034.bridge.Get" +
+      "AllPrefixResponse\022O\n\016GetOwnedPrefix\022\035.br" +
+      "idge.GetOwnedPrefixRequest\032\036.bridge.GetO" +
+      "wnedPrefixResponse\022U\n\020GetCurrentPrefix\022\037" +
+      ".bridge.GetCurrentPrefixRequest\032 .bridge" +
+      ".GetCurrentPrefixResponse\022I\n\014CreatePrefi" +
+      "x\022\033.bridge.CreatePrefixRequest\032\034.bridge." +
+      "CreatePrefixResponse\022I\n\014DeletePrefix\022\033.b" +
+      "ridge.DeletePrefixRequest\032\034.bridge.Delet" +
+      "ePrefixResponse\022F\n\013PlayerDeath\022\032.bridge." +
+      "PlayerDeathRequest\032\033.bridge.PlayerDeathR" +
+      "esponse\022C\n\nPlayerKill\022\031.bridge.PlayerKil" +
+      "lRequest\032\032.bridge.PlayerKillResponse\022U\n\020" +
+      "PlayerPlaceBlock\022\037.bridge.PlayerPlaceBlo" +
+      "ckRequest\032 .bridge.PlayerPlaceBlockRespo" +
+      "nse\022U\n\020PlayerBreakBlock\022\037.bridge.PlayerB" +
+      "reakBlockRequest\032 .bridge.PlayerBreakBlo" +
+      "ckResponse\022I\n\014ProxyStartup\022\033.bridge.Prox" +
+      "yStartupRequest\032\034.bridge.ProxyStartupRes" +
+      "ponse\022L\n\rProxyShutdown\022\034.bridge.ProxyShu" +
+      "tdownRequest\032\035.bridge.ProxyShutdownRespo" +
+      "nse\022R\n\017SurvivalStartup\022\036.bridge.Survival" +
+      "StartupRequest\032\037.bridge.SurvivalStartupR" +
+      "esponse\022U\n\020SurvivalShutdown\022\037.bridge.Sur" +
+      "vivalShutdownRequest\032 .bridge.SurvivalSh" +
+      "utdownResponse\022I\n\014LobbyStartup\022\033.bridge." +
+      "LobbyStartupRequest\032\034.bridge.LobbyStartu" +
+      "pResponse\022L\n\rLobbyShutdown\022\034.bridge.Lobb" +
+      "yShutdownRequest\032\035.bridge.LobbyShutdownR" +
+      "esponse\022X\n\021ServerSendMessage\022\036.bridge.Se" +
+      "rverSubscribeRequest\032!.bridge.ServerSend" +
+      "MessageResponse0\001\022T\n\017ServerSendTitle\022\036.b" +
+      "ridge.ServerSubscribeRequest\032\037.bridge.Se" +
+      "rverSendTitleResponse0\001\022>\n\007Message\022\026.bri" +
+      "dge.MessageRequest\032\027.bridge.MessageRespo" +
+      "nse(\0010\001\022I\n\014ReportPlayer\022\033.bridge.ReportP" +
+      "layerRequest\032\034.bridge.ReportPlayerRespon" +
+      "seB\036\n\017com.tron.bridgeB\013BridgeProtob\006prot" +
+      "o3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

@@ -48,7 +48,7 @@ class ServerMessageListener(
                         val timestamp = response.timestamp
 
                         sendToPlayer(username, message)
-                        logger.info("💬 [Server] $username -> $message ($timestamp)")
+                        logger.info("💬 [Server] $username ($timestamp)")
                     }
 
                     logger.warn("🔁 Stream ended normally. Reconnecting in 3s...")

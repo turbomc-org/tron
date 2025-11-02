@@ -1,6 +1,5 @@
 use crate::BridgeService;
 use crate::bridge::{GetOwnedPrefixRequest, GetOwnedPrefixResponse};
-use futures::future::join_all;
 use tonic::{Request, Response, Status};
 use tracing::info;
 
@@ -20,27 +19,18 @@ impl BridgeService {
 
         let player = self.state.get_player_with_handling(&username).await?;
 
-        let prefixes_future = player.prefixes.iter().map(|prefix_id| {
-            let state = self.state.clone();
-            async move {
-                let text = state
+        let prefixes: Result<Vec<String>, Status> = player
+            .prefixes
+            .iter()
+            .map(|prefix_id| {
+                let state = self.state.clone();
+                state
                     .get_prefix_text(prefix_id)
-                    .await
-                    .map_err(|_| Status::internal("Failed to fetch prefix text"))?;
+                    .ok_or_else(|| Status::not_found(format!("undefined prefix: {}", prefix_id)))
+            })
+            .collect();
 
-                Ok(text)
-            }
-        });
-
-        let results = join_all(prefixes_future).await;
-
-        let mut prefixes = Vec::new();
-        for res in results {
-            match res {
-                Ok(prefix) => prefixes.push(prefix),
-                Err(status) => return Err(status),
-            }
-        }
+        let prefixes = prefixes?;
 
         info!(
             "Get owned prefixes request from player {} completed",

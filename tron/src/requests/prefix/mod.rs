@@ -1,7 +1,10 @@
 pub mod buy;
 pub mod create;
 pub mod delete;
+pub mod equip;
 pub mod get_all;
 pub mod get_current;
 pub mod get_owned;
-pub mod select;
+pub mod list_all;
+pub mod list_owned;
+pub mod unequip;

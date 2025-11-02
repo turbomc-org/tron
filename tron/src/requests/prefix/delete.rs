@@ -26,6 +26,16 @@ impl BridgeService {
                 Status::internal("Failed to delete prefix")
             })?;
 
+        self.send_message_to_player(
+          &username,
+          format!(
+            "<gradient:#C724B1:#7A00FF><bold>✅ ASSET PURGED</bold></gradient>\n\
+             <gray>Successfully purged the <white><bold>{}</bold></white> identifier from the network.</gray>\n\
+             <dark_gray>»</dark_gray> <click:run_command:'/shop prefixes'><u><gradient:#B200FF:#6A00A3>View remaining assets</gradient></u></click>",
+            prefix_name
+          ),
+        ).await;
+
         info!("Delete request from player {} completed", username);
 
         Ok(Response::new(DeletePrefixResponse { success: true }))

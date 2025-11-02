@@ -20,7 +20,7 @@ impl BridgeService {
         let player = self.state.get_player_with_handling(&username).await?;
 
         if player.selected_prefix.is_none() {
-            return Err(Status::not_found("Player has no selected prefix"));
+            return Err(Status::not_found("You have not equipped any prefix"));
         }
 
         let prefix = self
@@ -33,6 +33,16 @@ impl BridgeService {
             "Get current prefix request from player {} completed",
             username
         );
+
+        self.send_message_to_player(
+          &username,
+          format!(
+            "<gradient:#C724B1:#7A00FF><bold>ℹ️ ACTIVE IDENTIFIER</bold></gradient>\n\
+             <gray>Your currently equipped network identifier is <color:{}>{}</color>.</gray>\n\
+             <dark_gray>»</dark_gray> <click:run_command:'/prefix unequip'><u><gradient:#B200FF:#6A00A3>Click to unequip</gradient></u></click>",
+             prefix.color, prefix.text
+          ),
+        ).await;
 
         Ok(Response::new(GetCurrentPrefixResponse {
             prefix: Some(prefix.compile()),

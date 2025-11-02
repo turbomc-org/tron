@@ -92,6 +92,11 @@ public object BridgeGrpcKt {
     @JvmStatic
     get() = BridgeGrpc.getGetFriendsMethod()
 
+  public val listFriendsMethod:
+      MethodDescriptor<Friends.ListFriendsRequest, Friends.ListFriendsResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getListFriendsMethod()
+
   public val sendFriendRequestMethod:
       MethodDescriptor<Friends.SendFriendRequestRequest, Friends.SendFriendRequestResponse>
     @JvmStatic
@@ -111,6 +116,11 @@ public object BridgeGrpcKt {
       MethodDescriptor<Friends.GetFriendRequestsRequest, Friends.GetFriendRequestsResponse>
     @JvmStatic
     get() = BridgeGrpc.getGetFriendRequestsMethod()
+
+  public val listFriendRequestsMethod:
+      MethodDescriptor<Friends.ListFriendRequestsRequest, Friends.ListFriendRequestsResponse>
+    @JvmStatic
+    get() = BridgeGrpc.getListFriendRequestsMethod()
 
   public val removeFriendMethod:
       MethodDescriptor<Friends.RemoveFriendRequest, Friends.RemoveFriendResponse>
@@ -548,6 +558,28 @@ public object BridgeGrpcKt {
      *
      * @return The single response from the server.
      */
+    public suspend fun listFriends(request: Friends.ListFriendsRequest, headers: Metadata =
+        Metadata()): Friends.ListFriendsResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getListFriendsMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
     public suspend fun sendFriendRequest(request: Friends.SendFriendRequestRequest,
         headers: Metadata = Metadata()): Friends.SendFriendRequestResponse = unaryRpc(
       channel,
@@ -618,6 +650,28 @@ public object BridgeGrpcKt {
         headers: Metadata = Metadata()): Friends.GetFriendRequestsResponse = unaryRpc(
       channel,
       BridgeGrpc.getGetFriendRequestsMethod(),
+      request,
+      callOptions,
+      headers
+    )
+
+    /**
+     * Executes this RPC and returns the response message, suspending until the RPC completes
+     * with [`Status.OK`][io.grpc.Status].  If the RPC completes with another status, a
+     * corresponding
+     * [StatusException] is thrown.  If this coroutine is cancelled, the RPC is also cancelled
+     * with the corresponding exception as a cause.
+     *
+     * @param request The request message to send to the server.
+     *
+     * @param headers Metadata to attach to the request.  Most users will not need this.
+     *
+     * @return The single response from the server.
+     */
+    public suspend fun listFriendRequests(request: Friends.ListFriendRequestsRequest,
+        headers: Metadata = Metadata()): Friends.ListFriendRequestsResponse = unaryRpc(
+      channel,
+      BridgeGrpc.getListFriendRequestsMethod(),
       request,
       callOptions,
       headers
@@ -1595,6 +1649,21 @@ public object BridgeGrpcKt {
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetFriends is unimplemented"))
 
     /**
+     * Returns the response to an RPC for bridge.Bridge.ListFriends.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun listFriends(request: Friends.ListFriendsRequest):
+        Friends.ListFriendsResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ListFriends is unimplemented"))
+
+    /**
      * Returns the response to an RPC for bridge.Bridge.SendFriendRequest.
      *
      * If this method fails with a [StatusException], the RPC will fail with the corresponding
@@ -1653,6 +1722,21 @@ public object BridgeGrpcKt {
     public open suspend fun getFriendRequests(request: Friends.GetFriendRequestsRequest):
         Friends.GetFriendRequestsResponse = throw
         StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.GetFriendRequests is unimplemented"))
+
+    /**
+     * Returns the response to an RPC for bridge.Bridge.ListFriendRequests.
+     *
+     * If this method fails with a [StatusException], the RPC will fail with the corresponding
+     * [io.grpc.Status].  If this method fails with a [java.util.concurrent.CancellationException],
+     * the RPC will fail
+     * with status `Status.CANCELLED`.  If this method fails for any other reason, the RPC will
+     * fail with `Status.UNKNOWN` with the exception as a cause.
+     *
+     * @param request The request from the client.
+     */
+    public open suspend fun listFriendRequests(request: Friends.ListFriendRequestsRequest):
+        Friends.ListFriendRequestsResponse = throw
+        StatusException(UNIMPLEMENTED.withDescription("Method bridge.Bridge.ListFriendRequests is unimplemented"))
 
     /**
      * Returns the response to an RPC for bridge.Bridge.RemoveFriend.
@@ -2254,6 +2338,11 @@ public object BridgeGrpcKt {
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,
+      descriptor = BridgeGrpc.getListFriendsMethod(),
+      implementation = ::listFriends
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
       descriptor = BridgeGrpc.getSendFriendRequestMethod(),
       implementation = ::sendFriendRequest
     ))
@@ -2271,6 +2360,11 @@ public object BridgeGrpcKt {
       context = this.context,
       descriptor = BridgeGrpc.getGetFriendRequestsMethod(),
       implementation = ::getFriendRequests
+    ))
+      .addMethod(unaryServerMethodDefinition(
+      context = this.context,
+      descriptor = BridgeGrpc.getListFriendRequestsMethod(),
+      implementation = ::listFriendRequests
     ))
       .addMethod(unaryServerMethodDefinition(
       context = this.context,

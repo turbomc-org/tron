@@ -205,7 +205,6 @@ class PrefixCommand(
         val player = invocation.source() as? Player ?: return CompletableFuture.completedFuture(emptyList())
         val args = invocation.arguments()
 
-        // Use the coroutine scope to launch an async task that returns a CompletableFuture
         return scope.future {
             try {
                 when {

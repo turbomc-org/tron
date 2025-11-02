@@ -9,10 +9,10 @@ impl State {
         Ok(self.prefixes.iter().map(|p| p.clone()).collect())
     }
 
-    pub async fn get_prefix_text(&self, id: &u64) -> Result<String> {
+    pub fn get_prefix_text(&self, id: &u64) -> Option<String> {
         match self.prefixes.get(id).map(|entry| entry.text.clone()) {
-            Some(text) => Ok(text),
-            None => Err(anyhow!("Requested prefix not found in database")),
+            Some(text) => Some(text),
+            None => None,
         }
     }
 

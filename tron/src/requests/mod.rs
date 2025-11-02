@@ -384,17 +384,52 @@ impl Bridge for BridgeService {
         self.handle_create_prefix(request).await
     }
 
-    async fn select_prefix(
+    async fn equip_prefix(
         &self,
-        request: Request<crate::bridge::SelectPrefixRequest>,
-    ) -> Result<Response<crate::bridge::SelectPrefixResponse>, Status> {
-        self.handle_select_prefix(request).await
+        request: Request<crate::bridge::EquipPrefixRequest>,
+    ) -> Result<Response<crate::bridge::EquipPrefixResponse>, Status> {
+        self.handle_equip_prefix(request).await
     }
 
     async fn get_current_prefix(
         &self,
-        _request: Request<crate::bridge::GetCurrentPrefixRequest>,
+        request: Request<crate::bridge::GetCurrentPrefixRequest>,
     ) -> Result<Response<crate::bridge::GetCurrentPrefixResponse>, Status> {
-        self.handle_get_current_prefix(_request).await
+        self.handle_get_current_prefix(request).await
+    }
+
+    async fn list_friends(
+        &self,
+        request: Request<crate::bridge::ListFriendsRequest>,
+    ) -> Result<Response<crate::bridge::ListFriendsResponse>, Status> {
+        self.handle_list_friends(request).await
+    }
+
+    async fn list_friend_requests(
+        &self,
+        request: Request<crate::bridge::ListFriendRequestsRequest>,
+    ) -> Result<Response<crate::bridge::ListFriendRequestsResponse>, Status> {
+        self.handle_list_friend_requests(request).await
+    }
+
+    async fn list_all_prefix(
+        &self,
+        request: Request<crate::bridge::ListAllPrefixRequest>,
+    ) -> Result<Response<crate::bridge::ListAllPrefixResponse>, Status> {
+        self.handle_list_all_prefix(request).await
+    }
+
+    async fn list_owned_prefix(
+        &self,
+        request: Request<crate::bridge::ListOwnedPrefixRequest>,
+    ) -> Result<Response<crate::bridge::ListOwnedPrefixResponse>, Status> {
+        self.handle_list_owned_prefix(request).await
+    }
+
+    async fn un_equip_prefix(
+        &self,
+        request: Request<crate::bridge::UnEquipPrefixRequest>,
+    ) -> Result<Response<crate::bridge::UnEquipPrefixResponse>, Status> {
+        self.handle_un_equip_prefix(request).await
     }
 }

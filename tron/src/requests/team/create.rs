@@ -52,6 +52,16 @@ impl BridgeService {
                 Status::internal("Failed to set team for player")
             })?;
 
+        self.send_message_to_player(
+          &username,
+          format!(
+            "<gradient:#C724B1:#7A00FF><bold>✅ SQUAD INITIALIZED</bold></gradient>\n\
+             <gray>You have successfully formed the <white><bold>{}</bold></white> squad.</gray>\n\
+             <dark_gray>»</dark_gray> <gray>Use <white>/team invite <user></white> to expand your roster.</gray>",
+            team_name
+          ),
+        ).await;
+
         debug!("Create team request from player {} completed", username);
         debug!("Created team {} for player {}", team_name, username);
 

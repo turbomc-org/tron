@@ -92,17 +92,8 @@ class FriendsCommand(
 
     private suspend fun listFriends(player: Player) {
         try {
-            val request = Friends.GetFriendsRequest.newBuilder().setUsername(player.username).build()
-            val response = connection.getFriends(request)
-            if (response.friendsList.isEmpty()) {
-                player.sendMessage(Component.text("You don't have any friends yet. Use /friend add <player> to add one!", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("--- Your Friends ---", NamedTextColor.GREEN))
-                response.friendsList.forEach { friendName ->
-                    val status = if (server.getPlayer(friendName).isPresent) "§aOnline" else "§cOffline"
-                    player.sendMessage(Component.text("- $friendName ($status)", NamedTextColor.YELLOW))
-                }
-            }
+            val request = Friends.ListFriendsRequest.newBuilder().setUsername(player.username).build()
+            connection.listFriends(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
@@ -115,16 +106,7 @@ class FriendsCommand(
                 .setReceiver(receiverName)
                 .build()
 
-            val response = connection.sendFriendRequest(request)
-
-            if (response.success) {
-                player.sendMessage(Component.text("✅ Friend request sent to $receiverName", NamedTextColor.GREEN))
-                server.getPlayer(receiverName).ifPresent {
-                    it.sendMessage(Component.text("💌 ${player.username} sent you a friend request!", NamedTextColor.YELLOW))
-                }
-            } else {
-                player.sendMessage(Component.text("Failed to send request. The player may not exist or has requests disabled.", NamedTextColor.RED))
-            }
+            connection.sendFriendRequest(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
@@ -136,15 +118,7 @@ class FriendsCommand(
                 .setUsername(player.username)
                 .setSender(senderName)
                 .build()
-            val response = connection.acceptFriendRequest(request)
-            if (response.success) {
-                player.sendMessage(Component.text("🎉 You are now friends with $senderName!", NamedTextColor.GREEN))
-                server.getPlayer(senderName).ifPresent {
-                    it.sendMessage(Component.text("🎉 ${player.username} accepted your friend request!", NamedTextColor.GREEN))
-                }
-            } else {
-                player.sendMessage(Component.text("Could not accept request. The request may not exist.", NamedTextColor.RED))
-            }
+            connection.acceptFriendRequest(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
@@ -156,12 +130,7 @@ class FriendsCommand(
                 .setUsername(player.username)
                 .setSender(senderName)
                 .build()
-            val response = connection.rejectFriendRequest(request)
-            if (response.success) {
-                player.sendMessage(Component.text("You have rejected the friend request from $senderName", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("Could not reject request. The request may not exist.", NamedTextColor.RED))
-            }
+           connection.rejectFriendRequest(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
@@ -173,12 +142,7 @@ class FriendsCommand(
                 .setUsername(player.username)
                 .setTarget(targetName)
                 .build()
-            val response = connection.removeFriend(request)
-            if (response.success) {
-                player.sendMessage(Component.text("🗑️ $targetName has been removed from your friends.", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("Failed to remove friend. Are you sure they are on your friends list?", NamedTextColor.RED))
-            }
+            connection.removeFriend(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
@@ -186,17 +150,8 @@ class FriendsCommand(
 
     private suspend fun listFriendRequests(player: Player) {
         try {
-            val request = Friends.GetFriendRequestsRequest.newBuilder().setUsername(player.username).build()
-            val response = connection.getFriendRequests(request)
-            if (response.incomingFriendRequestsMap.isEmpty()) {
-                player.sendMessage(Component.text("You have no pending friend requests.", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("--- Incoming Friend Requests ---", NamedTextColor.GREEN))
-                response.incomingFriendRequestsMap.keys.forEach { sender ->
-                    player.sendMessage(Component.text("- $sender", NamedTextColor.YELLOW))
-                }
-                player.sendMessage(Component.text("Use /friend accept <player> to accept.", NamedTextColor.GRAY))
-            }
+            val request = Friends.ListFriendRequestsRequest.newBuilder().setUsername(player.username).build()
+            connection.listFriendRequests(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
@@ -206,7 +161,6 @@ class FriendsCommand(
         val player = invocation.source() as? Player ?: return CompletableFuture.completedFuture(emptyList())
         val args = invocation.arguments()
 
-        // Use the coroutine scope to launch an async task that returns a CompletableFuture
         return scope.future {
             try {
                 when {
@@ -239,7 +193,6 @@ class FriendsCommand(
                     else -> emptyList()
                 }
             } catch (e: Exception) {
-                // On error, return an empty list to prevent command failure
                 emptyList<String>()
             }
         }

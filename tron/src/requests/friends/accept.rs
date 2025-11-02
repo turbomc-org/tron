@@ -45,6 +45,26 @@ impl BridgeService {
             Status::internal(format!("Failed to accept friend request from {}", sender))
         })?;
 
+        self.send_message_to_player(
+          &username,
+          format!(
+            "<gradient:#C724B1:#7A00FF><bold>✅ FRIEND CONNECTED</bold></gradient>\n\
+             <gray>You are now friends with <white><bold>{}</bold></white>.</gray>\n\
+             <dark_gray>»</dark_gray> <click:run_command:'/friends'><u><gradient:#B200FF:#6A00A3>Open Friends List</gradient></u></click>",
+            sender
+          ),
+        ).await;
+
+        self.send_message_to_player(
+          &sender,
+          format!(
+            "<gradient:#C724B1:#7A00FF><bold>⚡ FRIEND REQUEST ACCEPTED</bold></gradient>\n\
+             <gray><white><bold>{}</bold></white> has accepted your connection request.</gray>\n\
+             <dark_gray>»</dark_gray> <click:run_command:'/friend list'><u><gradient:#B200FF:#6A00A3>View your friends</gradient></u></click>",
+            username
+          ),
+        ).await;
+
         info!("Accept friend request from player {} completed", username);
 
         Ok(Response::new(AcceptFriendRequestResponse { success: true }))

@@ -36,10 +36,12 @@ service Bridge {
 
     // Friends
     rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
+    rpc ListFriends (ListFriendsRequest) returns (ListFriendsResponse);
     rpc SendFriendRequest (SendFriendRequestRequest) returns (SendFriendRequestResponse);
     rpc AcceptFriendRequest (AcceptFriendRequestRequest) returns (AcceptFriendRequestResponse);
     rpc RejectFriendRequest (RejectFriendRequestRequest) returns (RejectFriendRequestResponse);
     rpc GetFriendRequests (GetFriendRequestsRequest) returns (GetFriendRequestsResponse);
+    rpc ListFriendRequests (ListFriendRequestsRequest) returns (ListFriendRequestsResponse);
     rpc RemoveFriend (RemoveFriendRequest)  returns (RemoveFriendResponse);
 
     // Teams

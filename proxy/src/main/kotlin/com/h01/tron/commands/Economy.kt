@@ -53,26 +53,7 @@ class PayCommand(
                 .build()
 
             try {
-                val response = connection.transferBalance(request)
-
-                if (response.success) {
-                    player.sendMessage(Component.text("\uD83D\uDCB8 $amount Hash Coins successfully transferred to $receiverName", NamedTextColor.GREEN))
-
-                    val targetPlayer = server.getPlayer(receiverName).orElse(null)
-                    if (targetPlayer != null) {
-//                        val isBedrock = floodgateApi.isFloodgatePlayer(targetPlayer.uniqueId)
-//                        if (isBedrock) {
-//                            // You can show your GUI here if needed
-//                        } else {
-                            targetPlayer.sendMessage(
-                                Component.text("${player.username} sent you $amount Hash Coins", NamedTextColor.YELLOW)
-                            )
-//                        }
-                    }
-                } else {
-                    player.sendMessage(Component.text("Payment failed", NamedTextColor.RED))
-                }
-
+                connection.transferBalance(request)
             } catch (e: Exception) {
                 player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
             }
@@ -120,12 +101,7 @@ class BalanceCommand(
                 .build()
 
             try {
-                val response = connection.getBalance(request)
-
-                player.sendMessage(
-                    Component.text("Your balance is \uD83E\uDE99 ${response.balance} Hash Coins", NamedTextColor.YELLOW)
-                )
-
+                connection.getBalance(request)
             } catch (e: Exception) {
                 player.sendMessage(
                     Component.text("${e.message}", NamedTextColor.RED)

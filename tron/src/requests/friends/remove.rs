@@ -41,6 +41,16 @@ impl BridgeService {
                 ))
             })?;
 
+        self.send_message_to_player(
+            &username,
+            format!(
+                "<gradient:#FF4D4D:#FF0000><bold>❌ FRIEND REMOVED</bold></gradient>\n\
+                 <gray>You have successfully removed <white><bold>{}</bold></white> from your friend list.</gray>\n\
+                 <dark_gray>»</dark_gray> <click:run_command:'/friends'><u><gradient:#FF4D4D:#FF0000>View remaining friends</gradient></u></click>",
+                target
+            ),
+        ).await;
+
         info!("Remove friend request from player {} completed", username);
 
         Ok(Response::new(RemoveFriendResponse { success: true }))

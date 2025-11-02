@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::bridge::{KillsLeaderboardRequest, KillsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 
 impl BridgeService {
     #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
@@ -19,11 +19,6 @@ impl BridgeService {
             let username = self
                 .state
                 .get_player_username(&player.0)
-                .await
-                .map_err(|err| {
-                    error!("Failed to get player username: {}", err);
-                    Status::internal("Failed to get player username")
-                })?
                 .ok_or_else(|| Status::not_found("Player not found"))?;
             leaderboard_with_names.insert(username, player.1);
         }

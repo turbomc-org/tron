@@ -16,6 +16,16 @@ impl BridgeService {
 
         let player = self.state.get_player_with_handling(&username).await?;
 
+        self.send_message_to_player(
+          &username,
+          format!(
+            "<gradient:#C724B1:#7A00FF><bold>¤ CREDIT BALANCE</bold></gradient>\n\
+             <gray>You currently have <white><bold>{}</bold></white> Hash-Coins.</gray>\n\
+             <dark_gray>»</dark_gray> <click:run_command:'/shop'><u><gradient:#B200FF:#6A00A3>Access the Network Market</gradient></u></click>",
+             &player.coins
+          ),
+        ).await;
+
         info!(
             "Successfully responded to Get Balance request for player {}",
             username

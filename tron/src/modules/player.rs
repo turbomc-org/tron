@@ -177,7 +177,7 @@ impl Player {
         state.insert_player(self.clone()).await?;
 
         if state.active_players.contains_key(&sender.1) {
-            let mut sender_player = state.get_active_player(&sender.1).await?.unwrap().clone();
+            let mut sender_player = state.get_active_player(&sender.1).unwrap().clone();
             sender_player.friends.insert(self.id.clone());
             state.insert_player(sender_player).await?;
         }
@@ -226,7 +226,7 @@ impl Player {
         state: &Arc<State>,
     ) -> Result<()> {
         let target = target.clone();
-        let player_id = target.clone();
+        let player_id = self.id.clone();
 
         task::spawn({
             let col = col.clone();
@@ -265,14 +265,10 @@ impl Player {
         self.friends.remove(&target);
         state.insert_player(self.clone()).await?;
 
-        let target_username = state.get_player_username(&target).await?.unwrap().clone();
+        let target_username = state.get_player_username(&target).unwrap().clone();
 
         if state.active_players.contains_key(&target_username) {
-            let mut target_player = state
-                .get_active_player(&target_username)
-                .await?
-                .unwrap()
-                .clone();
+            let mut target_player = state.get_active_player(&target_username).unwrap().clone();
             target_player.friends.remove(&self.id);
             state.insert_player(target_player).await?;
         }
@@ -689,6 +685,38 @@ impl Player {
                 );
             }
         }
+        Ok(())
+    }
+
+    pub async fn un_equip_prefix(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        if !self.selected_prefix.is_none() {
+            let player_id = self.id.clone();
+
+            task::spawn({
+                let col = col.clone();
+                async move {
+                    let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                        col.unselect_prefix(player_id).await.map_err(|e| {
+                            error!("Retrying player update due to: {}", e);
+                            e
+                        })
+                    })
+                    .await;
+
+                    if let Err(e) = retry_result {
+                        error!("Player update permanently failed: {}", e);
+                    }
+                }
+            });
+
+            self.selected_prefix = None;
+            state.insert_player(self.clone()).await?;
+        }
+
         Ok(())
     }
 }
