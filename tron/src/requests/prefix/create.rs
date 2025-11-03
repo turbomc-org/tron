@@ -1,6 +1,7 @@
-use crate::BridgeService;
 use crate::bridge::{CreatePrefixRequest, CreatePrefixResponse};
+use crate::config::messages::IDENTIFIER_REGISTERED;
 use crate::models::prefix::Prefix;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -52,11 +53,10 @@ impl BridgeService {
 
         self.send_message_to_player(
             &username,
-            format!(
-                "<gradient:#C724B1:#7A00FF><bold>✅ IDENTIFIER REGISTERED</bold></gradient>\n\
-             <gray>Successfully registered the <color:{}>{}</color> identifier on the network.</gray>\n\
-             <dark_gray>»</dark_gray> <gray>It is now available for players to acquire.</gray>",
-                decompiled_prefix.color, decompiled_prefix.text
+            render!(
+                IDENTIFIER_REGISTERED,
+                color = &decompiled_prefix.color,
+                text = &decompiled_prefix.text
             ),
         )
         .await;

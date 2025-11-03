@@ -1,1 +1,0 @@
-{"id":"proxy","name":"proxy","version":"1.0-SNAPSHOT","description":"Proxy plugin for the Minecraft network","url":"https://h01.in","authors":["Harihar Nautiyal"],"dependencies":[],"main":"com.h01.tron.ProxyPlugin"}

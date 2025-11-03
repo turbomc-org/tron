@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{BuyPrefixRequest, BuyPrefixResponse};
+use crate::config::messages::{ALREADY_OWN_PREFIX, ASSET_ACQUIRED, INSUFFICIENT_CREDITS};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -20,13 +21,10 @@ impl BridgeService {
 
         if player.prefixes.contains(&prefix.id) {
             self.send_message_to_player(
-              &username,
-              format!(
-                "<gradient:#FF4D4D:#FF0000><bold>❌ DUPLICATE ASSET</bold></gradient>\n\
-                 <gray>You have already unlocked this network identifier.</gray>\n\
-                 <dark_gray>»</dark_gray> <click:run_command:'/prefixes'><u><gradient:#C724B1:#7A00FF>View your collection</gradient></u></click>"
-              ),
-            ).await;
+                &username,
+                render!(ALREADY_OWN_PREFIX, username = &player.username),
+            )
+            .await;
 
             error!("Player already owns this prefix");
             return Err(Status::already_exists("You already owns this prefix"));
@@ -34,14 +32,13 @@ impl BridgeService {
 
         if player.coins < prefix.price {
             self.send_message_to_player(
-              &username,
-              format!(
-                "<gradient:#FF4D4D:#FF0000><bold>❌ INSUFFICIENT CREDITS</bold></gradient>\n\
-                 <gray>Your balance is too low to acquire this asset. You need <white>{}</white> more credits.</gray>\n\
-                 <dark_gray>»</dark_gray> <click:run_command:'/balance'><u><gradient:#C724B1:#7A00FF>Check your balance</gradient></u></click>",
-                prefix.price - player.coins
-              ),
-            ).await;
+                &username,
+                render!(
+                    INSUFFICIENT_CREDITS,
+                    credits = &(prefix.price - player.coins)
+                ),
+            )
+            .await;
 
             error!("Player does not have enough coins");
             return Err(Status::failed_precondition("You do not have enough coins"));
@@ -56,17 +53,16 @@ impl BridgeService {
             })?;
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>✅ ASSET ACQUIRED</bold></gradient>\n\
-             <gray>You purchased the <color:{}>{}</color> <gray>prefix for <white>{}</white> credits.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/prefix set {}'><u><gradient:#B200FF:#6A00A3>Click to equip</gradient></u></click>",
-            prefix.color,
-            prefix.text,
-            prefix.price,
-            prefix_name
-          ),
-        ).await;
+            &username,
+            render!(
+                ASSET_ACQUIRED,
+                color = &prefix.color,
+                text = &prefix.text,
+                price = &prefix.price,
+                name = &prefix_name
+            ),
+        )
+        .await;
 
         info!("Buy prefix request from player {} completed", username);
 

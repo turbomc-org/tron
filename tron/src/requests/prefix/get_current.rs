@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{GetCurrentPrefixRequest, GetCurrentPrefixResponse};
+use crate::config::messages::ACTIVE_IDENTIFIER;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::info;
 
@@ -35,14 +36,14 @@ impl BridgeService {
         );
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>ℹ️ ACTIVE IDENTIFIER</bold></gradient>\n\
-             <gray>Your currently equipped network identifier is <color:{}>{}</color>.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/prefix unequip'><u><gradient:#B200FF:#6A00A3>Click to unequip</gradient></u></click>",
-             prefix.color, prefix.text
-          ),
-        ).await;
+            &username,
+            render!(
+                ACTIVE_IDENTIFIER,
+                color = &prefix.color,
+                text = &prefix.text
+            ),
+        )
+        .await;
 
         Ok(Response::new(GetCurrentPrefixResponse {
             prefix: Some(prefix.compile()),

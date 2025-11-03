@@ -1,6 +1,7 @@
-use crate::BridgeService;
 use crate::bridge::{AcceptTeamInviteRequest, AcceptTeamInviteResponse};
+use crate::config::messages::{CONNECTION_ESTABLISHED, SQUAD_LINK_ESTABLISHED};
 use chrono::Utc;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error};
 
@@ -44,14 +45,10 @@ impl BridgeService {
             })?;
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>✅ SQUAD LINK ESTABLISHED</bold></gradient>\n\
-             <gray>You have successfully joined the <white><bold>{}</bold></white> squad.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/team info'><u><gradient:#B200FF:#6A00A3>View Squad Roster</gradient></u></click>",
-            target
-          ),
-        ).await;
+            &username,
+            render!(SQUAD_LINK_ESTABLISHED, team = &target),
+        )
+        .await;
 
         let team = self
             .state
@@ -60,12 +57,7 @@ impl BridgeService {
             .map_err(|_| Status::not_found("Team not found"))?
             .ok_or_else(|| Status::not_found("Team not found"))?;
 
-        let team_broadcast_message = format!(
-            "<gradient:#C724B1:#7A00FF><bold>⚡ CONNECTION ESTABLISHED</bold></gradient>\n\
-             <gray><white><bold>{}</bold></white> has linked with your squad.</gray>\n\
-             <dark_gray>»</dark_gray> <gray>Type <white>/tc</white> to welcome them.</gray>",
-            username
-        );
+        let team_broadcast_message = render!(CONNECTION_ESTABLISHED, username = &username);
 
         for member in team
             .members

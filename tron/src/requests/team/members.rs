@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{GetTeamMembersRequest, GetTeamMembersResponse};
+use crate::config::messages::SQUAD_ROSTER;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::debug;
 
@@ -62,14 +63,11 @@ impl BridgeService {
 
         self.send_message_to_player(
             &username,
-            format!(
-                "<gradient:#C724B1:#7A00FF><bold>🌐 SQUAD ROSTER</bold></gradient>\n\
-                 <gray>Displaying roster for <white><bold>{}</bold></white> (<white>{}</white> members):</gray>\n\
-                 {}\n\
-                 <dark_gray>»</dark_gray> <gray>Use <white>/tc <message></white> for squad chat.</gray>",
-                team.name,
-                members.len(),
-                roster_text
+            render!(
+                SQUAD_ROSTER,
+                team_name = &team.name,
+                member_count = &members.len(),
+                roster_text = &roster_text
             ),
         )
         .await;

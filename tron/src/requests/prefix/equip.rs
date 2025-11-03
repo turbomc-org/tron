@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{EquipPrefixRequest, EquipPrefixResponse};
+use crate::config::messages::IDENTIFIER_EQUIPPED;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
@@ -33,14 +34,14 @@ impl BridgeService {
             })?;
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>✅ IDENTIFIER EQUIPPED</bold></gradient>\n\
-             <gray>You have equipped the <color:{}>{}</color> <gray>network identifier.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/prefix unequip'><u><gradient:#B200FF:#6A00A3>Click to unequip</gradient></u></click>",
-            prefix.color, prefix.text
-          ),
-        ).await;
+            &username,
+            render!(
+                IDENTIFIER_EQUIPPED,
+                color = &prefix.color,
+                text = &prefix.text
+            ),
+        )
+        .await;
 
         info!("Equip prefix request from player {} completed", username);
 

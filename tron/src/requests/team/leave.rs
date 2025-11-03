@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{LeaveTeamRequest, LeaveTeamResponse};
+use crate::config::messages::{SQUAD_LINK_SEVERED, USER_DISCONNECTED};
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error};
 
@@ -44,21 +45,11 @@ impl BridgeService {
 
         self.send_message_to_player(
             &username,
-            format!(
-                "<gradient:#C724B1:#7A00FF><bold>✅ SQUAD LINK SEVERED</bold></gradient>\n\
-             <gray>You have disconnected from the <white><bold>{}</bold></white> squad.</gray>\n\
-             <dark_gray>»</dark_gray> <gray>You are now operating independently.</gray>",
-                team.name
-            ),
+            render!(SQUAD_LINK_SEVERED, team = &team.name),
         )
         .await;
 
-        let team_broadcast_message = format!(
-            "<gradient:#C724B1:#7A00FF><bold>⚡ USER DISCONNECTED</bold></gradient>\n\
-             <gray><white><bold>{}</bold></white> has severed their link to the squad.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/team info'><u><gradient:#B200FF:#6A00A3>View updated roster</gradient></u></click>",
-            username
-        );
+        let team_broadcast_message = render!(USER_DISCONNECTED, username = &username);
 
         for member in team
             .members

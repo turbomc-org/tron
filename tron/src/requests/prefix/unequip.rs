@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{UnEquipPrefixRequest, UnEquipPrefixResponse};
+use crate::config::messages::{IDENTIFIER_UNEQUIPPED, NO_ACTIVE_IDENTIFIER};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
@@ -18,13 +19,10 @@ impl BridgeService {
 
         if player.selected_prefix.is_none() {
             self.send_message_to_player(
-              &username,
-              format!(
-                "<gradient:#C724B1:#7A00FF><bold>ℹ️ NO ACTIVE IDENTIFIER</bold></gradient>\n\
-                 <gray>You do not have a network identifier equipped to unequip.</gray>\n\
-                 <dark_gray>»</dark_gray> <click:run_command:'/prefixes'><u><gradient:#B200FF:#6A00A3>Select an identifier to equip</gradient></u></click>"
-              ),
-            ).await;
+                &username,
+                render!(NO_ACTIVE_IDENTIFIER, username = &player.username),
+            )
+            .await;
 
             return Err(Status::invalid_argument("Player has no prefix equipped"));
         }
@@ -38,13 +36,10 @@ impl BridgeService {
             })?;
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>✅ IDENTIFIER UNEQUIPPED</bold></gradient>\n\
-             <gray>Your network identifier has been reset to default.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/prefix owned'><u><gradient:#B200FF:#6A00A3>Browse your collection</gradient></u></click>"
-          ),
-        ).await;
+            &username,
+            render!(IDENTIFIER_UNEQUIPPED, username = &player.username),
+        )
+        .await;
 
         info!("UnEquip prefix request from player {} completed", username);
 

@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{RemoveFriendRequest, RemoveFriendResponse};
+use crate::config::messages::FRIEND_REMOVED;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -41,110 +42,11 @@ impl BridgeService {
                 ))
             })?;
 
-        self.send_message_to_player(
-            &username,
-            format!(
-                "<gradient:#FF4D4D:#FF0000><bold>❌ FRIEND REMOVED</bold></gradient>\n\
-                 <gray>You have successfully removed <white><bold>{}</bold></white> from your friend list.</gray>\n\
-                 <dark_gray>»</dark_gray> <click:run_command:'/friends'><u><gradient:#FF4D4D:#FF0000>View remaining friends</gradient></u></click>",
-                target
-            ),
-        ).await;
+        self.send_message_to_player(&username, render!(FRIEND_REMOVED, target = &target))
+            .await;
 
         info!("Remove friend request from player {} completed", username);
 
         Ok(Response::new(RemoveFriendResponse { success: true }))
     }
 }
-
-// #[cfg(test)]
-// mod tests {
-//     use crate::BridgeService;
-//     use crate::bridge::bridge_server::Bridge;
-//     use crate::logger::Logger;
-//     use mongodb::bson::doc;
-
-//     #[tokio::test]
-//     async fn test_remove_friend() {
-//         // --- Setup (same as before) ---
-//         Logger::init(true).await;
-//         let service = BridgeService::new().await;
-
-//         let username = "player_remove_1".to_string();
-//         let friend = "player_remove_2".to_string();
-//         let edition = 1;
-
-//         service
-//             .player_join(tonic::Request::new(crate::bridge::PlayerJoinRequest {
-//                 username: username.clone(),
-//                 edition,
-//             }))
-//             .await
-//             .unwrap();
-
-//         service
-//             .player_join(tonic::Request::new(crate::bridge::PlayerJoinRequest {
-//                 username: friend.clone(),
-//                 edition,
-//             }))
-//             .await
-//             .unwrap();
-
-//         service
-//             .send_friend_request(tonic::Request::new(
-//                 crate::bridge::SendFriendRequestRequest {
-//                     sender: username.clone(),
-//                     receiver: friend.clone(),
-//                 },
-//             ))
-//             .await
-//             .unwrap();
-
-//         service
-//             .accept_friend_request(tonic::Request::new(
-//                 crate::bridge::AcceptFriendRequestRequest {
-//                     username: friend.clone(),
-//                     sender: username.clone(),
-//                 },
-//             ))
-//             .await
-//             .unwrap();
-
-//         tokio::time::sleep(std::time::Duration::from_millis(2000)).await;
-
-//         let remove_req = tonic::Request::new(crate::bridge::RemoveFriendRequest {
-//             username: username.clone(),
-//             target: friend.clone(),
-//         });
-//         let remove_resp = service
-//             .remove_friend(remove_req)
-//             .await
-//             .unwrap()
-//             .into_inner();
-//         assert!(remove_resp.success);
-
-//         tokio::time::sleep(std::time::Duration::from_millis(2000)).await;
-
-//         let cached_player1 = service.cache.active_players.get(&username).unwrap();
-//         let cached_player2 = service.cache.active_players.get(&friend).unwrap();
-//         let player2_id = cached_player2.id;
-
-//         assert!(
-//             !cached_player1.friends.contains(&player2_id),
-//             "Friend should be removed from player 1's cache immediately."
-//         );
-
-//         service
-//             .databases
-//             .players
-//             .delete_one(doc! {"username": &username})
-//             .await
-//             .unwrap();
-//         service
-//             .databases
-//             .players
-//             .delete_one(doc! {"username": &friend})
-//             .await
-//             .unwrap();
-//     }
-// }

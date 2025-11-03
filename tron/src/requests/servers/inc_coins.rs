@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{IncreaseCoinsRequest, IncreaseCoinsResponse};
+use crate::config::messages::{ADMINISTRATIVE_GRANT, MASTER_CONTROL_CREDITS_GRANTED};
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::error;
 
@@ -32,23 +33,20 @@ impl BridgeService {
             })?;
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>MASTER CONTROL: CREDITS GRANTED</bold></gradient>\n\
-             <gray>You have granted <white><bold>{}</bold></white> Data-Credits to the user <white><bold>{}</bold></white>.</gray>",
-            amount, target
-          ),
-        ).await;
+            &username,
+            render!(
+                MASTER_CONTROL_CREDITS_GRANTED,
+                amount = &amount,
+                target = &target
+            ),
+        )
+        .await;
 
         self.send_message_to_player(
-          &target,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>⚡ ADMINISTRATIVE GRANT</bold></gradient>\n\
-             <gray>An administrator has updated your account with <white><bold>{}</bold></white> Data-Credits.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/balance'><u><gradient:#B200FF:#6A00A3>Check your new balance</gradient></u></click>",
-            amount
-          ),
-        ).await;
+            &target,
+            render!(ADMINISTRATIVE_GRANT, amount = &amount),
+        )
+        .await;
 
         Ok(Response::new(IncreaseCoinsResponse { success: true }))
     }

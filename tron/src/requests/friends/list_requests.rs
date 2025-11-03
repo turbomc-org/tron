@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{ListFriendRequestsRequest, ListFriendRequestsResponse};
+use crate::config::messages::{INCOMING_FRIEND_REQUESTS, NO_INCOMING_FRIEND_REQUESTS};
+use crate::{BridgeService, render};
 use chrono::Utc;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
@@ -33,10 +34,7 @@ impl BridgeService {
         if count == 0 {
             self.send_message_to_player(
                 &player.username,
-                "<gradient:#C724B1:#7A00FF><bold>📭 NO INCOMING FRIEND REQUESTS</bold></gradient>\n\
-                 <gray>Your <gradient:#B200FF:#6A00A3>H01 Network</gradient> inbox is currently empty.</gray>\n\
-                 <dark_gray>»</dark_gray> <click:run_command:'/friends'><u><gradient:#C724B1:#7A00FF>Send a new request</gradient></u></click>"
-                    .to_string(),
+                render!(NO_INCOMING_FRIEND_REQUESTS, username = &player.username),
             )
             .await;
         } else {
@@ -66,18 +64,11 @@ impl BridgeService {
 
             self.send_message_to_player(
                 &player.username,
-                format!(
-                    "<gradient:#C724B1:#7A00FF><bold>📨 INCOMING FRIEND REQUESTS</bold></gradient>\n\
-                     <gray>You have <light_purple><bold>{}</bold></light_purple> pending connection{} \
-                     on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.</gray>\n\
-                     {}\n\
-                     <dark_gray>»</dark_gray> <click:run_command:'/friends accept_all'>\
-                     <u><gradient:#C724B1:#7A00FF>[ ACCEPT ALL ]</gradient></u></click>  \
-                     <click:run_command:'/friends deny_all'>\
-                     <u><gradient:#8A2BE2:#C724B1>[ DENY ALL ]</gradient></u></click>",
-                    count,
-                    if count == 1 { "" } else { "s" },
-                    list
+                render!(
+                    INCOMING_FRIEND_REQUESTS,
+                    count = &count,
+                    s = if count == 1 { "" } else { "s" },
+                    list = &list
                 ),
             )
             .await;

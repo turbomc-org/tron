@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{ListAllPrefixRequest, ListAllPrefixResponse, PartialPrefix as CompiledPrefix};
+use crate::config::messages::{MARKET_DATABASE_EMPTY, NETWORK_MARKET_IDENTIFIERS};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -26,12 +27,9 @@ impl BridgeService {
         if prefixes.is_empty() {
             self.send_message_to_player(
                 &username,
-                format!(
-                    "<gradient:#C724B1:#7A00FF><bold>ℹ️ MARKET DATABASE EMPTY</bold></gradient>\n\
-                     <gray>There are currently no network identifiers available for acquisition.</gray>\n\
-                     <dark_gray>»</dark_gray> <gray>Please check back later.</gray>"
-                ),
-            ).await;
+                render!(MARKET_DATABASE_EMPTY, username = &player.username),
+            )
+            .await;
         } else {
             let player_owned_prefixes: std::collections::HashSet<String> = player
                 .prefixes
@@ -64,14 +62,9 @@ impl BridgeService {
 
             self.send_message_to_player(
                 &username,
-                format!(
-                    "<gradient:#C724B1:#7A00FF><bold>🌐 NETWORK MARKET: IDENTIFIERS</bold></gradient>\n\
-                     <gray>Displaying all available network assets:</gray>\n\
-                     {}\n\
-                     <dark_gray>»</dark_gray> <click:run_command:'/prefixes'><u><gradient:#B200FF:#6A00A3>View your owned assets</gradient></u></click>",
-                    prefix_list_str
-                ),
-            ).await;
+                render!(NETWORK_MARKET_IDENTIFIERS, list = &prefix_list_str),
+            )
+            .await;
         }
 
         info!("List all prefix request completed");

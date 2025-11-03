@@ -1,7 +1,13 @@
 [package]
 name = "tron"
-version = "0.1.0"
+version.workspace = true
 edition = "2024"
+
+description = "TRON — H01 MINECRAFT SERVER"
+license = "MIT"
+repository = "https://github.com/h01-team/tron"
+documentation = "https://docs.rs/tron"
+homepage = "https://h01.in"
 
 [dependencies]
 bincode = { version = "2.0.1", features = ["serde"] }

@@ -1,6 +1,7 @@
-use crate::BridgeService;
 use crate::bridge::{ListOwnedPrefixRequest, ListOwnedPrefixResponse};
+use crate::config::messages::{IDENTIFIER_COLLECTION, NO_ASSETS_UNLOCKED};
 use crate::models::prefix::Prefix;
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
@@ -34,12 +35,9 @@ impl BridgeService {
         if owned_prefixes.is_empty() {
             self.send_message_to_player(
                 &username,
-                format!(
-                    "<gradient:#C724B1:#7A00FF><bold>ℹ️ NO ASSETS UNLOCKED</bold></gradient>\n\
-                     <gray>Your collection is empty. Acquire identifiers from the network market.</gray>\n\
-                     <dark_gray>»</dark_gray> <click:run_command:'/prefix list'><u><gradient:#B200FF:#6A00A3>Browse the Network Market</gradient></u></click>"
-                ),
-            ).await;
+                render!(NO_ASSETS_UNLOCKED, username = &player.username),
+            )
+            .await;
         } else {
             let prefix_list_str = owned_prefixes
                 .iter()
@@ -63,15 +61,13 @@ impl BridgeService {
 
             self.send_message_to_player(
                 &username,
-                format!(
-                    "<gradient:#C724B1:#7A00FF><bold>🎨 IDENTIFIER COLLECTION</bold></gradient>\n\
-                     <gray>Displaying your <white>{}</white> unlocked network assets:</gray>\n\
-                     {}\n\
-                     <dark_gray>»</dark_gray> <click:run_command:'/prefix list'><u><gradient:#B200FF:#6A00A3>Acquire more assets</gradient></u></click>",
-                    owned_prefixes.len(),
-                    prefix_list_str
+                render!(
+                    IDENTIFIER_COLLECTION,
+                    count = &owned_prefixes.len(),
+                    list = &prefix_list_str
                 ),
-            ).await;
+            )
+            .await;
         }
 
         let response_prefixes = owned_prefixes

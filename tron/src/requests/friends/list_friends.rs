@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{ListFriendsRequest, ListFriendsResponse};
+use crate::config::messages::{FRIEND_NETWORK, NO_CONNECTIONS};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::debug;
 
@@ -26,10 +27,7 @@ impl BridgeService {
         if friends.is_empty() {
             self.send_message_to_player(
                 &username,
-                "<gradient:#C724B1:#7A00FF><bold>\u{2139} NO CONNECTIONS</bold></gradient>\n\
-                 <gray>Your friend network is empty. Establish new connections.</gray>\n\
-                 <dark_gray>»</dark_gray> <gray>Use <white>/friend add <user></white> to send a request.</gray>"
-                    .to_string(),
+                render!(NO_CONNECTIONS, username = &player.username),
             )
             .await;
         } else {
@@ -54,13 +52,10 @@ impl BridgeService {
 
             self.send_message_to_player(
                 &username,
-                format!(
-                    "<gradient:#C724B1:#7A00FF><bold>🌐 FRIEND NETWORK</bold></gradient>\n\
-                     <gray>Displaying <white>{}</white> connected users:</gray>\n\
-                     {}\n\
-                     <dark_gray>»</dark_gray> <gray>Use <white>/friend remove <user></white> to disconnect.</gray>",
-                    friends.len(),
-                    friend_list_str
+                render!(
+                    FRIEND_NETWORK,
+                    count = &friends.len(),
+                    friend_list = &friend_list_str
                 ),
             )
             .await;
