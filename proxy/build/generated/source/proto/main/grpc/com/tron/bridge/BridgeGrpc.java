@@ -914,6 +914,37 @@ public final class BridgeGrpc {
     return getGetOpenTeamsMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Teams.GetAllTeamsRequest,
+      com.tron.bridge.Teams.GetAllTeamsResponse> getGetAllTeamsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetAllTeams",
+      requestType = com.tron.bridge.Teams.GetAllTeamsRequest.class,
+      responseType = com.tron.bridge.Teams.GetAllTeamsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Teams.GetAllTeamsRequest,
+      com.tron.bridge.Teams.GetAllTeamsResponse> getGetAllTeamsMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Teams.GetAllTeamsRequest, com.tron.bridge.Teams.GetAllTeamsResponse> getGetAllTeamsMethod;
+    if ((getGetAllTeamsMethod = BridgeGrpc.getGetAllTeamsMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getGetAllTeamsMethod = BridgeGrpc.getGetAllTeamsMethod) == null) {
+          BridgeGrpc.getGetAllTeamsMethod = getGetAllTeamsMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Teams.GetAllTeamsRequest, com.tron.bridge.Teams.GetAllTeamsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetAllTeams"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Teams.GetAllTeamsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Teams.GetAllTeamsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("GetAllTeams"))
+              .build();
+        }
+      }
+    }
+    return getGetAllTeamsMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Shop.BuyItemRequest,
       com.tron.bridge.Shop.BuyItemResponse> getBuyItemMethod;
 
@@ -1038,35 +1069,35 @@ public final class BridgeGrpc {
     return getBuyPrefixMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.SelectPrefixRequest,
-      com.tron.bridge.Prefix.SelectPrefixResponse> getSelectPrefixMethod;
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.EquipPrefixRequest,
+      com.tron.bridge.Prefix.EquipPrefixResponse> getEquipPrefixMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "SelectPrefix",
-      requestType = com.tron.bridge.Prefix.SelectPrefixRequest.class,
-      responseType = com.tron.bridge.Prefix.SelectPrefixResponse.class,
+      fullMethodName = SERVICE_NAME + '/' + "EquipPrefix",
+      requestType = com.tron.bridge.Prefix.EquipPrefixRequest.class,
+      responseType = com.tron.bridge.Prefix.EquipPrefixResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.tron.bridge.Prefix.SelectPrefixRequest,
-      com.tron.bridge.Prefix.SelectPrefixResponse> getSelectPrefixMethod() {
-    io.grpc.MethodDescriptor<com.tron.bridge.Prefix.SelectPrefixRequest, com.tron.bridge.Prefix.SelectPrefixResponse> getSelectPrefixMethod;
-    if ((getSelectPrefixMethod = BridgeGrpc.getSelectPrefixMethod) == null) {
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Prefix.EquipPrefixRequest,
+      com.tron.bridge.Prefix.EquipPrefixResponse> getEquipPrefixMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Prefix.EquipPrefixRequest, com.tron.bridge.Prefix.EquipPrefixResponse> getEquipPrefixMethod;
+    if ((getEquipPrefixMethod = BridgeGrpc.getEquipPrefixMethod) == null) {
       synchronized (BridgeGrpc.class) {
-        if ((getSelectPrefixMethod = BridgeGrpc.getSelectPrefixMethod) == null) {
-          BridgeGrpc.getSelectPrefixMethod = getSelectPrefixMethod =
-              io.grpc.MethodDescriptor.<com.tron.bridge.Prefix.SelectPrefixRequest, com.tron.bridge.Prefix.SelectPrefixResponse>newBuilder()
+        if ((getEquipPrefixMethod = BridgeGrpc.getEquipPrefixMethod) == null) {
+          BridgeGrpc.getEquipPrefixMethod = getEquipPrefixMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Prefix.EquipPrefixRequest, com.tron.bridge.Prefix.EquipPrefixResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SelectPrefix"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "EquipPrefix"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.tron.bridge.Prefix.SelectPrefixRequest.getDefaultInstance()))
+                  com.tron.bridge.Prefix.EquipPrefixRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.tron.bridge.Prefix.SelectPrefixResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("SelectPrefix"))
+                  com.tron.bridge.Prefix.EquipPrefixResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("EquipPrefix"))
               .build();
         }
       }
     }
-    return getSelectPrefixMethod;
+    return getEquipPrefixMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.GetAllPrefixRequest,
@@ -1100,6 +1131,37 @@ public final class BridgeGrpc {
     return getGetAllPrefixMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.ListAllPrefixRequest,
+      com.tron.bridge.Prefix.ListAllPrefixResponse> getListAllPrefixMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ListAllPrefix",
+      requestType = com.tron.bridge.Prefix.ListAllPrefixRequest.class,
+      responseType = com.tron.bridge.Prefix.ListAllPrefixResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Prefix.ListAllPrefixRequest,
+      com.tron.bridge.Prefix.ListAllPrefixResponse> getListAllPrefixMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Prefix.ListAllPrefixRequest, com.tron.bridge.Prefix.ListAllPrefixResponse> getListAllPrefixMethod;
+    if ((getListAllPrefixMethod = BridgeGrpc.getListAllPrefixMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getListAllPrefixMethod = BridgeGrpc.getListAllPrefixMethod) == null) {
+          BridgeGrpc.getListAllPrefixMethod = getListAllPrefixMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Prefix.ListAllPrefixRequest, com.tron.bridge.Prefix.ListAllPrefixResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ListAllPrefix"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Prefix.ListAllPrefixRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Prefix.ListAllPrefixResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ListAllPrefix"))
+              .build();
+        }
+      }
+    }
+    return getListAllPrefixMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.GetOwnedPrefixRequest,
       com.tron.bridge.Prefix.GetOwnedPrefixResponse> getGetOwnedPrefixMethod;
 
@@ -1129,6 +1191,37 @@ public final class BridgeGrpc {
       }
     }
     return getGetOwnedPrefixMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.ListOwnedPrefixRequest,
+      com.tron.bridge.Prefix.ListOwnedPrefixResponse> getListOwnedPrefixMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ListOwnedPrefix",
+      requestType = com.tron.bridge.Prefix.ListOwnedPrefixRequest.class,
+      responseType = com.tron.bridge.Prefix.ListOwnedPrefixResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Prefix.ListOwnedPrefixRequest,
+      com.tron.bridge.Prefix.ListOwnedPrefixResponse> getListOwnedPrefixMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Prefix.ListOwnedPrefixRequest, com.tron.bridge.Prefix.ListOwnedPrefixResponse> getListOwnedPrefixMethod;
+    if ((getListOwnedPrefixMethod = BridgeGrpc.getListOwnedPrefixMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getListOwnedPrefixMethod = BridgeGrpc.getListOwnedPrefixMethod) == null) {
+          BridgeGrpc.getListOwnedPrefixMethod = getListOwnedPrefixMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Prefix.ListOwnedPrefixRequest, com.tron.bridge.Prefix.ListOwnedPrefixResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ListOwnedPrefix"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Prefix.ListOwnedPrefixRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Prefix.ListOwnedPrefixResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("ListOwnedPrefix"))
+              .build();
+        }
+      }
+    }
+    return getListOwnedPrefixMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.GetCurrentPrefixRequest,
@@ -1222,6 +1315,37 @@ public final class BridgeGrpc {
       }
     }
     return getDeletePrefixMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Prefix.UnEquipPrefixRequest,
+      com.tron.bridge.Prefix.UnEquipPrefixResponse> getUnEquipPrefixMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "UnEquipPrefix",
+      requestType = com.tron.bridge.Prefix.UnEquipPrefixRequest.class,
+      responseType = com.tron.bridge.Prefix.UnEquipPrefixResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Prefix.UnEquipPrefixRequest,
+      com.tron.bridge.Prefix.UnEquipPrefixResponse> getUnEquipPrefixMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Prefix.UnEquipPrefixRequest, com.tron.bridge.Prefix.UnEquipPrefixResponse> getUnEquipPrefixMethod;
+    if ((getUnEquipPrefixMethod = BridgeGrpc.getUnEquipPrefixMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getUnEquipPrefixMethod = BridgeGrpc.getUnEquipPrefixMethod) == null) {
+          BridgeGrpc.getUnEquipPrefixMethod = getUnEquipPrefixMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Prefix.UnEquipPrefixRequest, com.tron.bridge.Prefix.UnEquipPrefixResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "UnEquipPrefix"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Prefix.UnEquipPrefixRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Prefix.UnEquipPrefixResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("UnEquipPrefix"))
+              .build();
+        }
+      }
+    }
+    return getUnEquipPrefixMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Player.PlayerDeathRequest,
@@ -1627,6 +1751,37 @@ public final class BridgeGrpc {
     return getMessageMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Server.IncreaseCoinsRequest,
+      com.tron.bridge.Server.IncreaseCoinsResponse> getIncreaseCoinsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "IncreaseCoins",
+      requestType = com.tron.bridge.Server.IncreaseCoinsRequest.class,
+      responseType = com.tron.bridge.Server.IncreaseCoinsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.tron.bridge.Server.IncreaseCoinsRequest,
+      com.tron.bridge.Server.IncreaseCoinsResponse> getIncreaseCoinsMethod() {
+    io.grpc.MethodDescriptor<com.tron.bridge.Server.IncreaseCoinsRequest, com.tron.bridge.Server.IncreaseCoinsResponse> getIncreaseCoinsMethod;
+    if ((getIncreaseCoinsMethod = BridgeGrpc.getIncreaseCoinsMethod) == null) {
+      synchronized (BridgeGrpc.class) {
+        if ((getIncreaseCoinsMethod = BridgeGrpc.getIncreaseCoinsMethod) == null) {
+          BridgeGrpc.getIncreaseCoinsMethod = getIncreaseCoinsMethod =
+              io.grpc.MethodDescriptor.<com.tron.bridge.Server.IncreaseCoinsRequest, com.tron.bridge.Server.IncreaseCoinsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "IncreaseCoins"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.IncreaseCoinsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.tron.bridge.Server.IncreaseCoinsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new BridgeMethodDescriptorSupplier("IncreaseCoins"))
+              .build();
+        }
+      }
+    }
+    return getIncreaseCoinsMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.tron.bridge.Security.ReportPlayerRequest,
       com.tron.bridge.Security.ReportPlayerResponse> getReportPlayerMethod;
 
@@ -1925,6 +2080,13 @@ public final class BridgeGrpc {
     }
 
     /**
+     */
+    default void getAllTeams(com.tron.bridge.Teams.GetAllTeamsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Teams.GetAllTeamsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetAllTeamsMethod(), responseObserver);
+    }
+
+    /**
      * <pre>
      * Shop
      * </pre>
@@ -1960,9 +2122,9 @@ public final class BridgeGrpc {
 
     /**
      */
-    default void selectPrefix(com.tron.bridge.Prefix.SelectPrefixRequest request,
-        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.SelectPrefixResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSelectPrefixMethod(), responseObserver);
+    default void equipPrefix(com.tron.bridge.Prefix.EquipPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.EquipPrefixResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getEquipPrefixMethod(), responseObserver);
     }
 
     /**
@@ -1974,9 +2136,23 @@ public final class BridgeGrpc {
 
     /**
      */
+    default void listAllPrefix(com.tron.bridge.Prefix.ListAllPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.ListAllPrefixResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListAllPrefixMethod(), responseObserver);
+    }
+
+    /**
+     */
     default void getOwnedPrefix(com.tron.bridge.Prefix.GetOwnedPrefixRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.GetOwnedPrefixResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetOwnedPrefixMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void listOwnedPrefix(com.tron.bridge.Prefix.ListOwnedPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.ListOwnedPrefixResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListOwnedPrefixMethod(), responseObserver);
     }
 
     /**
@@ -1998,6 +2174,13 @@ public final class BridgeGrpc {
     default void deletePrefix(com.tron.bridge.Prefix.DeletePrefixRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.DeletePrefixResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeletePrefixMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void unEquipPrefix(com.tron.bridge.Prefix.UnEquipPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.UnEquipPrefixResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUnEquipPrefixMethod(), responseObserver);
     }
 
     /**
@@ -2095,6 +2278,13 @@ public final class BridgeGrpc {
     default io.grpc.stub.StreamObserver<com.tron.bridge.Server.MessageRequest> message(
         io.grpc.stub.StreamObserver<com.tron.bridge.Server.MessageResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getMessageMethod(), responseObserver);
+    }
+
+    /**
+     */
+    default void increaseCoins(com.tron.bridge.Server.IncreaseCoinsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.IncreaseCoinsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getIncreaseCoinsMethod(), responseObserver);
     }
 
     /**
@@ -2383,6 +2573,14 @@ public final class BridgeGrpc {
     }
 
     /**
+     */
+    public void getAllTeams(com.tron.bridge.Teams.GetAllTeamsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Teams.GetAllTeamsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetAllTeamsMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
      * <pre>
      * Shop
      * </pre>
@@ -2422,10 +2620,10 @@ public final class BridgeGrpc {
 
     /**
      */
-    public void selectPrefix(com.tron.bridge.Prefix.SelectPrefixRequest request,
-        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.SelectPrefixResponse> responseObserver) {
+    public void equipPrefix(com.tron.bridge.Prefix.EquipPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.EquipPrefixResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getSelectPrefixMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getEquipPrefixMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -2438,10 +2636,26 @@ public final class BridgeGrpc {
 
     /**
      */
+    public void listAllPrefix(com.tron.bridge.Prefix.ListAllPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.ListAllPrefixResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getListAllPrefixMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void getOwnedPrefix(com.tron.bridge.Prefix.GetOwnedPrefixRequest request,
         io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.GetOwnedPrefixResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetOwnedPrefixMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void listOwnedPrefix(com.tron.bridge.Prefix.ListOwnedPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.ListOwnedPrefixResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getListOwnedPrefixMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -2466,6 +2680,14 @@ public final class BridgeGrpc {
         io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.DeletePrefixResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getDeletePrefixMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public void unEquipPrefix(com.tron.bridge.Prefix.UnEquipPrefixRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.UnEquipPrefixResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getUnEquipPrefixMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -2576,6 +2798,14 @@ public final class BridgeGrpc {
         io.grpc.stub.StreamObserver<com.tron.bridge.Server.MessageResponse> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getMessageMethod(), getCallOptions()), responseObserver);
+    }
+
+    /**
+     */
+    public void increaseCoins(com.tron.bridge.Server.IncreaseCoinsRequest request,
+        io.grpc.stub.StreamObserver<com.tron.bridge.Server.IncreaseCoinsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getIncreaseCoinsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -2825,6 +3055,13 @@ public final class BridgeGrpc {
     }
 
     /**
+     */
+    public com.tron.bridge.Teams.GetAllTeamsResponse getAllTeams(com.tron.bridge.Teams.GetAllTeamsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetAllTeamsMethod(), getCallOptions(), request);
+    }
+
+    /**
      * <pre>
      * Shop
      * </pre>
@@ -2860,9 +3097,9 @@ public final class BridgeGrpc {
 
     /**
      */
-    public com.tron.bridge.Prefix.SelectPrefixResponse selectPrefix(com.tron.bridge.Prefix.SelectPrefixRequest request) {
+    public com.tron.bridge.Prefix.EquipPrefixResponse equipPrefix(com.tron.bridge.Prefix.EquipPrefixRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getSelectPrefixMethod(), getCallOptions(), request);
+          getChannel(), getEquipPrefixMethod(), getCallOptions(), request);
     }
 
     /**
@@ -2874,9 +3111,23 @@ public final class BridgeGrpc {
 
     /**
      */
+    public com.tron.bridge.Prefix.ListAllPrefixResponse listAllPrefix(com.tron.bridge.Prefix.ListAllPrefixRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListAllPrefixMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public com.tron.bridge.Prefix.GetOwnedPrefixResponse getOwnedPrefix(com.tron.bridge.Prefix.GetOwnedPrefixRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetOwnedPrefixMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Prefix.ListOwnedPrefixResponse listOwnedPrefix(com.tron.bridge.Prefix.ListOwnedPrefixRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getListOwnedPrefixMethod(), getCallOptions(), request);
     }
 
     /**
@@ -2898,6 +3149,13 @@ public final class BridgeGrpc {
     public com.tron.bridge.Prefix.DeletePrefixResponse deletePrefix(com.tron.bridge.Prefix.DeletePrefixRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getDeletePrefixMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Prefix.UnEquipPrefixResponse unEquipPrefix(com.tron.bridge.Prefix.UnEquipPrefixRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getUnEquipPrefixMethod(), getCallOptions(), request);
     }
 
     /**
@@ -2990,6 +3248,13 @@ public final class BridgeGrpc {
         com.tron.bridge.Server.ServerSubscribeRequest request) {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
           getChannel(), getServerSendTitleMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.tron.bridge.Server.IncreaseCoinsResponse increaseCoins(com.tron.bridge.Server.IncreaseCoinsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getIncreaseCoinsMethod(), getCallOptions(), request);
     }
 
     /**
@@ -3267,6 +3532,14 @@ public final class BridgeGrpc {
     }
 
     /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Teams.GetAllTeamsResponse> getAllTeams(
+        com.tron.bridge.Teams.GetAllTeamsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetAllTeamsMethod(), getCallOptions()), request);
+    }
+
+    /**
      * <pre>
      * Shop
      * </pre>
@@ -3306,10 +3579,10 @@ public final class BridgeGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Prefix.SelectPrefixResponse> selectPrefix(
-        com.tron.bridge.Prefix.SelectPrefixRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Prefix.EquipPrefixResponse> equipPrefix(
+        com.tron.bridge.Prefix.EquipPrefixRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getSelectPrefixMethod(), getCallOptions()), request);
+          getChannel().newCall(getEquipPrefixMethod(), getCallOptions()), request);
     }
 
     /**
@@ -3322,10 +3595,26 @@ public final class BridgeGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Prefix.ListAllPrefixResponse> listAllPrefix(
+        com.tron.bridge.Prefix.ListAllPrefixRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getListAllPrefixMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Prefix.GetOwnedPrefixResponse> getOwnedPrefix(
         com.tron.bridge.Prefix.GetOwnedPrefixRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetOwnedPrefixMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Prefix.ListOwnedPrefixResponse> listOwnedPrefix(
+        com.tron.bridge.Prefix.ListOwnedPrefixRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getListOwnedPrefixMethod(), getCallOptions()), request);
     }
 
     /**
@@ -3350,6 +3639,14 @@ public final class BridgeGrpc {
         com.tron.bridge.Prefix.DeletePrefixRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getDeletePrefixMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Prefix.UnEquipPrefixResponse> unEquipPrefix(
+        com.tron.bridge.Prefix.UnEquipPrefixRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getUnEquipPrefixMethod(), getCallOptions()), request);
     }
 
     /**
@@ -3439,6 +3736,14 @@ public final class BridgeGrpc {
     }
 
     /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.tron.bridge.Server.IncreaseCoinsResponse> increaseCoins(
+        com.tron.bridge.Server.IncreaseCoinsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getIncreaseCoinsMethod(), getCallOptions()), request);
+    }
+
+    /**
      * <pre>
      * Security
      * </pre>
@@ -3479,30 +3784,35 @@ public final class BridgeGrpc {
   private static final int METHODID_REMOVE_TEAM_MEMBER = 26;
   private static final int METHODID_PROMOTE_TEAM_MEMBER = 27;
   private static final int METHODID_GET_OPEN_TEAMS = 28;
-  private static final int METHODID_BUY_ITEM = 29;
-  private static final int METHODID_SELL_ITEM = 30;
-  private static final int METHODID_GET_ITEMS = 31;
-  private static final int METHODID_BUY_PREFIX = 32;
-  private static final int METHODID_SELECT_PREFIX = 33;
-  private static final int METHODID_GET_ALL_PREFIX = 34;
-  private static final int METHODID_GET_OWNED_PREFIX = 35;
-  private static final int METHODID_GET_CURRENT_PREFIX = 36;
-  private static final int METHODID_CREATE_PREFIX = 37;
-  private static final int METHODID_DELETE_PREFIX = 38;
-  private static final int METHODID_PLAYER_DEATH = 39;
-  private static final int METHODID_PLAYER_KILL = 40;
-  private static final int METHODID_PLAYER_PLACE_BLOCK = 41;
-  private static final int METHODID_PLAYER_BREAK_BLOCK = 42;
-  private static final int METHODID_PROXY_STARTUP = 43;
-  private static final int METHODID_PROXY_SHUTDOWN = 44;
-  private static final int METHODID_SURVIVAL_STARTUP = 45;
-  private static final int METHODID_SURVIVAL_SHUTDOWN = 46;
-  private static final int METHODID_LOBBY_STARTUP = 47;
-  private static final int METHODID_LOBBY_SHUTDOWN = 48;
-  private static final int METHODID_SERVER_SEND_MESSAGE = 49;
-  private static final int METHODID_SERVER_SEND_TITLE = 50;
-  private static final int METHODID_REPORT_PLAYER = 51;
-  private static final int METHODID_MESSAGE = 52;
+  private static final int METHODID_GET_ALL_TEAMS = 29;
+  private static final int METHODID_BUY_ITEM = 30;
+  private static final int METHODID_SELL_ITEM = 31;
+  private static final int METHODID_GET_ITEMS = 32;
+  private static final int METHODID_BUY_PREFIX = 33;
+  private static final int METHODID_EQUIP_PREFIX = 34;
+  private static final int METHODID_GET_ALL_PREFIX = 35;
+  private static final int METHODID_LIST_ALL_PREFIX = 36;
+  private static final int METHODID_GET_OWNED_PREFIX = 37;
+  private static final int METHODID_LIST_OWNED_PREFIX = 38;
+  private static final int METHODID_GET_CURRENT_PREFIX = 39;
+  private static final int METHODID_CREATE_PREFIX = 40;
+  private static final int METHODID_DELETE_PREFIX = 41;
+  private static final int METHODID_UN_EQUIP_PREFIX = 42;
+  private static final int METHODID_PLAYER_DEATH = 43;
+  private static final int METHODID_PLAYER_KILL = 44;
+  private static final int METHODID_PLAYER_PLACE_BLOCK = 45;
+  private static final int METHODID_PLAYER_BREAK_BLOCK = 46;
+  private static final int METHODID_PROXY_STARTUP = 47;
+  private static final int METHODID_PROXY_SHUTDOWN = 48;
+  private static final int METHODID_SURVIVAL_STARTUP = 49;
+  private static final int METHODID_SURVIVAL_SHUTDOWN = 50;
+  private static final int METHODID_LOBBY_STARTUP = 51;
+  private static final int METHODID_LOBBY_SHUTDOWN = 52;
+  private static final int METHODID_SERVER_SEND_MESSAGE = 53;
+  private static final int METHODID_SERVER_SEND_TITLE = 54;
+  private static final int METHODID_INCREASE_COINS = 55;
+  private static final int METHODID_REPORT_PLAYER = 56;
+  private static final int METHODID_MESSAGE = 57;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -3637,6 +3947,10 @@ public final class BridgeGrpc {
           serviceImpl.getOpenTeams((com.tron.bridge.Teams.GetOpenTeamsRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Teams.GetOpenTeamsResponse>) responseObserver);
           break;
+        case METHODID_GET_ALL_TEAMS:
+          serviceImpl.getAllTeams((com.tron.bridge.Teams.GetAllTeamsRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Teams.GetAllTeamsResponse>) responseObserver);
+          break;
         case METHODID_BUY_ITEM:
           serviceImpl.buyItem((com.tron.bridge.Shop.BuyItemRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Shop.BuyItemResponse>) responseObserver);
@@ -3653,17 +3967,25 @@ public final class BridgeGrpc {
           serviceImpl.buyPrefix((com.tron.bridge.Prefix.BuyPrefixRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.BuyPrefixResponse>) responseObserver);
           break;
-        case METHODID_SELECT_PREFIX:
-          serviceImpl.selectPrefix((com.tron.bridge.Prefix.SelectPrefixRequest) request,
-              (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.SelectPrefixResponse>) responseObserver);
+        case METHODID_EQUIP_PREFIX:
+          serviceImpl.equipPrefix((com.tron.bridge.Prefix.EquipPrefixRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.EquipPrefixResponse>) responseObserver);
           break;
         case METHODID_GET_ALL_PREFIX:
           serviceImpl.getAllPrefix((com.tron.bridge.Prefix.GetAllPrefixRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.GetAllPrefixResponse>) responseObserver);
           break;
+        case METHODID_LIST_ALL_PREFIX:
+          serviceImpl.listAllPrefix((com.tron.bridge.Prefix.ListAllPrefixRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.ListAllPrefixResponse>) responseObserver);
+          break;
         case METHODID_GET_OWNED_PREFIX:
           serviceImpl.getOwnedPrefix((com.tron.bridge.Prefix.GetOwnedPrefixRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.GetOwnedPrefixResponse>) responseObserver);
+          break;
+        case METHODID_LIST_OWNED_PREFIX:
+          serviceImpl.listOwnedPrefix((com.tron.bridge.Prefix.ListOwnedPrefixRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.ListOwnedPrefixResponse>) responseObserver);
           break;
         case METHODID_GET_CURRENT_PREFIX:
           serviceImpl.getCurrentPrefix((com.tron.bridge.Prefix.GetCurrentPrefixRequest) request,
@@ -3676,6 +3998,10 @@ public final class BridgeGrpc {
         case METHODID_DELETE_PREFIX:
           serviceImpl.deletePrefix((com.tron.bridge.Prefix.DeletePrefixRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.DeletePrefixResponse>) responseObserver);
+          break;
+        case METHODID_UN_EQUIP_PREFIX:
+          serviceImpl.unEquipPrefix((com.tron.bridge.Prefix.UnEquipPrefixRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Prefix.UnEquipPrefixResponse>) responseObserver);
           break;
         case METHODID_PLAYER_DEATH:
           serviceImpl.playerDeath((com.tron.bridge.Player.PlayerDeathRequest) request,
@@ -3724,6 +4050,10 @@ public final class BridgeGrpc {
         case METHODID_SERVER_SEND_TITLE:
           serviceImpl.serverSendTitle((com.tron.bridge.Server.ServerSubscribeRequest) request,
               (io.grpc.stub.StreamObserver<com.tron.bridge.Server.ServerSendTitleResponse>) responseObserver);
+          break;
+        case METHODID_INCREASE_COINS:
+          serviceImpl.increaseCoins((com.tron.bridge.Server.IncreaseCoinsRequest) request,
+              (io.grpc.stub.StreamObserver<com.tron.bridge.Server.IncreaseCoinsResponse>) responseObserver);
           break;
         case METHODID_REPORT_PLAYER:
           serviceImpl.reportPlayer((com.tron.bridge.Security.ReportPlayerRequest) request,
@@ -3954,6 +4284,13 @@ public final class BridgeGrpc {
               com.tron.bridge.Teams.GetOpenTeamsResponse>(
                 service, METHODID_GET_OPEN_TEAMS)))
         .addMethod(
+          getGetAllTeamsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Teams.GetAllTeamsRequest,
+              com.tron.bridge.Teams.GetAllTeamsResponse>(
+                service, METHODID_GET_ALL_TEAMS)))
+        .addMethod(
           getBuyItemMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
@@ -3982,12 +4319,12 @@ public final class BridgeGrpc {
               com.tron.bridge.Prefix.BuyPrefixResponse>(
                 service, METHODID_BUY_PREFIX)))
         .addMethod(
-          getSelectPrefixMethod(),
+          getEquipPrefixMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              com.tron.bridge.Prefix.SelectPrefixRequest,
-              com.tron.bridge.Prefix.SelectPrefixResponse>(
-                service, METHODID_SELECT_PREFIX)))
+              com.tron.bridge.Prefix.EquipPrefixRequest,
+              com.tron.bridge.Prefix.EquipPrefixResponse>(
+                service, METHODID_EQUIP_PREFIX)))
         .addMethod(
           getGetAllPrefixMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -3996,12 +4333,26 @@ public final class BridgeGrpc {
               com.tron.bridge.Prefix.GetAllPrefixResponse>(
                 service, METHODID_GET_ALL_PREFIX)))
         .addMethod(
+          getListAllPrefixMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Prefix.ListAllPrefixRequest,
+              com.tron.bridge.Prefix.ListAllPrefixResponse>(
+                service, METHODID_LIST_ALL_PREFIX)))
+        .addMethod(
           getGetOwnedPrefixMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
               com.tron.bridge.Prefix.GetOwnedPrefixRequest,
               com.tron.bridge.Prefix.GetOwnedPrefixResponse>(
                 service, METHODID_GET_OWNED_PREFIX)))
+        .addMethod(
+          getListOwnedPrefixMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Prefix.ListOwnedPrefixRequest,
+              com.tron.bridge.Prefix.ListOwnedPrefixResponse>(
+                service, METHODID_LIST_OWNED_PREFIX)))
         .addMethod(
           getGetCurrentPrefixMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -4023,6 +4374,13 @@ public final class BridgeGrpc {
               com.tron.bridge.Prefix.DeletePrefixRequest,
               com.tron.bridge.Prefix.DeletePrefixResponse>(
                 service, METHODID_DELETE_PREFIX)))
+        .addMethod(
+          getUnEquipPrefixMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Prefix.UnEquipPrefixRequest,
+              com.tron.bridge.Prefix.UnEquipPrefixResponse>(
+                service, METHODID_UN_EQUIP_PREFIX)))
         .addMethod(
           getPlayerDeathMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -4115,6 +4473,13 @@ public final class BridgeGrpc {
               com.tron.bridge.Server.MessageResponse>(
                 service, METHODID_MESSAGE)))
         .addMethod(
+          getIncreaseCoinsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.tron.bridge.Server.IncreaseCoinsRequest,
+              com.tron.bridge.Server.IncreaseCoinsResponse>(
+                service, METHODID_INCREASE_COINS)))
+        .addMethod(
           getReportPlayerMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
@@ -4198,16 +4563,20 @@ public final class BridgeGrpc {
               .addMethod(getRemoveTeamMemberMethod())
               .addMethod(getPromoteTeamMemberMethod())
               .addMethod(getGetOpenTeamsMethod())
+              .addMethod(getGetAllTeamsMethod())
               .addMethod(getBuyItemMethod())
               .addMethod(getSellItemMethod())
               .addMethod(getGetItemsMethod())
               .addMethod(getBuyPrefixMethod())
-              .addMethod(getSelectPrefixMethod())
+              .addMethod(getEquipPrefixMethod())
               .addMethod(getGetAllPrefixMethod())
+              .addMethod(getListAllPrefixMethod())
               .addMethod(getGetOwnedPrefixMethod())
+              .addMethod(getListOwnedPrefixMethod())
               .addMethod(getGetCurrentPrefixMethod())
               .addMethod(getCreatePrefixMethod())
               .addMethod(getDeletePrefixMethod())
+              .addMethod(getUnEquipPrefixMethod())
               .addMethod(getPlayerDeathMethod())
               .addMethod(getPlayerKillMethod())
               .addMethod(getPlayerPlaceBlockMethod())
@@ -4221,6 +4590,7 @@ public final class BridgeGrpc {
               .addMethod(getServerSendMessageMethod())
               .addMethod(getServerSendTitleMethod())
               .addMethod(getMessageMethod())
+              .addMethod(getIncreaseCoinsMethod())
               .addMethod(getReportPlayerMethod())
               .build();
         }

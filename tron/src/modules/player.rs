@@ -92,6 +92,49 @@ impl Player {
         Ok(())
     }
 
+    pub async fn inc_coins(
+        &mut self,
+        amount: i64,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+
+        if amount < 0 {
+            let abs_amount = (-amount) as u64; // safe: amount >= i64::MIN check optional
+            self.coins = self.coins.checked_sub(abs_amount).ok_or_else(|| {
+                anyhow::anyhow!("Coin underflow: {} - {}", self.coins, abs_amount)
+            })?;
+        } else {
+            let pos_amount = amount as u64;
+            self.coins = self
+                .coins
+                .checked_add(pos_amount)
+                .ok_or_else(|| anyhow::anyhow!("Coin overflow: {} + {}", self.coins, pos_amount))?;
+        }
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.inc_coins(player_id, amount as i64).await.map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        state.inc_coins(player_id, amount).await?;
+
+        Ok(())
+    }
+
     pub async fn add_friend_request(
         &self,
         target: &mut Self,

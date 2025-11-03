@@ -23,3 +23,11 @@ message PlayerLeaveRequest {
 message PlayerLeaveResponse {
     bool success = 1;
 }
+
+message PostLoginRequest {
+    string username = 1;
+}
+
+message PostLoginResponse {
+    bool success = 1;
+}

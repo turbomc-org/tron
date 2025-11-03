@@ -1,6 +1,7 @@
 package com.h01.tron.commands
 import com.tron.bridge.BridgeGrpcKt.BridgeCoroutineStub
 import com.tron.bridge.Friends
+import com.tron.bridge.Prefix
 import com.velocitypowered.api.command.SimpleCommand
 import com.velocitypowered.api.proxy.Player
 import com.velocitypowered.api.proxy.ProxyServer
@@ -18,7 +19,7 @@ class PrefixCommand(
 ) : SimpleCommand {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-    private val subCommands = listOf("owned", "buy", "select", "current")
+    private val subCommands = listOf("owned", "buy", "equip", "current", "list", "unequip")
 
     override fun execute(invocation: SimpleCommand.Invocation) {
         val source = invocation.source()
@@ -40,36 +41,30 @@ class PrefixCommand(
             }
 
             when (args[0].lowercase()) {
-                "add" -> {
+                "owned" ->
+                    listOwnedPrefixes(player)
+                "list" ->
+                    listAllPrefixes(player)
+                "current" -> {
+                    getCurrentPrefix(player)
+                }
+                "buy" -> {
                     if (args.size < 2) {
-                        player.sendMessage(Component.text("Usage: /friend add <player>", NamedTextColor.YELLOW))
+                        player.sendMessage(Component.text("Usage: /prefix buy <prefix>", NamedTextColor.YELLOW))
                         return@launch
                     }
-                    sendFriendRequest(player, args[1])
+
+                    buyPrefix(player, args[1])
                 }
-                "accept" -> {
+                "equip" -> {
                     if (args.size < 2) {
-                        player.sendMessage(Component.text("Usage: /friend accept <player>", NamedTextColor.YELLOW))
+                        player.sendMessage(Component.text("Usage: /prefix equip <prefix>", NamedTextColor.YELLOW))
                         return@launch
                     }
-                    acceptFriendRequest(player, args[1])
+
+                    equipPrefix(player, args[1])
                 }
-                "reject" -> {
-                    if (args.size < 2) {
-                        player.sendMessage(Component.text("Usage: /friend reject <player>", NamedTextColor.YELLOW))
-                        return@launch
-                    }
-                    rejectFriendRequest(player, args[1])
-                }
-                "remove" -> {
-                    if (args.size < 2) {
-                        player.sendMessage(Component.text("Usage: /friend remove <player>", NamedTextColor.YELLOW))
-                        return@launch
-                    }
-                    removeFriend(player, args[1])
-                }
-                "requests" -> listFriendRequests(player)
-                "list" -> listFriends(player)
+                "unequip" -> unequipPrefix(player)
                 else -> {
                     sendUsage(player)
                 }
@@ -89,115 +84,57 @@ class PrefixCommand(
         player.sendMessage(Component.text("/friend list", NamedTextColor.YELLOW))
     }
 
-    private suspend fun listFriends(player: Player) {
+    private suspend fun getCurrentPrefix(player: Player) {
         try {
-            val request = Friends.GetFriendsRequest.newBuilder().setUsername(player.username).build()
-            val response = connection.getFriends(request)
-            if (response.friendsList.isEmpty()) {
-                player.sendMessage(Component.text("You don't have any friends yet. Use /friend add <player> to add one!", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("--- Your Friends ---", NamedTextColor.GREEN))
-                response.friendsList.forEach { friendName ->
-                    val status = if (server.getPlayer(friendName).isPresent) "§aOnline" else "§cOffline"
-                    player.sendMessage(Component.text("- $friendName ($status)", NamedTextColor.YELLOW))
-                }
-            }
+            val request = Prefix.GetCurrentPrefixRequest.newBuilder().setUsername(player.username).build()
+            connection.getCurrentPrefix(request)
         } catch (e: Exception) {
             player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
         }
     }
 
-    private suspend fun sendFriendRequest(player: Player, receiverName: String) {
+    private suspend fun listAllPrefixes(player: Player) {
         try {
-            val request = Friends.SendFriendRequestRequest.newBuilder()
-                .setSender(player.username)
-                .setReceiver(receiverName)
-                .build()
-
-            val response = connection.sendFriendRequest(request)
-
-            if (response.success) {
-                player.sendMessage(Component.text("✅ Friend request sent to $receiverName", NamedTextColor.GREEN))
-                server.getPlayer(receiverName).ifPresent {
-                    it.sendMessage(Component.text("💌 ${player.username} sent you a friend request!", NamedTextColor.YELLOW))
-                }
-            } else {
-                player.sendMessage(Component.text("Failed to send request. The player may not exist or has requests disabled.", NamedTextColor.RED))
-            }
-        } catch (e: Exception) {
-            player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
+            val request = Prefix.ListAllPrefixRequest.newBuilder().setUsername(player.username).build()
+            connection.listAllPrefix(request)
+        } catch(e: Exception) {
+            player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
     }
 
-    private suspend fun acceptFriendRequest(player: Player, senderName: String) {
+    private suspend fun listOwnedPrefixes(player: Player) {
         try {
-            val request = Friends.AcceptFriendRequestRequest.newBuilder()
-                .setUsername(player.username)
-                .setSender(senderName)
-                .build()
-            val response = connection.acceptFriendRequest(request)
-            if (response.success) {
-                player.sendMessage(Component.text("🎉 You are now friends with $senderName!", NamedTextColor.GREEN))
-                server.getPlayer(senderName).ifPresent {
-                    it.sendMessage(Component.text("🎉 ${player.username} accepted your friend request!", NamedTextColor.GREEN))
-                }
-            } else {
-                player.sendMessage(Component.text("Could not accept request. The request may not exist.", NamedTextColor.RED))
-            }
-        } catch (e: Exception) {
-            player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
+            val request = Prefix.ListOwnedPrefixRequest.newBuilder().setUsername(player.username).build()
+            connection.listOwnedPrefix(request)
+        } catch(e: Exception) {
+            player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
     }
 
-    private suspend fun rejectFriendRequest(player: Player, senderName: String) {
+    private suspend fun buyPrefix(player: Player, prefixName: String) {
         try {
-            val request = Friends.RejectFriendRequestRequest.newBuilder()
-                .setUsername(player.username)
-                .setSender(senderName)
-                .build()
-            val response = connection.rejectFriendRequest(request)
-            if (response.success) {
-                player.sendMessage(Component.text("You have rejected the friend request from $senderName", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("Could not reject request. The request may not exist.", NamedTextColor.RED))
-            }
-        } catch (e: Exception) {
-            player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
+            val request = Prefix.BuyPrefixRequest.newBuilder().setUsername(player.username).setPrefix(prefixName).build()
+            connection.buyPrefix(request)
+        } catch(e: Exception) {
+            player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
     }
 
-    private suspend fun removeFriend(player: Player, targetName: String) {
+    private suspend fun equipPrefix(player: Player, prefixName: String) {
         try {
-            val request = Friends.RemoveFriendRequest.newBuilder()
-                .setUsername(player.username)
-                .setTarget(targetName)
-                .build()
-            val response = connection.removeFriend(request)
-            if (response.success) {
-                player.sendMessage(Component.text("🗑️ $targetName has been removed from your friends.", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("Failed to remove friend. Are you sure they are on your friends list?", NamedTextColor.RED))
-            }
-        } catch (e: Exception) {
-            player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
+           val request = Prefix.EquipPrefixRequest.newBuilder().setUsername(player.username).setPrefix(prefixName).build()
+           connection.equipPrefix(request)
+        } catch(e: Exception) {
+            player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
     }
 
-    private suspend fun listFriendRequests(player: Player) {
+    private suspend fun unequipPrefix(player: Player) {
         try {
-            val request = Friends.GetFriendRequestsRequest.newBuilder().setUsername(player.username).build()
-            val response = connection.getFriendRequests(request)
-            if (response.incomingFriendRequestsMap.isEmpty()) {
-                player.sendMessage(Component.text("You have no pending friend requests.", NamedTextColor.YELLOW))
-            } else {
-                player.sendMessage(Component.text("--- Incoming Friend Requests ---", NamedTextColor.GREEN))
-                response.incomingFriendRequestsMap.keys.forEach { sender ->
-                    player.sendMessage(Component.text("- $sender", NamedTextColor.YELLOW))
-                }
-                player.sendMessage(Component.text("Use /friend accept <player> to accept.", NamedTextColor.GRAY))
-            }
-        } catch (e: Exception) {
-            player.sendMessage(Component.text("${e.message}", NamedTextColor.RED))
+            val request = Prefix.UnEquipPrefixRequest.newBuilder().setUsername(player.username).build()
+            connection.unEquipPrefix(request)
+        } catch(e: Exception) {
+            player.sendMessage(Component.text(e.message.toString(), NamedTextColor.RED))
         }
     }
 
@@ -214,21 +151,15 @@ class PrefixCommand(
                     args.size == 2 -> {
                         val currentArg = args[1]
                         when (args[0].lowercase()) {
-                            "add" -> {
-                                server.allPlayers
-                                    .map { it.username }
-                                    .filter { it.startsWith(currentArg, ignoreCase = true) }
+                            "buy" -> {
+                                val request = Prefix.GetAllPrefixRequest.getDefaultInstance()
+                                val response = connection.getAllPrefix(request)
+                                response.prefixesList.filter {it.text.startsWith(currentArg, ignoreCase = true)}.map { prefix -> prefix.text }
                             }
-                            "remove" -> {
-                                val request = Friends.GetFriendsRequest.newBuilder().setUsername(player.username).build()
-                                val response = connection.getFriends(request)
-                                response.friendsList
-                                    .filter { it.startsWith(currentArg, ignoreCase = true) }
-                            }
-                            "accept", "reject" -> {
-                                val request = Friends.GetFriendRequestsRequest.newBuilder().setUsername(player.username).build()
-                                val response = connection.getFriendRequests(request)
-                                response.incomingFriendRequestsMap.keys
+                            "equip", "unequip" -> {
+                                val request = Prefix.GetOwnedPrefixRequest.newBuilder().setUsername(player.username).build()
+                                val response = connection.getOwnedPrefix(request)
+                                response.prefixesList
                                     .filter { it.startsWith(currentArg, ignoreCase = true) }
                             }
                             else -> emptyList()
@@ -237,7 +168,6 @@ class PrefixCommand(
                     else -> emptyList()
                 }
             } catch (e: Exception) {
-                // On error, return an empty list to prevent command failure
                 emptyList<String>()
             }
         }

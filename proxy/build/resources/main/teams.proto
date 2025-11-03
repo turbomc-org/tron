@@ -3,6 +3,14 @@ option java_package = "com.tron.bridge";
 
 package bridge;
 
+message GetAllTeamsRequest  {
+    string username = 1;
+}
+
+message GetAllTeamsResponse {
+    repeated string teams = 1;
+}
+
 message GetTeamLeaderboardRequest {
     string username = 1;
 }

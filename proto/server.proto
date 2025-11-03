@@ -41,6 +41,16 @@ message LobbyShutdownResponse {
     bool success = 1;
 }
 
+message IncreaseCoinsRequest {
+    string username = 1;
+    string target = 2;
+    int64 amount = 3;
+}
+
+message IncreaseCoinsResponse {
+    bool success = 1;
+}
+
 message ServerSendMessageResponse {
     string username = 1;
     string message = 2;

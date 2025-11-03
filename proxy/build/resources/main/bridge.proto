@@ -56,6 +56,7 @@ service Bridge {
     rpc RemoveTeamMember (RemoveTeamMemberRequest) returns (RemoveTeamMemberResponse);
     rpc PromoteTeamMember (PromoteTeamMemberRequest) returns (PromoteTeamMemberResponse);
     rpc GetOpenTeams (GetOpenTeamsRequest) returns (GetOpenTeamsResponse);
+    rpc GetAllTeams (GetAllTeamsRequest) returns (GetAllTeamsResponse);
 
     // Shop
     rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
@@ -64,12 +65,15 @@ service Bridge {
 
     // Prefix
     rpc BuyPrefix(BuyPrefixRequest) returns (BuyPrefixResponse);
-    rpc SelectPrefix(SelectPrefixRequest) returns (SelectPrefixResponse);
+    rpc EquipPrefix(EquipPrefixRequest) returns (EquipPrefixResponse);
     rpc GetAllPrefix(GetAllPrefixRequest) returns (GetAllPrefixResponse);
+    rpc ListAllPrefix(ListAllPrefixRequest) returns (ListAllPrefixResponse);
     rpc GetOwnedPrefix(GetOwnedPrefixRequest) returns (GetOwnedPrefixResponse);
+    rpc ListOwnedPrefix(ListOwnedPrefixRequest) returns (ListOwnedPrefixResponse);
     rpc GetCurrentPrefix(GetCurrentPrefixRequest) returns (GetCurrentPrefixResponse);
     rpc CreatePrefix(CreatePrefixRequest) returns (CreatePrefixResponse);
     rpc DeletePrefix(DeletePrefixRequest) returns (DeletePrefixResponse);
+    rpc UnEquipPrefix(UnEquipPrefixRequest) returns (UnEquipPrefixResponse);
 
     // Player
     rpc PlayerDeath(PlayerDeathRequest) returns (PlayerDeathResponse);
@@ -87,6 +91,7 @@ service Bridge {
     rpc ServerSendMessage(ServerSubscribeRequest) returns (stream ServerSendMessageResponse);
     rpc ServerSendTitle(ServerSubscribeRequest) returns (stream ServerSendTitleResponse);
     rpc Message(stream MessageRequest) returns (stream MessageResponse);
+    rpc IncreaseCoins(IncreaseCoinsRequest) returns (IncreaseCoinsResponse);
 
     // Security
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);

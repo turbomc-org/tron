@@ -1,6 +1,7 @@
-use crate::BridgeService;
 use crate::bridge::{TransferBalanceRequest, TransferBalanceResponse};
+use crate::config::messages::{INCOMING_TRANSFER, TRANSFERRED};
 use crate::models::player::Player;
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
@@ -67,24 +68,16 @@ impl BridgeService {
         })?;
 
         self.send_message_to_player(
-          &username,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>✅ CREDITS TRANSFERRED</bold></gradient>\n\
-             <gray>You have successfully transferred <white><bold>{}</bold></white> Hash-Coins to <white><bold>{}</bold></white>.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/balance'><u><gradient:#B200FF:#6A00A3>Check your new balance</gradient></u></click>",
-            amount, receiver
-          ),
-        ).await;
+            &username,
+            render!(TRANSFERRED, amount = &amount, target = &receiver),
+        )
+        .await;
 
         self.send_message_to_player(
-          &receiver,
-          format!(
-            "<gradient:#C724B1:#7A00FF><bold>✉️ INCOMING TRANSFER</bold></gradient>\n\
-             <gray>You have received <white><bold>{}</bold></white> Hash-Coins from <white><bold>{}</bold></white>.</gray>\n\
-             <dark_gray>»</dark_gray> <click:run_command:'/balance'><u><gradient:#B200FF:#6A00A3>Check your new balance</gradient></u></click>",
-            amount, username
-          ),
-        ).await;
+            &receiver,
+            render!(INCOMING_TRANSFER, amount = &amount, sender = &username),
+        )
+        .await;
 
         info!(
             "Transfer Balance request for player {} to {} completed",

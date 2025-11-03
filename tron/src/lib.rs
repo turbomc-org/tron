@@ -3,6 +3,7 @@ use crate::state::State;
 use bridge::bridge_server::Bridge;
 use futures::Stream;
 
+use crate::utils::templates::render_template;
 use once_cell::sync::Lazy;
 use snowflaked::sync::Generator;
 use std::iter::Take;
@@ -13,6 +14,7 @@ use tokio_retry::strategy::ExponentialBackoff;
 use tonic::Status;
 
 pub mod collections;
+pub mod config;
 pub mod grpc;
 pub mod logger;
 pub mod models;

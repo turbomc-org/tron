@@ -1,3 +1,4 @@
+pub mod inc_coins;
 pub mod lobby_shutdown;
 pub mod lobby_startup;
 pub mod proxy_shutdown;

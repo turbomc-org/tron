@@ -3541,8 +3541,8 @@ public final class Prefix {
 
   }
 
-  public interface SelectPrefixRequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:bridge.SelectPrefixRequest)
+  public interface EquipPrefixRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.EquipPrefixRequest)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3570,18 +3570,18 @@ public final class Prefix {
         getPrefixBytes();
   }
   /**
-   * Protobuf type {@code bridge.SelectPrefixRequest}
+   * Protobuf type {@code bridge.EquipPrefixRequest}
    */
-  public static final class SelectPrefixRequest extends
+  public static final class EquipPrefixRequest extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:bridge.SelectPrefixRequest)
-      SelectPrefixRequestOrBuilder {
+      // @@protoc_insertion_point(message_implements:bridge.EquipPrefixRequest)
+      EquipPrefixRequestOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use SelectPrefixRequest.newBuilder() to construct.
-    private SelectPrefixRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use EquipPrefixRequest.newBuilder() to construct.
+    private EquipPrefixRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private SelectPrefixRequest() {
+    private EquipPrefixRequest() {
       username_ = "";
       prefix_ = "";
     }
@@ -3590,20 +3590,20 @@ public final class Prefix {
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new SelectPrefixRequest();
+      return new EquipPrefixRequest();
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixRequest_descriptor;
+      return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixRequest_fieldAccessorTable
+      return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.tron.bridge.Prefix.SelectPrefixRequest.class, com.tron.bridge.Prefix.SelectPrefixRequest.Builder.class);
+              com.tron.bridge.Prefix.EquipPrefixRequest.class, com.tron.bridge.Prefix.EquipPrefixRequest.Builder.class);
     }
 
     public static final int USERNAME_FIELD_NUMBER = 1;
@@ -3729,10 +3729,10 @@ public final class Prefix {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.tron.bridge.Prefix.SelectPrefixRequest)) {
+      if (!(obj instanceof com.tron.bridge.Prefix.EquipPrefixRequest)) {
         return super.equals(obj);
       }
-      com.tron.bridge.Prefix.SelectPrefixRequest other = (com.tron.bridge.Prefix.SelectPrefixRequest) obj;
+      com.tron.bridge.Prefix.EquipPrefixRequest other = (com.tron.bridge.Prefix.EquipPrefixRequest) obj;
 
       if (!getUsername()
           .equals(other.getUsername())) return false;
@@ -3758,44 +3758,44 @@ public final class Prefix {
       return hash;
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(byte[] data)
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(java.io.InputStream input)
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3803,26 +3803,26 @@ public final class Prefix {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseDelimitedFrom(java.io.InputStream input)
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseDelimitedFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixRequest parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3835,7 +3835,7 @@ public final class Prefix {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.tron.bridge.Prefix.SelectPrefixRequest prototype) {
+    public static Builder newBuilder(com.tron.bridge.Prefix.EquipPrefixRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -3851,26 +3851,26 @@ public final class Prefix {
       return builder;
     }
     /**
-     * Protobuf type {@code bridge.SelectPrefixRequest}
+     * Protobuf type {@code bridge.EquipPrefixRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:bridge.SelectPrefixRequest)
-        com.tron.bridge.Prefix.SelectPrefixRequestOrBuilder {
+        // @@protoc_insertion_point(builder_implements:bridge.EquipPrefixRequest)
+        com.tron.bridge.Prefix.EquipPrefixRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixRequest_descriptor;
+        return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixRequest_fieldAccessorTable
+        return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.tron.bridge.Prefix.SelectPrefixRequest.class, com.tron.bridge.Prefix.SelectPrefixRequest.Builder.class);
+                com.tron.bridge.Prefix.EquipPrefixRequest.class, com.tron.bridge.Prefix.EquipPrefixRequest.Builder.class);
       }
 
-      // Construct using com.tron.bridge.Prefix.SelectPrefixRequest.newBuilder()
+      // Construct using com.tron.bridge.Prefix.EquipPrefixRequest.newBuilder()
       private Builder() {
 
       }
@@ -3892,17 +3892,17 @@ public final class Prefix {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixRequest_descriptor;
+        return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixRequest_descriptor;
       }
 
       @java.lang.Override
-      public com.tron.bridge.Prefix.SelectPrefixRequest getDefaultInstanceForType() {
-        return com.tron.bridge.Prefix.SelectPrefixRequest.getDefaultInstance();
+      public com.tron.bridge.Prefix.EquipPrefixRequest getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.EquipPrefixRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.tron.bridge.Prefix.SelectPrefixRequest build() {
-        com.tron.bridge.Prefix.SelectPrefixRequest result = buildPartial();
+      public com.tron.bridge.Prefix.EquipPrefixRequest build() {
+        com.tron.bridge.Prefix.EquipPrefixRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -3910,14 +3910,14 @@ public final class Prefix {
       }
 
       @java.lang.Override
-      public com.tron.bridge.Prefix.SelectPrefixRequest buildPartial() {
-        com.tron.bridge.Prefix.SelectPrefixRequest result = new com.tron.bridge.Prefix.SelectPrefixRequest(this);
+      public com.tron.bridge.Prefix.EquipPrefixRequest buildPartial() {
+        com.tron.bridge.Prefix.EquipPrefixRequest result = new com.tron.bridge.Prefix.EquipPrefixRequest(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(com.tron.bridge.Prefix.SelectPrefixRequest result) {
+      private void buildPartial0(com.tron.bridge.Prefix.EquipPrefixRequest result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.username_ = username_;
@@ -3961,16 +3961,16 @@ public final class Prefix {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.tron.bridge.Prefix.SelectPrefixRequest) {
-          return mergeFrom((com.tron.bridge.Prefix.SelectPrefixRequest)other);
+        if (other instanceof com.tron.bridge.Prefix.EquipPrefixRequest) {
+          return mergeFrom((com.tron.bridge.Prefix.EquipPrefixRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.tron.bridge.Prefix.SelectPrefixRequest other) {
-        if (other == com.tron.bridge.Prefix.SelectPrefixRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.tron.bridge.Prefix.EquipPrefixRequest other) {
+        if (other == com.tron.bridge.Prefix.EquipPrefixRequest.getDefaultInstance()) return this;
         if (!other.getUsername().isEmpty()) {
           username_ = other.username_;
           bitField0_ |= 0x00000001;
@@ -4190,23 +4190,23 @@ public final class Prefix {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:bridge.SelectPrefixRequest)
+      // @@protoc_insertion_point(builder_scope:bridge.EquipPrefixRequest)
     }
 
-    // @@protoc_insertion_point(class_scope:bridge.SelectPrefixRequest)
-    private static final com.tron.bridge.Prefix.SelectPrefixRequest DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:bridge.EquipPrefixRequest)
+    private static final com.tron.bridge.Prefix.EquipPrefixRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.SelectPrefixRequest();
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.EquipPrefixRequest();
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixRequest getDefaultInstance() {
+    public static com.tron.bridge.Prefix.EquipPrefixRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SelectPrefixRequest>
-        PARSER = new com.google.protobuf.AbstractParser<SelectPrefixRequest>() {
+    private static final com.google.protobuf.Parser<EquipPrefixRequest>
+        PARSER = new com.google.protobuf.AbstractParser<EquipPrefixRequest>() {
       @java.lang.Override
-      public SelectPrefixRequest parsePartialFrom(
+      public EquipPrefixRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4225,24 +4225,24 @@ public final class Prefix {
       }
     };
 
-    public static com.google.protobuf.Parser<SelectPrefixRequest> parser() {
+    public static com.google.protobuf.Parser<EquipPrefixRequest> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<SelectPrefixRequest> getParserForType() {
+    public com.google.protobuf.Parser<EquipPrefixRequest> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.tron.bridge.Prefix.SelectPrefixRequest getDefaultInstanceForType() {
+    public com.tron.bridge.Prefix.EquipPrefixRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  public interface SelectPrefixResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:bridge.SelectPrefixResponse)
+  public interface EquipPrefixResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.EquipPrefixResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -4252,38 +4252,38 @@ public final class Prefix {
     boolean getSuccess();
   }
   /**
-   * Protobuf type {@code bridge.SelectPrefixResponse}
+   * Protobuf type {@code bridge.EquipPrefixResponse}
    */
-  public static final class SelectPrefixResponse extends
+  public static final class EquipPrefixResponse extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:bridge.SelectPrefixResponse)
-      SelectPrefixResponseOrBuilder {
+      // @@protoc_insertion_point(message_implements:bridge.EquipPrefixResponse)
+      EquipPrefixResponseOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use SelectPrefixResponse.newBuilder() to construct.
-    private SelectPrefixResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use EquipPrefixResponse.newBuilder() to construct.
+    private EquipPrefixResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private SelectPrefixResponse() {
+    private EquipPrefixResponse() {
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
-      return new SelectPrefixResponse();
+      return new EquipPrefixResponse();
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixResponse_descriptor;
+      return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixResponse_fieldAccessorTable
+      return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.tron.bridge.Prefix.SelectPrefixResponse.class, com.tron.bridge.Prefix.SelectPrefixResponse.Builder.class);
+              com.tron.bridge.Prefix.EquipPrefixResponse.class, com.tron.bridge.Prefix.EquipPrefixResponse.Builder.class);
     }
 
     public static final int SUCCESS_FIELD_NUMBER = 1;
@@ -4337,10 +4337,10 @@ public final class Prefix {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.tron.bridge.Prefix.SelectPrefixResponse)) {
+      if (!(obj instanceof com.tron.bridge.Prefix.EquipPrefixResponse)) {
         return super.equals(obj);
       }
-      com.tron.bridge.Prefix.SelectPrefixResponse other = (com.tron.bridge.Prefix.SelectPrefixResponse) obj;
+      com.tron.bridge.Prefix.EquipPrefixResponse other = (com.tron.bridge.Prefix.EquipPrefixResponse) obj;
 
       if (getSuccess()
           != other.getSuccess()) return false;
@@ -4363,44 +4363,44 @@ public final class Prefix {
       return hash;
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(byte[] data)
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(java.io.InputStream input)
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4408,26 +4408,26 @@ public final class Prefix {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseDelimitedFrom(java.io.InputStream input)
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseDelimitedFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.tron.bridge.Prefix.SelectPrefixResponse parseFrom(
+    public static com.tron.bridge.Prefix.EquipPrefixResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4440,7 +4440,7 @@ public final class Prefix {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.tron.bridge.Prefix.SelectPrefixResponse prototype) {
+    public static Builder newBuilder(com.tron.bridge.Prefix.EquipPrefixResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4456,26 +4456,26 @@ public final class Prefix {
       return builder;
     }
     /**
-     * Protobuf type {@code bridge.SelectPrefixResponse}
+     * Protobuf type {@code bridge.EquipPrefixResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:bridge.SelectPrefixResponse)
-        com.tron.bridge.Prefix.SelectPrefixResponseOrBuilder {
+        // @@protoc_insertion_point(builder_implements:bridge.EquipPrefixResponse)
+        com.tron.bridge.Prefix.EquipPrefixResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixResponse_descriptor;
+        return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixResponse_fieldAccessorTable
+        return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.tron.bridge.Prefix.SelectPrefixResponse.class, com.tron.bridge.Prefix.SelectPrefixResponse.Builder.class);
+                com.tron.bridge.Prefix.EquipPrefixResponse.class, com.tron.bridge.Prefix.EquipPrefixResponse.Builder.class);
       }
 
-      // Construct using com.tron.bridge.Prefix.SelectPrefixResponse.newBuilder()
+      // Construct using com.tron.bridge.Prefix.EquipPrefixResponse.newBuilder()
       private Builder() {
 
       }
@@ -4496,17 +4496,17 @@ public final class Prefix {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.tron.bridge.Prefix.internal_static_bridge_SelectPrefixResponse_descriptor;
+        return com.tron.bridge.Prefix.internal_static_bridge_EquipPrefixResponse_descriptor;
       }
 
       @java.lang.Override
-      public com.tron.bridge.Prefix.SelectPrefixResponse getDefaultInstanceForType() {
-        return com.tron.bridge.Prefix.SelectPrefixResponse.getDefaultInstance();
+      public com.tron.bridge.Prefix.EquipPrefixResponse getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.EquipPrefixResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.tron.bridge.Prefix.SelectPrefixResponse build() {
-        com.tron.bridge.Prefix.SelectPrefixResponse result = buildPartial();
+      public com.tron.bridge.Prefix.EquipPrefixResponse build() {
+        com.tron.bridge.Prefix.EquipPrefixResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4514,14 +4514,14 @@ public final class Prefix {
       }
 
       @java.lang.Override
-      public com.tron.bridge.Prefix.SelectPrefixResponse buildPartial() {
-        com.tron.bridge.Prefix.SelectPrefixResponse result = new com.tron.bridge.Prefix.SelectPrefixResponse(this);
+      public com.tron.bridge.Prefix.EquipPrefixResponse buildPartial() {
+        com.tron.bridge.Prefix.EquipPrefixResponse result = new com.tron.bridge.Prefix.EquipPrefixResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(com.tron.bridge.Prefix.SelectPrefixResponse result) {
+      private void buildPartial0(com.tron.bridge.Prefix.EquipPrefixResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.success_ = success_;
@@ -4562,16 +4562,16 @@ public final class Prefix {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.tron.bridge.Prefix.SelectPrefixResponse) {
-          return mergeFrom((com.tron.bridge.Prefix.SelectPrefixResponse)other);
+        if (other instanceof com.tron.bridge.Prefix.EquipPrefixResponse) {
+          return mergeFrom((com.tron.bridge.Prefix.EquipPrefixResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.tron.bridge.Prefix.SelectPrefixResponse other) {
-        if (other == com.tron.bridge.Prefix.SelectPrefixResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.tron.bridge.Prefix.EquipPrefixResponse other) {
+        if (other == com.tron.bridge.Prefix.EquipPrefixResponse.getDefaultInstance()) return this;
         if (other.getSuccess() != false) {
           setSuccess(other.getSuccess());
         }
@@ -4667,23 +4667,23 @@ public final class Prefix {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:bridge.SelectPrefixResponse)
+      // @@protoc_insertion_point(builder_scope:bridge.EquipPrefixResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:bridge.SelectPrefixResponse)
-    private static final com.tron.bridge.Prefix.SelectPrefixResponse DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:bridge.EquipPrefixResponse)
+    private static final com.tron.bridge.Prefix.EquipPrefixResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.SelectPrefixResponse();
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.EquipPrefixResponse();
     }
 
-    public static com.tron.bridge.Prefix.SelectPrefixResponse getDefaultInstance() {
+    public static com.tron.bridge.Prefix.EquipPrefixResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<SelectPrefixResponse>
-        PARSER = new com.google.protobuf.AbstractParser<SelectPrefixResponse>() {
+    private static final com.google.protobuf.Parser<EquipPrefixResponse>
+        PARSER = new com.google.protobuf.AbstractParser<EquipPrefixResponse>() {
       @java.lang.Override
-      public SelectPrefixResponse parsePartialFrom(
+      public EquipPrefixResponse parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4702,17 +4702,17 @@ public final class Prefix {
       }
     };
 
-    public static com.google.protobuf.Parser<SelectPrefixResponse> parser() {
+    public static com.google.protobuf.Parser<EquipPrefixResponse> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<SelectPrefixResponse> getParserForType() {
+    public com.google.protobuf.Parser<EquipPrefixResponse> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.tron.bridge.Prefix.SelectPrefixResponse getDefaultInstanceForType() {
+    public com.tron.bridge.Prefix.EquipPrefixResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -8296,6 +8296,3539 @@ public final class Prefix {
 
   }
 
+  public interface ListAllPrefixRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.ListAllPrefixRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
+  }
+  /**
+   * Protobuf type {@code bridge.ListAllPrefixRequest}
+   */
+  public static final class ListAllPrefixRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.ListAllPrefixRequest)
+      ListAllPrefixRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ListAllPrefixRequest.newBuilder() to construct.
+    private ListAllPrefixRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ListAllPrefixRequest() {
+      username_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ListAllPrefixRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Prefix.ListAllPrefixRequest.class, com.tron.bridge.Prefix.ListAllPrefixRequest.Builder.class);
+    }
+
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object username_ = "";
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Prefix.ListAllPrefixRequest)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Prefix.ListAllPrefixRequest other = (com.tron.bridge.Prefix.ListAllPrefixRequest) obj;
+
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Prefix.ListAllPrefixRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.ListAllPrefixRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.ListAllPrefixRequest)
+        com.tron.bridge.Prefix.ListAllPrefixRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Prefix.ListAllPrefixRequest.class, com.tron.bridge.Prefix.ListAllPrefixRequest.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Prefix.ListAllPrefixRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        username_ = "";
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListAllPrefixRequest getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.ListAllPrefixRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListAllPrefixRequest build() {
+        com.tron.bridge.Prefix.ListAllPrefixRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListAllPrefixRequest buildPartial() {
+        com.tron.bridge.Prefix.ListAllPrefixRequest result = new com.tron.bridge.Prefix.ListAllPrefixRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Prefix.ListAllPrefixRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.username_ = username_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Prefix.ListAllPrefixRequest) {
+          return mergeFrom((com.tron.bridge.Prefix.ListAllPrefixRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Prefix.ListAllPrefixRequest other) {
+        if (other == com.tron.bridge.Prefix.ListAllPrefixRequest.getDefaultInstance()) return this;
+        if (!other.getUsername().isEmpty()) {
+          username_ = other.username_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                username_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object username_ = "";
+      /**
+       * <code>string username = 1;</code>
+       * @return The username.
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return The bytes for username.
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        username_ = getDefaultInstance().getUsername();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.ListAllPrefixRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.ListAllPrefixRequest)
+    private static final com.tron.bridge.Prefix.ListAllPrefixRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.ListAllPrefixRequest();
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ListAllPrefixRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ListAllPrefixRequest>() {
+      @java.lang.Override
+      public ListAllPrefixRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListAllPrefixRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListAllPrefixRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Prefix.ListAllPrefixRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ListAllPrefixResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.ListAllPrefixResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    java.util.List<com.tron.bridge.Common.PartialPrefix> 
+        getPrefixesList();
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    com.tron.bridge.Common.PartialPrefix getPrefixes(int index);
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    int getPrefixesCount();
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    java.util.List<? extends com.tron.bridge.Common.PartialPrefixOrBuilder> 
+        getPrefixesOrBuilderList();
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    com.tron.bridge.Common.PartialPrefixOrBuilder getPrefixesOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code bridge.ListAllPrefixResponse}
+   */
+  public static final class ListAllPrefixResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.ListAllPrefixResponse)
+      ListAllPrefixResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ListAllPrefixResponse.newBuilder() to construct.
+    private ListAllPrefixResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ListAllPrefixResponse() {
+      prefixes_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ListAllPrefixResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Prefix.ListAllPrefixResponse.class, com.tron.bridge.Prefix.ListAllPrefixResponse.Builder.class);
+    }
+
+    public static final int PREFIXES_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private java.util.List<com.tron.bridge.Common.PartialPrefix> prefixes_;
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<com.tron.bridge.Common.PartialPrefix> getPrefixesList() {
+      return prefixes_;
+    }
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    @java.lang.Override
+    public java.util.List<? extends com.tron.bridge.Common.PartialPrefixOrBuilder> 
+        getPrefixesOrBuilderList() {
+      return prefixes_;
+    }
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    @java.lang.Override
+    public int getPrefixesCount() {
+      return prefixes_.size();
+    }
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    @java.lang.Override
+    public com.tron.bridge.Common.PartialPrefix getPrefixes(int index) {
+      return prefixes_.get(index);
+    }
+    /**
+     * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+     */
+    @java.lang.Override
+    public com.tron.bridge.Common.PartialPrefixOrBuilder getPrefixesOrBuilder(
+        int index) {
+      return prefixes_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < prefixes_.size(); i++) {
+        output.writeMessage(1, prefixes_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < prefixes_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, prefixes_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Prefix.ListAllPrefixResponse)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Prefix.ListAllPrefixResponse other = (com.tron.bridge.Prefix.ListAllPrefixResponse) obj;
+
+      if (!getPrefixesList()
+          .equals(other.getPrefixesList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPrefixesCount() > 0) {
+        hash = (37 * hash) + PREFIXES_FIELD_NUMBER;
+        hash = (53 * hash) + getPrefixesList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Prefix.ListAllPrefixResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.ListAllPrefixResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.ListAllPrefixResponse)
+        com.tron.bridge.Prefix.ListAllPrefixResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Prefix.ListAllPrefixResponse.class, com.tron.bridge.Prefix.ListAllPrefixResponse.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Prefix.ListAllPrefixResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        if (prefixesBuilder_ == null) {
+          prefixes_ = java.util.Collections.emptyList();
+        } else {
+          prefixes_ = null;
+          prefixesBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000001);
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListAllPrefixResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListAllPrefixResponse getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.ListAllPrefixResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListAllPrefixResponse build() {
+        com.tron.bridge.Prefix.ListAllPrefixResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListAllPrefixResponse buildPartial() {
+        com.tron.bridge.Prefix.ListAllPrefixResponse result = new com.tron.bridge.Prefix.ListAllPrefixResponse(this);
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(com.tron.bridge.Prefix.ListAllPrefixResponse result) {
+        if (prefixesBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0)) {
+            prefixes_ = java.util.Collections.unmodifiableList(prefixes_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.prefixes_ = prefixes_;
+        } else {
+          result.prefixes_ = prefixesBuilder_.build();
+        }
+      }
+
+      private void buildPartial0(com.tron.bridge.Prefix.ListAllPrefixResponse result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Prefix.ListAllPrefixResponse) {
+          return mergeFrom((com.tron.bridge.Prefix.ListAllPrefixResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Prefix.ListAllPrefixResponse other) {
+        if (other == com.tron.bridge.Prefix.ListAllPrefixResponse.getDefaultInstance()) return this;
+        if (prefixesBuilder_ == null) {
+          if (!other.prefixes_.isEmpty()) {
+            if (prefixes_.isEmpty()) {
+              prefixes_ = other.prefixes_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensurePrefixesIsMutable();
+              prefixes_.addAll(other.prefixes_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.prefixes_.isEmpty()) {
+            if (prefixesBuilder_.isEmpty()) {
+              prefixesBuilder_.dispose();
+              prefixesBuilder_ = null;
+              prefixes_ = other.prefixes_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              prefixesBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getPrefixesFieldBuilder() : null;
+            } else {
+              prefixesBuilder_.addAllMessages(other.prefixes_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                com.tron.bridge.Common.PartialPrefix m =
+                    input.readMessage(
+                        com.tron.bridge.Common.PartialPrefix.parser(),
+                        extensionRegistry);
+                if (prefixesBuilder_ == null) {
+                  ensurePrefixesIsMutable();
+                  prefixes_.add(m);
+                } else {
+                  prefixesBuilder_.addMessage(m);
+                }
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<com.tron.bridge.Common.PartialPrefix> prefixes_ =
+        java.util.Collections.emptyList();
+      private void ensurePrefixesIsMutable() {
+        if (!((bitField0_ & 0x00000001) != 0)) {
+          prefixes_ = new java.util.ArrayList<com.tron.bridge.Common.PartialPrefix>(prefixes_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.tron.bridge.Common.PartialPrefix, com.tron.bridge.Common.PartialPrefix.Builder, com.tron.bridge.Common.PartialPrefixOrBuilder> prefixesBuilder_;
+
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public java.util.List<com.tron.bridge.Common.PartialPrefix> getPrefixesList() {
+        if (prefixesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(prefixes_);
+        } else {
+          return prefixesBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public int getPrefixesCount() {
+        if (prefixesBuilder_ == null) {
+          return prefixes_.size();
+        } else {
+          return prefixesBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public com.tron.bridge.Common.PartialPrefix getPrefixes(int index) {
+        if (prefixesBuilder_ == null) {
+          return prefixes_.get(index);
+        } else {
+          return prefixesBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder setPrefixes(
+          int index, com.tron.bridge.Common.PartialPrefix value) {
+        if (prefixesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePrefixesIsMutable();
+          prefixes_.set(index, value);
+          onChanged();
+        } else {
+          prefixesBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder setPrefixes(
+          int index, com.tron.bridge.Common.PartialPrefix.Builder builderForValue) {
+        if (prefixesBuilder_ == null) {
+          ensurePrefixesIsMutable();
+          prefixes_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          prefixesBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder addPrefixes(com.tron.bridge.Common.PartialPrefix value) {
+        if (prefixesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePrefixesIsMutable();
+          prefixes_.add(value);
+          onChanged();
+        } else {
+          prefixesBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder addPrefixes(
+          int index, com.tron.bridge.Common.PartialPrefix value) {
+        if (prefixesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensurePrefixesIsMutable();
+          prefixes_.add(index, value);
+          onChanged();
+        } else {
+          prefixesBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder addPrefixes(
+          com.tron.bridge.Common.PartialPrefix.Builder builderForValue) {
+        if (prefixesBuilder_ == null) {
+          ensurePrefixesIsMutable();
+          prefixes_.add(builderForValue.build());
+          onChanged();
+        } else {
+          prefixesBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder addPrefixes(
+          int index, com.tron.bridge.Common.PartialPrefix.Builder builderForValue) {
+        if (prefixesBuilder_ == null) {
+          ensurePrefixesIsMutable();
+          prefixes_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          prefixesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder addAllPrefixes(
+          java.lang.Iterable<? extends com.tron.bridge.Common.PartialPrefix> values) {
+        if (prefixesBuilder_ == null) {
+          ensurePrefixesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, prefixes_);
+          onChanged();
+        } else {
+          prefixesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder clearPrefixes() {
+        if (prefixesBuilder_ == null) {
+          prefixes_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          prefixesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public Builder removePrefixes(int index) {
+        if (prefixesBuilder_ == null) {
+          ensurePrefixesIsMutable();
+          prefixes_.remove(index);
+          onChanged();
+        } else {
+          prefixesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public com.tron.bridge.Common.PartialPrefix.Builder getPrefixesBuilder(
+          int index) {
+        return getPrefixesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public com.tron.bridge.Common.PartialPrefixOrBuilder getPrefixesOrBuilder(
+          int index) {
+        if (prefixesBuilder_ == null) {
+          return prefixes_.get(index);  } else {
+          return prefixesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public java.util.List<? extends com.tron.bridge.Common.PartialPrefixOrBuilder> 
+           getPrefixesOrBuilderList() {
+        if (prefixesBuilder_ != null) {
+          return prefixesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(prefixes_);
+        }
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public com.tron.bridge.Common.PartialPrefix.Builder addPrefixesBuilder() {
+        return getPrefixesFieldBuilder().addBuilder(
+            com.tron.bridge.Common.PartialPrefix.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public com.tron.bridge.Common.PartialPrefix.Builder addPrefixesBuilder(
+          int index) {
+        return getPrefixesFieldBuilder().addBuilder(
+            index, com.tron.bridge.Common.PartialPrefix.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .bridge.PartialPrefix prefixes = 1;</code>
+       */
+      public java.util.List<com.tron.bridge.Common.PartialPrefix.Builder> 
+           getPrefixesBuilderList() {
+        return getPrefixesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.tron.bridge.Common.PartialPrefix, com.tron.bridge.Common.PartialPrefix.Builder, com.tron.bridge.Common.PartialPrefixOrBuilder> 
+          getPrefixesFieldBuilder() {
+        if (prefixesBuilder_ == null) {
+          prefixesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.tron.bridge.Common.PartialPrefix, com.tron.bridge.Common.PartialPrefix.Builder, com.tron.bridge.Common.PartialPrefixOrBuilder>(
+                  prefixes_,
+                  ((bitField0_ & 0x00000001) != 0),
+                  getParentForChildren(),
+                  isClean());
+          prefixes_ = null;
+        }
+        return prefixesBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.ListAllPrefixResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.ListAllPrefixResponse)
+    private static final com.tron.bridge.Prefix.ListAllPrefixResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.ListAllPrefixResponse();
+    }
+
+    public static com.tron.bridge.Prefix.ListAllPrefixResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ListAllPrefixResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ListAllPrefixResponse>() {
+      @java.lang.Override
+      public ListAllPrefixResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListAllPrefixResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListAllPrefixResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Prefix.ListAllPrefixResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ListOwnedPrefixRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.ListOwnedPrefixRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
+  }
+  /**
+   * Protobuf type {@code bridge.ListOwnedPrefixRequest}
+   */
+  public static final class ListOwnedPrefixRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.ListOwnedPrefixRequest)
+      ListOwnedPrefixRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ListOwnedPrefixRequest.newBuilder() to construct.
+    private ListOwnedPrefixRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ListOwnedPrefixRequest() {
+      username_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ListOwnedPrefixRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Prefix.ListOwnedPrefixRequest.class, com.tron.bridge.Prefix.ListOwnedPrefixRequest.Builder.class);
+    }
+
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object username_ = "";
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Prefix.ListOwnedPrefixRequest)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Prefix.ListOwnedPrefixRequest other = (com.tron.bridge.Prefix.ListOwnedPrefixRequest) obj;
+
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Prefix.ListOwnedPrefixRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.ListOwnedPrefixRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.ListOwnedPrefixRequest)
+        com.tron.bridge.Prefix.ListOwnedPrefixRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Prefix.ListOwnedPrefixRequest.class, com.tron.bridge.Prefix.ListOwnedPrefixRequest.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Prefix.ListOwnedPrefixRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        username_ = "";
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListOwnedPrefixRequest getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.ListOwnedPrefixRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListOwnedPrefixRequest build() {
+        com.tron.bridge.Prefix.ListOwnedPrefixRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListOwnedPrefixRequest buildPartial() {
+        com.tron.bridge.Prefix.ListOwnedPrefixRequest result = new com.tron.bridge.Prefix.ListOwnedPrefixRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Prefix.ListOwnedPrefixRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.username_ = username_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Prefix.ListOwnedPrefixRequest) {
+          return mergeFrom((com.tron.bridge.Prefix.ListOwnedPrefixRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Prefix.ListOwnedPrefixRequest other) {
+        if (other == com.tron.bridge.Prefix.ListOwnedPrefixRequest.getDefaultInstance()) return this;
+        if (!other.getUsername().isEmpty()) {
+          username_ = other.username_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                username_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object username_ = "";
+      /**
+       * <code>string username = 1;</code>
+       * @return The username.
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return The bytes for username.
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        username_ = getDefaultInstance().getUsername();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.ListOwnedPrefixRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.ListOwnedPrefixRequest)
+    private static final com.tron.bridge.Prefix.ListOwnedPrefixRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.ListOwnedPrefixRequest();
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ListOwnedPrefixRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ListOwnedPrefixRequest>() {
+      @java.lang.Override
+      public ListOwnedPrefixRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListOwnedPrefixRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListOwnedPrefixRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Prefix.ListOwnedPrefixRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ListOwnedPrefixResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.ListOwnedPrefixResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @return A list containing the prefixes.
+     */
+    java.util.List<java.lang.String>
+        getPrefixesList();
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @return The count of prefixes.
+     */
+    int getPrefixesCount();
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @param index The index of the element to return.
+     * @return The prefixes at the given index.
+     */
+    java.lang.String getPrefixes(int index);
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the prefixes at the given index.
+     */
+    com.google.protobuf.ByteString
+        getPrefixesBytes(int index);
+  }
+  /**
+   * Protobuf type {@code bridge.ListOwnedPrefixResponse}
+   */
+  public static final class ListOwnedPrefixResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.ListOwnedPrefixResponse)
+      ListOwnedPrefixResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ListOwnedPrefixResponse.newBuilder() to construct.
+    private ListOwnedPrefixResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ListOwnedPrefixResponse() {
+      prefixes_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ListOwnedPrefixResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Prefix.ListOwnedPrefixResponse.class, com.tron.bridge.Prefix.ListOwnedPrefixResponse.Builder.class);
+    }
+
+    public static final int PREFIXES_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private com.google.protobuf.LazyStringArrayList prefixes_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @return A list containing the prefixes.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getPrefixesList() {
+      return prefixes_;
+    }
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @return The count of prefixes.
+     */
+    public int getPrefixesCount() {
+      return prefixes_.size();
+    }
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @param index The index of the element to return.
+     * @return The prefixes at the given index.
+     */
+    public java.lang.String getPrefixes(int index) {
+      return prefixes_.get(index);
+    }
+    /**
+     * <code>repeated string prefixes = 1;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the prefixes at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getPrefixesBytes(int index) {
+      return prefixes_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      for (int i = 0; i < prefixes_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, prefixes_.getRaw(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      {
+        int dataSize = 0;
+        for (int i = 0; i < prefixes_.size(); i++) {
+          dataSize += computeStringSizeNoTag(prefixes_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getPrefixesList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Prefix.ListOwnedPrefixResponse)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Prefix.ListOwnedPrefixResponse other = (com.tron.bridge.Prefix.ListOwnedPrefixResponse) obj;
+
+      if (!getPrefixesList()
+          .equals(other.getPrefixesList())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (getPrefixesCount() > 0) {
+        hash = (37 * hash) + PREFIXES_FIELD_NUMBER;
+        hash = (53 * hash) + getPrefixesList().hashCode();
+      }
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Prefix.ListOwnedPrefixResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.ListOwnedPrefixResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.ListOwnedPrefixResponse)
+        com.tron.bridge.Prefix.ListOwnedPrefixResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Prefix.ListOwnedPrefixResponse.class, com.tron.bridge.Prefix.ListOwnedPrefixResponse.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Prefix.ListOwnedPrefixResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        prefixes_ =
+            com.google.protobuf.LazyStringArrayList.emptyList();
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Prefix.internal_static_bridge_ListOwnedPrefixResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListOwnedPrefixResponse getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.ListOwnedPrefixResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListOwnedPrefixResponse build() {
+        com.tron.bridge.Prefix.ListOwnedPrefixResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.ListOwnedPrefixResponse buildPartial() {
+        com.tron.bridge.Prefix.ListOwnedPrefixResponse result = new com.tron.bridge.Prefix.ListOwnedPrefixResponse(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Prefix.ListOwnedPrefixResponse result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          prefixes_.makeImmutable();
+          result.prefixes_ = prefixes_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Prefix.ListOwnedPrefixResponse) {
+          return mergeFrom((com.tron.bridge.Prefix.ListOwnedPrefixResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Prefix.ListOwnedPrefixResponse other) {
+        if (other == com.tron.bridge.Prefix.ListOwnedPrefixResponse.getDefaultInstance()) return this;
+        if (!other.prefixes_.isEmpty()) {
+          if (prefixes_.isEmpty()) {
+            prefixes_ = other.prefixes_;
+            bitField0_ |= 0x00000001;
+          } else {
+            ensurePrefixesIsMutable();
+            prefixes_.addAll(other.prefixes_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensurePrefixesIsMutable();
+                prefixes_.add(s);
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private com.google.protobuf.LazyStringArrayList prefixes_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
+      private void ensurePrefixesIsMutable() {
+        if (!prefixes_.isModifiable()) {
+          prefixes_ = new com.google.protobuf.LazyStringArrayList(prefixes_);
+        }
+        bitField0_ |= 0x00000001;
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @return A list containing the prefixes.
+       */
+      public com.google.protobuf.ProtocolStringList
+          getPrefixesList() {
+        prefixes_.makeImmutable();
+        return prefixes_;
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @return The count of prefixes.
+       */
+      public int getPrefixesCount() {
+        return prefixes_.size();
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @param index The index of the element to return.
+       * @return The prefixes at the given index.
+       */
+      public java.lang.String getPrefixes(int index) {
+        return prefixes_.get(index);
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @param index The index of the value to return.
+       * @return The bytes of the prefixes at the given index.
+       */
+      public com.google.protobuf.ByteString
+          getPrefixesBytes(int index) {
+        return prefixes_.getByteString(index);
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @param index The index to set the value at.
+       * @param value The prefixes to set.
+       * @return This builder for chaining.
+       */
+      public Builder setPrefixes(
+          int index, java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensurePrefixesIsMutable();
+        prefixes_.set(index, value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @param value The prefixes to add.
+       * @return This builder for chaining.
+       */
+      public Builder addPrefixes(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensurePrefixesIsMutable();
+        prefixes_.add(value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @param values The prefixes to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllPrefixes(
+          java.lang.Iterable<java.lang.String> values) {
+        ensurePrefixesIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, prefixes_);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearPrefixes() {
+        prefixes_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string prefixes = 1;</code>
+       * @param value The bytes of the prefixes to add.
+       * @return This builder for chaining.
+       */
+      public Builder addPrefixesBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        ensurePrefixesIsMutable();
+        prefixes_.add(value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.ListOwnedPrefixResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.ListOwnedPrefixResponse)
+    private static final com.tron.bridge.Prefix.ListOwnedPrefixResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.ListOwnedPrefixResponse();
+    }
+
+    public static com.tron.bridge.Prefix.ListOwnedPrefixResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ListOwnedPrefixResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ListOwnedPrefixResponse>() {
+      @java.lang.Override
+      public ListOwnedPrefixResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ListOwnedPrefixResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListOwnedPrefixResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Prefix.ListOwnedPrefixResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UnEquipPrefixRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.UnEquipPrefixRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
+  }
+  /**
+   * Protobuf type {@code bridge.UnEquipPrefixRequest}
+   */
+  public static final class UnEquipPrefixRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.UnEquipPrefixRequest)
+      UnEquipPrefixRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UnEquipPrefixRequest.newBuilder() to construct.
+    private UnEquipPrefixRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UnEquipPrefixRequest() {
+      username_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UnEquipPrefixRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Prefix.UnEquipPrefixRequest.class, com.tron.bridge.Prefix.UnEquipPrefixRequest.Builder.class);
+    }
+
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object username_ = "";
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Prefix.UnEquipPrefixRequest)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Prefix.UnEquipPrefixRequest other = (com.tron.bridge.Prefix.UnEquipPrefixRequest) obj;
+
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Prefix.UnEquipPrefixRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.UnEquipPrefixRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.UnEquipPrefixRequest)
+        com.tron.bridge.Prefix.UnEquipPrefixRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Prefix.UnEquipPrefixRequest.class, com.tron.bridge.Prefix.UnEquipPrefixRequest.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Prefix.UnEquipPrefixRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        username_ = "";
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.UnEquipPrefixRequest getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.UnEquipPrefixRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.UnEquipPrefixRequest build() {
+        com.tron.bridge.Prefix.UnEquipPrefixRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.UnEquipPrefixRequest buildPartial() {
+        com.tron.bridge.Prefix.UnEquipPrefixRequest result = new com.tron.bridge.Prefix.UnEquipPrefixRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Prefix.UnEquipPrefixRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.username_ = username_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Prefix.UnEquipPrefixRequest) {
+          return mergeFrom((com.tron.bridge.Prefix.UnEquipPrefixRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Prefix.UnEquipPrefixRequest other) {
+        if (other == com.tron.bridge.Prefix.UnEquipPrefixRequest.getDefaultInstance()) return this;
+        if (!other.getUsername().isEmpty()) {
+          username_ = other.username_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                username_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object username_ = "";
+      /**
+       * <code>string username = 1;</code>
+       * @return The username.
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return The bytes for username.
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        username_ = getDefaultInstance().getUsername();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.UnEquipPrefixRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.UnEquipPrefixRequest)
+    private static final com.tron.bridge.Prefix.UnEquipPrefixRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.UnEquipPrefixRequest();
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UnEquipPrefixRequest>
+        PARSER = new com.google.protobuf.AbstractParser<UnEquipPrefixRequest>() {
+      @java.lang.Override
+      public UnEquipPrefixRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<UnEquipPrefixRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UnEquipPrefixRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Prefix.UnEquipPrefixRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface UnEquipPrefixResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.UnEquipPrefixResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool success = 1;</code>
+     * @return The success.
+     */
+    boolean getSuccess();
+  }
+  /**
+   * Protobuf type {@code bridge.UnEquipPrefixResponse}
+   */
+  public static final class UnEquipPrefixResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.UnEquipPrefixResponse)
+      UnEquipPrefixResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use UnEquipPrefixResponse.newBuilder() to construct.
+    private UnEquipPrefixResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private UnEquipPrefixResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new UnEquipPrefixResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Prefix.UnEquipPrefixResponse.class, com.tron.bridge.Prefix.UnEquipPrefixResponse.Builder.class);
+    }
+
+    public static final int SUCCESS_FIELD_NUMBER = 1;
+    private boolean success_ = false;
+    /**
+     * <code>bool success = 1;</code>
+     * @return The success.
+     */
+    @java.lang.Override
+    public boolean getSuccess() {
+      return success_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (success_ != false) {
+        output.writeBool(1, success_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (success_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, success_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Prefix.UnEquipPrefixResponse)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Prefix.UnEquipPrefixResponse other = (com.tron.bridge.Prefix.UnEquipPrefixResponse) obj;
+
+      if (getSuccess()
+          != other.getSuccess()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSuccess());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Prefix.UnEquipPrefixResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.UnEquipPrefixResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.UnEquipPrefixResponse)
+        com.tron.bridge.Prefix.UnEquipPrefixResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Prefix.UnEquipPrefixResponse.class, com.tron.bridge.Prefix.UnEquipPrefixResponse.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Prefix.UnEquipPrefixResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        success_ = false;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Prefix.internal_static_bridge_UnEquipPrefixResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.UnEquipPrefixResponse getDefaultInstanceForType() {
+        return com.tron.bridge.Prefix.UnEquipPrefixResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.UnEquipPrefixResponse build() {
+        com.tron.bridge.Prefix.UnEquipPrefixResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Prefix.UnEquipPrefixResponse buildPartial() {
+        com.tron.bridge.Prefix.UnEquipPrefixResponse result = new com.tron.bridge.Prefix.UnEquipPrefixResponse(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Prefix.UnEquipPrefixResponse result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.success_ = success_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Prefix.UnEquipPrefixResponse) {
+          return mergeFrom((com.tron.bridge.Prefix.UnEquipPrefixResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Prefix.UnEquipPrefixResponse other) {
+        if (other == com.tron.bridge.Prefix.UnEquipPrefixResponse.getDefaultInstance()) return this;
+        if (other.getSuccess() != false) {
+          setSuccess(other.getSuccess());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                success_ = input.readBool();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private boolean success_ ;
+      /**
+       * <code>bool success = 1;</code>
+       * @return The success.
+       */
+      @java.lang.Override
+      public boolean getSuccess() {
+        return success_;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       * @param value The success to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSuccess(boolean value) {
+
+        success_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSuccess() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        success_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.UnEquipPrefixResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.UnEquipPrefixResponse)
+    private static final com.tron.bridge.Prefix.UnEquipPrefixResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Prefix.UnEquipPrefixResponse();
+    }
+
+    public static com.tron.bridge.Prefix.UnEquipPrefixResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<UnEquipPrefixResponse>
+        PARSER = new com.google.protobuf.AbstractParser<UnEquipPrefixResponse>() {
+      @java.lang.Override
+      public UnEquipPrefixResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<UnEquipPrefixResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<UnEquipPrefixResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Prefix.UnEquipPrefixResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_bridge_GetAllPrefixRequest_descriptor;
   private static final 
@@ -8327,15 +11860,15 @@ public final class Prefix {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_bridge_BuyPrefixResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_bridge_SelectPrefixRequest_descriptor;
+    internal_static_bridge_EquipPrefixRequest_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_bridge_SelectPrefixRequest_fieldAccessorTable;
+      internal_static_bridge_EquipPrefixRequest_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_bridge_SelectPrefixResponse_descriptor;
+    internal_static_bridge_EquipPrefixResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_bridge_SelectPrefixResponse_fieldAccessorTable;
+      internal_static_bridge_EquipPrefixResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_bridge_GetCurrentPrefixRequest_descriptor;
   private static final 
@@ -8366,6 +11899,36 @@ public final class Prefix {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_bridge_DeletePrefixResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_ListAllPrefixRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_ListAllPrefixRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_ListAllPrefixResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_ListAllPrefixResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_ListOwnedPrefixRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_ListOwnedPrefixRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_ListOwnedPrefixResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_ListOwnedPrefixResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_UnEquipPrefixRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_UnEquipPrefixRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_UnEquipPrefixResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_UnEquipPrefixResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -8382,18 +11945,25 @@ public final class Prefix {
       "e\030\001 \001(\t\"*\n\026GetOwnedPrefixResponse\022\020\n\010pre" +
       "fixes\030\001 \003(\t\"4\n\020BuyPrefixRequest\022\020\n\010usern" +
       "ame\030\001 \001(\t\022\016\n\006prefix\030\002 \001(\t\"$\n\021BuyPrefixRe" +
-      "sponse\022\017\n\007success\030\001 \001(\010\"7\n\023SelectPrefixR" +
-      "equest\022\020\n\010username\030\001 \001(\t\022\016\n\006prefix\030\002 \001(\t" +
-      "\"\'\n\024SelectPrefixResponse\022\017\n\007success\030\001 \001(" +
-      "\010\"+\n\027GetCurrentPrefixRequest\022\020\n\010username" +
-      "\030\001 \001(\t\"A\n\030GetCurrentPrefixResponse\022%\n\006pr" +
-      "efix\030\001 \001(\0132\025.bridge.PartialPrefix\"N\n\023Cre" +
-      "atePrefixRequest\022\020\n\010username\030\001 \001(\t\022%\n\006pr" +
-      "efix\030\002 \001(\0132\025.bridge.PartialPrefix\"\'\n\024Cre" +
-      "atePrefixResponse\022\017\n\007success\030\001 \001(\010\"7\n\023De" +
-      "letePrefixRequest\022\020\n\010username\030\001 \001(\t\022\016\n\006p" +
-      "refix\030\002 \001(\t\"\'\n\024DeletePrefixResponse\022\017\n\007s" +
-      "uccess\030\001 \001(\010B\021\n\017com.tron.bridgeb\006proto3"
+      "sponse\022\017\n\007success\030\001 \001(\010\"6\n\022EquipPrefixRe" +
+      "quest\022\020\n\010username\030\001 \001(\t\022\016\n\006prefix\030\002 \001(\t\"" +
+      "&\n\023EquipPrefixResponse\022\017\n\007success\030\001 \001(\010\"" +
+      "+\n\027GetCurrentPrefixRequest\022\020\n\010username\030\001" +
+      " \001(\t\"A\n\030GetCurrentPrefixResponse\022%\n\006pref" +
+      "ix\030\001 \001(\0132\025.bridge.PartialPrefix\"N\n\023Creat" +
+      "ePrefixRequest\022\020\n\010username\030\001 \001(\t\022%\n\006pref" +
+      "ix\030\002 \001(\0132\025.bridge.PartialPrefix\"\'\n\024Creat" +
+      "ePrefixResponse\022\017\n\007success\030\001 \001(\010\"7\n\023Dele" +
+      "tePrefixRequest\022\020\n\010username\030\001 \001(\t\022\016\n\006pre" +
+      "fix\030\002 \001(\t\"\'\n\024DeletePrefixResponse\022\017\n\007suc" +
+      "cess\030\001 \001(\010\"(\n\024ListAllPrefixRequest\022\020\n\010us" +
+      "ername\030\001 \001(\t\"@\n\025ListAllPrefixResponse\022\'\n" +
+      "\010prefixes\030\001 \003(\0132\025.bridge.PartialPrefix\"*" +
+      "\n\026ListOwnedPrefixRequest\022\020\n\010username\030\001 \001" +
+      "(\t\"+\n\027ListOwnedPrefixResponse\022\020\n\010prefixe" +
+      "s\030\001 \003(\t\"(\n\024UnEquipPrefixRequest\022\020\n\010usern" +
+      "ame\030\001 \001(\t\"(\n\025UnEquipPrefixResponse\022\017\n\007su" +
+      "ccess\030\001 \001(\010B\021\n\017com.tron.bridgeb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -8436,17 +12006,17 @@ public final class Prefix {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_BuyPrefixResponse_descriptor,
         new java.lang.String[] { "Success", });
-    internal_static_bridge_SelectPrefixRequest_descriptor =
+    internal_static_bridge_EquipPrefixRequest_descriptor =
       getDescriptor().getMessageTypes().get(6);
-    internal_static_bridge_SelectPrefixRequest_fieldAccessorTable = new
+    internal_static_bridge_EquipPrefixRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_bridge_SelectPrefixRequest_descriptor,
+        internal_static_bridge_EquipPrefixRequest_descriptor,
         new java.lang.String[] { "Username", "Prefix", });
-    internal_static_bridge_SelectPrefixResponse_descriptor =
+    internal_static_bridge_EquipPrefixResponse_descriptor =
       getDescriptor().getMessageTypes().get(7);
-    internal_static_bridge_SelectPrefixResponse_fieldAccessorTable = new
+    internal_static_bridge_EquipPrefixResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_bridge_SelectPrefixResponse_descriptor,
+        internal_static_bridge_EquipPrefixResponse_descriptor,
         new java.lang.String[] { "Success", });
     internal_static_bridge_GetCurrentPrefixRequest_descriptor =
       getDescriptor().getMessageTypes().get(8);
@@ -8483,6 +12053,42 @@ public final class Prefix {
     internal_static_bridge_DeletePrefixResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_DeletePrefixResponse_descriptor,
+        new java.lang.String[] { "Success", });
+    internal_static_bridge_ListAllPrefixRequest_descriptor =
+      getDescriptor().getMessageTypes().get(14);
+    internal_static_bridge_ListAllPrefixRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_ListAllPrefixRequest_descriptor,
+        new java.lang.String[] { "Username", });
+    internal_static_bridge_ListAllPrefixResponse_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_bridge_ListAllPrefixResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_ListAllPrefixResponse_descriptor,
+        new java.lang.String[] { "Prefixes", });
+    internal_static_bridge_ListOwnedPrefixRequest_descriptor =
+      getDescriptor().getMessageTypes().get(16);
+    internal_static_bridge_ListOwnedPrefixRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_ListOwnedPrefixRequest_descriptor,
+        new java.lang.String[] { "Username", });
+    internal_static_bridge_ListOwnedPrefixResponse_descriptor =
+      getDescriptor().getMessageTypes().get(17);
+    internal_static_bridge_ListOwnedPrefixResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_ListOwnedPrefixResponse_descriptor,
+        new java.lang.String[] { "Prefixes", });
+    internal_static_bridge_UnEquipPrefixRequest_descriptor =
+      getDescriptor().getMessageTypes().get(18);
+    internal_static_bridge_UnEquipPrefixRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_UnEquipPrefixRequest_descriptor,
+        new java.lang.String[] { "Username", });
+    internal_static_bridge_UnEquipPrefixResponse_descriptor =
+      getDescriptor().getMessageTypes().get(19);
+    internal_static_bridge_UnEquipPrefixResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_UnEquipPrefixResponse_descriptor,
         new java.lang.String[] { "Success", });
     com.tron.bridge.Common.getDescriptor();
   }

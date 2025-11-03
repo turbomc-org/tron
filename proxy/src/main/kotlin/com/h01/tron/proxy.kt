@@ -1,9 +1,11 @@
 package com.h01.tron
 
 import com.google.inject.Inject
+import com.h01.tron.commands.AdminCommand
 import com.h01.tron.commands.BalanceCommand
 import com.h01.tron.commands.FriendsCommand
 import com.h01.tron.commands.PayCommand
+import com.h01.tron.commands.PrefixCommand
 import com.h01.tron.commands.TeamsCommand
 import com.h01.tron.events.SessionEvents
 import com.h01.tron.listeners.ServerMessageListener
@@ -40,6 +42,8 @@ class ProxyPlugin @Inject constructor(
     private lateinit var balanceCommand: BalanceCommand
     private lateinit var friendsCommand: FriendsCommand
     private lateinit var teamsCommand: TeamsCommand
+    private lateinit var prefixCommand: PrefixCommand
+    private lateinit var adminCommand: AdminCommand
     private var clientId by Delegates.notNull<Long>()
 
     @Subscribe
@@ -64,6 +68,8 @@ class ProxyPlugin @Inject constructor(
         balanceCommand = BalanceCommand(bridgeClient)
         friendsCommand = FriendsCommand(bridgeClient, server)
         teamsCommand = TeamsCommand(bridgeClient, server)
+        prefixCommand = PrefixCommand(bridgeClient, server)
+        adminCommand = AdminCommand(bridgeClient, server)
 
         registerCommands()
         server.eventManager.register(this, sessionEvents)
@@ -96,6 +102,16 @@ class ProxyPlugin @Inject constructor(
         manager.register(
             manager.metaBuilder("team").aliases("t").plugin(this).build(),
             teamsCommand
+        )
+
+        manager.register(
+            manager.metaBuilder("prefix").aliases("p").plugin(this).build(),
+            prefixCommand
+        )
+
+        manager.register(
+            manager.metaBuilder("admin").aliases("a").plugin(this).build(),
+            adminCommand
         )
 
         logger.info("Commands registered successfully")

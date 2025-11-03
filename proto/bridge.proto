@@ -56,6 +56,7 @@ service Bridge {
     rpc RemoveTeamMember (RemoveTeamMemberRequest) returns (RemoveTeamMemberResponse);
     rpc PromoteTeamMember (PromoteTeamMemberRequest) returns (PromoteTeamMemberResponse);
     rpc GetOpenTeams (GetOpenTeamsRequest) returns (GetOpenTeamsResponse);
+    rpc GetAllTeams (GetAllTeamsRequest) returns (GetAllTeamsResponse);
 
     // Shop
     rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
@@ -90,6 +91,7 @@ service Bridge {
     rpc ServerSendMessage(ServerSubscribeRequest) returns (stream ServerSendMessageResponse);
     rpc ServerSendTitle(ServerSubscribeRequest) returns (stream ServerSendTitleResponse);
     rpc Message(stream MessageRequest) returns (stream MessageResponse);
+    rpc IncreaseCoins(IncreaseCoinsRequest) returns (IncreaseCoinsResponse);
 
     // Security
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);

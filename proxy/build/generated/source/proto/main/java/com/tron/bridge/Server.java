@@ -5499,6 +5499,1256 @@ public final class Server {
 
   }
 
+  public interface IncreaseCoinsRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.IncreaseCoinsRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    java.lang.String getUsername();
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    com.google.protobuf.ByteString
+        getUsernameBytes();
+
+    /**
+     * <code>string target = 2;</code>
+     * @return The target.
+     */
+    java.lang.String getTarget();
+    /**
+     * <code>string target = 2;</code>
+     * @return The bytes for target.
+     */
+    com.google.protobuf.ByteString
+        getTargetBytes();
+
+    /**
+     * <code>int64 amount = 3;</code>
+     * @return The amount.
+     */
+    long getAmount();
+  }
+  /**
+   * Protobuf type {@code bridge.IncreaseCoinsRequest}
+   */
+  public static final class IncreaseCoinsRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.IncreaseCoinsRequest)
+      IncreaseCoinsRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use IncreaseCoinsRequest.newBuilder() to construct.
+    private IncreaseCoinsRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private IncreaseCoinsRequest() {
+      username_ = "";
+      target_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new IncreaseCoinsRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Server.IncreaseCoinsRequest.class, com.tron.bridge.Server.IncreaseCoinsRequest.Builder.class);
+    }
+
+    public static final int USERNAME_FIELD_NUMBER = 1;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object username_ = "";
+    /**
+     * <code>string username = 1;</code>
+     * @return The username.
+     */
+    @java.lang.Override
+    public java.lang.String getUsername() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        username_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string username = 1;</code>
+     * @return The bytes for username.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getUsernameBytes() {
+      java.lang.Object ref = username_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        username_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TARGET_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object target_ = "";
+    /**
+     * <code>string target = 2;</code>
+     * @return The target.
+     */
+    @java.lang.Override
+    public java.lang.String getTarget() {
+      java.lang.Object ref = target_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        target_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string target = 2;</code>
+     * @return The bytes for target.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getTargetBytes() {
+      java.lang.Object ref = target_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        target_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int AMOUNT_FIELD_NUMBER = 3;
+    private long amount_ = 0L;
+    /**
+     * <code>int64 amount = 3;</code>
+     * @return The amount.
+     */
+    @java.lang.Override
+    public long getAmount() {
+      return amount_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, username_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(target_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, target_);
+      }
+      if (amount_ != 0L) {
+        output.writeInt64(3, amount_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(username_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, username_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(target_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, target_);
+      }
+      if (amount_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, amount_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Server.IncreaseCoinsRequest)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Server.IncreaseCoinsRequest other = (com.tron.bridge.Server.IncreaseCoinsRequest) obj;
+
+      if (!getUsername()
+          .equals(other.getUsername())) return false;
+      if (!getTarget()
+          .equals(other.getTarget())) return false;
+      if (getAmount()
+          != other.getAmount()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + USERNAME_FIELD_NUMBER;
+      hash = (53 * hash) + getUsername().hashCode();
+      hash = (37 * hash) + TARGET_FIELD_NUMBER;
+      hash = (53 * hash) + getTarget().hashCode();
+      hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getAmount());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Server.IncreaseCoinsRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.IncreaseCoinsRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.IncreaseCoinsRequest)
+        com.tron.bridge.Server.IncreaseCoinsRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Server.IncreaseCoinsRequest.class, com.tron.bridge.Server.IncreaseCoinsRequest.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Server.IncreaseCoinsRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        username_ = "";
+        target_ = "";
+        amount_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Server.IncreaseCoinsRequest getDefaultInstanceForType() {
+        return com.tron.bridge.Server.IncreaseCoinsRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Server.IncreaseCoinsRequest build() {
+        com.tron.bridge.Server.IncreaseCoinsRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Server.IncreaseCoinsRequest buildPartial() {
+        com.tron.bridge.Server.IncreaseCoinsRequest result = new com.tron.bridge.Server.IncreaseCoinsRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Server.IncreaseCoinsRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.username_ = username_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.target_ = target_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.amount_ = amount_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Server.IncreaseCoinsRequest) {
+          return mergeFrom((com.tron.bridge.Server.IncreaseCoinsRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Server.IncreaseCoinsRequest other) {
+        if (other == com.tron.bridge.Server.IncreaseCoinsRequest.getDefaultInstance()) return this;
+        if (!other.getUsername().isEmpty()) {
+          username_ = other.username_;
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        if (!other.getTarget().isEmpty()) {
+          target_ = other.target_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getAmount() != 0L) {
+          setAmount(other.getAmount());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                username_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              case 18: {
+                target_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                amount_ = input.readInt64();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object username_ = "";
+      /**
+       * <code>string username = 1;</code>
+       * @return The username.
+       */
+      public java.lang.String getUsername() {
+        java.lang.Object ref = username_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          username_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return The bytes for username.
+       */
+      public com.google.protobuf.ByteString
+          getUsernameBytes() {
+        java.lang.Object ref = username_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          username_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsername(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearUsername() {
+        username_ = getDefaultInstance().getUsername();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string username = 1;</code>
+       * @param value The bytes for username to set.
+       * @return This builder for chaining.
+       */
+      public Builder setUsernameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        username_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object target_ = "";
+      /**
+       * <code>string target = 2;</code>
+       * @return The target.
+       */
+      public java.lang.String getTarget() {
+        java.lang.Object ref = target_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          target_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string target = 2;</code>
+       * @return The bytes for target.
+       */
+      public com.google.protobuf.ByteString
+          getTargetBytes() {
+        java.lang.Object ref = target_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          target_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string target = 2;</code>
+       * @param value The target to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTarget(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        target_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string target = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTarget() {
+        target_ = getDefaultInstance().getTarget();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string target = 2;</code>
+       * @param value The bytes for target to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTargetBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        target_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private long amount_ ;
+      /**
+       * <code>int64 amount = 3;</code>
+       * @return The amount.
+       */
+      @java.lang.Override
+      public long getAmount() {
+        return amount_;
+      }
+      /**
+       * <code>int64 amount = 3;</code>
+       * @param value The amount to set.
+       * @return This builder for chaining.
+       */
+      public Builder setAmount(long value) {
+
+        amount_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 amount = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearAmount() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        amount_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.IncreaseCoinsRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.IncreaseCoinsRequest)
+    private static final com.tron.bridge.Server.IncreaseCoinsRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Server.IncreaseCoinsRequest();
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<IncreaseCoinsRequest>
+        PARSER = new com.google.protobuf.AbstractParser<IncreaseCoinsRequest>() {
+      @java.lang.Override
+      public IncreaseCoinsRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<IncreaseCoinsRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<IncreaseCoinsRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Server.IncreaseCoinsRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface IncreaseCoinsResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bridge.IncreaseCoinsResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>bool success = 1;</code>
+     * @return The success.
+     */
+    boolean getSuccess();
+  }
+  /**
+   * Protobuf type {@code bridge.IncreaseCoinsResponse}
+   */
+  public static final class IncreaseCoinsResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:bridge.IncreaseCoinsResponse)
+      IncreaseCoinsResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use IncreaseCoinsResponse.newBuilder() to construct.
+    private IncreaseCoinsResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private IncreaseCoinsResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new IncreaseCoinsResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.tron.bridge.Server.IncreaseCoinsResponse.class, com.tron.bridge.Server.IncreaseCoinsResponse.Builder.class);
+    }
+
+    public static final int SUCCESS_FIELD_NUMBER = 1;
+    private boolean success_ = false;
+    /**
+     * <code>bool success = 1;</code>
+     * @return The success.
+     */
+    @java.lang.Override
+    public boolean getSuccess() {
+      return success_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (success_ != false) {
+        output.writeBool(1, success_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (success_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, success_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.tron.bridge.Server.IncreaseCoinsResponse)) {
+        return super.equals(obj);
+      }
+      com.tron.bridge.Server.IncreaseCoinsResponse other = (com.tron.bridge.Server.IncreaseCoinsResponse) obj;
+
+      if (getSuccess()
+          != other.getSuccess()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + SUCCESS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSuccess());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.tron.bridge.Server.IncreaseCoinsResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.tron.bridge.Server.IncreaseCoinsResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bridge.IncreaseCoinsResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bridge.IncreaseCoinsResponse)
+        com.tron.bridge.Server.IncreaseCoinsResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.tron.bridge.Server.IncreaseCoinsResponse.class, com.tron.bridge.Server.IncreaseCoinsResponse.Builder.class);
+      }
+
+      // Construct using com.tron.bridge.Server.IncreaseCoinsResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        success_ = false;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.tron.bridge.Server.internal_static_bridge_IncreaseCoinsResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Server.IncreaseCoinsResponse getDefaultInstanceForType() {
+        return com.tron.bridge.Server.IncreaseCoinsResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Server.IncreaseCoinsResponse build() {
+        com.tron.bridge.Server.IncreaseCoinsResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.tron.bridge.Server.IncreaseCoinsResponse buildPartial() {
+        com.tron.bridge.Server.IncreaseCoinsResponse result = new com.tron.bridge.Server.IncreaseCoinsResponse(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.tron.bridge.Server.IncreaseCoinsResponse result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.success_ = success_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.tron.bridge.Server.IncreaseCoinsResponse) {
+          return mergeFrom((com.tron.bridge.Server.IncreaseCoinsResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.tron.bridge.Server.IncreaseCoinsResponse other) {
+        if (other == com.tron.bridge.Server.IncreaseCoinsResponse.getDefaultInstance()) return this;
+        if (other.getSuccess() != false) {
+          setSuccess(other.getSuccess());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                success_ = input.readBool();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private boolean success_ ;
+      /**
+       * <code>bool success = 1;</code>
+       * @return The success.
+       */
+      @java.lang.Override
+      public boolean getSuccess() {
+        return success_;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       * @param value The success to set.
+       * @return This builder for chaining.
+       */
+      public Builder setSuccess(boolean value) {
+
+        success_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool success = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearSuccess() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        success_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bridge.IncreaseCoinsResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:bridge.IncreaseCoinsResponse)
+    private static final com.tron.bridge.Server.IncreaseCoinsResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.tron.bridge.Server.IncreaseCoinsResponse();
+    }
+
+    public static com.tron.bridge.Server.IncreaseCoinsResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<IncreaseCoinsResponse>
+        PARSER = new com.google.protobuf.AbstractParser<IncreaseCoinsResponse>() {
+      @java.lang.Override
+      public IncreaseCoinsResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<IncreaseCoinsResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<IncreaseCoinsResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.tron.bridge.Server.IncreaseCoinsResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface ServerSendMessageResponseOrBuilder extends
       // @@protoc_insertion_point(interface_extends:bridge.ServerSendMessageResponse)
       com.google.protobuf.MessageOrBuilder {
@@ -12224,6 +13474,16 @@ public final class Server {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_bridge_LobbyShutdownResponse_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_IncreaseCoinsRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_IncreaseCoinsRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_bridge_IncreaseCoinsResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_bridge_IncreaseCoinsResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_bridge_ServerSendMessageResponse_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -12289,25 +13549,28 @@ public final class Server {
       ")\n\024LobbyStartupResponse\022\021\n\tclient_id\030\001 \001" +
       "(\004\")\n\024LobbyShutdownRequest\022\021\n\tclient_id\030" +
       "\001 \001(\004\"(\n\025LobbyShutdownResponse\022\017\n\007succes" +
-      "s\030\001 \001(\010\"Q\n\031ServerSendMessageResponse\022\020\n\010" +
-      "username\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022\021\n\ttimes" +
-      "tamp\030\004 \001(\004\"+\n\026ServerSubscribeRequest\022\021\n\t" +
-      "client_id\030\001 \001(\004\"\313\001\n\027ServerSendTitleRespo" +
-      "nse\022\020\n\010username\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022\021\n\t" +
-      "sub_title\030\003 \001(\t\0228\n\ntitle_type\030\004 \001(\0162$.br" +
-      "idge.ServerSendTitleResponse.Type\022\021\n\ttim" +
-      "estamp\030\005 \001(\004\"/\n\004Type\022\017\n\013ACHIEVEMENT\020\000\022\013\n" +
-      "\007WARNING\020\001\022\t\n\005AWARD\020\002\"3\n\016MessageRequest\022" +
-      "\020\n\010username\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\"u\n\017Me" +
-      "ssageResponse\022\020\n\010username\030\001 \001(\t\022\017\n\007messa" +
-      "ge\030\002 \001(\t\022\016\n\006prefix\030\003 \001(\t\022\016\n\006badges\030\004 \001(\t" +
-      "\022\014\n\004team\030\005 \001(\t\022\021\n\ttimestamp\030\006 \001(\004\",\n\027Ser" +
-      "verKickPlayerRequest\022\021\n\tclient_id\030\001 \001(\t\"" +
-      "?\n\030ServerKickPlayerResponse\022\020\n\010username\030" +
-      "\001 \001(\t\022\021\n\ttimestamp\030\002 \001(\004\"+\n\026ServerBanPla" +
-      "yerRequest\022\021\n\tclient_id\030\001 \001(\t\">\n\027ServerB" +
-      "anPlayerResponse\022\020\n\010username\030\001 \001(\t\022\021\n\tti" +
-      "mestamp\030\003 \001(\004B\021\n\017com.tron.bridgeb\006proto3"
+      "s\030\001 \001(\010\"H\n\024IncreaseCoinsRequest\022\020\n\010usern" +
+      "ame\030\001 \001(\t\022\016\n\006target\030\002 \001(\t\022\016\n\006amount\030\003 \001(" +
+      "\003\"(\n\025IncreaseCoinsResponse\022\017\n\007success\030\001 " +
+      "\001(\010\"Q\n\031ServerSendMessageResponse\022\020\n\010user" +
+      "name\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\022\021\n\ttimestamp" +
+      "\030\004 \001(\004\"+\n\026ServerSubscribeRequest\022\021\n\tclie" +
+      "nt_id\030\001 \001(\004\"\313\001\n\027ServerSendTitleResponse\022" +
+      "\020\n\010username\030\001 \001(\t\022\r\n\005title\030\002 \001(\t\022\021\n\tsub_" +
+      "title\030\003 \001(\t\0228\n\ntitle_type\030\004 \001(\0162$.bridge" +
+      ".ServerSendTitleResponse.Type\022\021\n\ttimesta" +
+      "mp\030\005 \001(\004\"/\n\004Type\022\017\n\013ACHIEVEMENT\020\000\022\013\n\007WAR" +
+      "NING\020\001\022\t\n\005AWARD\020\002\"3\n\016MessageRequest\022\020\n\010u" +
+      "sername\030\001 \001(\t\022\017\n\007message\030\002 \001(\t\"u\n\017Messag" +
+      "eResponse\022\020\n\010username\030\001 \001(\t\022\017\n\007message\030\002" +
+      " \001(\t\022\016\n\006prefix\030\003 \001(\t\022\016\n\006badges\030\004 \001(\t\022\014\n\004" +
+      "team\030\005 \001(\t\022\021\n\ttimestamp\030\006 \001(\004\",\n\027ServerK" +
+      "ickPlayerRequest\022\021\n\tclient_id\030\001 \001(\t\"?\n\030S" +
+      "erverKickPlayerResponse\022\020\n\010username\030\001 \001(" +
+      "\t\022\021\n\ttimestamp\030\002 \001(\004\"+\n\026ServerBanPlayerR" +
+      "equest\022\021\n\tclient_id\030\001 \001(\t\">\n\027ServerBanPl" +
+      "ayerResponse\022\020\n\010username\030\001 \001(\t\022\021\n\ttimest" +
+      "amp\030\003 \001(\004B\021\n\017com.tron.bridgeb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -12385,56 +13648,68 @@ public final class Server {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_LobbyShutdownResponse_descriptor,
         new java.lang.String[] { "Success", });
-    internal_static_bridge_ServerSendMessageResponse_descriptor =
+    internal_static_bridge_IncreaseCoinsRequest_descriptor =
       getDescriptor().getMessageTypes().get(12);
+    internal_static_bridge_IncreaseCoinsRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_IncreaseCoinsRequest_descriptor,
+        new java.lang.String[] { "Username", "Target", "Amount", });
+    internal_static_bridge_IncreaseCoinsResponse_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_bridge_IncreaseCoinsResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_bridge_IncreaseCoinsResponse_descriptor,
+        new java.lang.String[] { "Success", });
+    internal_static_bridge_ServerSendMessageResponse_descriptor =
+      getDescriptor().getMessageTypes().get(14);
     internal_static_bridge_ServerSendMessageResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerSendMessageResponse_descriptor,
         new java.lang.String[] { "Username", "Message", "Timestamp", });
     internal_static_bridge_ServerSubscribeRequest_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_bridge_ServerSubscribeRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerSubscribeRequest_descriptor,
         new java.lang.String[] { "ClientId", });
     internal_static_bridge_ServerSendTitleResponse_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_bridge_ServerSendTitleResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerSendTitleResponse_descriptor,
         new java.lang.String[] { "Username", "Title", "SubTitle", "TitleType", "Timestamp", });
     internal_static_bridge_MessageRequest_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_bridge_MessageRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_MessageRequest_descriptor,
         new java.lang.String[] { "Username", "Message", });
     internal_static_bridge_MessageResponse_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_bridge_MessageResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_MessageResponse_descriptor,
         new java.lang.String[] { "Username", "Message", "Prefix", "Badges", "Team", "Timestamp", });
     internal_static_bridge_ServerKickPlayerRequest_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_bridge_ServerKickPlayerRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerKickPlayerRequest_descriptor,
         new java.lang.String[] { "ClientId", });
     internal_static_bridge_ServerKickPlayerResponse_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_bridge_ServerKickPlayerResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerKickPlayerResponse_descriptor,
         new java.lang.String[] { "Username", "Timestamp", });
     internal_static_bridge_ServerBanPlayerRequest_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_bridge_ServerBanPlayerRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerBanPlayerRequest_descriptor,
         new java.lang.String[] { "ClientId", });
     internal_static_bridge_ServerBanPlayerResponse_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_bridge_ServerBanPlayerResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_bridge_ServerBanPlayerResponse_descriptor,

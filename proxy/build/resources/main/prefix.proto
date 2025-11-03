@@ -24,11 +24,11 @@ message BuyPrefixResponse {
     bool success = 1;
 }
 
-message SelectPrefixRequest {
+message EquipPrefixRequest {
     string username = 1;
     string prefix = 2;
 }
-message SelectPrefixResponse {
+message EquipPrefixResponse {
     bool success = 1;
 }
 
@@ -52,5 +52,29 @@ message DeletePrefixRequest {
     string prefix = 2;
 }
 message DeletePrefixResponse {
+    bool success = 1;
+}
+
+message ListAllPrefixRequest {
+    string username = 1;
+}
+
+message ListAllPrefixResponse {
+    repeated PartialPrefix prefixes = 1;
+}
+
+message ListOwnedPrefixRequest {
+    string username = 1;
+}
+
+message ListOwnedPrefixResponse {
+    repeated string prefixes = 1;
+}
+
+message UnEquipPrefixRequest {
+    string username = 1;
+}
+
+message UnEquipPrefixResponse {
     bool success = 1;
 }

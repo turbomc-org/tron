@@ -432,4 +432,18 @@ impl Bridge for BridgeService {
     ) -> Result<Response<crate::bridge::UnEquipPrefixResponse>, Status> {
         self.handle_un_equip_prefix(request).await
     }
+
+    async fn get_all_teams(
+        &self,
+        request: Request<crate::bridge::GetAllTeamsRequest>,
+    ) -> Result<Response<crate::bridge::GetAllTeamsResponse>, Status> {
+        self.handle_get_all_teams(request).await
+    }
+
+    async fn increase_coins(
+        &self,
+        request: Request<crate::bridge::IncreaseCoinsRequest>,
+    ) -> Result<Response<crate::bridge::IncreaseCoinsResponse>, Status> {
+        self.handle_increase_coins(request).await
+    }
 }

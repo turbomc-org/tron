@@ -37,7 +37,7 @@ impl BridgeService {
                 format!(
                     "<gradient:#C724B1:#7A00FF><bold>ℹ️ NO ASSETS UNLOCKED</bold></gradient>\n\
                      <gray>Your collection is empty. Acquire identifiers from the network market.</gray>\n\
-                     <dark_gray>»</dark_gray> <click:run_command:'/shop prefixes'><u><gradient:#B200FF:#6A00A3>Browse the Network Market</gradient></u></click>"
+                     <dark_gray>»</dark_gray> <click:run_command:'/prefix list'><u><gradient:#B200FF:#6A00A3>Browse the Network Market</gradient></u></click>"
                 ),
             ).await;
         } else {
@@ -53,8 +53,8 @@ impl BridgeService {
                         )
                     } else {
                         format!(
-                            "<dark_gray> - <color:{}>{}</color> <click:run_command:'/prefix set {}'><u><gradient:#C724B1:#7A00FF>Equip</gradient></u></click></dark_gray>",
-                            prefix_data.color, prefix_data.text, prefix_data.id
+                            "<dark_gray> - <color:{}>{}</color> <click:run_command:'/prefix equip {}'><u><gradient:#C724B1:#7A00FF>Equip</gradient></u></click></dark_gray>",
+                            prefix_data.color, prefix_data.text, prefix_data.text
                         )
                     }
                 })
@@ -67,7 +67,7 @@ impl BridgeService {
                     "<gradient:#C724B1:#7A00FF><bold>🎨 IDENTIFIER COLLECTION</bold></gradient>\n\
                      <gray>Displaying your <white>{}</white> unlocked network assets:</gray>\n\
                      {}\n\
-                     <dark_gray>»</dark_gray> <click:run_command:'/shop prefixes'><u><gradient:#B200FF:#6A00A3>Acquire more assets</gradient></u></click>",
+                     <dark_gray>»</dark_gray> <click:run_command:'/prefix list'><u><gradient:#B200FF:#6A00A3>Acquire more assets</gradient></u></click>",
                     owned_prefixes.len(),
                     prefix_list_str
                 ),

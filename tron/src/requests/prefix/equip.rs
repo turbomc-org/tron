@@ -1,8 +1,8 @@
 use crate::BridgeService;
 use crate::bridge::{EquipPrefixRequest, EquipPrefixResponse};
 use tonic::{Request, Response, Status};
-use tracing::debug;
 use tracing::error;
+use tracing::info;
 
 impl BridgeService {
     #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
@@ -14,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let prefix_id = inner_request.prefix;
 
-        debug!("Equip prefix request from player {} received", username);
+        info!("Equip prefix request from player {} received", username);
 
         let mut player = self.state.get_player_with_handling(&username).await?;
         let prefix = self.state.get_prefix_with_handling(&prefix_id).await?;
@@ -41,6 +41,8 @@ impl BridgeService {
             prefix.color, prefix.text
           ),
         ).await;
+
+        info!("Equip prefix request from player {} completed", username);
 
         Ok(Response::new(EquipPrefixResponse { success: true }))
     }

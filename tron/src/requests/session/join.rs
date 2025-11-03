@@ -1,7 +1,8 @@
-use crate::BridgeService;
 use crate::bridge::{PlayerJoinRequest, PlayerJoinResponse};
+use crate::config::messages::{WELCOME_BACK, WELCOME_FIRST_TIME};
 use crate::models::player::Edition;
 use crate::models::player::Player;
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
@@ -46,14 +47,9 @@ impl BridgeService {
 
                 self.send_message_to_player(
                     &player.username,
-                    format!(
-                        "<gradient:#C724B1:#7A00FF><bold>⚡ WELCOME BACK, {}</bold></gradient>\n\
-                        <gray>Connection to the <gradient:#B200FF:#6A00A3>H01 Network</gradient> re-established.</gray>\n\
-                        <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 6</gradient> systems online — enjoy your session, <light_purple><bold>player.</bold></light_purple>\n\
-                        <dark_gray>»</dark_gray> <click:open_url:'https://discord.gg/yourinvite'><u><gradient:#C724B1:#7A00FF>Report bugs or updates on Discord</gradient></u></click>",
-                        username
-                    ),
-                ).await;
+                    render!(WELCOME_BACK, username = &player.username),
+                )
+                .await;
 
                 info!("Player {} joined the server", username);
                 Response::new(PlayerJoinResponse { success: true })
@@ -77,15 +73,10 @@ impl BridgeService {
                     })?;
 
                 self.send_message_to_player(
-                        &player.username,
-                        format!(
-                            "<gradient:#C724B1:#7A00FF><bold>⛓ WELCOME, {}</bold></gradient>\n\
-                            <gray>You've entered the <bold><gradient:#B200FF:#6A00A3>H01 Network</gradient></bold> for the first time.</gray>\n\
-                            <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 6</gradient> has begun — your legacy starts <light_purple><bold>now.</bold></light_purple>\n\
-                            <dark_gray>»</dark_gray> <click:open_url:'https://discord.gg/yourinvite'><u><gradient:#C724B1:#7A00FF>Join the Grid (Discord)</gradient></u></click>",
-                            username
-                        ),
-                    ).await;
+                    &player.username,
+                    render!(WELCOME_FIRST_TIME, username = &player.username),
+                )
+                .await;
 
                 info!("Player {} joined the server", username);
 
