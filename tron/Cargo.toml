@@ -2,7 +2,12 @@
 name = "tron"
 version.workspace = true
 edition = "2024"
-
+include = [
+    "src/**/*",
+    "build.rs",
+    "../proto/**/*",
+    "Cargo.toml"
+]
 description = "TRON — H01 MINECRAFT SERVER"
 license = "MIT"
 repository = "https://github.com/h01-team/tron"
