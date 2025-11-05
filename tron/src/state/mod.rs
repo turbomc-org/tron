@@ -6,12 +6,15 @@ use crate::models::prefix::Prefix;
 use crate::models::servers::Servers;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
+use crate::state::messaging::Messaging;
 use dashmap::{DashMap, DashSet};
 use std::collections::{HashMap, HashSet};
 use tokio::sync::mpsc;
 use tonic::Status;
 use tracing::info;
 
+pub mod auth;
+pub mod messaging;
 pub mod player;
 pub mod prefix;
 pub mod shop_item;
@@ -19,6 +22,7 @@ pub mod team;
 
 #[derive(Debug)]
 pub struct State {
+    pub aliases: DashMap<String, String>,
     pub active_players: DashMap<String, Player>,
     pub shop_items: DashMap<u64, ShopItem>,
     pub teams: DashMap<u64, Team>,
@@ -33,11 +37,13 @@ pub struct State {
     pub message_clients: DashMap<u64, mpsc::Sender<Result<MessageResponse, Status>>>,
     pub send_message_clients: DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>,
     pub send_title_clients: DashMap<u64, mpsc::Sender<Result<ServerSendTitleResponse, Status>>>,
+    pub messaging: Messaging,
 }
 
 impl State {
     pub fn new() -> Self {
         Self {
+            aliases: DashMap::new(),
             active_players: DashMap::new(),
             shop_items: DashMap::new(),
             teams: DashMap::new(),
@@ -52,6 +58,7 @@ impl State {
             send_message_clients: DashMap::new(),
             send_title_clients: DashMap::new(),
             message_clients: DashMap::new(),
+            messaging: Messaging::new(),
         }
     }
 
@@ -199,9 +206,9 @@ impl State {
         info!("Populating team leaderboard from database");
         let mut team_indexes: HashMap<u64, f64> = HashMap::new();
 
-        for team in teams {
+        for team in &teams {
             let mut team_score = 0.0;
-            for member in team.members {
+            for member in &team.members {
                 let member_id = member.0;
                 let overall_score = overall_indexes.get(&member_id).unwrap_or(&0.0);
                 team_score += overall_score;
@@ -218,6 +225,14 @@ impl State {
                 .update_score(id, score as u64)
                 .await
         }
+
+        info!("Setting up teams messaging streams");
+
+        for team in teams {
+            cache.messaging.register_team_stream(team.id);
+        }
+
+        info!("Populating aliases from database");
 
         Ok(cache)
     }

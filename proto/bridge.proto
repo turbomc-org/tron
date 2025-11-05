@@ -17,6 +17,11 @@ import "prefix.proto";
 
 service Bridge {
     // Session
+    rpc PlayerPreLogin (PlayerPreLoginRequest) returns (PlayerPreLoginResponse);
+    rpc PlayerPostLogin (PlayerPostLoginRequest) returns (PlayerPostLoginResponse);
+    rpc PlayerFloodgateLogin (PlayerFloodgateLoginRequest) returns (PlayerFloodgateLoginResponse);
+    rpc PlayerEncryptionLogin (PlayerEncryptionLoginRequest) returns (PlayerEncryptionLoginResponse);
+    rpc PlayerPasswordLogin (PlayerPasswordLoginRequest) returns (PlayerPasswordLoginResponse);
     rpc PlayerJoin (PlayerJoinRequest) returns (PlayerJoinResponse);
     rpc PlayerLeave (PlayerLeaveRequest) returns (PlayerLeaveResponse);
 

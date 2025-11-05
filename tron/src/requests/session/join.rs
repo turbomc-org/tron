@@ -2,6 +2,7 @@ use crate::bridge::{PlayerJoinRequest, PlayerJoinResponse};
 use crate::config::messages::{WELCOME_BACK, WELCOME_FIRST_TIME};
 use crate::models::player::Edition;
 use crate::models::player::Player;
+use crate::utils::name_generator::generate;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
@@ -16,10 +17,9 @@ impl BridgeService {
         let username = inner_request.username;
 
         #[allow(deprecated)]
-        let edition: Edition =
-            crate::bridge::player_join_request::Edition::from_i32(inner_request.edition)
-                .unwrap_or(crate::bridge::player_join_request::Edition::Java)
-                .into();
+        let edition: Edition = crate::bridge::Edition::from_i32(inner_request.edition)
+            .unwrap_or(crate::bridge::Edition::Java)
+            .into();
 
         debug!("Join request for player {} received", username);
 
@@ -60,7 +60,8 @@ impl BridgeService {
                     username
                 );
 
-                let player = Player::new(username.clone(), edition);
+                let alias = generate();
+                let player = Player::new(username.clone(), Some(alias), edition);
 
                 debug!("Inserting player {} into cache and database", username);
 

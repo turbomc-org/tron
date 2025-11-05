@@ -1,4 +1,4 @@
-use crate::bridge::player_join_request::Edition as GrpcEdition;
+use crate::bridge::Edition as GrpcEdition;
 use crate::models::achievements::Achievements;
 use bincode::{Decode, Encode};
 use chrono::{DateTime, Utc};
@@ -13,6 +13,8 @@ pub struct Player {
     #[serde(rename = "_id")]
     pub id: u64,
     pub username: String,
+    pub original_name: Option<String>,
+    pub password: Option<String>,
     pub discord_id: Option<u64>,
     pub edition: Edition,
     pub coins: u64,
@@ -72,12 +74,14 @@ impl From<GrpcEdition> for Edition {
 }
 
 impl Player {
-    pub fn new(username: String, edition: Edition) -> Self {
+    pub fn new(username: String, original_name: Option<String>, edition: Edition) -> Self {
         let now: DateTime<Utc> = Utc::now();
 
         Self {
             id: GENERATOR.generate(),
             username,
+            original_name,
+            password: None,
             edition,
             discord_id: None,
             coins: 0,

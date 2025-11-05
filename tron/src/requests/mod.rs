@@ -21,6 +21,41 @@ impl Bridge for BridgeService {
     type ServerSendTitleStream = ServerSendTitleStream;
     type MessageStream = MessageStream;
 
+    async fn player_post_login(
+        &self,
+        request: Request<crate::bridge::PlayerPostLoginRequest>,
+    ) -> Result<Response<crate::bridge::PlayerPostLoginResponse>, Status> {
+        self.handle_player_post_login(request).await
+    }
+
+    async fn player_pre_login(
+        &self,
+        request: Request<crate::bridge::PlayerPreLoginRequest>,
+    ) -> Result<Response<crate::bridge::PlayerPreLoginResponse>, Status> {
+        self.handle_player_pre_login(request).await
+    }
+
+    async fn player_password_login(
+        &self,
+        request: Request<crate::bridge::PlayerPasswordLoginRequest>,
+    ) -> Result<Response<crate::bridge::PlayerPasswordLoginResponse>, Status> {
+        self.handle_player_password_login(request).await
+    }
+
+    async fn player_encryption_login(
+        &self,
+        request: Request<crate::bridge::PlayerEncryptionLoginRequest>,
+    ) -> Result<Response<crate::bridge::PlayerEncryptionLoginResponse>, Status> {
+        self.handle_player_encryption_login(request).await
+    }
+
+    async fn player_floodgate_login(
+        &self,
+        request: Request<crate::bridge::PlayerFloodgateLoginRequest>,
+    ) -> Result<Response<crate::bridge::PlayerFloodgateLoginResponse>, Status> {
+        self.handle_player_floodgate_login(request).await
+    }
+
     async fn player_join(
         &self,
         request: Request<crate::bridge::PlayerJoinRequest>,

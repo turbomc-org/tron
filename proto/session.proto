@@ -3,13 +3,56 @@ option java_package = "com.tron.bridge";
 
 package bridge;
 
+enum Edition {
+    BEDROCK = 0;
+    JAVA = 1;
+}
+
+message PlayerPreLoginRequest {
+    string username = 1;
+    Edition edition = 3;
+}
+
+message PlayerPreLoginResponse {
+    enum LoginType {
+        FLOODGATE = 0;
+        ENCRYPTION = 1;
+        PASSWORD = 2;
+    }
+    string username = 2;
+}
+
+message PlayerFloodgateLoginRequest {
+    string username = 1;
+}
+
+message PlayerFloodgateLoginResponse {
+    bool success = 1;
+}
+
+message PlayerEncryptionLoginRequest {
+    string username = 1;
+    string ip = 2;
+}
+
+message PlayerEncryptionLoginResponse {
+    string alias = 1;
+}
+
+message PlayerPasswordLoginRequest {
+    string username = 1;
+    string ip = 2;
+    string password = 3;
+}
+
+message PlayerPasswordLoginResponse {
+    bool success = 1;
+}
+
 message PlayerJoinRequest {
     string username = 1;
-    enum Edition {
-        BEDROCK = 0;
-        JAVA = 1;
-    }
-    Edition edition = 2;
+    string ip = 2;
+    Edition edition = 3;
 }
 
 message PlayerJoinResponse {
@@ -24,10 +67,10 @@ message PlayerLeaveResponse {
     bool success = 1;
 }
 
-message PostLoginRequest {
+message PlayerPostLoginRequest {
     string username = 1;
 }
 
-message PostLoginResponse {
+message PlayerPostLoginResponse {
     bool success = 1;
 }
