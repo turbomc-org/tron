@@ -389,3 +389,11 @@ pub static SQUAD_ROSTER: Lazy<Template<'static>> = Lazy::new(|| {
     <dark_gray>»</dark_gray> Use <white>/tc <message></white> for squad chat."#
     }
 });
+
+pub static BENGALI_KALA_JADU: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "JAABHAA ASSKIRIPT",
+        body: "Jaabhaa asskripitsdgfrejhgijuhgyt",
+    }
+});
