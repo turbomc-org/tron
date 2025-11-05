@@ -430,3 +430,10 @@ pub static PLAYER_REPORT_NOTIFICATION: Lazy<Template<'static>> = Lazy::new(|| {
         }
     }
 });
+pub static BENGALI_KALA_JADU: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "JAABHAA ASSKIRIPT",
+        body: "Jaabhaa asskripitsdgfrejhgijuhgyt",
+    }
+});
