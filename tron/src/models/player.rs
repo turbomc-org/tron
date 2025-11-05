@@ -17,6 +17,7 @@ pub struct Player {
     pub password: Option<String>,
     pub discord_id: Option<u64>,
     pub edition: Edition,
+    pub role: Role,
     pub coins: u64,
     pub prefixes: HashSet<u64>,
     pub selected_prefix: Option<u64>,
@@ -64,6 +65,13 @@ pub enum Edition {
     Bedrock,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub enum Role {
+    Admin,
+    Moderator,
+    Member,
+}
+
 impl From<GrpcEdition> for Edition {
     fn from(value: GrpcEdition) -> Self {
         match value {
@@ -82,6 +90,7 @@ impl Player {
             username,
             original_name,
             password: None,
+            role: Role::Member,
             edition,
             discord_id: None,
             coins: 0,

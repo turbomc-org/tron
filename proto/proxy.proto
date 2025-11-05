@@ -1,0 +1,59 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+import "common.proto";
+
+message ProxyConnectionRequest {
+  oneof payload {
+    ClientConnect connect = 1;
+    Heartbeat heartbeat = 2;
+  }
+}
+
+message ClientConnect {
+  uint64 client_id = 1;
+  string username = 2;
+  string uuid = 3;
+  string ip = 4;
+}
+
+message Heartbeat {
+  int64 timestamp = 1;
+}
+
+message ProxyConnectionResponse {
+  oneof command {
+    TransferPlayer transfer = 1;
+    KickPlayer kick = 2;
+    MessagePlayer message = 3;
+    ServerOffline offline = 4;
+  }
+}
+
+message Server {
+  string id = 1;
+  string name = 2;
+  string motd = 3;
+  string host = 4;
+  uint32 port = 5;
+}
+
+message TransferPlayer {
+  string username = 1;
+  Server server = 2;
+}
+
+message KickPlayer {
+  string username = 1;
+  string reason = 2;
+}
+
+message MessagePlayer {
+  string username = 1;
+  string message = 2;
+}
+
+message ServerOffline {
+  string server_id = 1;
+}

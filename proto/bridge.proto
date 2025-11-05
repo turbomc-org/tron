@@ -14,6 +14,7 @@ import "player.proto";
 import "server.proto";
 import "security.proto";
 import "prefix.proto";
+import "proxy.proto";
 
 service Bridge {
     // Session
@@ -22,7 +23,6 @@ service Bridge {
     rpc PlayerFloodgateLogin (PlayerFloodgateLoginRequest) returns (PlayerFloodgateLoginResponse);
     rpc PlayerEncryptionLogin (PlayerEncryptionLoginRequest) returns (PlayerEncryptionLoginResponse);
     rpc PlayerPasswordLogin (PlayerPasswordLoginRequest) returns (PlayerPasswordLoginResponse);
-    rpc PlayerJoin (PlayerJoinRequest) returns (PlayerJoinResponse);
     rpc PlayerLeave (PlayerLeaveRequest) returns (PlayerLeaveResponse);
 
     // Balance
@@ -100,4 +100,7 @@ service Bridge {
 
     // Security
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);
+
+    // Proxy
+    rpc ProxyTransfer(ProxyTransferRequest) returns (stream ProxyTransferResponse);
 }

@@ -12,12 +12,12 @@ impl State {
 
     pub async fn delete_team(&self, team_id: u64, team_name: &String) -> Result<()> {
         self.teams.remove(&team_id);
-        self.team_indexes.remove(team_name);
+        self.indexes.team.remove(team_name);
         Ok(())
     }
 
     pub async fn get_team_by_name(&self, name: String) -> Result<Option<Team>> {
-        let id = match self.team_indexes.get(&name) {
+        let id = match self.indexes.team.get(&name) {
             Some(entry) => *entry.value(),
             None => return Ok(None),
         };
@@ -26,7 +26,7 @@ impl State {
     }
 
     pub async fn get_team_id(&self, name: String) -> Result<Option<u64>> {
-        let id = match self.team_indexes.get(&name) {
+        let id = match self.indexes.team.get(&name) {
             Some(entry) => *entry.value(),
             None => return Ok(None),
         };
@@ -47,10 +47,10 @@ impl State {
         self.teams.insert(team.id, team.clone());
 
         if team.open {
-            self.open_team_indexes.insert(team.id);
+            self.indexes.open_team.insert(team.id);
         }
 
-        self.team_indexes.insert(team.name, team.id);
+        self.indexes.team.insert(team.name, team.id);
         Ok(())
     }
 

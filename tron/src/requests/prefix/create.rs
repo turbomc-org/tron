@@ -1,7 +1,7 @@
 use crate::bridge::{CreatePrefixRequest, CreatePrefixResponse};
 use crate::config::messages::IDENTIFIER_REGISTERED;
 use crate::models::prefix::Prefix;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -30,7 +30,8 @@ impl BridgeService {
 
         if self
             .state
-            .prefix_indexes
+            .indexes
+            .prefix
             .contains_key(&decompiled_prefix.text)
         {
             error!(

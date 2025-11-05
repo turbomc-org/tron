@@ -11,7 +11,7 @@ impl State {
     }
 
     pub fn get_player_username(&self, id: &u64) -> Option<String> {
-        self.player_indexes.get(id).map(|entry| entry.clone())
+        self.indexes.player.get(id).map(|entry| entry.clone())
     }
 
     pub async fn get_player_with_handling(&self, username: &String) -> Result<Player, Status> {
@@ -28,7 +28,8 @@ impl State {
     pub async fn insert_player(&self, player: Player) -> Result<()> {
         self.active_players
             .insert(player.username.clone(), player.clone());
-        self.player_indexes
+        self.indexes
+            .player
             .insert(player.id.clone(), player.username.clone());
 
         Ok(())

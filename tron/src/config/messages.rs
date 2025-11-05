@@ -389,3 +389,44 @@ pub static SQUAD_ROSTER: Lazy<Template<'static>> = Lazy::new(|| {
     <dark_gray>»</dark_gray> Use <white>/tc <message></white> for squad chat."#
     }
 });
+
+pub static REPORT_PLAYER: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ REPORT SUBMITTED",
+        body: "
+        Your report against <white><bold>{{target}}</bold></white> has been logged for review.\n\
+        <dark_gray>Reason:</dark_gray> <white>{{reason}}</white>\n\
+        <dark_gray>»</dark_gray> <light_purple>Thank you for helping keep the network secure.</light_purple>
+        "
+    }
+});
+
+pub static INVALID_REPORT_TARGET: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ INVALID TARGET",
+        body: "You cannot submit a report against your own user profile."
+    }
+});
+
+pub static TARGET_NOT_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ PLAYER NOT FOUND",
+        body: "The player <white><bold>{{username}}</bold></white> could not be located on the network. Either the player isn't active or not found in database."
+    }
+});
+
+pub static PLAYER_REPORT_NOTIFICATION: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⚡ NEW PLAYER REPORT",
+        body: "
+        Player <white><bold>{{username}}</bold></white> has reported <white><bold>{{target}}</bold></white>.
+        ",
+        actions: {
+            view_reports: { kind: "command", value: "/admin report list", label: "View reports" }
+        }
+    }
+});

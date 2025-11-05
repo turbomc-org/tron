@@ -27,7 +27,7 @@ impl BridgeService {
             ));
         }
 
-        if self.state.team_indexes.contains_key(&team_name) {
+        if self.state.indexes.team.contains_key(&team_name) {
             error!("Team already exists with this name");
             return Err(Status::already_exists(format!(
                 "Team already exists with name {}",

@@ -1,6 +1,6 @@
 use crate::collections::team::TeamCollection;
 use crate::models::achievements::Achievements;
-use crate::models::player::Player;
+use crate::models::player::{Player, Role};
 use crate::models::team::Team;
 use async_trait::async_trait;
 use futures::TryStreamExt;
@@ -13,7 +13,9 @@ use mongodb::error::Error;
 use mongodb::options::AggregateOptions;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
+use serde_json::to_string;
 use std::collections::HashMap;
+use std::collections::HashSet;
 use std::fmt::Debug;
 use std::sync::Arc;
 
@@ -25,6 +27,8 @@ pub trait PlayerCollection: Send + Sync + Debug {
     async fn kill_indexes(&self) -> Result<HashMap<u64, u64>, Error>;
     async fn death_indexes(&self) -> Result<HashMap<u64, u64>, Error>;
     async fn coin_indexes(&self) -> Result<HashMap<u64, u64>, Error>;
+    async fn admin_indexes(&self) -> Result<HashSet<u64>, Error>;
+    async fn moderator_indexes(&self) -> Result<HashSet<u64>, Error>;
     async fn find_by_username(&self, username: &str) -> Result<Option<Player>, Error>;
     async fn find_by_discord_id(&self, discord_id: u64) -> Result<Option<Player>, Error>;
     async fn insert_one(&self, player: &Player) -> Result<(), Error>;
@@ -172,6 +176,60 @@ impl PlayerCollection for MongoPlayerCollection {
         let mut indexes = HashMap::new();
         while let Some(user) = user_cursor.try_next().await? {
             indexes.insert(user.id, user.kills);
+        }
+
+        Ok(indexes)
+    }
+
+    async fn admin_indexes(&self) -> Result<HashSet<u64>, Error> {
+        #[derive(Serialize, Deserialize)]
+        struct PartialResponse {
+            #[serde(rename = "_id")]
+            id: u64,
+            role: Role,
+        }
+
+        let partial_players: Collection<PartialResponse> = self.collection.clone_with_type();
+        let projection = doc! { "_id": 1 };
+        let find_options = FindOptions::builder().projection(projection).build();
+
+        let mut player_cursor = partial_players
+            .find(doc! {
+                "role": to_string(&Role::Admin).unwrap()
+            })
+            .with_options(find_options)
+            .await?;
+
+        let mut indexes = HashSet::new();
+        while let Some(user) = player_cursor.try_next().await? {
+            indexes.insert(user.id);
+        }
+
+        Ok(indexes)
+    }
+
+    async fn moderator_indexes(&self) -> Result<HashSet<u64>, Error> {
+        #[derive(Serialize, Deserialize)]
+        struct PartialResponse {
+            #[serde(rename = "_id")]
+            id: u64,
+            role: Role,
+        }
+
+        let partial_players: Collection<PartialResponse> = self.collection.clone_with_type();
+        let projection = doc! { "_id": 1 };
+        let find_options = FindOptions::builder().projection(projection).build();
+
+        let mut player_cursor = partial_players
+            .find(doc! {
+                "role": to_string(&Role::Moderator).unwrap()
+            })
+            .with_options(find_options)
+            .await?;
+
+        let mut indexes = HashSet::new();
+        while let Some(user) = player_cursor.try_next().await? {
+            indexes.insert(user.id);
         }
 
         Ok(indexes)

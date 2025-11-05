@@ -6,8 +6,9 @@ use crate::models::prefix::Prefix;
 use crate::models::servers::Servers;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
+use crate::modules::indexes::Indexes;
 use crate::state::messaging::Messaging;
-use dashmap::{DashMap, DashSet};
+use dashmap::DashMap;
 use std::collections::{HashMap, HashSet};
 use tokio::sync::mpsc;
 use tonic::Status;
@@ -29,11 +30,7 @@ pub struct State {
     pub prefixes: DashMap<u64, Prefix>,
     pub leaderboards: Leaderboards,
     pub servers: Servers,
-    pub player_indexes: DashMap<u64, String>,
-    pub team_indexes: DashMap<String, u64>,
-    pub open_team_indexes: DashSet<u64>,
-    pub prefix_indexes: DashMap<String, u64>,
-    pub shop_item_indexes: DashMap<(String, Vec<String>), u64>,
+    pub indexes: Indexes,
     pub message_clients: DashMap<u64, mpsc::Sender<Result<MessageResponse, Status>>>,
     pub send_message_clients: DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>,
     pub send_title_clients: DashMap<u64, mpsc::Sender<Result<ServerSendTitleResponse, Status>>>,
@@ -50,11 +47,7 @@ impl State {
             prefixes: DashMap::new(),
             leaderboards: Leaderboards::new(),
             servers: Servers::new(),
-            player_indexes: DashMap::new(),
-            team_indexes: DashMap::new(),
-            open_team_indexes: DashSet::new(),
-            prefix_indexes: DashMap::new(),
-            shop_item_indexes: DashMap::new(),
+            indexes: Indexes::new(),
             send_message_clients: DashMap::new(),
             send_title_clients: DashMap::new(),
             message_clients: DashMap::new(),
@@ -90,7 +83,7 @@ impl State {
             .await
             .expect("Failed to populate player indexes");
         for (id, username) in indexes {
-            cache.player_indexes.insert(id, username);
+            cache.indexes.player.insert(id, username);
         }
 
         info!("Populating teams indexes from database");
@@ -100,7 +93,7 @@ impl State {
             .await
             .expect("Failed to populate team indexes");
         for (name, id) in indexes {
-            cache.team_indexes.insert(name, id);
+            cache.indexes.team.insert(name, id);
         }
 
         info!("Populating open teams indexes from database");
@@ -110,7 +103,7 @@ impl State {
             .await
             .expect("Failed to populate open team indexes");
         for id in indexes {
-            cache.open_team_indexes.insert(id);
+            cache.indexes.open_team.insert(id);
         }
 
         info!("Populating prefix indexes from database");
@@ -120,7 +113,7 @@ impl State {
             .await
             .expect("Failed to populate prefix indexes");
         for (text, id) in indexes {
-            cache.prefix_indexes.insert(text, id);
+            cache.indexes.prefix.insert(text, id);
         }
 
         info!("Populating shop_item indexes from database");
@@ -130,7 +123,7 @@ impl State {
             .await
             .expect("Failed to populate shop_item indexes");
         for (key, entry) in indexes {
-            cache.shop_item_indexes.insert(key, entry);
+            cache.indexes.shop_item.insert(key, entry);
         }
 
         info!("Populating kills leaderboard from database");

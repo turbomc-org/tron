@@ -72,16 +72,16 @@ impl Bridge for BridgeService {
 
     async fn player_place_block(
         &self,
-        _request: Request<crate::bridge::PlayerPlaceBlockRequest>,
+        request: Request<crate::bridge::PlayerPlaceBlockRequest>,
     ) -> Result<Response<crate::bridge::PlayerPlaceBlockResponse>, Status> {
-        unimplemented!()
+        self.handle_player_place_block(request).await
     }
 
     async fn player_break_block(
         &self,
-        _request: Request<crate::bridge::PlayerBreakBlockRequest>,
+        request: Request<crate::bridge::PlayerBreakBlockRequest>,
     ) -> Result<Response<crate::bridge::PlayerBreakBlockResponse>, Status> {
-        unimplemented!()
+        self.handle_player_break_block(request).await
     }
 
     async fn get_balance(
@@ -254,9 +254,9 @@ impl Bridge for BridgeService {
 
     async fn delete_team(
         &self,
-        _request: Request<crate::bridge::DeleteTeamRequest>,
+        request: Request<crate::bridge::DeleteTeamRequest>,
     ) -> Result<Response<crate::bridge::DeleteTeamResponse>, Status> {
-        unimplemented!()
+        self.handle_delete_team(request).await
     }
 
     async fn buy_item(
@@ -277,7 +277,7 @@ impl Bridge for BridgeService {
         &self,
         _request: Request<crate::bridge::GetItemsRequest>,
     ) -> Result<Response<crate::bridge::GetItemsResponse>, Status> {
-        unimplemented!()
+        todo!("Implement get shop items endpoint")
     }
 
     async fn player_death(
@@ -310,37 +310,37 @@ impl Bridge for BridgeService {
 
     async fn survival_startup(
         &self,
-        _request: Request<crate::bridge::SurvivalStartupRequest>,
+        request: Request<crate::bridge::SurvivalStartupRequest>,
     ) -> Result<Response<crate::bridge::SurvivalStartupResponse>, Status> {
-        unimplemented!()
+        self.handle_survival_startup(request).await
     }
 
     async fn survival_shutdown(
         &self,
-        _request: Request<crate::bridge::SurvivalShutdownRequest>,
+        request: Request<crate::bridge::SurvivalShutdownRequest>,
     ) -> Result<Response<crate::bridge::SurvivalShutdownResponse>, Status> {
-        unimplemented!()
+        self.handle_survival_shutdown(request).await
     }
 
     async fn lobby_startup(
         &self,
-        _request: Request<crate::bridge::LobbyStartupRequest>,
+        request: Request<crate::bridge::LobbyStartupRequest>,
     ) -> Result<Response<crate::bridge::LobbyStartupResponse>, Status> {
-        unimplemented!()
+        self.handle_lobby_startup(request).await
     }
 
     async fn lobby_shutdown(
         &self,
-        _request: Request<crate::bridge::LobbyShutdownRequest>,
+        request: Request<crate::bridge::LobbyShutdownRequest>,
     ) -> Result<Response<crate::bridge::LobbyShutdownResponse>, Status> {
-        unimplemented!()
+        self.handle_lobby_shutdown(request).await
     }
 
     async fn report_player(
         &self,
-        _request: Request<crate::bridge::ReportPlayerRequest>,
+        request: Request<crate::bridge::ReportPlayerRequest>,
     ) -> Result<Response<crate::bridge::ReportPlayerResponse>, Status> {
-        unimplemented!()
+        self.handle_report_player(request).await
     }
 
     async fn server_send_message(

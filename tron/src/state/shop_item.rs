@@ -16,7 +16,7 @@ impl State {
 
     pub async fn insert_shop_item(&self, shop_item: ShopItem) -> Result<()> {
         self.shop_items.insert(shop_item.id, shop_item.clone());
-        self.shop_item_indexes.insert(
+        self.indexes.shop_item.insert(
             (
                 shop_item.type_id,
                 shop_item.enchantments.iter().map(|v| v.clone()).collect(),
@@ -28,7 +28,7 @@ impl State {
 
     pub async fn remove_shop_item(&self, shop_item: &ShopItem) -> Result<()> {
         self.shop_items.remove(&shop_item.id);
-        self.shop_item_indexes.remove(&(
+        self.indexes.shop_item.remove(&(
             shop_item.type_id.clone(),
             shop_item.enchantments.iter().map(|v| v.clone()).collect(),
         ));
@@ -41,7 +41,8 @@ impl State {
         enchantments: &[String],
     ) -> Result<ShopItem, Status> {
         if let Some(id) = self
-            .shop_item_indexes
+            .indexes
+            .shop_item
             .get(&(type_id.clone(), enchantments.to_vec()))
             .map(|e| e.clone())
         {

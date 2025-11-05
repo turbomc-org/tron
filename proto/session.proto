@@ -49,16 +49,6 @@ message PlayerPasswordLoginResponse {
     bool success = 1;
 }
 
-message PlayerJoinRequest {
-    string username = 1;
-    string ip = 2;
-    Edition edition = 3;
-}
-
-message PlayerJoinResponse {
-    bool success = 1;
-}
-
 message PlayerLeaveRequest {
     string username = 1;
 }

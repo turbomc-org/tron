@@ -1,14 +1,17 @@
 pub mod player;
 pub mod prefix;
+pub mod report;
 pub mod shop_item;
 pub mod team;
 
 use crate::collections::player::{MongoPlayerCollection, PlayerCollection};
 use crate::collections::prefix::{MongoPrefixCollection, PrefixCollection};
+use crate::collections::report::{MongoReportCollection, ReportCollection};
 use crate::collections::shop_item::{MongoShopItemCollection, ShopItemCollection};
 use crate::collections::team::{MongoTeamCollection, TeamCollection};
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
+use crate::models::report::Report;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
 use mongodb::Database;
@@ -20,6 +23,7 @@ pub struct Collections {
     pub shop_items: Arc<dyn ShopItemCollection>,
     pub prefixes: Arc<dyn PrefixCollection>,
     pub teams: Arc<dyn TeamCollection>,
+    pub reports: Arc<dyn ReportCollection>,
 }
 
 impl Collections {
@@ -40,11 +44,16 @@ impl Collections {
             collection: database.collection::<Team>("teams"),
         };
 
+        let report_collection = MongoReportCollection {
+            collection: database.collection::<Report>("reports"),
+        };
+
         Self {
             players: Arc::new(player_collection),
             shop_items: Arc::new(shop_item_collection),
             prefixes: Arc::new(prefix_collection),
             teams: Arc::new(team_collection),
+            reports: Arc::new(report_collection),
         }
     }
 }

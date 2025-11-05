@@ -25,20 +25,22 @@ impl State {
 
     pub async fn insert_prefix(&self, prefix: Prefix) -> Result<()> {
         self.prefixes.insert(prefix.id.clone(), prefix.clone());
-        self.prefix_indexes
+        self.indexes
+            .prefix
             .insert(prefix.text.clone(), prefix.id.clone());
         Ok(())
     }
 
     pub async fn remove_prefix(&self, id: &u64, text: &String) -> Result<()> {
         self.prefixes.remove(id);
-        self.prefix_indexes.remove(text);
+        self.indexes.prefix.remove(text);
         Ok(())
     }
 
     pub async fn get_prefix_with_handling(&self, name: &String) -> Result<Prefix, Status> {
         let id = self
-            .prefix_indexes
+            .indexes
+            .prefix
             .get(name)
             .ok_or_else(|| Status::not_found("Requested prefix not found in database"))?;
 
