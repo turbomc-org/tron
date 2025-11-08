@@ -1,14 +1,16 @@
 use crate::BridgeService;
 use crate::bridge::MessagePlayer;
+use anyhow::Result;
 pub struct Message {}
 
 impl BridgeService {
-    pub async fn send_message(&self, username: &str, message: String) {
+    pub async fn send_message(&self, username: &str, message: String) -> Result<()> {
         self.message_player(MessagePlayer {
             username: username.to_string(),
             message: message.to_string(),
         })
-        .await
+        .await?;
+        Ok(())
     }
 }
 

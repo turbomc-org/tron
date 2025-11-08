@@ -1,3 +1,4 @@
+pub mod format_message;
 pub mod math;
 pub mod message;
 pub mod mongodb;

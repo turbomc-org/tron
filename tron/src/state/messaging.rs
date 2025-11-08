@@ -43,4 +43,18 @@ impl Messaging {
     pub fn check_player(&self, player_id: u64) -> bool {
         self.subscriptions.contains_key(&player_id)
     }
+
+    pub fn get_players_in_stream(&self, stream_id: u64) -> Vec<u64> {
+        self.subscriptions
+            .iter()
+            .filter_map(|entry| {
+                let (player_id, subscribed_stream) = entry.pair();
+                if *subscribed_stream == stream_id {
+                    Some(*player_id)
+                } else {
+                    None
+                }
+            })
+            .collect()
+    }
 }

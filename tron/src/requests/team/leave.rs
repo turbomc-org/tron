@@ -59,7 +59,7 @@ impl BridgeService {
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
             self.send_message(&member_username, team_broadcast_message.clone())
-                .await
+                .await;
         }
 
         debug!("Leave team request for player {} completed", username);

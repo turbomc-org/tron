@@ -430,10 +430,23 @@ pub static PLAYER_REPORT_NOTIFICATION: Lazy<Template<'static>> = Lazy::new(|| {
         }
     }
 });
+
 pub static BENGALI_KALA_JADU: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "JAABHAA ASSKIRIPT",
         body: "Jaabhaa asskripitsdgfrejhgijuhgyt",
+    }
+});
+
+pub static NOT_SUBSCRIBED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ NOT SUBSCRIBED",
+        body: "You are not subscribed to any channel",
+        actions: {
+            global: {kind: "command", value: "/global", label: "Join Global"},
+            hindi: {kind: "command", value: "/hindi", label: "Join Hindi"}
+        }
     }
 });

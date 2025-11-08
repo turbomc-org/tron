@@ -1,8 +1,9 @@
 use crate::BridgeService;
 use crate::bridge::{MessagePlayer, ProxyConnectionResponse};
+use anyhow::Result;
 
 impl BridgeService {
-    pub async fn message_player(&self, req: MessagePlayer) {
+    pub async fn message_player(&self, req: MessagePlayer) -> Result<()> {
         let mut dead_clients = Vec::new();
 
         for entry in self.state().proxy_connections.iter() {
@@ -23,5 +24,7 @@ impl BridgeService {
         for id in dead_clients {
             self.state().proxy_connections.remove(&id);
         }
+
+        Ok(())
     }
 }
