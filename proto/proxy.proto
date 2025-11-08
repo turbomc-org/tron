@@ -6,28 +6,42 @@ import "common.proto";
 
 message ProxyConnectionRequest {
   oneof payload {
-    ClientConnect connect = 1;
-    Heartbeat heartbeat = 2;
+    Heartbeat heartbeat = 1;
+    Handshake handshake = 2;
+    EmitMessage emit_message = 3;
+    EmitWhisper emit_whisper = 4;
   }
 }
 
-message ClientConnect {
-  uint64 client_id = 1;
-  string username = 2;
-  string uuid = 3;
-  string ip = 4;
+message Handshake {
+    uint64 proxy_id = 1;
+}
+
+message EmitMessage {
+    string username = 1;
+    string message = 2;
+}
+
+message EmitWhisper {
+    string username = 1;
+    string target = 2;
+    string message = 3;
 }
 
 message Heartbeat {
-  int64 timestamp = 1;
+  uint64 proxy_id = 1;
+  int64 timestamp = 2;
 }
 
 message ProxyConnectionResponse {
   oneof command {
     TransferPlayer transfer = 1;
-    KickPlayer kick = 2;
-    MessagePlayer message = 3;
-    ServerOffline offline = 4;
+    BanPlayer ban = 2;
+    PardonPlayer pardon = 3;
+    KickPlayer kick = 4;
+    MessagePlayer message = 5;
+    TitlePlayer title = 6;
+    ServerOffline offline = 7;
   }
 }
 
@@ -49,9 +63,24 @@ message KickPlayer {
   string reason = 2;
 }
 
+message BanPlayer {
+    string username = 1;
+    string reason = 2;
+}
+
+message PardonPlayer {
+    string username = 1;
+}
+
 message MessagePlayer {
   string username = 1;
   string message = 2;
+}
+
+message TitlePlayer {
+    string username = 1;
+    string title = 2;
+    string subtitle = 3;
 }
 
 message ServerOffline {

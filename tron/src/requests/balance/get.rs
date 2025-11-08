@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::info;
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_get_balance(
         &self,
         request: Request<GetBalanceRequest>,
@@ -15,15 +15,12 @@ impl BridgeService {
 
         info!("Get Balance request for player {} received", username);
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
-        self.send_message_to_player(&username, render!(BALANCE, balance = &player.coins))
+        self.send_message(&username, render!(BALANCE, balance = &player.coins))
             .await;
 
-        info!(
-            "Successfully responded to Get Balance request for player {}",
-            username
-        );
+        info!("Get Balance request for player {} completed", username);
 
         Ok(Response::new(GetBalanceResponse {
             balance: player.coins,

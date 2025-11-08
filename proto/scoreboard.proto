@@ -1,0 +1,29 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+import "common.proto";
+
+message GetScoreboardRequest {
+    string username = 1;
+}
+
+message GetScoreboardResponse {
+   Rank rank = 1;
+   uint64 overall = 2;
+   uint64 kills = 3;
+   uint64 deaths = 4;
+   uint64 coins = 5;
+   uint64 rank_in_kills_leaderboard = 6;
+   uint64 rank_in_deaths_leaderboard = 7;
+   uint64 rank_in_overall_leaderboard = 8;
+}
+
+message ToggleScoreboardRequest {
+    string username = 1;
+}
+
+message ToggleScoreboardResponse {
+    bool success = 1;
+}

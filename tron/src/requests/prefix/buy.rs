@@ -16,11 +16,11 @@ impl BridgeService {
 
         info!("Buy prefix request from player {} received", username);
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
-        let prefix = self.state.get_prefix_with_handling(&prefix_name).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
+        let prefix = self.state().get_prefix_with_handling(&prefix_name).await?;
 
         if player.prefixes.contains(&prefix.id) {
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(ALREADY_OWN_PREFIX, username = &player.username),
             )
@@ -31,7 +31,7 @@ impl BridgeService {
         }
 
         if player.coins < prefix.price {
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(
                     INSUFFICIENT_CREDITS,
@@ -45,14 +45,14 @@ impl BridgeService {
         }
 
         prefix
-            .buy(&mut player, &self.collections.players, &self.state)
+            .buy(&mut player, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!("Failed to buy prefix: {}", err);
                 Status::internal("Failed to buy prefix")
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &username,
             render!(
                 ASSET_ACQUIRED,

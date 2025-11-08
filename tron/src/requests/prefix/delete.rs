@@ -1,6 +1,6 @@
 use crate::bridge::{DeletePrefixRequest, DeletePrefixResponse};
 use crate::config::messages::ASSET_PURGED;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -16,18 +16,18 @@ impl BridgeService {
 
         info!("Delete request from player {} received", username);
 
-        let _ = self.state.get_player_with_handling(&username).await?;
-        let prefix = self.state.get_prefix_with_handling(&prefix_name).await?;
+        let _ = self.state().get_player_with_handling(&username).await?;
+        let prefix = self.state().get_prefix_with_handling(&prefix_name).await?;
 
         prefix
-            .delete(&self.collections.prefixes, &self.state)
+            .delete(&self.collections().prefixes, &self.state())
             .await
             .map_err(|err| {
                 error!("Failed to delete prefix: {}", err);
                 Status::internal("Failed to delete prefix")
             })?;
 
-        self.send_message_to_player(&username, render!(ASSET_PURGED, name = &prefix_name))
+        self.send_message(&username, render!(ASSET_PURGED, name = &prefix_name))
             .await;
 
         info!("Delete request from player {} completed", username);

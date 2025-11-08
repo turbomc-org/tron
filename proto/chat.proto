@@ -1,0 +1,45 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+message FriendChatRequest {
+    string username = 1;
+    string friend = 2;
+}
+
+message FriendChatResponse {
+    bool success = 1;
+}
+
+message TeamChatRequest {
+    string username = 1;
+}
+
+message TeamChatResponse {
+    bool success = 1;
+}
+
+message ExitChatRequest {
+    string username = 1;
+}
+
+message ExitChatResponse {
+    bool success = 1;
+}
+
+message GlobalChatRequest {
+    string username = 1;
+}
+
+message GlobalChatResponse {
+    bool success = 1;
+}
+
+message HindiChatRequest {
+    string username = 1;
+}
+
+message HindiChatResponse {
+    bool success = 1;
+}

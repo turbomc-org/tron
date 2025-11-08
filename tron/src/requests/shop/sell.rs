@@ -15,13 +15,13 @@ impl BridgeService {
 
         info!("Sell item request from player {} received", username);
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
         let mut sum: u64 = 0;
 
         for sell_item in sell_items {
             let set: Vec<String> = sell_item.enchantments.into_iter().collect();
             let item = self
-                .state
+                .state()
                 .get_by_typeid_and_enchantments(&sell_item.item_type, &set)
                 .await?;
 
@@ -29,8 +29,8 @@ impl BridgeService {
                 .sell(
                     sell_item.quantity,
                     &mut player,
-                    &self.collections.players,
-                    &self.state,
+                    &self.collections().players,
+                    &self.state(),
                 )
                 .await
                 .map_err(|err| {

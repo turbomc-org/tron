@@ -28,3 +28,11 @@ message PartialPrefix {
     string color = 2;
     uint64 price = 3;
 }
+
+enum Rank {
+    NEWBIE = 0;
+    MEMBER = 1;
+    VIP = 2;
+    ELITE = 3;
+    LEGEND = 4;
+}

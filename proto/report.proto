@@ -1,0 +1,38 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+message ReportRequest {
+    string username = 1;
+    string target = 2;
+    string reason = 3;
+}
+
+message ReportResponse {
+    bool success = 1;
+}
+
+message GetAllReportsRequest {
+    string username = 1;
+}
+
+message GetAllReportsResponse {
+    repeated uint64 ids = 1;
+}
+
+message ListAllReportsRequest {
+    string username = 1;
+}
+
+message ListAllReportsResponse {
+    bool success = 1;
+}
+
+message DeleteReportRequest {
+    uint64 id = 1;
+}
+
+message DeleteReportResponse {
+    bool success = 1;
+}

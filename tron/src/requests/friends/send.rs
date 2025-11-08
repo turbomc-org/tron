@@ -1,6 +1,6 @@
 use crate::bridge::{SendFriendRequestRequest, SendFriendRequestResponse};
 use crate::config::messages::{FRIEND_REQUEST_SENT, NEW_FRIEND_REQUEST};
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
@@ -14,7 +14,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.sender;
         let target_username = inner_request.receiver;
-        let players = self.collections.players.clone();
+        let players = self.collections().players.clone();
 
         info!(
             "Send friend request request from player {} received",
@@ -31,16 +31,16 @@ impl BridgeService {
             ));
         }
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
         let mut target = self
-            .state
+            .state()
             .get_player_with_handling(&target_username)
             .await?;
 
         let now = Utc::now().timestamp() as u64;
 
         player
-            .add_friend_request(&mut target, now.clone(), &players, &self.state)
+            .add_friend_request(&mut target, now.clone(), &players, &self.state())
             .await
             .map_err(|err| {
                 error!(
@@ -54,13 +54,13 @@ impl BridgeService {
                 ))
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &target_username,
             render!(NEW_FRIEND_REQUEST, sender = &username),
         )
         .await;
 
-        self.send_message_to_player(
+        self.send_message(
             &player.username,
             render!(FRIEND_REQUEST_SENT, receiver = &target_username),
         )

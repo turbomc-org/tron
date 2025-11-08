@@ -1,4 +1,5 @@
 pub mod achievements;
+pub mod bug;
 pub mod leaderboards;
 pub mod message;
 pub mod player;

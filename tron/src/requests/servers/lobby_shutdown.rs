@@ -17,12 +17,12 @@ impl BridgeService {
 
         debug!("Lobby shutdown requested by client {}", client_id);
 
-        if !self.state.servers.lobbies.contains(&client_id) {
+        if !self.state().servers.lobbies.contains(&client_id) {
             error!("Client {} is not in a lobby", client_id);
             return Err(Status::not_found("Client is not in a lobby"));
         }
 
-        self.state.servers.lobbies.remove(&client_id);
+        self.state().servers.lobbies.remove(&client_id);
 
         debug!("Lobby shutdown request by client {} completed", client_id);
 

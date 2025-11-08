@@ -15,17 +15,17 @@ impl BridgeService {
 
         debug!("Get friends request for player {} received", username);
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
         let mut friends: Vec<String> = Vec::new();
         for friend_id in &player.friends {
-            if let Some(friend_name) = self.state.get_player_username(friend_id) {
+            if let Some(friend_name) = self.state().get_player_username(friend_id) {
                 friends.push(friend_name);
             }
         }
 
         if friends.is_empty() {
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(NO_CONNECTIONS, username = &player.username),
             )
@@ -34,7 +34,7 @@ impl BridgeService {
             let friend_list_str = friends
                 .iter()
                 .map(|name| {
-                    let is_online = self.state.active_players.contains_key(name);
+                    let is_online = self.state().active_players.contains_key(name);
                     if is_online {
                         format!(
                             "<dark_gray> - <green>●</green> <white>{}</white></dark_gray>",
@@ -50,7 +50,7 @@ impl BridgeService {
                 .collect::<Vec<String>>()
                 .join("\n");
 
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(
                     FRIEND_NETWORK,

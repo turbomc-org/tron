@@ -49,18 +49,18 @@ message PlayerPasswordLoginResponse {
     bool success = 1;
 }
 
-message PlayerLeaveRequest {
-    string username = 1;
-}
-
-message PlayerLeaveResponse {
-    bool success = 1;
-}
-
 message PlayerPostLoginRequest {
     string username = 1;
 }
 
 message PlayerPostLoginResponse {
+    bool success = 1;
+}
+
+message PlayerLogoutRequest {
+    string username = 1;
+}
+
+message PlayerLogoutResponse {
     bool success = 1;
 }

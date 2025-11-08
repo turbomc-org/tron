@@ -1,6 +1,6 @@
 use crate::bridge::{IncreaseCoinsRequest, IncreaseCoinsResponse};
 use crate::config::messages::{ADMINISTRATIVE_GRANT, MASTER_CONTROL_CREDITS_GRANTED};
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 
@@ -14,11 +14,11 @@ impl BridgeService {
         let target = inner_request.target;
         let amount = inner_request.amount;
 
-        let _ = self.state.get_player_with_handling(&username).await?;
-        let mut target_player = self.state.get_player_with_handling(&target).await?;
+        let _ = self.state().get_player_with_handling(&username).await?;
+        let mut target_player = self.state().get_player_with_handling(&target).await?;
 
         target_player
-            .inc_coins(amount, &self.collections.players, &self.state)
+            .inc_coins(amount, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!(
@@ -32,7 +32,7 @@ impl BridgeService {
                 ))
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &username,
             render!(
                 MASTER_CONTROL_CREDITS_GRANTED,
@@ -42,11 +42,8 @@ impl BridgeService {
         )
         .await;
 
-        self.send_message_to_player(
-            &target,
-            render!(ADMINISTRATIVE_GRANT, amount = &amount),
-        )
-        .await;
+        self.send_message(&target, render!(ADMINISTRATIVE_GRANT, amount = &amount))
+            .await;
 
         Ok(Response::new(IncreaseCoinsResponse { success: true }))
     }

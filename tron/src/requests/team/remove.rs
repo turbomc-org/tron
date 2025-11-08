@@ -18,14 +18,14 @@ impl BridgeService {
             username
         );
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
 
         if player.team.is_none() {
             return Err(Status::not_found("Player is not in a team"));
         }
 
         let mut team = self
-            .state
+            .state()
             .get_team_with_handling(player.team.unwrap())
             .await?;
 
@@ -37,9 +37,9 @@ impl BridgeService {
 
         team.remove_member(
             &mut player,
-            &self.collections.players,
-            &self.collections.teams,
-            &self.state,
+            &self.collections().players,
+            &self.collections().teams,
+            &self.state(),
         )
         .await
         .map_err(|err| {

@@ -18,14 +18,14 @@ impl BridgeService {
             username
         );
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
         if player.team.is_none() {
             return Err(Status::not_found("You are not in a team"));
         }
 
         let mut team = self
-            .state
+            .state()
             .get_team_with_handling(player.team.unwrap())
             .await?;
 
@@ -35,7 +35,7 @@ impl BridgeService {
             ));
         }
 
-        team.promote_player(player.id, &self.collections.teams, &self.state)
+        team.promote_player(player.id, &self.collections().teams, &self.state())
             .await
             .map_err(|err| {
                 error!(

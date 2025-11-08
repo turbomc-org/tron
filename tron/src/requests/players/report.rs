@@ -17,20 +17,20 @@ impl BridgeService {
 
         info!("Report player request received");
 
-        let player = self.state.get_player_with_handling(&username).await?;
-        let target_player = self.state.get_player_with_handling(&target).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
+        let target_player = self.state().get_player_with_handling(&target).await?;
 
         let report = Report::new(player.id, target_player.id, reason);
 
         report
-            .insert(&self.collections.reports)
+            .insert(&self.collections().reports)
             .await
             .map_err(|e| {
                 error!("Failed to insert report: {}", e);
                 Status::internal("Failed to insert report")
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &username,
             render!(REPORT_PLAYER, username = target, reason = report.reason),
         )

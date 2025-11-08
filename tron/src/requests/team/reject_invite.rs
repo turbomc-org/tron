@@ -18,9 +18,9 @@ impl BridgeService {
             username
         );
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
         let team_id = self
-            .state
+            .state()
             .get_team_id(target.clone())
             .await
             .map_err(|err| {
@@ -36,7 +36,7 @@ impl BridgeService {
             })?;
 
         player
-            .reject_team_request(team_id, &self.collections.players, &self.state)
+            .reject_team_request(team_id, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!(

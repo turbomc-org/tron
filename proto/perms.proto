@@ -1,0 +1,22 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+message PromotePermsRequest {
+    string username = 1;
+    string code = 2;
+}
+
+message PromotePermsResponse {
+    bool success = 1;
+}
+
+message DemotePermsRequest {
+    string username = 1;
+    string target = 2;
+}
+
+message DemotePermsResponse {
+    bool success = 1;
+}

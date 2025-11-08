@@ -13,9 +13,9 @@ impl BridgeService {
         let username = inner_request.username;
         let team_name = inner_request.team_name;
 
-        let _ = self.state.get_player_with_handling(&username).await?;
+        let _ = self.state().get_player_with_handling(&username).await?;
         let team = self
-            .state
+            .state()
             .get_team_by_name(team_name)
             .await
             .map_err(|e| Status::internal(format!("Failed to retrieve team: {}", e)))?;
@@ -27,7 +27,7 @@ impl BridgeService {
         }
 
         team.unwrap()
-            .delete(&self.collections.teams, &self.state)
+            .delete(&self.collections().teams, &self.state())
             .await
             .map_err(|err| Status::internal(format!("Failed to delete team: {}", err)))?;
 

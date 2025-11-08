@@ -1,4 +1,4 @@
-use crate::bridge::{MessageResponse, ServerSendMessageResponse, ServerSendTitleResponse};
+use crate::bridge::ProxyConnectionResponse;
 use crate::collections::Collections;
 use crate::models::leaderboards::Leaderboards;
 use crate::models::player::Player;
@@ -31,9 +31,7 @@ pub struct State {
     pub leaderboards: Leaderboards,
     pub servers: Servers,
     pub indexes: Indexes,
-    pub message_clients: DashMap<u64, mpsc::Sender<Result<MessageResponse, Status>>>,
-    pub send_message_clients: DashMap<u64, mpsc::Sender<Result<ServerSendMessageResponse, Status>>>,
-    pub send_title_clients: DashMap<u64, mpsc::Sender<Result<ServerSendTitleResponse, Status>>>,
+    pub proxy_connections: DashMap<u64, mpsc::Sender<Result<ProxyConnectionResponse, Status>>>,
     pub messaging: Messaging,
 }
 
@@ -48,9 +46,7 @@ impl State {
             leaderboards: Leaderboards::new(),
             servers: Servers::new(),
             indexes: Indexes::new(),
-            send_message_clients: DashMap::new(),
-            send_title_clients: DashMap::new(),
-            message_clients: DashMap::new(),
+            proxy_connections: DashMap::new(),
             messaging: Messaging::new(),
         }
     }

@@ -15,9 +15,9 @@ impl BridgeService {
 
         info!("List all prefix request received");
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
-        let prefixes = self.state.get_prefixes().await.map_err(|err| {
+        let prefixes = self.state().get_prefixes().await.map_err(|err| {
             error!("Failed to get all prefixes: {}", err);
             Status::internal("Failed to get all prefixes")
         })?;
@@ -25,7 +25,7 @@ impl BridgeService {
             prefixes.iter().map(|prefix| prefix.compile()).collect();
 
         if prefixes.is_empty() {
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(MARKET_DATABASE_EMPTY, username = &player.username),
             )
@@ -35,7 +35,7 @@ impl BridgeService {
                 .prefixes
                 .iter()
                 .map(|id| {
-                    self.state
+                    self.state()
                         .get_prefix_text(id)
                         .ok_or("undefined".to_string())
                 })
@@ -60,7 +60,7 @@ impl BridgeService {
                 .collect::<Vec<String>>()
                 .join("\n");
 
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(NETWORK_MARKET_IDENTIFIERS, list = &prefix_list_str),
             )

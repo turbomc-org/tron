@@ -25,11 +25,11 @@ impl BridgeService {
             return Err(Status::invalid_argument("Prefix cannot be empty"));
         }
 
-        let _ = self.state.get_player_with_handling(&username).await?;
+        let _ = self.state().get_player_with_handling(&username).await?;
         let decompiled_prefix = Prefix::decompile(prefix.unwrap());
 
         if self
-            .state
+            .state()
             .indexes
             .prefix
             .contains_key(&decompiled_prefix.text)
@@ -45,14 +45,14 @@ impl BridgeService {
         }
 
         decompiled_prefix
-            .insert(&self.collections.prefixes, &self.state)
+            .insert(&self.collections().prefixes, &self.state())
             .await
             .map_err(|e| {
                 error!("Failed to insert prefix: {}", e);
                 Status::internal("Failed to insert prefix")
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &username,
             render!(
                 IDENTIFIER_REGISTERED,

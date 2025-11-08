@@ -16,10 +16,10 @@ impl BridgeService {
 
         info!("Place Block request of player {} received", username);
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
 
         player
-            .add_blocks_placed(1, &self.collections.players, &self.state)
+            .add_blocks_placed(1, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!(

@@ -17,13 +17,13 @@ impl BridgeService {
 
         info!("Get friend requests for player {} received", username);
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
         // Resolve all incoming friend requests synchronously
         let mut incoming_friend_requests: HashMap<String, u64> = HashMap::new();
 
         for (sender_id, sent_at) in &player.incoming_friend_requests {
-            if let Some(sender_name) = self.state.get_player_username(sender_id) {
+            if let Some(sender_name) = self.state().get_player_username(sender_id) {
                 incoming_friend_requests.insert(sender_name, *sent_at);
             }
         }
@@ -32,7 +32,7 @@ impl BridgeService {
 
         // If none exist — send info message
         if count == 0 {
-            self.send_message_to_player(
+            self.send_message(
                 &player.username,
                 render!(NO_INCOMING_FRIEND_REQUESTS, username = &player.username),
             )
@@ -62,7 +62,7 @@ impl BridgeService {
 
             let list = entries.join("\n");
 
-            self.send_message_to_player(
+            self.send_message(
                 &player.username,
                 render!(
                     INCOMING_FRIEND_REQUESTS,

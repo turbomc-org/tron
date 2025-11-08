@@ -1,0 +1,87 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+
+message GetBugRequest {
+    string username = 1;
+    uint64 bug_id = 2;
+}
+
+message GetBugResponse {
+    bool success = 1;
+}
+
+message ViewBugRequest {
+    string username = 1;
+    uint64 bug_id = 2;
+}
+
+message ViewBugResponse {
+    bool success = 1;
+}
+
+message BugRequest {
+    string username = 1;
+    string description = 2;
+}
+
+message BugResponse {
+    bool success = 1;
+}
+
+message GetAllBugsRequest {
+    string username = 1;
+}
+
+message GetAllBugsResponse {
+    repeated uint64 ids = 1;
+}
+
+message ListAllBugsRequest {
+    string username = 1;
+}
+
+message ListAllBugsResponse {
+    repeated uint64 ids = 1;
+}
+
+message DeleteBugRequest {
+    string username = 1;
+}
+
+message DeleteBugResponse {
+    bool success = 1;
+}
+
+message GetAllAdminsRequest {
+    string username = 1;
+}
+
+message GetAllAdminsResponse {
+    repeated string usernames = 1;
+}
+
+message GetAllModeratorsRequest {
+    string username = 1;
+}
+
+message GetAllModeratorsResponse {
+    repeated string usernames = 1;
+}
+
+message ListAllAdminsRequest {
+    string username = 1;
+}
+
+message ListAllAdminsResponse {
+    bool success = 1;
+}
+
+message ListAllModeratorsRequest {
+    string username = 1;
+}
+
+message ListAllModeratorsResponse {
+    bool success = 1;
+}

@@ -1,0 +1,55 @@
+syntax = "proto3";
+option java_package = "com.tron.bridge";
+
+package bridge;
+import "common.proto";
+
+message RedeemCodeRequest {
+    string username = 1;
+    string code = 2;
+}
+
+message RedeemCodeResponse {
+    string message = 1;
+}
+
+message CreateRedeemCodeRequest {
+    string username = 1;
+}
+
+message CreateRedeemCodeResponse {
+    bool success = 1;
+}
+
+message DeleteRedeemCodeRequest {
+    string username = 1;
+    string code = 2;
+}
+
+message DeleteRedeemCodeResponse {
+    bool success = 1;
+}
+
+message GetAllRedeemCodesRequest {
+    string username = 1;
+}
+
+message GetAllRedeemCodesResponse {
+    repeated string codes = 1;
+}
+
+message ListRedeemCodesRequest {
+    string username = 1;
+}
+
+message ListRedeemCodesResponse {
+    bool success = 1;
+}
+
+message ViewRedeemCodesRequest {
+    string username = 1;
+}
+
+message ViewRedeemCodesResponse {
+    repeated string codes = 1;
+}

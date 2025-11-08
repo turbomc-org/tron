@@ -15,10 +15,10 @@ impl BridgeService {
 
         info!("UnEquip prefix request from player {} received", username);
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
 
         if player.selected_prefix.is_none() {
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(NO_ACTIVE_IDENTIFIER, username = &player.username),
             )
@@ -28,14 +28,14 @@ impl BridgeService {
         }
 
         player
-            .un_equip_prefix(&self.collections.players, &self.state)
+            .un_equip_prefix(&self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!("Failed to un-equip prefix: {}", err);
                 Status::internal(format!("Failed to un-equip prefix: {}", err))
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &username,
             render!(IDENTIFIER_UNEQUIPPED, username = &player.username),
         )

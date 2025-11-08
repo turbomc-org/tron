@@ -13,11 +13,11 @@ impl BridgeService {
         info!("Kda leaderboard request received");
 
         let mut leaderboard_with_names: HashMap<String, f32> = HashMap::new();
-        let leaderboard = self.state.leaderboards.kd.get(10).await;
+        let leaderboard = self.state().leaderboards.kd.get(10).await;
 
         for player in leaderboard {
             let username = self
-                .state
+                .state()
                 .get_player_username(&player.0)
                 .ok_or_else(|| Status::not_found("Player not found"))?;
             leaderboard_with_names.insert(username, player.1 as f32);

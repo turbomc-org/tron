@@ -16,7 +16,7 @@ impl BridgeService {
         warn!("Survival startup request received");
 
         let client_id = GENERATOR.generate();
-        self.state.servers.survivals.insert(client_id);
+        self.state().servers.survivals.insert(client_id);
 
         info!("New survival client registered {}", client_id);
         warn!("Survival startup request completed");

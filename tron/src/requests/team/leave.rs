@@ -1,6 +1,6 @@
 use crate::bridge::{LeaveTeamRequest, LeaveTeamResponse};
 use crate::config::messages::{SQUAD_LINK_SEVERED, USER_DISCONNECTED};
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error};
 
@@ -15,7 +15,7 @@ impl BridgeService {
 
         debug!("Leave team request for player {} received", username);
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
 
         if player.team.is_none() {
             error!(
@@ -27,15 +27,15 @@ impl BridgeService {
         }
 
         let mut team = self
-            .state
+            .state()
             .get_team_with_handling(player.team.unwrap())
             .await?;
 
         team.remove_member(
             &mut player,
-            &self.collections.players,
-            &self.collections.teams,
-            &self.state,
+            &self.collections().players,
+            &self.collections().teams,
+            &self.state(),
         )
         .await
         .map_err(|e| {
@@ -43,11 +43,8 @@ impl BridgeService {
             Status::internal("Failed to leave team")
         })?;
 
-        self.send_message_to_player(
-            &username,
-            render!(SQUAD_LINK_SEVERED, team = &team.name),
-        )
-        .await;
+        self.send_message(&username, render!(SQUAD_LINK_SEVERED, team = &team.name))
+            .await;
 
         let team_broadcast_message = render!(USER_DISCONNECTED, username = &username);
 
@@ -57,11 +54,11 @@ impl BridgeService {
             .filter(|(member_id, _)| *member_id != &player.id)
         {
             let member_username = self
-                .state
+                .state()
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            self.send_message_to_player(&member_username, team_broadcast_message.clone())
+            self.send_message(&member_username, team_broadcast_message.clone())
                 .await
         }
 

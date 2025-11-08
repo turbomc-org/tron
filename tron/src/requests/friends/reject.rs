@@ -1,7 +1,7 @@
 use crate::bridge::{RejectFriendRequestRequest, RejectFriendRequestResponse};
 use crate::config::messages::{FRIEND_REQUEST_DECLINED, FRIEND_REQUEST_REJECTED};
 use crate::models::player::Player;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -23,11 +23,11 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
-        let players = &self.collections.players.clone();
-        let sender_id = self.state.check_friend_request(&player, &sender).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
+        let players = &self.collections().players.clone();
+        let sender_id = self.state().check_friend_request(&player, &sender).await?;
 
-        Player::reject_friend_request(&mut player, sender_id, &players, &self.state)
+        Player::reject_friend_request(&mut player, sender_id, &players, &self.state())
             .await
             .map_err(|err| {
                 error!("Failed to reject friend request from {}: {}", sender, err);
@@ -35,10 +35,13 @@ impl BridgeService {
                 Status::internal(format!("Failed to reject friend request from {}", sender))
             })?;
 
-        self.send_message_to_player(&username, render!(FRIEND_REQUEST_REJECTED, sender = &sender))
-            .await;
+        self.send_message(
+            &username,
+            render!(FRIEND_REQUEST_REJECTED, sender = &sender),
+        )
+        .await;
 
-        self.send_message_to_player(
+        self.send_message(
             &sender,
             render!(FRIEND_REQUEST_DECLINED, username = &username),
         )

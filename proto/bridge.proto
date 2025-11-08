@@ -15,15 +15,24 @@ import "server.proto";
 import "security.proto";
 import "prefix.proto";
 import "proxy.proto";
+import "redeem.proto";
+import "bug.proto";
+import "scoreboard.proto";
+import "chat.proto";
+import "perms.proto";
+import "report.proto";
 
 service Bridge {
+    // Proxy
+    rpc ProxyConnection (stream ProxyConnectionRequest) returns (stream ProxyConnectionResponse);
+
     // Session
     rpc PlayerPreLogin (PlayerPreLoginRequest) returns (PlayerPreLoginResponse);
     rpc PlayerPostLogin (PlayerPostLoginRequest) returns (PlayerPostLoginResponse);
     rpc PlayerFloodgateLogin (PlayerFloodgateLoginRequest) returns (PlayerFloodgateLoginResponse);
     rpc PlayerEncryptionLogin (PlayerEncryptionLoginRequest) returns (PlayerEncryptionLoginResponse);
     rpc PlayerPasswordLogin (PlayerPasswordLoginRequest) returns (PlayerPasswordLoginResponse);
-    rpc PlayerLeave (PlayerLeaveRequest) returns (PlayerLeaveResponse);
+    rpc PlayerLogout(PlayerLogoutRequest) returns (PlayerLogoutResponse);
 
     // Balance
     rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
@@ -36,8 +45,12 @@ service Bridge {
     rpc KdaLeaderboard (KdaLeaderboardRequest) returns (KdaLeaderboardResponse);
     rpc DeathsLeaderboard (DeathsLeaderboardRequest) returns (DeathsLeaderboardResponse);
     rpc KillsLeaderboard (KillsLeaderboardRequest) returns (KillsLeaderboardResponse);
-
-    // Messaging
+    rpc ListOverallLeaderboard (ListOverallLeaderboardRequest) returns (ListOverallLeaderboardResponse);
+    rpc ListKdaLeaderboard (ListKdaLeaderboardRequest) returns (ListKdaLeaderboardResponse);
+    rpc ListKillsLeaderboard (ListKillsLeaderboardRequest) returns (ListKillsLeaderboardResponse);
+    rpc ListDeathsLeaderboard (ListDeathsLeaderboardRequest) returns (ListDeathsLeaderboardResponse);
+    rpc ListCoinsLeaderboard (ListCoinsLeaderboardRequest) returns (ListCoinsLeaderboardResponse);
+    rpc ListTeamsLeaderboard (ListTeamsLeaderboardRequest) returns (ListTeamsLeaderboardResponse);
 
     // Friends
     rpc GetFriends (GetFriendsRequest) returns (GetFriendsResponse);
@@ -76,8 +89,6 @@ service Bridge {
     rpc GetOwnedPrefix(GetOwnedPrefixRequest) returns (GetOwnedPrefixResponse);
     rpc ListOwnedPrefix(ListOwnedPrefixRequest) returns (ListOwnedPrefixResponse);
     rpc GetCurrentPrefix(GetCurrentPrefixRequest) returns (GetCurrentPrefixResponse);
-    rpc CreatePrefix(CreatePrefixRequest) returns (CreatePrefixResponse);
-    rpc DeletePrefix(DeletePrefixRequest) returns (DeletePrefixResponse);
     rpc UnEquipPrefix(UnEquipPrefixRequest) returns (UnEquipPrefixResponse);
 
     // Player
@@ -93,14 +104,51 @@ service Bridge {
     rpc SurvivalShutdown(SurvivalShutdownRequest) returns (SurvivalShutdownResponse);
     rpc LobbyStartup(LobbyStartupRequest) returns (LobbyStartupResponse);
     rpc LobbyShutdown(LobbyShutdownRequest) returns (LobbyShutdownResponse);
-    rpc ServerSendMessage(ServerSubscribeRequest) returns (stream ServerSendMessageResponse);
-    rpc ServerSendTitle(ServerSubscribeRequest) returns (stream ServerSendTitleResponse);
-    rpc Message(stream MessageRequest) returns (stream MessageResponse);
+
+    // Admin
+    rpc CreateShopItem(CreateShopItemRequest) returns (CreateShopItemResponse);
+    rpc DeleteShopItem(DeleteShopItemRequest) returns (DeleteShopItemResponse);
     rpc IncreaseCoins(IncreaseCoinsRequest) returns (IncreaseCoinsResponse);
+    rpc CreatePrefix(CreatePrefixRequest) returns (CreatePrefixResponse);
+    rpc DeletePrefix(DeletePrefixRequest) returns (DeletePrefixResponse);
 
-    // Security
+    // Reports
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);
+    rpc GetAllReports(GetAllReportsRequest) returns (GetAllReportsResponse);
+    rpc ListAllReports(ListAllReportsRequest) returns (ListAllReportsResponse);
+    rpc DeleteReport(DeleteReportRequest) returns (DeleteReportResponse);
+    rpc DemotePerms(DemotePermsRequest) returns (DemotePermsResponse);
+    rpc GetAllAdmins(GetAllAdminsRequest) returns (GetAllAdminsResponse);
+    rpc GetAllModerators(GetAllModeratorsRequest) returns (GetAllModeratorsResponse);
+    rpc ListAllAdmins(ListAllAdminsRequest) returns (ListAllAdminsResponse);
+    rpc ListAllModerators(ListAllModeratorsRequest) returns (ListAllModeratorsResponse);
 
-    // Proxy
-    rpc ProxyTransfer(ProxyTransferRequest) returns (stream ProxyTransferResponse);
+    // Redeem
+    rpc RedeemCode(RedeemCodeRequest) returns (RedeemCodeResponse);
+    rpc GetAllRedeemCodes(GetAllRedeemCodesRequest) returns (GetAllRedeemCodesResponse);
+    rpc ListAllRedeemCodes(ListRedeemCodesRequest) returns (ListRedeemCodesResponse);
+    rpc CreateRedeemCode(CreateRedeemCodeRequest) returns (CreateRedeemCodeResponse);
+    rpc DeleteRedeemCode(DeleteRedeemCodeRequest) returns (DeleteRedeemCodeResponse);
+
+    // Bug
+    rpc Bug(BugRequest) returns (BugResponse);
+    rpc DeleteBug(DeleteBugRequest) returns (DeleteBugResponse);
+    rpc ListAllBugs(ListAllBugsRequest) returns (ListAllBugsResponse);
+    rpc GetAllBugs(GetAllBugsRequest) returns (GetAllBugsResponse);
+    rpc GetBug(GetBugRequest) returns (GetBugResponse);
+    rpc ViewBug(ViewBugRequest) returns (ViewBugResponse);
+
+    // Perms
+    rpc PromotePerms(PromotePermsRequest) returns (PromotePermsResponse);
+
+    // Scoreboard
+    rpc GetScoreboard (GetScoreboardRequest) returns (GetScoreboardResponse);
+    rpc ToggleScoreboard(ToggleScoreboardRequest) returns (ToggleScoreboardResponse);
+
+    // Messaging
+    rpc GlobalChat(GlobalChatRequest) returns (GlobalChatResponse);
+    rpc HindiChat(HindiChatRequest) returns (HindiChatResponse);
+    rpc FriendChat(FriendChatRequest) returns (FriendChatResponse);
+    rpc TeamChat(TeamChatRequest) returns (TeamChatResponse);
+    rpc ExitChat(ExitChatRequest) returns (ExitChatResponse);
 }

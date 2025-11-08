@@ -16,7 +16,7 @@ impl BridgeService {
 
         debug!("Send invite request from player {} received", username);
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
         if player.team.is_none() {
             error!("Player {} is not in a team", username);
@@ -24,7 +24,7 @@ impl BridgeService {
         }
 
         let team = self
-            .state
+            .state()
             .get_team_with_handling(player.team.unwrap())
             .await?;
 
@@ -34,7 +34,7 @@ impl BridgeService {
             ));
         }
 
-        let mut target_player = self.state.get_player_with_handling(&target).await?;
+        let mut target_player = self.state().get_player_with_handling(&target).await?;
 
         if target_player.team.is_some() {
             return Err(Status::already_exists("Target player is already in a team"));
@@ -43,7 +43,7 @@ impl BridgeService {
         let now = Utc::now().timestamp() as u64;
 
         target_player
-            .add_team_invite(team.id, now, &self.collections.players, &self.state)
+            .add_team_invite(team.id, now, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 warn!("Failed to send team invite to {}: {}", target, err);

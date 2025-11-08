@@ -16,7 +16,7 @@ impl BridgeService {
         warn!("Lobby startup request received");
 
         let client_id = GENERATOR.generate();
-        self.state.servers.lobbies.insert(client_id);
+        self.state().servers.lobbies.insert(client_id);
 
         info!("New lobby client registered {}", client_id);
         warn!("Lobby startup request completed");

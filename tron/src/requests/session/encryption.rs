@@ -11,8 +11,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        if self.state.aliases.contains_key(&username) {
-            if let Some(alias) = self.state.get_alias(&username) {
+        if self.state().aliases.contains_key(&username) {
+            if let Some(alias) = self.state().get_alias(&username) {
                 return Ok(Response::new(PlayerEncryptionLoginResponse { alias }));
             } else {
                 return Err(Status::internal(

@@ -1,6 +1,6 @@
 use crate::bridge::{RemoveFriendRequest, RemoveFriendResponse};
 use crate::config::messages::FRIEND_REMOVED;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
@@ -22,11 +22,11 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
-        let target_id = self.state.get_friend_id(&player, &target).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
+        let target_id = self.state().get_friend_id(&player, &target).await?;
 
         player
-            .remove_friend(target_id, &self.collections.players, &self.state)
+            .remove_friend(target_id, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!(
@@ -42,7 +42,7 @@ impl BridgeService {
                 ))
             })?;
 
-        self.send_message_to_player(&username, render!(FRIEND_REMOVED, target = &target))
+        self.send_message(&username, render!(FRIEND_REMOVED, target = &target))
             .await;
 
         info!("Remove friend request from player {} completed", username);

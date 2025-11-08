@@ -22,8 +22,8 @@ impl GRPCService {
         let collections = Collections::new(&database);
 
         let bs = BridgeService::new(collections).await;
-
         let svc = BridgeServer::new(bs);
+
         Server::builder()
             .add_service(svc)
             .serve(addr)

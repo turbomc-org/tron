@@ -20,11 +20,11 @@ impl BridgeService {
             username
         );
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
         let mut owned_prefixes: Vec<Prefix> = Vec::new();
 
         for prefix in player.prefixes {
-            let prefix = self.state.get_prefix(&prefix).await.map_err(|err| {
+            let prefix = self.state().get_prefix(&prefix).await.map_err(|err| {
                 error!("Failed to retrieve prefix: {}", err);
                 Status::internal("Failed to retrieve prefix")
             })?;
@@ -33,7 +33,7 @@ impl BridgeService {
         }
 
         if owned_prefixes.is_empty() {
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(NO_ASSETS_UNLOCKED, username = &player.username),
             )
@@ -59,7 +59,7 @@ impl BridgeService {
                 .collect::<Vec<String>>()
                 .join("\n");
 
-            self.send_message_to_player(
+            self.send_message(
                 &username,
                 render!(
                     IDENTIFIER_COLLECTION,

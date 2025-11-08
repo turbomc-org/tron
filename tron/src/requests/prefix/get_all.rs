@@ -11,7 +11,7 @@ impl BridgeService {
     ) -> Result<Response<GetAllPrefixResponse>, Status> {
         info!("Get all prefix request received");
 
-        let prefixes = self.state.get_prefixes().await.map_err(|err| {
+        let prefixes = self.state().get_prefixes().await.map_err(|err| {
             error!("Failed to get all prefixes: {}", err);
             Status::internal("Failed to get all prefixes")
         })?;

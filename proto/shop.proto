@@ -36,3 +36,22 @@ message SellItemRequest {
 message SellItemResponse {
     uint64 price = 1;
 }
+
+message CreateShopItemRequest {
+    string name = 1;
+    string description = 2;
+    uint64 price = 3;
+    string item_id = 4;
+}
+
+message CreateShopItemResponse {
+    ShopItem item = 1;
+}
+
+message DeleteShopItemRequest {
+    uint64 id = 1;
+}
+
+message DeleteShopItemResponse {
+    bool success = 1;
+}

@@ -1,6 +1,6 @@
 use crate::bridge::{EquipPrefixRequest, EquipPrefixResponse};
 use crate::config::messages::IDENTIFIER_EQUIPPED;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
@@ -17,8 +17,8 @@ impl BridgeService {
 
         info!("Equip prefix request from player {} received", username);
 
-        let mut player = self.state.get_player_with_handling(&username).await?;
-        let prefix = self.state.get_prefix_with_handling(&prefix_id).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
+        let prefix = self.state().get_prefix_with_handling(&prefix_id).await?;
 
         if !player.prefixes.contains(&prefix.id) {
             error!("Player {} does not own prefix {}", username, prefix_id);
@@ -26,14 +26,14 @@ impl BridgeService {
         }
 
         prefix
-            .select(&mut player, &self.collections.players, &self.state)
+            .select(&mut player, &self.collections().players, &self.state())
             .await
             .map_err(|err| {
                 error!("Failed to select prefix: {}", err);
                 Status::internal("Failed to equip prefix")
             })?;
 
-        self.send_message_to_player(
+        self.send_message(
             &username,
             render!(
                 IDENTIFIER_EQUIPPED,

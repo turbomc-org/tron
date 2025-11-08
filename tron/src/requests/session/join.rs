@@ -31,11 +31,11 @@ impl BridgeService {
 
         debug!("Fetching player {} record from mongodb", username);
 
-        let response = match self.collections.players.find_by_username(&username).await {
+        let response = match self.collections().players.find_by_username(&username).await {
             Ok(Some(player)) => {
                 debug!("Inserting player {} into cache", username);
 
-                self.state
+                self.state()
                     .insert_player(player.clone())
                     .await
                     .map_err(|err| {
@@ -45,7 +45,7 @@ impl BridgeService {
 
                 debug!("Successfully inserted player {} into cache", username);
 
-                self.send_message_to_player(
+                self.send_message(
                     &player.username,
                     render!(WELCOME_BACK, username = &player.username),
                 )
@@ -66,14 +66,14 @@ impl BridgeService {
                 debug!("Inserting player {} into cache and database", username);
 
                 player
-                    .insert(&self.collections.players, &self.state)
+                    .insert(&self.collections().players, &self.state())
                     .await
                     .map_err(|e| {
                         error!("Failed to insert player: {}", e);
                         Status::internal(format!("Failed to insert player: {}", e))
                     })?;
 
-                self.send_message_to_player(
+                self.send_message(
                     &player.username,
                     render!(WELCOME_FIRST_TIME, username = &player.username),
                 )

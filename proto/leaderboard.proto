@@ -46,3 +46,52 @@ message KillsLeaderboardRequest {}
 message KillsLeaderboardResponse {
     map<string, uint64> leaderboard = 1;
 }
+
+
+message ListKillsLeaderboardRequest {
+    string username = 1;
+}
+
+message ListKillsLeaderboardResponse {
+    bool success = 1;
+}
+
+message ListDeathsLeaderboardRequest {
+    string username = 1;
+}
+
+message ListDeathsLeaderboardResponse {
+    bool success = 1;
+}
+
+message ListCoinsLeaderboardRequest {
+    string username = 1;
+}
+
+message ListCoinsLeaderboardResponse {
+    bool success = 1;
+}
+
+message ListTeamsLeaderboardRequest {
+    string username = 1;
+}
+
+message ListTeamsLeaderboardResponse {
+    bool success = 1;
+}
+
+message ListOverallLeaderboardRequest {
+    string username = 1;
+}
+
+message ListOverallLeaderboardResponse {
+    bool success = 1;
+}
+
+message ListKdaLeaderboardRequest {
+    string username = 1;
+}
+
+message ListKdaLeaderboardResponse {
+    bool success = 1;
+}

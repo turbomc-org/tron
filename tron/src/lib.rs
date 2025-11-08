@@ -23,20 +23,8 @@ pub mod requests;
 pub mod state;
 pub mod utils;
 
-pub type ServerSendMessageStream = Pin<
-    Box<
-        dyn Stream<Item = Result<crate::bridge::ServerSendMessageResponse, Status>>
-            + Send
-            + 'static,
-    >,
->;
-
-pub type ServerSendTitleStream = Pin<
-    Box<dyn Stream<Item = Result<crate::bridge::ServerSendTitleResponse, Status>> + Send + 'static>,
->;
-
-pub type MessageStream =
-    Pin<Box<dyn Stream<Item = Result<crate::bridge::MessageResponse, Status>> + Send>>;
+pub type ProxyConnectionStream =
+    Pin<Box<dyn Stream<Item = Result<crate::bridge::ProxyConnectionResponse, Status>> + Send>>;
 
 static RETRY_STRATEGY: Lazy<Take<ExponentialBackoff>> = Lazy::new(|| {
     ExponentialBackoff::from_millis(100)
@@ -46,15 +34,18 @@ static RETRY_STRATEGY: Lazy<Take<ExponentialBackoff>> = Lazy::new(|| {
 
 static GENERATOR: Generator = Generator::new(0);
 
+#[derive(Debug)]
+struct BridgeServiceInner {
+    state: Arc<State>,
+    collections: Collections,
+}
+
 pub mod bridge {
     tonic::include_proto!("bridge");
 }
 
-#[derive(Debug)]
-pub struct BridgeService {
-    state: Arc<State>,
-    collections: Collections,
-}
+#[derive(Debug, Clone)]
+pub struct BridgeService(Arc<BridgeServiceInner>);
 
 impl BridgeService {
     pub async fn new(collections: Collections) -> Self {
@@ -64,40 +55,15 @@ impl BridgeService {
                 .expect("failed to load cache"),
         );
 
-        Self { state, collections }
+        Self(Arc::new(BridgeServiceInner { state, collections }))
     }
 
-    pub async fn broadcast_message(&self, msg: bridge::ServerSendMessageResponse) {
-        let mut dead_clients = Vec::new();
-
-        for entry in self.state.send_message_clients.iter() {
-            let client_id = *entry.key();
-            let tx = entry.value();
-
-            if tx.send(Ok(msg.clone())).await.is_err() {
-                dead_clients.push(client_id);
-            }
-        }
-
-        for id in dead_clients {
-            self.state.message_clients.remove(&id);
-        }
+    pub fn state(&self) -> &Arc<State> {
+        &self.0.state
     }
 
-    pub async fn send_message_to_client(
-        &self,
-        client_id: u64,
-        msg: bridge::ServerSendMessageResponse,
-    ) -> Result<(), Status> {
-        if let Some(entry) = self.state.send_message_clients.get(&client_id) {
-            let tx = entry.value();
-            tx.send(Ok(msg))
-                .await
-                .map_err(|_| Status::unavailable("Client disconnected"))?;
-            Ok(())
-        } else {
-            Err(Status::not_found("Client not found"))
-        }
+    pub fn collections(&self) -> &Collections {
+        &self.0.collections
     }
 
     fn filter_message(input: &str) -> String {

@@ -7,7 +7,7 @@ impl BridgeService {
         &self,
         _request: Request<GetAllTeamsRequest>,
     ) -> Result<Response<GetAllTeamsResponse>, Status> {
-        let teams: Vec<String> = self.state.teams.iter().map(|t| t.name.clone()).collect();
+        let teams: Vec<String> = self.state().teams.iter().map(|t| t.name.clone()).collect();
         Ok(Response::new(GetAllTeamsResponse { teams }))
     }
 }

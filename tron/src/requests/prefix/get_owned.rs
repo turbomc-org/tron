@@ -17,13 +17,13 @@ impl BridgeService {
             username
         );
 
-        let player = self.state.get_player_with_handling(&username).await?;
+        let player = self.state().get_player_with_handling(&username).await?;
 
         let prefixes: Result<Vec<String>, Status> = player
             .prefixes
             .iter()
             .map(|prefix_id| {
-                let state = self.state.clone();
+                let state = self.state().clone();
                 state
                     .get_prefix_text(prefix_id)
                     .ok_or_else(|| Status::not_found(format!("undefined prefix: {}", prefix_id)))
