@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_buy_prefix(
         &self,
         request: Request<BuyPrefixRequest>,
@@ -24,7 +24,11 @@ impl BridgeService {
                 &username,
                 render!(ALREADY_OWN_PREFIX, username = &player.username),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
             error!("Player already owns this prefix");
             return Err(Status::already_exists("You already owns this prefix"));
@@ -38,7 +42,11 @@ impl BridgeService {
                     credits = &(prefix.price - player.coins)
                 ),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
             error!("Player does not have enough coins");
             return Err(Status::failed_precondition("You do not have enough coins"));
@@ -62,7 +70,11 @@ impl BridgeService {
                 name = &prefix_name
             ),
         )
-        .await;
+        .await
+        .map_err(|err| {
+            error!("Failed to send player message: {}", err);
+        })
+        .unwrap();
 
         info!("Buy prefix request from player {} completed", username);
 

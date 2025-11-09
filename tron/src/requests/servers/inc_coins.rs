@@ -32,18 +32,26 @@ impl BridgeService {
                 ))
             })?;
 
-        self.send_message(
-            &username,
-            render!(
-                MASTER_CONTROL_CREDITS_GRANTED,
-                amount = &amount,
-                target = &target
-            ),
-        )
-        .await;
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(
+                    MASTER_CONTROL_CREDITS_GRANTED,
+                    amount = &amount,
+                    target = &target
+                ),
+            )
+            .await
+        {
+            error!("Failed to send player {} message: {}", username, e);
+        };
 
-        self.send_message(&target, render!(ADMINISTRATIVE_GRANT, amount = &amount))
-            .await;
+        if let Err(e) = self
+            .send_message(&target, render!(ADMINISTRATIVE_GRANT, amount = &amount))
+            .await
+        {
+            error!("Failed to send player {} message: {}", target, e);
+        };
 
         Ok(Response::new(IncreaseCoinsResponse { success: true }))
     }

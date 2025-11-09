@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_delete_prefix(
         &self,
         request: Request<DeletePrefixRequest>,
@@ -28,7 +28,11 @@ impl BridgeService {
             })?;
 
         self.send_message(&username, render!(ASSET_PURGED, name = &prefix_name))
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
         info!("Delete request from player {} completed", username);
 

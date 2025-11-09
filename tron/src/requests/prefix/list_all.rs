@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_list_all_prefix(
         &self,
         request: Request<ListAllPrefixRequest>,
@@ -29,7 +29,11 @@ impl BridgeService {
                 &username,
                 render!(MARKET_DATABASE_EMPTY, username = &player.username),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
         } else {
             let player_owned_prefixes: std::collections::HashSet<String> = player
                 .prefixes
@@ -64,7 +68,11 @@ impl BridgeService {
                 &username,
                 render!(NETWORK_MARKET_IDENTIFIERS, list = &prefix_list_str),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
         }
 
         info!("List all prefix request completed");

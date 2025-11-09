@@ -4,11 +4,11 @@ use futures::StreamExt;
 use tokio::sync::mpsc;
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status, Streaming};
+use tracing::error;
 
 pub mod ban_player;
 pub mod emit_message;
 pub mod emit_whisper;
-pub mod handshake;
 pub mod heartbeat;
 pub mod kick_player;
 pub mod message_player;
@@ -51,14 +51,15 @@ impl BridgeService {
                                                 crate::bridge::proxy_connection_request::Payload::EmitWhisper(payload) => {
                                                     this.handle_proxy_emit_whisper(payload).await
                                                 }
-                                                _ => {
-                                                    // Disconnect if the first message is not a handshake
-                                                }
+                                                _ => {}
                                             }
                                         }
                                     }
                                     Err(err) => {
-                                        // Handle error and break
+                                        error!(
+                                            "Failed to handle proxy connection request: {}",
+                                            err
+                                        );
                                         break;
                                     }
                                 }
@@ -67,7 +68,7 @@ impl BridgeService {
                         });
                     }
                     _ => {
-                        // Handle error, first message must be a handshake
+                        error!("Invalid proxy connection request");
                     }
                 }
             }

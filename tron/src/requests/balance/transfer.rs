@@ -71,13 +71,21 @@ impl BridgeService {
             &username,
             render!(TRANSFERRED, amount = &amount, target = &receiver),
         )
-        .await;
+        .await
+        .map_err(|err| {
+            error!("Failed to send player message: {}", err);
+        })
+        .unwrap();
 
         self.send_message(
             &receiver,
             render!(INCOMING_TRANSFER, amount = &amount, sender = &username),
         )
-        .await;
+        .await
+        .map_err(|err| {
+            error!("Failed to send player message: {}", err);
+        })
+        .unwrap();
 
         info!(
             "Transfer Balance request for player {} to {} completed",

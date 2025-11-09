@@ -1,4 +1,8 @@
+pub mod create;
+pub mod delete;
+pub mod get_all;
 pub mod inc_coins;
+pub mod list_all;
 pub mod lobby_shutdown;
 pub mod lobby_startup;
 pub mod proxy_shutdown;

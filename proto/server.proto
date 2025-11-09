@@ -3,6 +3,59 @@ option java_package = "com.tron.bridge";
 
 package bridge;
 
+message ListAllServersRequest {
+    string username = 1;
+}
+
+message ListAllServersResponse {
+    repeated string names = 1;
+}
+
+message GetAllServersRequest {
+    string username = 1;
+}
+
+message GetAllServersResponse {
+    repeated string names = 1;
+}
+
+message GetServerRequest {
+    string username = 1;
+}
+
+message GetServerResponse {
+    Server server = 1;
+}
+
+message ViewServerRequest {
+    string username = 1;
+    string name = 2;
+}
+
+message ViewServerResponse {
+    bool success = 1;
+}
+
+message CreateServerRequest {
+    string username = 1;
+    string name = 2;
+    string description = 3;
+    string address = 4;
+}
+
+message CreateServerResponse {
+    bool success = 1;
+}
+
+message DeleteServerRequest {
+    string username = 1;
+    string name = 2;
+}
+
+message DeleteServerResponse {
+    bool success = 1;
+}
+
 message ProxyStartupRequest {}
 message ProxyStartupResponse {
     uint64 client_id = 1;
@@ -49,60 +102,4 @@ message IncreaseCoinsRequest {
 
 message IncreaseCoinsResponse {
     bool success = 1;
-}
-
-message ServerSendMessageResponse {
-    string username = 1;
-    string message = 2;
-    uint64 timestamp = 4;
-}
-
-message ServerSubscribeRequest {
-    uint64 client_id = 1;
-}
-
-message ServerSendTitleResponse {
-    enum Type {
-        ACHIEVEMENT = 0;
-        WARNING = 1;
-        AWARD = 2;
-    }
-
-    string username = 1;
-    string title = 2;
-    string sub_title = 3;
-    Type title_type = 4;
-    uint64 timestamp = 5;
-}
-
-message MessageRequest {
-    string username = 1;
-    string message = 2;
-}
-
-message MessageResponse {
-    string username = 1;
-    string message = 2;
-    string prefix = 3;
-    string badges = 4;
-    string team = 5;
-    uint64 timestamp = 6;
-}
-
-message ServerKickPlayerRequest {
-    string client_id = 1;
-}
-
-message ServerKickPlayerResponse {
-    string username = 1;
-    uint64 timestamp = 2;
-}
-
-message ServerBanPlayerRequest {
-    string client_id = 1;
-}
-
-message ServerBanPlayerResponse {
-    string username = 1;
-    uint64 timestamp = 3;
 }

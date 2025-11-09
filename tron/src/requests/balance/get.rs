@@ -2,6 +2,7 @@ use crate::bridge::{GetBalanceRequest, GetBalanceResponse};
 use crate::config::messages::BALANCE;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
+use tracing::error;
 use tracing::info;
 
 impl BridgeService {
@@ -18,7 +19,11 @@ impl BridgeService {
         let player = self.state().get_player_with_handling(&username).await?;
 
         self.send_message(&username, render!(BALANCE, balance = &player.coins))
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
         info!("Get Balance request for player {} completed", username);
 

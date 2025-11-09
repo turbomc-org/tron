@@ -7,7 +7,7 @@ use tracing::error;
 pub async fn format_message(
     state: &Arc<State>,
     player: &Player,
-    message: String,
+    message: &String,
 ) -> Result<String> {
     let mut prefix: Option<Prefix> = None;
     let mut team: Option<Team> = None;

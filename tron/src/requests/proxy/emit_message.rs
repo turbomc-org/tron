@@ -2,7 +2,7 @@ use crate::bridge::EmitMessage;
 use crate::config::messages::NOT_SUBSCRIBED;
 use crate::utils::format_message::format_message;
 use crate::{BridgeService, render};
-use tracing::{error, info, warn};
+use tracing::{error, warn};
 
 impl BridgeService {
     pub async fn handle_proxy_emit_message(&self, req: EmitMessage) {
@@ -16,7 +16,7 @@ impl BridgeService {
             }
         };
 
-        let message = format_message(&self.state(), &player, req.message)
+        let message = format_message(&self.state(), &player, &req.message)
             .await
             .map_err(|err| {
                 error!(
@@ -32,7 +32,11 @@ impl BridgeService {
             None => {
                 warn!("⚠️ Player '{}' not subscribed to any stream", username);
                 self.send_message(&username, render!(NOT_SUBSCRIBED, username = &username))
-                    .await;
+                    .await
+                    .map_err(|err| {
+                        error!("Failed to send player message: {}", err);
+                    })
+                    .unwrap();
                 return;
             }
         };
@@ -43,7 +47,11 @@ impl BridgeService {
                 subscription, username
             );
             self.send_message(&username, render!(NOT_SUBSCRIBED, username = &username))
-                .await;
+                .await
+                .map_err(|err| {
+                    error!("Failed to send player message: {}", err);
+                })
+                .unwrap();
             return;
         }
 
@@ -54,10 +62,6 @@ impl BridgeService {
         }
 
         for player_id in players_in_stream {
-            if player_id == player.id {
-                continue;
-            }
-
             let Some(username) = self.state().indexes.player.get(&player_id) else {
                 warn!("⚠️ Missing username for player ID {}", player_id);
                 continue;
@@ -72,10 +76,5 @@ impl BridgeService {
                 );
             }
         }
-
-        info!(
-            "✅ Player '{}' emitted message to stream {}",
-            player.username, subscription
-        );
     }
 }

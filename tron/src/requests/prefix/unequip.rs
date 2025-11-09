@@ -22,7 +22,11 @@ impl BridgeService {
                 &username,
                 render!(NO_ACTIVE_IDENTIFIER, username = &player.username),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
             return Err(Status::invalid_argument("Player has no prefix equipped"));
         }
@@ -39,7 +43,11 @@ impl BridgeService {
             &username,
             render!(IDENTIFIER_UNEQUIPPED, username = &player.username),
         )
-        .await;
+        .await
+        .map_err(|err| {
+            error!("Failed to send player message: {}", err);
+        })
+        .unwrap();
 
         info!("UnEquip prefix request from player {} completed", username);
 

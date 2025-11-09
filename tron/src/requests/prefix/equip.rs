@@ -6,7 +6,7 @@ use tracing::error;
 use tracing::info;
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_equip_prefix(
         &self,
         request: Request<EquipPrefixRequest>,
@@ -41,7 +41,11 @@ impl BridgeService {
                 text = &prefix.text
             ),
         )
-        .await;
+        .await
+        .map_err(|err| {
+            error!("Failed to send player message: {}", err);
+        })
+        .unwrap();
 
         info!("Equip prefix request from player {} completed", username);
 

@@ -5,7 +5,7 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_remove_friend(
         &self,
         request: Request<RemoveFriendRequest>,
@@ -43,7 +43,11 @@ impl BridgeService {
             })?;
 
         self.send_message(&username, render!(FRIEND_REMOVED, target = &target))
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
         info!("Remove friend request from player {} completed", username);
 

@@ -7,7 +7,7 @@ use tracing::error;
 use tracing::info;
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_list_owned_prefix(
         &self,
         request: Request<ListOwnedPrefixRequest>,
@@ -37,7 +37,11 @@ impl BridgeService {
                 &username,
                 render!(NO_ASSETS_UNLOCKED, username = &player.username),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
         } else {
             let prefix_list_str = owned_prefixes
                 .iter()
@@ -67,7 +71,11 @@ impl BridgeService {
                     list = &prefix_list_str
                 ),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
         }
 
         let response_prefixes = owned_prefixes

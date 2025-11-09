@@ -34,7 +34,11 @@ impl BridgeService {
             &username,
             render!(REPORT_PLAYER, username = target, reason = report.reason),
         )
-        .await;
+        .await
+        .map_err(|err| {
+            error!("Failed to send player message: {}", err);
+        })
+        .unwrap();
 
         info!("Report player request completed");
 

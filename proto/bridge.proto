@@ -97,7 +97,13 @@ service Bridge {
     rpc PlayerPlaceBlock(PlayerPlaceBlockRequest) returns (PlayerPlaceBlockResponse);
     rpc PlayerBreakBlock(PlayerBreakBlockRequest) returns (PlayerBreakBlockResponse);
 
-    // Server
+    // Servers
+    rpc GetAllServers(GetAllServersRequest) returns (GetAllServersResponse);
+    rpc GetServer(GetServerRequest) returns (GetServerResponse);
+    rpc ViewServer(ViewServerRequest) returns (ViewServerResponse);
+    rpc ListAllServers(ListAllServersRequest) returns (ListAllServersResponse);
+    rpc CreateServer(CreateServerRequest) returns (CreateServerResponse);
+    rpc DeleteServer(DeleteServerRequest) returns (DeleteServerResponse);
     rpc ProxyStartup(ProxyStartupRequest) returns (ProxyStartupResponse);
     rpc ProxyShutdown(ProxyShutdownRequest) returns (ProxyShutdownResponse);
     rpc SurvivalStartup(SurvivalStartupRequest) returns (SurvivalStartupResponse);

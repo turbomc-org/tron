@@ -418,6 +418,14 @@ pub static TARGET_NOT_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
     }
 });
 
+pub static PLAYER_OFFLINE: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ PLAYER IS OFFLINE",
+        body: "The player <white><bold>{{username}}</bold></white> left the network."
+    }
+});
+
 pub static PLAYER_REPORT_NOTIFICATION: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
@@ -447,6 +455,28 @@ pub static NOT_SUBSCRIBED: Lazy<Template<'static>> = Lazy::new(|| {
         actions: {
             global: {kind: "command", value: "/global", label: "Join Global"},
             hindi: {kind: "command", value: "/hindi", label: "Join Hindi"}
+        }
+    }
+});
+
+pub static NOT_A_FRIEND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ NOT A FRIEND",
+        body: "<white><bold>{{target}}</bold></white> is not your friend.",
+        actions: {
+            send: {kind: "command", value: "/friend {{target}}", label: "Send Friend Request"},
+        }
+    }
+});
+
+pub static FAILED_TO_SEND_WHISPER: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ FAILED TO SEND WHISPER",
+        body: "Failed to send whisper to <white><bold>{{target}}</bold></white>. Please try again later if occurred repeatedly report bug.",
+        actions: {
+            bug: {kind: "command", value: "/bug failed to send whisper to {{target}}", label: "Report Bug"},
         }
     }
 });

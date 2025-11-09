@@ -6,7 +6,7 @@ use tracing::{error, info};
 use crate::BridgeService;
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_player_kill(
         &self,
         request: Request<PlayerKillRequest>,

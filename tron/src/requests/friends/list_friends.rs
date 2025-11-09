@@ -2,10 +2,10 @@ use crate::bridge::{ListFriendsRequest, ListFriendsResponse};
 use crate::config::messages::{FRIEND_NETWORK, NO_CONNECTIONS};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::debug;
+use tracing::{error, info};
 
 impl BridgeService {
-    #[tracing::instrument(skip(self), fields(request = ?request.get_ref()))]
+    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_list_friends(
         &self,
         request: Request<ListFriendsRequest>,
@@ -13,7 +13,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username.clone();
 
-        debug!("Get friends request for player {} received", username);
+        info!("Get friends request for player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -29,7 +29,11 @@ impl BridgeService {
                 &username,
                 render!(NO_CONNECTIONS, username = &player.username),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
         } else {
             let friend_list_str = friends
                 .iter()
@@ -58,10 +62,14 @@ impl BridgeService {
                     friend_list = &friend_list_str
                 ),
             )
-            .await;
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
         }
 
-        debug!("Get friends request for player {} completed", username);
+        info!("Get friends request for player {} completed", username);
 
         Ok(Response::new(ListFriendsResponse { friends }))
     }
