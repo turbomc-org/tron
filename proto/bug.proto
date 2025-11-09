@@ -3,13 +3,15 @@ option java_package = "com.tron.bridge";
 
 package bridge;
 
+import "common.proto";
+
 message GetBugRequest {
     string username = 1;
     uint64 bug_id = 2;
 }
 
 message GetBugResponse {
-    bool success = 1;
+    Bug bug = 1;
 }
 
 message ViewBugRequest {
@@ -43,11 +45,12 @@ message ListAllBugsRequest {
 }
 
 message ListAllBugsResponse {
-    repeated uint64 ids = 1;
+    bool success = 1;
 }
 
 message DeleteBugRequest {
     string username = 1;
+    uint64 bug_id = 2;
 }
 
 message DeleteBugResponse {

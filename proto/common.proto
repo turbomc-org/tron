@@ -51,3 +51,9 @@ message Report {
     string target_username = 3;
     string reason = 4;
 }
+
+message Bug {
+    uint64 id = 1;
+    string username = 2;
+    string description = 3;
+}

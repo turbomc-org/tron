@@ -86,10 +86,10 @@ service Bridge {
     // Prefix
     rpc BuyPrefix(BuyPrefixRequest) returns (BuyPrefixResponse);
     rpc EquipPrefix(EquipPrefixRequest) returns (EquipPrefixResponse);
-    rpc GetAllPrefix(GetAllPrefixRequest) returns (GetAllPrefixResponse);
-    rpc ListAllPrefix(ListAllPrefixRequest) returns (ListAllPrefixResponse);
-    rpc GetOwnedPrefix(GetOwnedPrefixRequest) returns (GetOwnedPrefixResponse);
-    rpc ListOwnedPrefix(ListOwnedPrefixRequest) returns (ListOwnedPrefixResponse);
+    rpc GetAllPrefixes(GetAllPrefixRequest) returns (GetAllPrefixResponse);
+    rpc ListAllPrefixes(ListAllPrefixRequest) returns (ListAllPrefixResponse);
+    rpc GetOwnedPrefixes(GetOwnedPrefixRequest) returns (GetOwnedPrefixResponse);
+    rpc ListOwnedPrefixes(ListOwnedPrefixRequest) returns (ListOwnedPrefixResponse);
     rpc GetCurrentPrefix(GetCurrentPrefixRequest) returns (GetCurrentPrefixResponse);
     rpc UnEquipPrefix(UnEquipPrefixRequest) returns (UnEquipPrefixResponse);
 

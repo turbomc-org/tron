@@ -87,8 +87,8 @@ pub static NO_CONNECTIONS: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "ℹ NO CONNECTIONS",
-        body: r#"Your friend network is empty. Establish new connections.
-    <dark_gray>»</dark_gray> Use <white>/friend add <user></white> to send a request."#
+        body: r#"You currently have no active connections.
+        Make friends to grow your <gradient:#6A00A3:#B200FF>network</gradient>!"#
     }
 });
 
@@ -96,9 +96,8 @@ pub static FRIEND_NETWORK: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "🌐 FRIEND NETWORK",
-        body: r#"Displaying <white>{{count}}</white> connected users:
-    {{friend_list}}
-    <dark_gray>»</dark_gray> Use <white>/friend remove <user></white> to disconnect."#
+        body: r#"Displaying <white>{{count}}</white> friend{{s}}:
+       {{friend_list}}"#
     }
 });
 
@@ -478,5 +477,51 @@ pub static FAILED_TO_SEND_WHISPER: Lazy<Template<'static>> = Lazy::new(|| {
         actions: {
             bug: {kind: "command", value: "/bug failed to send whisper to {{target}}", label: "Report Bug"},
         }
+    }
+});
+
+pub static GENERIC_STATUS_ERROR: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "error",
+        title: "❌ {{code}}",
+        body: "{{message}}",
+        actions: {
+            bug: {kind: "command", value: "/bug [{{type}}] {{message}}", label: "Report Bug"},
+        }
+    }
+});
+
+pub static NO_BUGS_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🐞 BUG REPORTS",
+        body: r#"No bugs found in the system. Everything looks <green>clean</green>!"#
+    }
+});
+
+pub static BUG_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🐛 REPORTED BUGS",
+        body: r#"Displaying <white>{{count}}</white> reported issue{{s}}:
+    {{list}}"#
+    }
+});
+
+pub static BUG_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔎 BUG DETAIL VIEW",
+        body: r#"
+<gray>Bug ID:</gray> <yellow><bold>#{{id}}</bold></yellow>
+<gray>Reporter:</gray> <aqua>{{reporter}}</aqua>
+<gray>Reported:</gray> <white>{{created}}</white>
+
+<gray>Description:</gray>
+<light_purple>{{description}}</light_purple>
+
+<dark_gray>──────────────────────────────</dark_gray>
+[<red><click:run_command:'/admin bug delete {{id}}'>Delete Bug</click></red>]
+"#
     }
 });

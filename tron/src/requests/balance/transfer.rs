@@ -6,7 +6,6 @@ use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_transfer_balance(
         &self,
         request: Request<TransferBalanceRequest>,

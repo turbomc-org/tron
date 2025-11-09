@@ -13,7 +13,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username.clone();
 
-        info!("Get friends request for player {} received", username);
+        info!("Get friends list for player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -30,29 +30,30 @@ impl BridgeService {
                 render!(NO_CONNECTIONS, username = &player.username),
             )
             .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .map_err(|err| error!("Failed to send player message: {}", err))
+            .ok();
         } else {
-            let friend_list_str = friends
-                .iter()
-                .map(|name| {
-                    let is_online = self.state().active_players.contains_key(name);
-                    if is_online {
-                        format!(
-                            "<dark_gray> - <green>●</green> <white>{}</white></dark_gray>",
-                            name
-                        )
-                    } else {
-                        format!(
-                            "<dark_gray> - <dark_gray>●</dark_gray> <gray>{}</gray></dark_gray>",
-                            name
-                        )
-                    }
-                })
-                .collect::<Vec<String>>()
-                .join("\n");
+            let mut friend_entries = Vec::new();
+
+            for friend_name in &friends {
+                let is_online = self.state().active_players.contains_key(friend_name);
+                let status_icon = if is_online {
+                    "<green>●</green>"
+                } else {
+                    "<dark_gray>●</dark_gray>"
+                };
+
+                friend_entries.push(format!(
+                    "<dark_gray>»</dark_gray> {} <white><bold>{}</bold></white> \
+                     <gray>-</gray> {} [<red><click:run_command:'/friend remove {}'>Remove</click></red>]",
+                    status_icon,
+                    friend_name,
+                    if is_online { "<green>Online</green>" } else { "<gray>Offline</gray>" },
+                    friend_name
+                ));
+            }
+
+            let friend_list_str = friend_entries.join("\n");
 
             self.send_message(
                 &username,
@@ -63,13 +64,11 @@ impl BridgeService {
                 ),
             )
             .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .map_err(|err| error!("Failed to send player message: {}", err))
+            .ok();
         }
 
-        info!("Get friends request for player {} completed", username);
+        info!("Get friends list for player {} completed", username);
 
         Ok(Response::new(ListFriendsResponse { friends }))
     }

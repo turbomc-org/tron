@@ -13,6 +13,11 @@ impl BridgeService {
         &self,
         request: Request<BugRequest>,
     ) -> Result<Response<BugResponse>, Status> {
+        let inner_request = request.into_inner();
+        let username = inner_request.username;
+        let description = inner_request.description;
+
+        let player = self.state().get_player_with_handling(&username).await?;
         todo!("Implement bug functionality")
     }
 }

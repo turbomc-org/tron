@@ -1,3 +1,4 @@
+pub mod bug;
 pub mod indexes;
 pub mod leaderboard;
 pub mod player;

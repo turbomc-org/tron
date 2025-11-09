@@ -3,6 +3,8 @@ resolver = "2"
 members = [
 "tron",
 "tron-bot"
+,
+"tron-macros"
 ]
 
 [workspace.dependencies]
