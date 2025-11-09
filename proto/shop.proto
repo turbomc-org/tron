@@ -5,12 +5,38 @@ package bridge;
 
 import "common.proto";
 
-message GetItemsRequest {
+message GetAllItemsRequest {
     string username = 1;
 }
 
-message GetItemsResponse {
+message GetAllItemsResponse {
     repeated ShopItem items = 1;
+}
+
+message ListAllItemsRequest {
+    string username = 1;
+}
+
+message ListAllItemsResponse {
+    bool success = 1;
+}
+
+message GetItemRequest {
+    string username = 1;
+    uint64 id = 2;
+}
+
+message GetItemResponse {
+    ShopItem item = 1;
+}
+
+message ViewItemRequest {
+    string username = 1;
+    uint64 id = 2;
+}
+
+message ViewItemResponse {
+    ShopItem item = 1;
 }
 
 message BuyItemRequest {

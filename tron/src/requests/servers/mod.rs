@@ -1,5 +1,6 @@
 pub mod create;
 pub mod delete;
+pub mod get;
 pub mod get_all;
 pub mod inc_coins;
 pub mod list_all;
@@ -9,3 +10,4 @@ pub mod proxy_shutdown;
 pub mod proxy_startup;
 pub mod survival_shutdown;
 pub mod survival_startup;
+pub mod view;

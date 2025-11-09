@@ -77,9 +77,11 @@ service Bridge {
     rpc GetAllTeams (GetAllTeamsRequest) returns (GetAllTeamsResponse);
 
     // Shop
+    rpc ListAllItems (ListAllItemsRequest) returns (ListAllItemsResponse);
+    rpc ViewItem (ViewItemRequest) returns (ViewItemResponse);
+    rpc GetAllItems (GetAllItemsRequest) returns (GetAllItemsResponse);
     rpc BuyItem (BuyItemRequest) returns (BuyItemResponse);
     rpc SellItem (SellItemRequest) returns (SellItemResponse);
-    rpc GetItems (GetItemsRequest) returns (GetItemsResponse);
 
     // Prefix
     rpc BuyPrefix(BuyPrefixRequest) returns (BuyPrefixResponse);
@@ -121,7 +123,9 @@ service Bridge {
     // Reports
     rpc ReportPlayer(ReportPlayerRequest) returns (ReportPlayerResponse);
     rpc GetAllReports(GetAllReportsRequest) returns (GetAllReportsResponse);
+    rpc GetReport(GetReportRequest) returns (GetReportResponse);
     rpc ListAllReports(ListAllReportsRequest) returns (ListAllReportsResponse);
+    rpc ViewReport(ViewReportRequest) returns (ViewReportResponse);
     rpc DeleteReport(DeleteReportRequest) returns (DeleteReportResponse);
     rpc DemotePerms(DemotePermsRequest) returns (DemotePermsResponse);
     rpc GetAllAdmins(GetAllAdminsRequest) returns (GetAllAdminsResponse);
@@ -132,7 +136,7 @@ service Bridge {
     // Redeem
     rpc RedeemCode(RedeemCodeRequest) returns (RedeemCodeResponse);
     rpc GetAllRedeemCodes(GetAllRedeemCodesRequest) returns (GetAllRedeemCodesResponse);
-    rpc ListAllRedeemCodes(ListRedeemCodesRequest) returns (ListRedeemCodesResponse);
+    rpc ListAllRedeemCodes(ListAllRedeemCodesRequest) returns (ListAllRedeemCodesResponse);
     rpc CreateRedeemCode(CreateRedeemCodeRequest) returns (CreateRedeemCodeResponse);
     rpc DeleteRedeemCode(DeleteRedeemCodeRequest) returns (DeleteRedeemCodeResponse);
 

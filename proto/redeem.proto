@@ -38,11 +38,11 @@ message GetAllRedeemCodesResponse {
     repeated string codes = 1;
 }
 
-message ListRedeemCodesRequest {
+message ListAllRedeemCodesRequest {
     string username = 1;
 }
 
-message ListRedeemCodesResponse {
+message ListAllRedeemCodesResponse {
     bool success = 1;
 }
 

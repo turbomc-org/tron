@@ -1,6 +1,8 @@
 syntax = "proto3";
 option java_package = "com.tron.bridge";
 
+import "common.proto";
+
 package bridge;
 
 message ReportRequest {
@@ -34,5 +36,22 @@ message DeleteReportRequest {
 }
 
 message DeleteReportResponse {
+    bool success = 1;
+}
+
+message GetReportRequest {
+    string username = 1;
+}
+
+message GetReportResponse {
+    Report report = 1;
+}
+
+message ViewReportRequest {
+    string username = 1;
+    uint64 id = 2;
+}
+
+message ViewReportResponse {
     bool success = 1;
 }

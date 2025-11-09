@@ -45,7 +45,7 @@ message ProxyConnectionResponse {
   }
 }
 
-message Server {
+message ProxyServer {
   string id = 1;
   string name = 2;
   string motd = 3;
@@ -55,7 +55,7 @@ message Server {
 
 message TransferPlayer {
   string username = 1;
-  Server server = 2;
+  ProxyServer server = 2;
 }
 
 message KickPlayer {

@@ -3,11 +3,17 @@ use crate::{Bridge, BridgeService, ProxyConnectionStream};
 use tonic::{Request, Response, Status};
 
 pub mod balance;
+pub mod bug;
+pub mod chat;
 pub mod friends;
 pub mod leaderboards;
+pub mod perms;
 pub mod players;
 pub mod prefix;
 pub mod proxy;
+pub mod redeem;
+pub mod report;
+pub mod scoreboard;
 pub mod servers;
 pub mod session;
 pub mod shop;
@@ -18,6 +24,49 @@ impl Bridge for BridgeService {
     type ProxyConnectionStream = ProxyConnectionStream;
 
     // Session management
+
+    // Servers
+    async fn get_all_servers(
+        &self,
+        request: Request<GetAllServersRequest>,
+    ) -> Result<Response<GetAllServersResponse>, Status> {
+        self.handle_get_all_servers(request).await
+    }
+
+    async fn list_all_servers(
+        &self,
+        request: Request<ListAllServersRequest>,
+    ) -> Result<Response<ListAllServersResponse>, Status> {
+        self.handle_list_all_servers(request).await
+    }
+
+    async fn get_server(
+        &self,
+        request: Request<GetServerRequest>,
+    ) -> Result<Response<GetServerResponse>, Status> {
+        self.handle_get_server(request).await
+    }
+
+    async fn view_server(
+        &self,
+        request: Request<ViewServerRequest>,
+    ) -> Result<Response<ViewServerResponse>, Status> {
+        self.handle_view_server(request).await
+    }
+
+    async fn create_server(
+        &self,
+        request: Request<CreateServerRequest>,
+    ) -> Result<Response<CreateServerResponse>, Status> {
+        self.handle_create_server(request).await
+    }
+
+    async fn delete_server(
+        &self,
+        request: Request<DeleteServerRequest>,
+    ) -> Result<Response<DeleteServerResponse>, Status> {
+        self.handle_delete_server(request).await
+    }
 
     async fn player_post_login(
         &self,
@@ -137,42 +186,42 @@ impl Bridge for BridgeService {
         &self,
         request: Request<ListOverallLeaderboardRequest>,
     ) -> Result<Response<ListOverallLeaderboardResponse>, Status> {
-        todo!("Implement overall list leaderboard")
+        self.handle_list_overall_leaderboard(request).await
     }
 
     async fn list_kda_leaderboard(
         &self,
         request: Request<ListKdaLeaderboardRequest>,
     ) -> Result<Response<ListKdaLeaderboardResponse>, Status> {
-        todo!("Implement kda list leaderboard")
+        self.handle_list_kda_leaderboard(request).await
     }
 
     async fn list_kills_leaderboard(
         &self,
         request: Request<ListKillsLeaderboardRequest>,
     ) -> Result<Response<ListKillsLeaderboardResponse>, Status> {
-        todo!("Implement kills list leaderboard")
+        self.handle_list_kills_leaderboard(request).await
     }
 
     async fn list_deaths_leaderboard(
         &self,
         request: Request<ListDeathsLeaderboardRequest>,
     ) -> Result<Response<ListDeathsLeaderboardResponse>, Status> {
-        todo!("Implement deaths list leaderboard")
+        self.handle_list_deaths_leaderboard(request).await
     }
 
     async fn list_coins_leaderboard(
         &self,
         request: Request<ListCoinsLeaderboardRequest>,
     ) -> Result<Response<ListCoinsLeaderboardResponse>, Status> {
-        todo!("Implement coins list leaderboard")
+        self.handle_list_coins_leaderboard(request).await
     }
 
     async fn list_teams_leaderboard(
         &self,
         request: Request<ListTeamsLeaderboardRequest>,
     ) -> Result<Response<ListTeamsLeaderboardResponse>, Status> {
-        todo!("Implement teams list leaderboard")
+        self.handle_list_teams_leaderboard(request).await
     }
 
     async fn get_friends(
@@ -296,6 +345,20 @@ impl Bridge for BridgeService {
 
     // Shop
 
+    async fn list_all_items(
+        &self,
+        request: Request<ListAllItemsRequest>,
+    ) -> Result<Response<ListAllItemsResponse>, Status> {
+        self.handle_list_all_items(request).await
+    }
+
+    async fn view_item(
+        &self,
+        request: Request<ViewItemRequest>,
+    ) -> Result<Response<ViewItemResponse>, Status> {
+        self.handle_view_item(request).await
+    }
+
     async fn buy_item(
         &self,
         request: Request<BuyItemRequest>,
@@ -310,25 +373,25 @@ impl Bridge for BridgeService {
         self.handle_sell_item(request).await
     }
 
-    async fn get_items(
+    async fn get_all_items(
         &self,
-        _request: Request<GetItemsRequest>,
-    ) -> Result<Response<GetItemsResponse>, Status> {
-        todo!("Implement get shop items endpoint")
+        request: Request<GetAllItemsRequest>,
+    ) -> Result<Response<GetAllItemsResponse>, Status> {
+        self.handle_get_all_items(request).await
     }
 
     async fn create_shop_item(
         &self,
-        _request: Request<CreateShopItemRequest>,
+        request: Request<CreateShopItemRequest>,
     ) -> Result<Response<CreateShopItemResponse>, Status> {
-        todo!("Implement create shop item endpoint")
+        self.handle_create_shop_item(request).await
     }
 
     async fn delete_shop_item(
         &self,
-        _request: Request<DeleteShopItemRequest>,
+        request: Request<DeleteShopItemRequest>,
     ) -> Result<Response<DeleteShopItemResponse>, Status> {
-        todo!("Implement delete shop item endpoint")
+        self.handle_delete_item(request).await
     }
 
     // Player
@@ -389,18 +452,34 @@ impl Bridge for BridgeService {
         self.handle_lobby_shutdown(request).await
     }
 
+    // Reports
+
+    async fn get_report(
+        &self,
+        request: Request<GetReportRequest>,
+    ) -> Result<Response<GetReportResponse>, Status> {
+        self.handle_get_report(request).await
+    }
+
     async fn get_all_reports(
         &self,
-        _request: Request<GetAllReportsRequest>,
+        request: Request<GetAllReportsRequest>,
     ) -> Result<Response<GetAllReportsResponse>, Status> {
-        todo!("Implement get all reports")
+        self.handle_get_all_reports(request).await
     }
 
     async fn list_all_reports(
         &self,
-        _request: Request<ListAllReportsRequest>,
+        request: Request<ListAllReportsRequest>,
     ) -> Result<Response<ListAllReportsResponse>, Status> {
-        todo!("Implement list all reports")
+        self.handle_list_all_reports(request).await
+    }
+
+    async fn view_report(
+        &self,
+        request: Request<ViewReportRequest>,
+    ) -> Result<Response<ViewReportResponse>, Status> {
+        self.handle_view_report(request).await
     }
 
     async fn report_player(
@@ -414,7 +493,7 @@ impl Bridge for BridgeService {
         &self,
         request: Request<DeleteReportRequest>,
     ) -> Result<Response<DeleteReportResponse>, Status> {
-        todo!("Implement delete report")
+        self.handle_delete_report(request).await
     }
 
     async fn proxy_connection(
@@ -530,35 +609,35 @@ impl Bridge for BridgeService {
         &self,
         request: Request<GetAllRedeemCodesRequest>,
     ) -> Result<Response<GetAllRedeemCodesResponse>, Status> {
-        todo!("Implement get all redeem codes")
+        self.handle_get_all_redeem_codes(request).await
     }
 
     async fn list_all_redeem_codes(
         &self,
-        request: Request<ListRedeemCodesRequest>,
-    ) -> Result<Response<ListRedeemCodesResponse>, Status> {
-        todo!("Implement list all redeem codes")
+        request: Request<ListAllRedeemCodesRequest>,
+    ) -> Result<Response<ListAllRedeemCodesResponse>, Status> {
+        self.handle_list_all_redeem_codes(request).await
     }
 
     async fn redeem_code(
         &self,
         request: Request<RedeemCodeRequest>,
     ) -> Result<Response<RedeemCodeResponse>, Status> {
-        todo!("Implement redeem code")
+        self.handle_redeem_code(request).await
     }
 
     async fn create_redeem_code(
         &self,
         request: Request<CreateRedeemCodeRequest>,
     ) -> Result<Response<CreateRedeemCodeResponse>, Status> {
-        todo!("Implement create redeem code")
+        self.handle_create_redeem_code(request).await
     }
 
     async fn delete_redeem_code(
         &self,
         request: Request<DeleteRedeemCodeRequest>,
     ) -> Result<Response<DeleteRedeemCodeResponse>, Status> {
-        todo!("Implement delete redeem code")
+        self.handle_delete_redeem_code(request).await
     }
 
     // Perms
@@ -567,42 +646,42 @@ impl Bridge for BridgeService {
         &self,
         request: Request<PromotePermsRequest>,
     ) -> Result<Response<PromotePermsResponse>, Status> {
-        todo!("Implement promote player")
+        self.handle_promote_perms(request).await
     }
 
     async fn demote_perms(
         &self,
         request: Request<DemotePermsRequest>,
     ) -> Result<Response<DemotePermsResponse>, Status> {
-        todo!("Implement demote player")
+        self.handle_demote_perms(request).await
     }
 
     async fn get_all_admins(
         &self,
         request: Request<GetAllAdminsRequest>,
     ) -> Result<Response<GetAllAdminsResponse>, Status> {
-        todo!("Implement get all admins")
+        self.handle_get_all_admins(request).await
     }
 
     async fn get_all_moderators(
         &self,
         request: Request<GetAllModeratorsRequest>,
     ) -> Result<Response<GetAllModeratorsResponse>, Status> {
-        todo!("Implement get all moderators")
+        self.handle_get_all_moderators(request).await
     }
 
     async fn list_all_admins(
         &self,
         request: Request<ListAllAdminsRequest>,
     ) -> Result<Response<ListAllAdminsResponse>, Status> {
-        todo!("Implement list all admins")
+        self.handle_list_all_admins(request).await
     }
 
     async fn list_all_moderators(
         &self,
         request: Request<ListAllModeratorsRequest>,
     ) -> Result<Response<ListAllModeratorsResponse>, Status> {
-        todo!("Implement list all moderators")
+        self.handle_list_all_moderators(request).await
     }
 
     // Chats / Messaging
@@ -611,35 +690,35 @@ impl Bridge for BridgeService {
         &self,
         request: Request<ExitChatRequest>,
     ) -> Result<Response<ExitChatResponse>, Status> {
-        todo!("Implement exit chat")
+        self.handle_exit_chat(request).await
     }
 
     async fn global_chat(
         &self,
         request: Request<GlobalChatRequest>,
     ) -> Result<Response<GlobalChatResponse>, Status> {
-        todo!("Implement global chat")
+        self.handle_global_chat(request).await
     }
 
     async fn hindi_chat(
         &self,
         request: Request<HindiChatRequest>,
     ) -> Result<Response<HindiChatResponse>, Status> {
-        todo!("Implement hindi chat")
+        self.handle_hindi_chat(request).await
     }
 
     async fn friend_chat(
         &self,
         request: Request<FriendChatRequest>,
     ) -> Result<Response<FriendChatResponse>, Status> {
-        todo!("Implement friend chat")
+        self.handle_friend_chat(request).await
     }
 
     async fn team_chat(
         &self,
         request: Request<TeamChatRequest>,
     ) -> Result<Response<TeamChatResponse>, Status> {
-        todo!("Implement team chat")
+        self.handle_team_chat(request).await
     }
 
     // Scoreboard
@@ -648,53 +727,54 @@ impl Bridge for BridgeService {
         &self,
         request: Request<GetScoreboardRequest>,
     ) -> Result<Response<GetScoreboardResponse>, Status> {
-        todo!("Implement get scoreboard")
+        self.handle_get_scoreboard(request).await
     }
 
     async fn toggle_scoreboard(
         &self,
         request: Request<ToggleScoreboardRequest>,
     ) -> Result<Response<ToggleScoreboardResponse>, Status> {
-        todo!("Implement toggle scoreboard")
+        self.handle_toggle_scoreboard(request).await
     }
 
     // Bug
+
     async fn get_bug(
         &self,
         request: Request<GetBugRequest>,
     ) -> Result<Response<GetBugResponse>, Status> {
-        todo!("Implement get bug")
+        self.handle_get_bug(request).await
     }
 
     async fn view_bug(
         &self,
         request: Request<ViewBugRequest>,
     ) -> Result<Response<ViewBugResponse>, Status> {
-        todo!("Implement view bug")
+        self.handle_view_bug(request).await
     }
 
     async fn get_all_bugs(
         &self,
         request: Request<GetAllBugsRequest>,
     ) -> Result<Response<GetAllBugsResponse>, Status> {
-        todo!("Implement get all bugs")
+        self.handle_get_all_bugs(request).await
     }
 
     async fn list_all_bugs(
         &self,
         request: Request<ListAllBugsRequest>,
     ) -> Result<Response<ListAllBugsResponse>, Status> {
-        todo!("Implement list all bugs")
+        self.handle_list_all_bugs(request).await
     }
 
     async fn bug(&self, request: Request<BugRequest>) -> Result<Response<BugResponse>, Status> {
-        todo!("Implement bug")
+        self.handle_bug(request).await
     }
 
     async fn delete_bug(
         &self,
         request: Request<DeleteBugRequest>,
     ) -> Result<Response<DeleteBugResponse>, Status> {
-        todo!("Implement delete bug")
+        self.delete_bug(request).await
     }
 }
