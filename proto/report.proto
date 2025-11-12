@@ -32,7 +32,8 @@ message ListAllReportsResponse {
 }
 
 message DeleteReportRequest {
-    uint64 id = 1;
+    string username = 1;
+    uint64 id = 2;
 }
 
 message DeleteReportResponse {
@@ -41,6 +42,7 @@ message DeleteReportResponse {
 
 message GetReportRequest {
     string username = 1;
+    uint64 id = 2;
 }
 
 message GetReportResponse {

@@ -46,7 +46,7 @@ message Server {
 }
 
 message Report {
-    string id = 1;
+    uint64 id = 1;
     string username = 2;
     string target_username = 3;
     string reason = 4;

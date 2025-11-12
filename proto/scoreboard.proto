@@ -15,9 +15,10 @@ message GetScoreboardResponse {
    uint64 kills = 3;
    uint64 deaths = 4;
    uint64 coins = 5;
-   uint64 rank_in_kills_leaderboard = 6;
-   uint64 rank_in_deaths_leaderboard = 7;
-   uint64 rank_in_overall_leaderboard = 8;
+   uint64 rank_in_kd_leaderboard = 6;
+   uint64 rank_in_kills_leaderboard = 7;
+   uint64 rank_in_deaths_leaderboard = 8;
+   uint64 rank_in_overall_leaderboard = 9;
 }
 
 message ToggleScoreboardRequest {

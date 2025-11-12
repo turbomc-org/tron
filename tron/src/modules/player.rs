@@ -762,4 +762,36 @@ impl Player {
 
         Ok(())
     }
+
+    pub async fn set_scoreboard(
+        &mut self,
+        val: bool,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+        let val = val.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.set_scoreboard(player_id, val).await.map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.scoreboard_enabled = val;
+        state.insert_player(self.clone()).await;
+
+        Ok(())
+    }
 }

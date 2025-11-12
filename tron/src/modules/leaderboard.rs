@@ -1,6 +1,7 @@
 use crate::models::leaderboards::Leaderboard;
 use crate::models::leaderboards::ScoreKey;
 use anyhow::Result;
+use std::borrow::Borrow;
 use std::cmp::Reverse;
 
 impl Leaderboard {
@@ -13,8 +14,9 @@ impl Leaderboard {
         self.order.write().await.insert(key, new_score);
     }
 
-    pub async fn get_rank(&self, player_id: u64) -> Option<usize> {
-        let key = self.index.get(&player_id)?.clone();
+    pub async fn get_rank(&self, player_id: impl Borrow<u64>) -> Option<usize> {
+        let player_id: &u64 = player_id.borrow();
+        let key = self.index.get(player_id)?.clone();
         let order = self.order.read().await;
         Some(order.rank(&key) + 1)
     }

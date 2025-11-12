@@ -43,6 +43,7 @@ pub struct Player {
         deserialize_with = "crate::utils::serde::deserialize_u64_map"
     )]
     pub incoming_team_requests: HashMap<u64, u64>,
+    pub scoreboard_enabled: bool,
     pub banned: u64,
     pub timed_out: u64,
     pub created_at: u64,
@@ -105,6 +106,7 @@ impl Player {
             invite_blocked: false,
             vault_count: 0,
             rank: Rank::Newbie,
+            scoreboard_enabled: true,
             achievements: HashSet::new(),
             owned_vault_ids: HashSet::new(),
             redeemed_codes: HashSet::new(),
@@ -114,6 +116,16 @@ impl Player {
             timed_out: 0,
             created_at: now.timestamp() as u64,
             updated_at: now.timestamp() as u64,
+        }
+    }
+
+    pub fn compile_rank(&self) -> i32 {
+        match self.rank {
+            Rank::Newbie => 0,
+            Rank::Member => 1,
+            Rank::Vip => 2,
+            Rank::Elite => 3,
+            Rank::Legend => 4,
         }
     }
 }

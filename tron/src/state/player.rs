@@ -3,6 +3,7 @@ use crate::models::player::Player;
 use crate::state::State;
 use anyhow::Result;
 use anyhow::anyhow;
+use std::borrow::Borrow;
 use tonic::Status;
 
 impl State {
@@ -28,9 +29,7 @@ impl State {
     pub async fn insert_player(&self, player: Player) -> Result<()> {
         self.active_players
             .insert(player.username.clone(), player.clone());
-        self.indexes
-            .player
-            .insert(player.id.clone(), player.username.clone());
+        self.indexes.player.insert(player.id, player.username);
 
         Ok(())
     }

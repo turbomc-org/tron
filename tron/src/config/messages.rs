@@ -525,3 +525,62 @@ pub static BUG_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
 "#
     }
 });
+
+pub static NO_REPORTS_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "📋 REPORTS",
+        body: "No reports found in the network. Everything looks <green>clean</green>!"
+    }
+});
+
+pub static ENABLE_SCOREBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✓ SUCCESSFULLY ENABLED SCOREBOARD",
+        body: "You enabled your scoreboard. Enjoy live stats and let us know if found any bug!",
+        actions: {
+           disable: {kind: "command", value: "/toggle", label: "Disable Scoreboard"},
+        }
+    }
+});
+
+pub static DISABLE_SCOREBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✓ SUCCESSFULLY DISABLED SCOREBOARD",
+        body: "You disabled your scoreboard. Enjoy true vanilla experience and toggle the scoreboard whenever you want!",
+        actions: {
+           enable: {kind: "command", value: "/toggle", label: "Enable Scoreboard"},
+        }
+    }
+});
+
+pub static REPORT_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "📋 REPORTED PLAYERS",
+        body:
+        "Displaying <white>{{count}}</white> reported player{{s}}:\n\
+        {{list}}"
+    }
+});
+
+pub static REPORT_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔎 REPORT DETAIL VIEW",
+        body: "
+    <gray>Report ID:</gray> <yellow><bold>#{{id}}</bold></yellow>\n\
+    <gray>Reporter:</gray> <aqua>{{reporter}}</aqua>\n\
+    <gray>Player:</gray> <aqua>{{player}}</aqua>\n\
+    <gray>Reported:</gray> <white>{{created}}</white>\n\
+    <gray>Reason:</gray>\n\
+    \n\
+    <light_purple>{{report}}</light_purple>\n\
+    \n\
+    <dark_gray>──────────────────────────────</dark_gray>\n\
+    [<red><click:run_command:'/admin bug delete {{id}}'>Delete Bug</click></red>]
+    "
+    }
+});

@@ -68,6 +68,7 @@ pub trait PlayerCollection: Send + Sync + Debug {
     async fn add_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error>;
     async fn select_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error>;
     async fn unselect_prefix(&self, player_id: u64) -> Result<(), Error>;
+    async fn set_scoreboard(&self, player_id: u64, val: bool) -> Result<(), Error>;
 }
 
 #[derive(Debug)]
@@ -689,6 +690,21 @@ impl PlayerCollection for MongoPlayerCollection {
             .update_one(
                 doc! {"_id": player_id as i64},
                 doc! {"unset": {"selected_prefix": 1}},
+            )
+            .await?;
+
+        Ok(())
+    }
+
+    async fn set_scoreboard(&self, player_id: u64, val: bool) -> Result<(), Error> {
+        self.collection
+            .update_one(
+                doc! { "_id": player_id as i64 },
+                doc! {
+                    "$set": {
+                        "scoreboard": val
+                    }
+                },
             )
             .await?;
 

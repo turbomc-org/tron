@@ -6,13 +6,13 @@ use chrono::Utc;
 use std::sync::Arc;
 
 impl Report {
-    pub fn new(player_id: u64, reported_by_player_id: u64, reason: String) -> Self {
+    pub fn new(player_id: u64, target_player_id: u64, reason: String) -> Self {
         let now: u64 = Utc::now().timestamp_millis() as u64;
 
         Report {
             id: GENERATOR.generate(),
             player_id,
-            reported_by_player_id,
+            target_player_id,
             reason,
             created_at: now,
         }
