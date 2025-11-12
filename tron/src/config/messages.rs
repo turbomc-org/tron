@@ -584,3 +584,100 @@ pub static REPORT_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
     "
     }
 });
+
+pub static NO_SERVERS_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🌐 SERVERS",
+        body: r#"No servers found in the system."#
+    }
+});
+
+pub static SERVER_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🌐 SERVERS",
+        body:
+        "Displaying <white>{{count}}</white> server{{s}}:\n\
+        {{list}}"
+    }
+});
+
+pub static SERVER_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔎 SERVER DETAILS",
+        body: "
+    <gray>SERVER ID:</gray> <yellow><bold>#{{id}}</bold></yellow>\n\
+    <gray>Name:</gray> <aqua>{{name}}</aqua>\n\
+    <gray>Description:</gray> <aqua>{{description}}</aqua>\n\
+    <gray>Created By:</gray> <aqua>{{creator}}</aqua>\n\
+    <gray>Created On:</gray> <white>{{created}}</white>\n\
+    <gray>Address:</gray> <white>{{address}}</white>\n\
+    <dark_gray>──────────────────────────────</dark_gray>\n\
+    [<red><click:run_command:'/admin server delete {{name}}'>Delete Server</click></red>]\n\
+    [<red><click:run_command:'/admin set landing {{name}}'>Make Landing</click></red>]
+    "
+    }
+});
+
+pub static EXIT_CHAT: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "➜] SUCCESSFULLY EXITED CHANNEL",
+        body: "You exited channel successfully. Join one to continue chatting!",
+        actions: {
+          global: {kind: "command", value: "/global", label: "Global Channel"},
+          hindi: {kind: "command", value: "/hindi", label: "Hindi Channel"},
+        }
+    }
+});
+
+pub static GLOBAL_CHAT: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🌍 SUCCESSFULLY JOINED GLOBAL CHANNEL",
+        body: "You entered the global channel. Follow the rules for global chat and be respectful talking to other players!\n
+              <dark_gray>»</dark_gray> 1. Don't abuse or say anything offensive\n
+              <dark_gray>»</dark_gray> 2. Only english is allowed\n
+              <dark_gray>»</dark_gray> 3. Be respectful and don't spam\n
+              <dark_gray>»</dark_gray> 4. Don't promote or advertise other servers\n
+              <dark_gray>»</dark_gray> 5. Report players if they try to bully or abuse\n",
+        actions: {
+          exit: {kind: "command", value: "/exit", label: "Exit Channel"},
+          hindi: {kind: "command", value: "/hindi", label: "Join Hindi Channel"},
+        }
+    }
+});
+
+pub static HINDI_CHANNEL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🇮🇳 SUCCESSFULLY JOINED HINDI CHANNEL",
+        body: "Aapne hindi channel join kiya hai diye gaye rules ka dhyad rakhte hue dusre players se baat kare!\n
+              <dark_gray>»</dark_gray> 1. Gali ya abhadra bhasha ka upyog na kare\n
+              <dark_gray>»</dark_gray> 2. Hindi bhasha ka upyog hi kare\n
+              <dark_gray>»</dark_gray> 3. Dusre players ke sath ijat se baat kare\n
+              <dark_gray>»</dark_gray> 4. Dusre servers promote na kare\n
+              <dark_gray>»</dark_gray> 5. Agar kisine apko pareshan ya gali dene ki kosish kari to turant report kare\n",
+        actions: {
+          exit: {kind: "command", value: "/exit", label: "Exit Channel"},
+          hindi: {kind: "command", value: "/global", label: "Join Global Channel"},
+        }
+    }
+});
+
+pub static DM_CHANNEL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔗 SUCCESSFULLY JOINED DM CHANNEL WITH {{friend}}",
+        body: "You have joined the DM channel with {{friend}}. Your chat your rules but keep in mind you can still report player if they try to abuse or bully you.",
+        actions: {
+          exit: {kind: "command", value: "/exit", label: "Exit Channel"},
+        }
+    }
+});
+
+pub static JOINED_CHANNEL: Lazy<Template<'static>> = Lazy::new(|| {
+    Template::new("<gradient:#B200FF:#6A00A3>╰┈➤ {{username}} joined the channel</gradient>")
+});

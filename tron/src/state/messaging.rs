@@ -12,19 +12,16 @@ pub struct Messaging {
 #[derive(PartialEq, Eq, Hash, Debug)]
 pub enum DefaultStreams {
     Global,
-    Survival,
-    Lobby,
+    Hindi,
 }
 
 impl Messaging {
     pub fn new() -> Self {
         let global_stream: u64 = GENERATOR.generate();
-        let survival_stream: u64 = GENERATOR.generate();
-        let lobby_stream: u64 = GENERATOR.generate();
+        let hindi_stream: u64 = GENERATOR.generate();
         let default_streams = DashMap::new();
         default_streams.insert(DefaultStreams::Global, global_stream);
-        default_streams.insert(DefaultStreams::Survival, survival_stream);
-        default_streams.insert(DefaultStreams::Lobby, lobby_stream);
+        default_streams.insert(DefaultStreams::Hindi, hindi_stream);
 
         Self {
             streams: DashSet::new(),
@@ -56,5 +53,49 @@ impl Messaging {
                 }
             })
             .collect()
+    }
+
+    pub fn exit_chat(&self, player_id: u64) {
+        self.subscriptions.remove(&player_id);
+    }
+
+    pub fn join_stream(&self, player_id: u64, stream_id: u64) {
+        self.subscriptions.insert(player_id, stream_id);
+    }
+
+    pub fn join_global(&self, player_id: u64) {
+        if let Some(global) = self.default_streams.get(&DefaultStreams::Global) {
+            self.join_stream(player_id, *global);
+        }
+    }
+
+    pub fn join_hindi(&self, player_id: u64) {
+        if let Some(global) = self.default_streams.get(&DefaultStreams::Hindi) {
+            self.join_stream(player_id, *global);
+        }
+    }
+
+    pub fn is_in_global(&self, player_id: u64) -> bool {
+        if let Some(global) = self.default_streams.get(&DefaultStreams::Global) {
+            self.subscriptions.contains_key(&player_id)
+                && *self.subscriptions.get(&player_id).unwrap() == *global
+        } else {
+            false
+        }
+    }
+
+    pub fn is_in_hindi(&self, player_id: u64) -> bool {
+        if let Some(hindi) = self.default_streams.get(&DefaultStreams::Hindi) {
+            self.subscriptions.contains_key(&player_id)
+                && *self.subscriptions.get(&player_id).unwrap() == *hindi
+        } else {
+            false
+        }
+    }
+
+    pub fn join_team(&self, player_id: u64, team_id: u64) {
+        if let Some(team) = self.team_streams.get(&team_id) {
+            self.join_stream(player_id, *team);
+        }
     }
 }

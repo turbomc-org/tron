@@ -9,7 +9,7 @@ message ListAllServersRequest {
 }
 
 message ListAllServersResponse {
-    repeated string names = 1;
+    bool success = 1;
 }
 
 message GetAllServersRequest {
@@ -22,6 +22,7 @@ message GetAllServersResponse {
 
 message GetServerRequest {
     string username = 1;
+    string name = 2;
 }
 
 message GetServerResponse {

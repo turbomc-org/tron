@@ -7,7 +7,6 @@ use mongodb::bson::doc;
 use mongodb::error::Error;
 use mongodb::options::FindOptions;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::collections::HashSet;
 use std::fmt::Debug;
 

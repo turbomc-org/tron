@@ -13,14 +13,6 @@ impl BridgeService {
         &self,
         request: Request<SurvivalStartupRequest>,
     ) -> Result<Response<SurvivalStartupResponse>, Status> {
-        warn!("Survival startup request received");
-
-        let client_id = GENERATOR.generate();
-        self.state().servers.survivals.insert(client_id);
-
-        info!("New survival client registered {}", client_id);
-        warn!("Survival startup request completed");
-
-        Ok(Response::new(SurvivalStartupResponse { client_id }))
+        todo!("Implement survival startup handling")
     }
 }

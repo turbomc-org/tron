@@ -18,6 +18,7 @@ pub mod auth;
 pub mod messaging;
 pub mod player;
 pub mod prefix;
+pub mod server;
 pub mod shop_item;
 pub mod team;
 
