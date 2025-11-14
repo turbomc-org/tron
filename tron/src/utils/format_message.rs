@@ -20,10 +20,9 @@ pub async fn format_message(
     }
 
     if let Some(team_id) = player.team {
-        match state.get_team(team_id).await {
-            Ok(Some(t)) => team = Some(t),
-            Ok(None) => (),
-            Err(err) => error!("❌ Failed to get team for '{}': {}", player.username, err),
+        match state.get_team(team_id) {
+            Some(t) => team = Some(t),
+            None => (),
         }
     }
 

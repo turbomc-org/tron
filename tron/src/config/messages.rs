@@ -711,3 +711,207 @@ pub static FRIEND_CHAT_JOINED: Lazy<Template<'static>> = Lazy::new(|| {
         }
     }
 });
+
+pub static COINS_LEADERBOARD_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "💰 COINS LEADERBOARD",
+        body: "No players found in the coins leaderboard yet."
+    }
+});
+
+pub static COINS_LEADERBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "💰 COINS LEADERBOARD",
+        body: "
+<white><bold>Top Players:</bold></white>
+
+{{list}}
+
+<dark_gray>────────────────────────</dark_gray>
+<gray>Your Rank:</gray> <yellow><bold>{{rank}}</bold></yellow>
+        "
+    }
+});
+
+pub static DEATHS_LEADERBOARD_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "☠️ DEATHS LEADERBOARD",
+        body: "No players found in the deaths leaderboard yet."
+    }
+});
+
+pub static DEATHS_LEADERBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "☠️ DEATHS LEADERBOARD",
+        body: "
+<white><bold>Top Players:</bold></white>
+
+{{list}}
+
+<dark_gray>────────────────────────</dark_gray>
+<gray>Your Rank:</gray> <yellow><bold>{{rank}}</bold></yellow>
+        "
+    }
+});
+
+pub static KILLS_LEADERBOARD_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⚔️ KILLS LEADERBOARD",
+        body: "No players found in the kills leaderboard yet."
+    }
+});
+
+pub static KILLS_LEADERBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⚔️ KILLS LEADERBOARD",
+        body: "
+<white><bold>Top Players:</bold></white>
+
+{{list}}
+
+<dark_gray>────────────────────────</dark_gray>
+<gray>Your Rank:</gray> <yellow><bold>{{rank}}</bold></yellow>
+        "
+    }
+});
+
+pub static OVERALL_LEADERBOARD_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🏅 OVERALL LEADERBOARD",
+        body: "No players found in the overall leaderboard yet."
+    }
+});
+
+pub static OVERALL_LEADERBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🏅 OVERALL LEADERBOARD",
+        body: "
+<white><bold>Top Players:</bold></white>
+
+{{list}}
+
+<dark_gray>────────────────────────</dark_gray>
+<gray>Your Rank:</gray> <yellow><bold>{{rank}}</bold></yellow>
+        "
+    }
+});
+
+pub static KD_LEADERBOARD_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🛡️ KD LEADERBOARD",
+        body: "No players found in the overall leaderboard yet."
+    }
+});
+
+pub static KD_LEADERBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🛡️ KD LEADERBOARD",
+        body: "
+<white><bold>Top Players:</bold></white>
+
+{{list}}
+
+<dark_gray>────────────────────────</dark_gray>
+<gray>Your Rank:</gray> <yellow><bold>{{rank}}</bold></yellow>
+        "
+    }
+});
+
+pub static TEAMS_LEADERBOARD_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🏆 TEAMS LEADERBOARD",
+        body: "No team found in the teams leaderboard yet."
+    }
+});
+
+pub static TEAMS_LEADERBOARD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🏆 TEAMS LEADERBOARD",
+        body: "
+<white><bold>Top Teams:</bold></white>
+
+{{list}}
+
+<dark_gray>────────────────────────</dark_gray>
+<gray>Your Team's Rank:</gray> <yellow><bold>{{rank}}</bold></yellow>
+        "
+    }
+});
+
+pub static ADMIN_LIST_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔑 EMPTY ADMIN LIST",
+        body: "No admins found in the admin list yet."
+    }
+});
+
+pub static ADMIN_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "success",
+        title: "🛡️ KD LEADERBOARD",
+        body: "
+<white><bold>ADMINS:</bold></white>
+
+{{list}}
+        "
+    }
+});
+
+pub static ADMIN_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔎 ADMIN DETAILS",
+        body: "
+    <gray>ADMIN ID:</gray> <yellow><bold>#{{id}}</bold></yellow>\n\
+    <gray>Username:</gray> <aqua>{{username}}</aqua>\n\
+    <dark_gray>──────────────────────────────</dark_gray>\n\
+    [<red><click:run_command:'/admin perms demote {{username}}'>Demote</click></red>]\n\
+    "
+    }
+});
+
+pub static MODERATOR_LIST_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "👤 EMPTY MODERATOR LIST",
+        body: "No moderators found in the moderator list yet."
+    }
+});
+
+pub static MODERATOR_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "success",
+        title: "👤 MODERATOR LIST",
+        body: "
+<white><bold>MODERATORS:</bold></white>
+
+{{list}}
+        "
+    }
+});
+
+pub static MODERATOR_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔎 MODERATOR DETAILS",
+        body: "
+    <gray>MODERATOR ID:</gray> <yellow><bold>#{{id}}</bold></yellow>\n\
+    <gray>Username:</gray> <aqua>{{username}}</aqua>\n\
+    <dark_gray>──────────────────────────────</dark_gray>\n\
+    [<red><click:run_command:'/admin perms demote {{username}}'>Demote</click></red>]\n\
+    "
+    }
+});

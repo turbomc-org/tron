@@ -30,11 +30,6 @@ impl BridgeService {
         let mut team = self
             .state()
             .get_team_by_name(team_name.clone())
-            .await
-            .map_err(|err| {
-                error!("Failed to find team: {}", err);
-                Status::internal(format!("Failed to find team {}", team_name))
-            })?
             .ok_or_else(|| Status::not_found(format!("Team {} not found", team_name)))?;
 
         if !team.open {

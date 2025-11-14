@@ -6,8 +6,8 @@ use tonic::Status;
 use tracing::error;
 
 impl State {
-    pub async fn get_team(&self, id: u64) -> Result<Option<Team>> {
-        Ok(self.teams.get(&id).map(|entry| entry.value().clone()))
+    pub fn get_team(&self, id: u64) -> Option<Team> {
+        self.teams.get(&id).map(|entry| entry.value().clone())
     }
 
     pub async fn delete_team(&self, team_id: u64, team_name: &String) -> Result<()> {
@@ -16,13 +16,13 @@ impl State {
         Ok(())
     }
 
-    pub async fn get_team_by_name(&self, name: String) -> Result<Option<Team>> {
+    pub fn get_team_by_name(&self, name: String) -> Option<Team> {
         let id = match self.indexes.team.get(&name) {
             Some(entry) => *entry.value(),
-            None => return Ok(None),
+            None => return None,
         };
 
-        self.get_team(id).await
+        self.get_team(id)
     }
 
     pub async fn get_team_id(&self, name: String) -> Result<Option<u64>> {

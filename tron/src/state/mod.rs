@@ -8,6 +8,7 @@ use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
 use crate::modules::indexes::Indexes;
 use crate::state::messaging::Messaging;
+use crate::state::permissions::Permissions;
 use dashmap::DashMap;
 use std::collections::{HashMap, HashSet};
 use tokio::sync::mpsc;
@@ -16,6 +17,7 @@ use tracing::info;
 
 pub mod auth;
 pub mod messaging;
+pub mod permissions;
 pub mod player;
 pub mod prefix;
 pub mod server;
@@ -25,6 +27,7 @@ pub mod team;
 #[derive(Debug)]
 pub struct State {
     pub aliases: DashMap<String, String>,
+    pub permissions: Permissions,
     pub active_players: DashMap<String, Player>,
     pub shop_items: DashMap<u64, ShopItem>,
     pub teams: DashMap<u64, Team>,
@@ -42,6 +45,7 @@ impl State {
             aliases: DashMap::new(),
             active_players: DashMap::new(),
             shop_items: DashMap::new(),
+            permissions: Permissions::new(),
             teams: DashMap::new(),
             prefixes: DashMap::new(),
             leaderboards: Leaderboards::new(),

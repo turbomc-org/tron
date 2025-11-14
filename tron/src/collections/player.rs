@@ -2,6 +2,7 @@ use crate::collections::team::TeamCollection;
 use crate::models::achievements::Achievements;
 use crate::models::player::{Player, Role};
 use crate::models::team::Team;
+use anyhow::anyhow;
 use async_trait::async_trait;
 use futures::TryStreamExt;
 use mockall::automock;
@@ -69,6 +70,7 @@ pub trait PlayerCollection: Send + Sync + Debug {
     async fn select_prefix(&self, player_id: u64, prefix_id: u64) -> Result<(), Error>;
     async fn unselect_prefix(&self, player_id: u64) -> Result<(), Error>;
     async fn set_scoreboard(&self, player_id: u64, val: bool) -> Result<(), Error>;
+    async fn set_role(&self, player_id: u64, role: Role) -> Result<(), Error>;
 }
 
 #[derive(Debug)]
@@ -703,6 +705,23 @@ impl PlayerCollection for MongoPlayerCollection {
                 doc! {
                     "$set": {
                         "scoreboard": val
+                    }
+                },
+            )
+            .await?;
+
+        Ok(())
+    }
+
+    async fn set_role(&self, player_id: u64, role: Role) -> Result<(), Error> {
+        let role_str: String = serde_json::to_string(&role).unwrap();
+
+        self.collection
+            .update_one(
+                doc! {"_id": player_id as i64},
+                doc! {
+                    "$set": {
+                        "role": role_str
                     }
                 },
             )

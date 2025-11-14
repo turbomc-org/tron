@@ -50,8 +50,6 @@ impl BridgeService {
         let team = self
             .state()
             .get_team(team_id)
-            .await
-            .map_err(|_| Status::not_found("Team not found"))?
             .ok_or_else(|| Status::not_found("Team not found"))?;
 
         let team_broadcast_message = render!(CONNECTION_ESTABLISHED, username = &username);

@@ -3,7 +3,6 @@ use crate::models::player::Player;
 use crate::state::State;
 use anyhow::Result;
 use anyhow::anyhow;
-use std::borrow::Borrow;
 use tonic::Status;
 
 impl State {
@@ -142,7 +141,7 @@ impl State {
             .await;
 
         if let Some(team) = player.team {
-            let Some(team) = self.get_team(team).await? else {
+            let Some(team) = self.get_team(team) else {
                 return Err(anyhow!("Team not found"));
             };
 

@@ -14,11 +14,7 @@ impl BridgeService {
         let team_name = inner_request.team_name;
 
         let _ = self.state().get_player_with_handling(&username).await?;
-        let team = self
-            .state()
-            .get_team_by_name(team_name)
-            .await
-            .map_err(|e| Status::internal(format!("Failed to retrieve team: {}", e)))?;
+        let team = self.state().get_team_by_name(team_name);
 
         if team.is_none() {
             return Err(Status::not_found(

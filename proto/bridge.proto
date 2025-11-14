@@ -149,7 +149,8 @@ service Bridge {
     rpc ViewBug(ViewBugRequest) returns (ViewBugResponse);
 
     // Perms
-    rpc PromotePerms(PromotePermsRequest) returns (PromotePermsResponse);
+    rpc PromoteAdminPerms(PromoteAdminPermsRequest) returns (PromoteAdminPermsResponse);
+    rpc PromoteModeratorPerms(PromoteModeratorPermsRequest) returns (PromoteModeratorPermsResponse);
 
     // Scoreboard
     rpc GetScoreboard (GetScoreboardRequest) returns (GetScoreboardResponse);

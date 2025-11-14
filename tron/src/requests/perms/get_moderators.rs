@@ -7,6 +7,34 @@ impl BridgeService {
         &self,
         request: Request<GetAllModeratorsRequest>,
     ) -> Result<Response<GetAllModeratorsResponse>, Status> {
-        todo!("Implement get all moderators")
+        let inner_request = request.into_inner();
+        let username = inner_request.username;
+
+        let player = self.state().get_player_with_handling(&username).await?;
+
+        if !player.is_admin() {
+            return Err(Status::permission_denied("Your are not an admin."));
+        }
+
+        let moderator_ids: Vec<u64> = self
+            .state()
+            .permissions
+            .moderators
+            .iter()
+            .map(|id| id.clone())
+            .collect();
+        let mut moderator_names: Vec<String> = Vec::new();
+
+        for id in moderator_ids {
+            if let Some(username) = self.state().get_player_username(&id) {
+                moderator_names.push(username);
+            } else {
+                continue;
+            }
+        }
+
+        Ok(Response::new(GetAllModeratorsResponse {
+            usernames: moderator_names,
+        }))
     }
 }

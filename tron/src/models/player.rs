@@ -67,6 +67,7 @@ pub enum Edition {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+#[serde(rename_all = "UPPERCASE")]
 pub enum Role {
     Admin,
     Moderator,

@@ -2,7 +2,7 @@ use crate::RETRY_STRATEGY;
 use crate::collections::player::PlayerCollection;
 use crate::collections::team::TeamCollection;
 use crate::models::achievements::Achievements;
-use crate::models::player::{Player, Rank};
+use crate::models::player::{Player, Rank, Role};
 use crate::models::team::Team;
 use crate::state::State;
 use anyhow::Result;
@@ -388,7 +388,7 @@ impl Player {
         self.incoming_team_requests.remove(&team_id);
         state.insert_player(self.clone()).await?;
 
-        let mut team: Team = state.get_team(team_id).await?.ok_or_else(|| {
+        let mut team: Team = state.get_team(team_id).ok_or_else(|| {
             error!("Team not found");
             anyhow!("Team not found")
         })?;
@@ -790,7 +790,113 @@ impl Player {
         });
 
         self.scoreboard_enabled = val;
-        state.insert_player(self.clone()).await;
+        state.insert_player(self.clone()).await?;
+
+        Ok(())
+    }
+
+    pub fn is_admin(&self) -> bool {
+        self.role == Role::Admin
+    }
+
+    pub fn is_moderator(&self) -> bool {
+        self.role == Role::Moderator
+    }
+
+    pub fn is_member(&self) -> bool {
+        self.role == Role::Member
+    }
+
+    pub async fn demote(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.set_role(player_id, Role::Member).await.map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.role = Role::Member;
+        state.insert_player(self.clone()).await?;
+        state.permissions.remove_admin(&player_id);
+        state.permissions.remove_moderator(&player_id);
+
+        Ok(())
+    }
+
+    pub async fn promote_admin(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.set_role(player_id, Role::Admin).await.map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.role = Role::Admin;
+        state.insert_player(self.clone()).await?;
+        state.permissions.add_admin(player_id);
+
+        Ok(())
+    }
+
+    pub async fn promote_moderator(
+        &mut self,
+        col: &Arc<dyn PlayerCollection>,
+        state: &Arc<State>,
+    ) -> Result<()> {
+        let player_id = self.id.clone();
+
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.set_role(player_id, Role::Moderator).await.map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
+        self.role = Role::Moderator;
+        state.insert_player(self.clone()).await?;
+        state.permissions.add_moderator(player_id);
 
         Ok(())
     }

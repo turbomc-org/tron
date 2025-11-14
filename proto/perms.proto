@@ -3,12 +3,21 @@ option java_package = "com.tron.bridge";
 
 package bridge;
 
-message PromotePermsRequest {
+message PromoteAdminPermsRequest {
     string username = 1;
-    string code = 2;
+    uint64 token = 2;
 }
 
-message PromotePermsResponse {
+message PromoteAdminPermsResponse {
+    bool success = 1;
+}
+
+message PromoteModeratorPermsRequest {
+    string username = 1;
+    string target = 2;
+}
+
+message PromoteModeratorPermsResponse {
     bool success = 1;
 }
 
