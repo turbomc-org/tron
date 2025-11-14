@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{FriendChatRequest, FriendChatResponse};
+use crate::config::messages::{FRIEND_CHAT_REQUEST_RECEIVED, FRIEND_CHAT_REQUEST_SENT};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 
 impl BridgeService {
@@ -17,6 +18,42 @@ impl BridgeService {
             .get_player_with_handling(&friend_username)
             .await?;
 
-        todo!("Implement friend chat")
+        if !player.friends.contains(&friend.id) || !friend.friends.contains(&player.id) {
+            return self
+                .status(
+                    &username,
+                    Status::invalid_argument(format!(
+                        "You are not friend with {}",
+                        friend_username
+                    )),
+                )
+                .await;
+        }
+
+        let token = self.state().messaging.insert_request(player.id);
+
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(FRIEND_CHAT_REQUEST_SENT, friend = &friend_username),
+            )
+            .await
+        {
+            self.state().messaging.remove_request(&token);
+            return Err(Status::internal(format!("Failed to send message: {}", e)));
+        }
+
+        if let Err(e) = self
+            .send_message(
+                &friend_username,
+                render!(FRIEND_CHAT_REQUEST_RECEIVED, friend = &username),
+            )
+            .await
+        {
+            self.state().messaging.remove_request(&token);
+            return Err(Status::internal(format!("Failed to send message: {}", e)));
+        }
+
+        Ok(Response::new(FriendChatResponse { success: true }))
     }
 }

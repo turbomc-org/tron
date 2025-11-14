@@ -51,6 +51,6 @@ impl BridgeService {
             }
         }
 
-        todo!("Implement team chat")
+        Ok(Response::new(TeamChatResponse { success: true }))
     }
 }

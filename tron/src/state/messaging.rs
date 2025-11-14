@@ -7,6 +7,7 @@ pub struct Messaging {
     pub subscriptions: DashMap<u64, u64>,
     pub team_streams: DashMap<u64, u64>,
     pub default_streams: DashMap<DefaultStreams, u64>,
+    pub friend_chat_invites: DashMap<u64, u64>,
 }
 
 #[derive(PartialEq, Eq, Hash, Debug)]
@@ -27,6 +28,7 @@ impl Messaging {
             streams: DashSet::new(),
             subscriptions: DashMap::new(),
             team_streams: DashMap::new(),
+            friend_chat_invites: DashMap::new(),
             default_streams,
         }
     }
@@ -57,6 +59,12 @@ impl Messaging {
 
     pub fn exit_chat(&self, player_id: u64) {
         self.subscriptions.remove(&player_id);
+    }
+
+    pub fn create_stream(&self) -> u64 {
+        let token = GENERATOR.generate();
+        self.streams.insert(token);
+        token
     }
 
     pub fn join_stream(&self, player_id: u64, stream_id: u64) {
@@ -97,5 +105,15 @@ impl Messaging {
         if let Some(team) = self.team_streams.get(&team_id) {
             self.join_stream(player_id, *team);
         }
+    }
+
+    pub fn insert_request(&self, player_id: u64) -> u64 {
+        let token = GENERATOR.generate();
+        self.friend_chat_invites.insert(token, player_id);
+        token
+    }
+
+    pub fn remove_request(&self, token: &u64) {
+        self.friend_chat_invites.remove(token);
     }
 }

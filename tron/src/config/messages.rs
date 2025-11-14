@@ -681,3 +681,33 @@ pub static DM_CHANNEL: Lazy<Template<'static>> = Lazy::new(|| {
 pub static JOINED_CHANNEL: Lazy<Template<'static>> = Lazy::new(|| {
     Template::new("<gradient:#B200FF:#6A00A3>╰┈➤ {{username}} joined the channel</gradient>")
 });
+
+pub static FRIEND_CHAT_REQUEST_SENT: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "📨 SENT A FRIEND CHAT REQUEST TO {{friend}}",
+        body: "You had sent a friend chat request to {{friend}}. If they accept, you will be able to chat privately.",
+    }
+});
+
+pub static FRIEND_CHAT_REQUEST_RECEIVED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "📨 RECEIVED A FRIEND CHAT REQUEST FROM {{friend}}",
+        body: "You had received a friend chat request from {{friend}}. If you accept, you will be able to chat privately.",
+        actions: {
+            accept: {kind: "command", value: "/dmaccept {{token}}", label: "Accept"},
+        }
+    }
+});
+
+pub static FRIEND_CHAT_JOINED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "💬 JOINED FRIEND CHAT WITH {{friend}}",
+        body: "You joined friend chat with {{friend}}. Your chat your rules but keep in mind you can still report player if they try to abuse or bully you.",
+        actions: {
+            accept: {kind: "command", value: "/exit", label: "Exit Channel"},
+        }
+    }
+});

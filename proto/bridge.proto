@@ -159,6 +159,7 @@ service Bridge {
     rpc GlobalChat(GlobalChatRequest) returns (GlobalChatResponse);
     rpc HindiChat(HindiChatRequest) returns (HindiChatResponse);
     rpc FriendChat(FriendChatRequest) returns (FriendChatResponse);
+    rpc FriendChatAccept(FriendChatAcceptRequest) returns (FriendChatAcceptResponse);
     rpc TeamChat(TeamChatRequest) returns (TeamChatResponse);
     rpc ExitChat(ExitChatRequest) returns (ExitChatResponse);
 }

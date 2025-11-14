@@ -12,6 +12,15 @@ message FriendChatResponse {
     bool success = 1;
 }
 
+message FriendChatAcceptRequest {
+    string username = 1;
+    uint64 token = 2;
+}
+
+message FriendChatAcceptResponse {
+    bool success = 1;
+}
+
 message TeamChatRequest {
     string username = 1;
 }
