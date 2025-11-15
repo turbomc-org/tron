@@ -1,6 +1,5 @@
 use crate::GENERATOR;
 use tonic::{Request, Response, Status};
-use tracing::{info, warn};
 
 use crate::{
     BridgeService,
@@ -13,6 +12,11 @@ impl BridgeService {
         &self,
         request: Request<ProxyStartupRequest>,
     ) -> Result<Response<ProxyStartupResponse>, Status> {
-        todo!("Implement proxy startup handling")
+        let proxy_id = GENERATOR.generate();
+        self.state().proxies.insert(proxy_id);
+
+        Ok(Response::new(ProxyStartupResponse {
+            client_id: proxy_id,
+        }))
     }
 }

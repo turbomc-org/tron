@@ -10,6 +10,15 @@ impl BridgeService {
         &self,
         request: Request<ProxyShutdownRequest>,
     ) -> Result<Response<ProxyShutdownResponse>, Status> {
-        todo!("Implement proxy shutdown handling")
+        let inner_request = request.into_inner();
+        let client_id = inner_request.client_id;
+
+        if !self.state().proxies.contains(&client_id) {
+            return Err(Status::not_found("Id not found"));
+        }
+
+        self.state().proxies.remove(&client_id);
+
+        Ok(Response::new(ProxyShutdownResponse { success: true }))
     }
 }

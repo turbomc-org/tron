@@ -108,10 +108,6 @@ service Bridge {
     rpc DeleteServer(DeleteServerRequest) returns (DeleteServerResponse);
     rpc ProxyStartup(ProxyStartupRequest) returns (ProxyStartupResponse);
     rpc ProxyShutdown(ProxyShutdownRequest) returns (ProxyShutdownResponse);
-    rpc SurvivalStartup(SurvivalStartupRequest) returns (SurvivalStartupResponse);
-    rpc SurvivalShutdown(SurvivalShutdownRequest) returns (SurvivalShutdownResponse);
-    rpc LobbyStartup(LobbyStartupRequest) returns (LobbyStartupResponse);
-    rpc LobbyShutdown(LobbyShutdownRequest) returns (LobbyShutdownResponse);
 
     // Admin
     rpc CreateShopItem(CreateShopItemRequest) returns (CreateShopItemResponse);

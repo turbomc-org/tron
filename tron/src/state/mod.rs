@@ -10,7 +10,7 @@ use crate::models::team::Team;
 use crate::modules::indexes::Indexes;
 use crate::state::messaging::Messaging;
 use crate::state::permissions::Permissions;
-use dashmap::DashMap;
+use dashmap::{DashMap, DashSet};
 use std::collections::{HashMap, HashSet};
 use tokio::sync::mpsc;
 use tonic::Status;
@@ -38,6 +38,7 @@ pub struct State {
     pub leaderboards: Leaderboards,
     pub servers: Servers,
     pub indexes: Indexes,
+    pub proxies: DashSet<u64>,
     pub proxy_connections: DashMap<u64, mpsc::Sender<Result<ProxyConnectionResponse, Status>>>,
     pub messaging: Messaging,
 }

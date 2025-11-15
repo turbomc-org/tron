@@ -1,6 +1,4 @@
-use crate::bridge::*;
 use crate::{Bridge, BridgeService};
-use tonic::{Request, Response, Status};
 use tron_macros::auto_impl_bridge;
 
 pub mod balance;
