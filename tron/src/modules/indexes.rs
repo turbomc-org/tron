@@ -9,6 +9,7 @@ pub struct Indexes {
     pub shop_item: DashMap<(String, Vec<String>), u64>,
     pub admin: DashSet<u64>,
     pub moderator: DashSet<u64>,
+    pub redeem: DashMap<String, u64>,
 }
 
 impl Indexes {
@@ -21,6 +22,7 @@ impl Indexes {
             shop_item: DashMap::new(),
             admin: DashSet::new(),
             moderator: DashSet::new(),
+            redeem: DashMap::new(),
         }
     }
 }

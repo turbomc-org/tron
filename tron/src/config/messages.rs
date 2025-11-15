@@ -915,3 +915,23 @@ pub static MODERATOR_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
     "
     }
 });
+
+pub static EMPTY_REDEEM_CODES: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⌨️ EMPTY REDEEM CODES LIST",
+        body: "No redeem codes found in the redeem codes list yet."
+    }
+});
+
+pub static REDEEM_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "success",
+        title: "⌨️ REDEEM LIST",
+        body: "
+<white><bold>REDEEM CODES:</bold></white>
+
+{{list}}
+        "
+    }
+});

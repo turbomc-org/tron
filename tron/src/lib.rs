@@ -65,17 +65,4 @@ impl BridgeService {
     pub fn collections(&self) -> &Collections {
         &self.0.collections
     }
-
-    fn filter_message(input: &str) -> String {
-        let bad_words = ["badword", "noob"];
-        let mut filtered = input.to_string();
-
-        for word in bad_words {
-            if filtered.to_lowercase().contains(word) {
-                filtered = filtered.replace(word, "****");
-            }
-        }
-
-        filtered
-    }
 }

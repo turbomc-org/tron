@@ -1,8 +1,7 @@
 use crate::collections::team::TeamCollection;
 use crate::models::achievements::Achievements;
-use crate::models::player::{Player, Role};
+use crate::models::player::{Player, Rank, Role};
 use crate::models::team::Team;
-use anyhow::anyhow;
 use async_trait::async_trait;
 use futures::TryStreamExt;
 use mockall::automock;
@@ -71,6 +70,8 @@ pub trait PlayerCollection: Send + Sync + Debug {
     async fn unselect_prefix(&self, player_id: u64) -> Result<(), Error>;
     async fn set_scoreboard(&self, player_id: u64, val: bool) -> Result<(), Error>;
     async fn set_role(&self, player_id: u64, role: Role) -> Result<(), Error>;
+    async fn set_rank(&self, player_id: u64, rank: Rank) -> Result<(), Error>;
+    async fn add_redeem(&self, player_id: u64, redeem_id: u64) -> Result<(), Error>;
 }
 
 #[derive(Debug)]
@@ -722,6 +723,38 @@ impl PlayerCollection for MongoPlayerCollection {
                 doc! {
                     "$set": {
                         "role": role_str
+                    }
+                },
+            )
+            .await?;
+
+        Ok(())
+    }
+
+    async fn set_rank(&self, player_id: u64, rank: Rank) -> Result<(), Error> {
+        let rank_str: String = serde_json::to_string(&rank).unwrap();
+
+        self.collection
+            .update_one(
+                doc! {"_id": player_id as i64},
+                doc! {
+                    "$set": {
+                        "rank": rank_str
+                    }
+                },
+            )
+            .await?;
+
+        Ok(())
+    }
+
+    async fn add_redeem(&self, player_id: u64, redeem_id: u64) -> Result<(), Error> {
+        self.collection
+            .update_one(
+                doc! {"_id": player_id as i64},
+                doc! {
+                    "$addToSet": {
+                        "redeems": redeem_id as i64
                     }
                 },
             )

@@ -1,6 +1,7 @@
 pub mod bug;
 pub mod player;
 pub mod prefix;
+pub mod redeem;
 pub mod report;
 pub mod server;
 pub mod shop_item;
@@ -9,6 +10,7 @@ pub mod team;
 use crate::collections::bug::{BugCollection, MongoBugCollection};
 use crate::collections::player::{MongoPlayerCollection, PlayerCollection};
 use crate::collections::prefix::{MongoPrefixCollection, PrefixCollection};
+use crate::collections::redeem::{MongoRedeemCollection, RedeemCollection};
 use crate::collections::report::{MongoReportCollection, ReportCollection};
 use crate::collections::server::{MongoServerCollection, ServerCollection};
 use crate::collections::shop_item::{MongoShopItemCollection, ShopItemCollection};
@@ -16,6 +18,7 @@ use crate::collections::team::{MongoTeamCollection, TeamCollection};
 use crate::models::bug::Bug;
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
+use crate::models::redeem::Redeem;
 use crate::models::report::Report;
 use crate::models::server::Server;
 use crate::models::shop_item::ShopItem;
@@ -32,6 +35,7 @@ pub struct Collections {
     pub reports: Arc<dyn ReportCollection>,
     pub bugs: Arc<dyn BugCollection>,
     pub servers: Arc<dyn ServerCollection>,
+    pub redeems: Arc<dyn RedeemCollection>,
 }
 
 impl Collections {
@@ -64,6 +68,10 @@ impl Collections {
             collection: database.collection::<Server>("servers"),
         };
 
+        let redeem_collection = MongoRedeemCollection {
+            collection: database.collection::<Redeem>("redeems"),
+        };
+
         Self {
             players: Arc::new(player_collection),
             shop_items: Arc::new(shop_item_collection),
@@ -72,6 +80,7 @@ impl Collections {
             reports: Arc::new(report_collection),
             bugs: Arc::new(bug_collections),
             servers: Arc::new(server_collection),
+            redeems: Arc::new(redeem_collection),
         }
     }
 }

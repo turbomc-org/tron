@@ -10,15 +10,18 @@ message RedeemCodeRequest {
 }
 
 message RedeemCodeResponse {
-    string message = 1;
+    bool success = 1;
 }
 
 message CreateRedeemCodeRequest {
-    string username = 1;
+  string username = 1;
+  string code = 2;
+  uint64 expires_at = 3;
+  RedeemType reward = 4;
 }
 
 message CreateRedeemCodeResponse {
-    bool success = 1;
+  bool success = 1;
 }
 
 message DeleteRedeemCodeRequest {

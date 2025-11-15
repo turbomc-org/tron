@@ -3,6 +3,7 @@ use crate::collections::Collections;
 use crate::models::leaderboards::Leaderboards;
 use crate::models::player::Player;
 use crate::models::prefix::Prefix;
+use crate::models::redeem::Redeem;
 use crate::models::servers::Servers;
 use crate::models::shop_item::ShopItem;
 use crate::models::team::Team;
@@ -20,6 +21,7 @@ pub mod messaging;
 pub mod permissions;
 pub mod player;
 pub mod prefix;
+pub mod redeem;
 pub mod server;
 pub mod shop_item;
 pub mod team;
@@ -31,6 +33,7 @@ pub struct State {
     pub active_players: DashMap<String, Player>,
     pub shop_items: DashMap<u64, ShopItem>,
     pub teams: DashMap<u64, Team>,
+    pub redeems: DashMap<u64, Redeem>,
     pub prefixes: DashMap<u64, Prefix>,
     pub leaderboards: Leaderboards,
     pub servers: Servers,
@@ -53,6 +56,7 @@ impl State {
             indexes: Indexes::new(),
             proxy_connections: DashMap::new(),
             messaging: Messaging::new(),
+            redeems: DashMap::new(),
         }
     }
 

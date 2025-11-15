@@ -1,4 +1,5 @@
 use crate::bridge::Edition as GrpcEdition;
+use crate::bridge::Rank as ProtoRank;
 use crate::models::achievements::Achievements;
 use bincode::{Decode, Encode};
 use chrono::{DateTime, Utc};
@@ -32,7 +33,7 @@ pub struct Player {
     pub vault_count: u64,
     pub owned_vault_ids: HashSet<String>,
     pub achievements: HashSet<Achievements>,
-    pub redeemed_codes: HashSet<String>,
+    pub redeemed_codes: HashSet<u64>,
     #[serde(
         serialize_with = "crate::utils::serde::serialize_u64_map",
         deserialize_with = "crate::utils::serde::deserialize_u64_map"
@@ -50,13 +51,48 @@ pub struct Player {
     pub updated_at: u64,
 }
 
-#[derive(Serialize, Deserialize, Encode, Decode, Debug, Clone)]
+#[derive(
+    Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default,
+)]
+#[serde(rename_all = "UPPERCASE")]
+#[repr(i32)]
 pub enum Rank {
-    Newbie,
-    Member,
-    Vip,
-    Elite,
-    Legend,
+    #[default]
+    Newbie = 0,
+    Member = 1,
+    Vip = 2,
+    Elite = 3,
+    Legend = 4,
+}
+
+impl From<ProtoRank> for Rank {
+    #[inline(always)]
+    fn from(p: ProtoRank) -> Self {
+        unsafe { std::mem::transmute(p) }
+    }
+}
+
+impl From<Rank> for ProtoRank {
+    #[inline(always)]
+    fn from(a: Rank) -> Self {
+        unsafe { std::mem::transmute(a) }
+    }
+}
+
+impl TryFrom<i32> for Rank {
+    type Error = ();
+
+    #[inline]
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Rank::Newbie),
+            1 => Ok(Rank::Member),
+            2 => Ok(Rank::Vip),
+            3 => Ok(Rank::Elite),
+            4 => Ok(Rank::Legend),
+            _ => Err(()),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode, PartialEq)]

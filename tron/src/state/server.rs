@@ -1,16 +1,13 @@
 use crate::models::server::Server;
 use crate::state::State;
-use std::borrow::Borrow;
 
 impl State {
     pub fn insert_server(&self, server: Server) {
-        &self.servers.documents.insert(server.id, server.clone());
-        &self
-            .servers
+        self.servers.documents.insert(server.id, server.clone());
+        self.servers
             .addresses
             .insert(server.address.clone(), server.id.clone());
-        &self
-            .servers
+        self.servers
             .names
             .insert(server.name.clone(), server.id.clone());
 

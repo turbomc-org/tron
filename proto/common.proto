@@ -57,3 +57,19 @@ message Bug {
     string username = 2;
     string description = 3;
 }
+
+message Redeem {
+  uint64 id = 1 [json_name = "_id"];
+  RedeemType redeem_type = 2;
+  string code = 3;
+  uint64 expires_at = 4;
+  uint64 created_by = 5;
+  uint64 created_at = 6;
+}
+
+message RedeemType {
+  oneof kind {
+    uint64 coins = 1;
+    Rank rank = 2;
+  }
+}

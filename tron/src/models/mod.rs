@@ -4,6 +4,7 @@ pub mod leaderboards;
 pub mod message;
 pub mod player;
 pub mod prefix;
+pub mod redeem;
 pub mod report;
 pub mod server;
 pub mod servers;
