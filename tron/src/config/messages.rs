@@ -935,3 +935,19 @@ pub static REDEEM_LIST: Lazy<Template<'static>> = Lazy::new(|| {
         "
     }
 });
+
+pub static SUCCESSFUL_LOGIN: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✔️ SUCCESSFULL LOGIN",
+        body: "Welcome <white><bold>{{username}}</bold></white> to H01 network. You have successfully logged in."
+    }
+});
+
+pub static TRANSFERRING_PLAYER: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🌐 TRANSFERRING YOU TO SURVIVAL",
+        body: "Hold on! We are transferring you to survival."
+    }
+});

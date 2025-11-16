@@ -11,16 +11,16 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        if self.state().aliases.contains_key(&username) {
-            if let Some(alias) = self.state().get_alias(&username) {
-                return Ok(Response::new(PlayerEncryptionLoginResponse { alias }));
-            } else {
-                return Err(Status::internal(
-                    "Key of alias was present in cache but record not found when requested",
-                ));
-            }
+        let player = self.state().get_player_with_handling(&username).await?;
+
+        if player.original_name.is_none() {
+            return self.status(&username, Status::internal("You are not a player using encryption authentication but still you tried for it.")).await;
         }
 
-        todo!("Implement encryption login")
+        self.join_game(player).await;
+
+        Ok(Response::new(PlayerEncryptionLoginResponse {
+            success: true,
+        }))
     }
 }

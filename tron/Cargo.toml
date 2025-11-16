@@ -46,6 +46,7 @@ names = "0.14.0"
 serde_json = "1.0.145"
 tron-macros = {path = "../tron-macros"}
 rug = "1.28.0"
+argon2 = "0.5.3"
 
 [build-dependencies]
 tonic-build = "0.14.2"

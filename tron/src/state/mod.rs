@@ -58,6 +58,7 @@ impl State {
             proxy_connections: DashMap::new(),
             messaging: Messaging::new(),
             redeems: DashMap::new(),
+            proxies: DashSet::new(),
         }
     }
 

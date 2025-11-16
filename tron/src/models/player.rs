@@ -102,6 +102,19 @@ pub enum Edition {
     Bedrock,
 }
 
+impl TryFrom<i32> for Edition {
+    type Error = ();
+
+    #[inline]
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Edition::Java),
+            1 => Ok(Edition::Bedrock),
+            _ => Err(()),
+        }
+    }
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum Role {

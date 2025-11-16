@@ -19,6 +19,7 @@ message PlayerPreLoginResponse {
         ENCRYPTION = 1;
         PASSWORD = 2;
     }
+    LoginType login_type = 1;
     string username = 2;
 }
 
@@ -36,7 +37,7 @@ message PlayerEncryptionLoginRequest {
 }
 
 message PlayerEncryptionLoginResponse {
-    string alias = 1;
+    bool success = 1;
 }
 
 message PlayerPasswordLoginRequest {
