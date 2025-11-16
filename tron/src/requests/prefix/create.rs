@@ -6,7 +6,6 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_create_prefix(
         &self,
         request: Request<CreatePrefixRequest>,
@@ -52,19 +51,19 @@ impl BridgeService {
                 Status::internal("Failed to insert prefix")
             })?;
 
-        self.send_message(
-            &username,
-            render!(
-                IDENTIFIER_REGISTERED,
-                color = &decompiled_prefix.color,
-                text = &decompiled_prefix.text
-            ),
-        )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(
+                    IDENTIFIER_REGISTERED,
+                    color = &decompiled_prefix.color,
+                    text = &decompiled_prefix.text
+                ),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        };
 
         info!("Create prefix request from player {} completed", username);
 

@@ -6,7 +6,11 @@ pub mod view;
 
 use crate::BridgeService;
 use crate::bridge::{BugRequest, BugResponse};
+use crate::config::messages::BUG_SUBMITTED;
+use crate::models::bug::Bug;
+use crate::render;
 use tonic::{Request, Response, Status};
+use tracing::error;
 
 impl BridgeService {
     pub async fn handle_bug(
@@ -18,6 +22,23 @@ impl BridgeService {
         let description = inner_request.description;
 
         let player = self.state().get_player_with_handling(&username).await?;
-        todo!("Implement bug functionality")
+
+        let bug = Bug::new(player.id, description);
+
+        if let Err(e) = bug.insert(&self.collections().bugs).await {
+            error!("Failed to register bug: {}", e);
+            return self
+                .status(&username, Status::internal("Failed to register bug."))
+                .await;
+        }
+
+        if let Err(e) = self
+            .send_message(&username, render!(BUG_SUBMITTED, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        Ok(Response::new(BugResponse { success: true }))
     }
 }

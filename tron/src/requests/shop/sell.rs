@@ -1,10 +1,10 @@
-use crate::BridgeService;
 use crate::bridge::{SellItemRequest, SellItemResponse};
+use crate::config::messages::ITEM_SOLD;
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_sell_item(
         &self,
         request: Request<SellItemRequest>,
@@ -45,6 +45,13 @@ impl BridgeService {
 
             sum += price;
         }
+
+        self.send_message(&username, render!(ITEM_SOLD, price = sum))
+            .await
+            .map_err(|err| {
+                error!("Failed to send player message: {}", err);
+            })
+            .unwrap();
 
         info!("Sell item request from player {} completed", username);
 

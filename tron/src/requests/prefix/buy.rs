@@ -5,7 +5,6 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_buy_prefix(
         &self,
         request: Request<BuyPrefixRequest>,
@@ -60,21 +59,21 @@ impl BridgeService {
                 Status::internal("Failed to buy prefix")
             })?;
 
-        self.send_message(
-            &username,
-            render!(
-                ASSET_ACQUIRED,
-                color = &prefix.color,
-                text = &prefix.text,
-                price = &prefix.price,
-                name = &prefix_name
-            ),
-        )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(
+                    ASSET_ACQUIRED,
+                    color = &prefix.color,
+                    text = &prefix.text,
+                    price = &prefix.price,
+                    name = &prefix_name
+                ),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        };
 
         info!("Buy prefix request from player {} completed", username);
 

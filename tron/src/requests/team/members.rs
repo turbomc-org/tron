@@ -2,10 +2,9 @@ use crate::bridge::{GetTeamMembersRequest, GetTeamMembersResponse};
 use crate::config::messages::SQUAD_ROSTER;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::debug;
+use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_get_team_members(
         &self,
         request: Request<GetTeamMembersRequest>,
@@ -13,7 +12,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username.clone();
 
-        debug!("Get team members request for player {} received", username);
+        info!("Get team members request for player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
         let team_id = player
@@ -65,18 +64,22 @@ impl BridgeService {
 
         let roster_text = roster_lines.join("\n");
 
-        self.send_message(
-            &username,
-            render!(
-                SQUAD_ROSTER,
-                team_name = &team.name,
-                member_count = &members.len(),
-                roster_text = &roster_text
-            ),
-        )
-        .await;
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(
+                    SQUAD_ROSTER,
+                    team_name = &team.name,
+                    member_count = &members.len(),
+                    roster_text = &roster_text
+                ),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        };
 
-        debug!("Get team members request for player {} completed", username);
+        info!("Get team members request for player {} completed", username);
 
         Ok(Response::new(GetTeamMembersResponse { members }))
     }

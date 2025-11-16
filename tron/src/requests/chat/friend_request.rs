@@ -1,7 +1,8 @@
 use crate::bridge::{FriendChatAcceptRequest, FriendChatAcceptResponse};
 use crate::config::messages::FRIEND_CHAT_JOINED;
-use crate::{BridgeService, render};
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_friend_chat_accept(
@@ -11,6 +12,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let token = inner_request.token;
+
+        info!(
+            "Friend chat accept request from player {} with token {} received",
+            username, token
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -87,6 +93,11 @@ impl BridgeService {
                 &username, e
             )));
         }
+
+        info!(
+            "Friend chat accept request from player {} with token {} completed",
+            username, token
+        );
 
         Ok(Response::new(FriendChatAcceptResponse { success: true }))
     }

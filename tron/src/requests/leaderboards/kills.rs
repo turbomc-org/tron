@@ -5,10 +5,9 @@ use tonic::{Request, Response, Status};
 use tracing::info;
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_kills_leaderboard(
         &self,
-        request: Request<KillsLeaderboardRequest>,
+        _request: Request<KillsLeaderboardRequest>,
     ) -> Result<Response<KillsLeaderboardResponse>, Status> {
         info!("Kills leaderboard request received");
 

@@ -1,8 +1,8 @@
 use crate::bridge::{GlobalChatRequest, GlobalChatResponse};
 use crate::config::messages::GLOBAL_CHAT;
-use crate::{BridgeService, render};
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_global_chat(
@@ -11,6 +11,8 @@ impl BridgeService {
     ) -> Result<Response<GlobalChatResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Global chat request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -35,6 +37,8 @@ impl BridgeService {
                 e
             )));
         }
+
+        info!("Global chat request from player {} completed", username);
 
         Ok(Response::new(GlobalChatResponse { success: true }))
     }

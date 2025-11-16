@@ -5,10 +5,9 @@ use tonic::{Request, Response, Status};
 use tracing::info;
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_coins_leaderboard(
         &self,
-        request: Request<CoinsLeaderboardRequest>,
+        _request: Request<CoinsLeaderboardRequest>,
     ) -> Result<Response<CoinsLeaderboardResponse>, Status> {
         info!("Coins leaderboard request received");
 

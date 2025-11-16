@@ -1,7 +1,9 @@
 use crate::BridgeService;
 use crate::bridge::{DemotePermsRequest, DemotePermsResponse};
-use crate::models::player::Role;
+use crate::config::messages::DEMOTE_PERMS;
+use crate::render;
 use tonic::{Request, Response, Status};
+use tracing::error;
 
 impl BridgeService {
     pub async fn handle_demote_perms(
@@ -12,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let target = inner_request.target;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.state().get_player_with_handling(&username).await?;
         let target = self.state().get_player_with_handling(&target).await?;
 
         if !player.is_admin() {
@@ -33,10 +35,8 @@ impl BridgeService {
                 .await;
         }
 
-        if let Err(e) = self
-            .collections()
-            .players
-            .set_role(target.id, Role::Member)
+        if let Err(e) = player
+            .demote(&self.collections().players, &self.state())
             .await
         {
             return self
@@ -45,6 +45,13 @@ impl BridgeService {
                     Status::internal(format!("Failed to demote player: {}", e)),
                 )
                 .await;
+        }
+
+        if let Err(e) = self
+            .send_message(&username, render!(DEMOTE_PERMS, username = target.username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
         }
 
         Ok(Response::new(DemotePermsResponse { success: true }))

@@ -1,11 +1,10 @@
-use crate::BridgeService;
 use crate::bridge::{ListAllBugsRequest, ListAllBugsResponse};
 use crate::config::messages::{BUG_LIST, NO_BUGS_FOUND};
 use crate::models::player::Role;
-use crate::render;
+use crate::{render, BridgeService};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_all_bugs(
@@ -14,6 +13,8 @@ impl BridgeService {
     ) -> Result<Response<ListAllBugsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("List all bugs request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -85,6 +86,8 @@ impl BridgeService {
             .map_err(|err| error!("Failed to send message: {}", err))
             .ok();
         }
+
+        info!("List all bugs request from player {} completed", username);
 
         Ok(Response::new(ListAllBugsResponse { success: true }))
     }

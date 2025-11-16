@@ -1,5 +1,5 @@
 use crate::bridge::{ReportPlayerRequest, ReportPlayerResponse};
-use crate::config::messages::REPORT_PLAYER;
+use crate::config::messages::{PLAYER_REPORT_NOTIFICATION, REPORT_PLAYER};
 use crate::models::report::Report;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
@@ -30,15 +30,29 @@ impl BridgeService {
                 Status::internal("Failed to insert report")
             })?;
 
-        self.send_message(
-            &username,
-            render!(REPORT_PLAYER, username = target, reason = report.reason),
-        )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(REPORT_PLAYER, username = target, reason = report.reason),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        };
+
+        if let Err(e) = self
+            .send_message_to_admins(render!(PLAYER_REPORT_NOTIFICATION, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        if let Err(e) = self
+            .send_message_to_moderators(render!(PLAYER_REPORT_NOTIFICATION, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
 
         info!("Report player request completed");
 

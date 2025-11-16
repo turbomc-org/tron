@@ -5,10 +5,9 @@ use tonic::{Request, Response, Status};
 use tracing::info;
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_kda_leaderboard(
         &self,
-        request: Request<KdaLeaderboardRequest>,
+        _request: Request<KdaLeaderboardRequest>,
     ) -> Result<Response<KdaLeaderboardResponse>, Status> {
         info!("Kda leaderboard request received");
 

@@ -7,7 +7,6 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_list_friend_requests(
         &self,
         request: Request<ListFriendRequestsRequest>,

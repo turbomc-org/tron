@@ -6,7 +6,6 @@ use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_accept_friend_request(
         &self,
         request: Request<AcceptFriendRequestRequest>,
@@ -46,22 +45,22 @@ impl BridgeService {
             Status::internal(format!("Failed to accept friend request from {}", sender))
         })?;
 
-        self.send_message(&username, render!(FRIEND_CONNECTED, sender = &sender))
+        if let Err(e) = self
+            .send_message(&username, render!(FRIEND_CONNECTED, sender = &sender))
             .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+        {
+            error!("Failed to send player message: {}", e);
+        };
 
-        self.send_message(
-            &sender,
-            render!(FRIEND_REQUEST_ACCEPTED, username = &username),
-        )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        if let Err(e) = self
+            .send_message(
+                &sender,
+                render!(FRIEND_REQUEST_ACCEPTED, username = &username),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
 
         info!("Accept friend request from player {} completed", username);
 

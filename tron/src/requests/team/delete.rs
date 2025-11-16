@@ -4,7 +4,6 @@ use crate::BridgeService;
 use crate::bridge::{DeleteTeamRequest, DeleteTeamResponse};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_delete_team(
         &self,
         request: Request<DeleteTeamRequest>,

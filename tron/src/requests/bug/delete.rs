@@ -1,8 +1,9 @@
-use crate::BridgeService;
 use crate::bridge::{DeleteBugRequest, DeleteBugResponse};
+use crate::config::messages::DELETE_BUG;
 use crate::models::player::Role;
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_delete_bug(
@@ -12,6 +13,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let bug_id = inner_request.bug_id;
+
+        info!(
+            "Delete bug request from player {} for bug {} received",
+            username, bug_id
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -34,6 +40,18 @@ impl BridgeService {
                 )
                 .await;
         }
+
+        if let Err(e) = self
+            .send_message(&username, render!(DELETE_BUG, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e)
+        }
+
+        info!(
+            "Delete bug request from player {} for bug {} completed",
+            username, bug_id
+        );
 
         Ok(Response::new(DeleteBugResponse { success: true }))
     }

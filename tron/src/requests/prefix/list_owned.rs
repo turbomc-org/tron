@@ -7,7 +7,6 @@ use tracing::error;
 use tracing::info;
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_list_owned_prefixes(
         &self,
         request: Request<ListOwnedPrefixRequest>,

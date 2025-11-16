@@ -6,7 +6,6 @@ use tonic::{Request, Response, Status};
 use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_reject_friend_request(
         &self,
         request: Request<RejectFriendRequestRequest>,
@@ -43,7 +42,7 @@ impl BridgeService {
         .map_err(|err| {
             error!("Failed to send player message: {}", err);
         })
-        .unwrap();        // If none exist — send info message
+        .unwrap();
 
         self.send_message(
             &sender,

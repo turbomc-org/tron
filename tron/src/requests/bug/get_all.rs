@@ -2,6 +2,7 @@ use crate::BridgeService;
 use crate::bridge::{GetAllBugsRequest, GetAllBugsResponse};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_get_all_bugs(
@@ -10,6 +11,8 @@ impl BridgeService {
     ) -> Result<Response<GetAllBugsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Get all bugs request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -35,6 +38,8 @@ impl BridgeService {
         };
 
         let indexes = indexes.iter().map(|id| id.clone()).collect::<Vec<u64>>();
+
+        info!("Get all bugs request from player {} completed", username);
 
         Ok(Response::new(GetAllBugsResponse { ids: indexes }))
     }

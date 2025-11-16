@@ -1,6 +1,9 @@
 use crate::BridgeService;
 use crate::bridge::{ExitChatRequest, ExitChatResponse};
+use crate::config::messages::EXIT_CHAT;
+use crate::render;
 use tonic::{Request, Response, Status};
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_exit_chat(
@@ -9,6 +12,8 @@ impl BridgeService {
     ) -> Result<Response<ExitChatResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Exit chat request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -28,6 +33,15 @@ impl BridgeService {
 
         self.state().messaging.exit_chat(player.id);
 
-        todo!("Implement exit chat")
+        if let Err(e) = self
+            .send_message(&username, render!(EXIT_CHAT, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        info!("Exit chat request from player {} completed", username);
+
+        Ok(Response::new(ExitChatResponse { success: true }))
     }
 }

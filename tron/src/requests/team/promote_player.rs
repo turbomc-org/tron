@@ -1,10 +1,9 @@
 use crate::BridgeService;
 use crate::bridge::{PromoteTeamMemberRequest, PromoteTeamMemberResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_promote_team_member(
         &self,
         request: Request<PromoteTeamMemberRequest>,
@@ -13,7 +12,7 @@ impl BridgeService {
         let username = inner_request.username;
         let target = inner_request.target;
 
-        debug!(
+        info!(
             "Promote team member request from player {} received",
             username
         );
@@ -47,7 +46,7 @@ impl BridgeService {
                 Status::internal(format!("Failed to promote player {} to leader", &target))
             })?;
 
-        debug!(
+        info!(
             "Promote team member request from player {} completed",
             username
         );

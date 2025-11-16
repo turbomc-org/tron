@@ -3,10 +3,9 @@ use crate::config::messages::{CONNECTION_ESTABLISHED, SQUAD_LINK_ESTABLISHED};
 use crate::{BridgeService, render};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_join_team(
         &self,
         request: Request<JoinTeamRequest>,
@@ -15,7 +14,7 @@ impl BridgeService {
         let username = inner_request.username;
         let team_name = inner_request.team;
 
-        debug!("Join team request for player {} received", username);
+        info!("Join team request for player {} received", username);
 
         let mut player = self.state().get_player_with_handling(&username).await?;
 
@@ -55,11 +54,15 @@ impl BridgeService {
             Status::internal("Failed to join team")
         })?;
 
-        self.send_message(
-            &username,
-            render!(SQUAD_LINK_ESTABLISHED, team = &team_name),
-        )
-        .await;
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(SQUAD_LINK_ESTABLISHED, team = &team_name),
+            )
+            .await
+        {
+            error!("Failed to send message to player {}: {}", username, e);
+        };
 
         let team_broadcast_message = render!(CONNECTION_ESTABLISHED, username = &username);
 
@@ -73,11 +76,15 @@ impl BridgeService {
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            self.send_message(&member_username, team_broadcast_message.clone())
-                .await;
+            if let Err(e) = self
+                .send_message(&member_username, team_broadcast_message.clone())
+                .await
+            {
+                error!("Failed to send player message: {}", e);
+            };
         }
 
-        debug!("Join team request for player {} completed", username);
+        info!("Join team request for player {} completed", username);
 
         Ok(Response::new(JoinTeamResponse { success: true }))
     }

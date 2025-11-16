@@ -1,5 +1,6 @@
 use crate::BridgeService;
 use crate::bridge::{GetItemRequest, GetItemResponse};
+use crate::models::shop_item::ShopItem;
 use tonic::{Request, Response, Status};
 
 impl BridgeService {
@@ -7,6 +8,15 @@ impl BridgeService {
         &self,
         request: Request<GetItemRequest>,
     ) -> Result<Response<GetItemResponse>, Status> {
-        todo!("handle get item")
+        let inner_request = request.into_inner();
+        let id = inner_request.id;
+
+        let shop_item = self.state().get_shop_item(&id).await?;
+
+        let compiled_item = ShopItem::convert_shop_item(shop_item);
+
+        Ok(Response::new(GetItemResponse {
+            item: Some(compiled_item),
+        }))
     }
 }

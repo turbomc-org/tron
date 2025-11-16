@@ -2,10 +2,9 @@ use crate::bridge::{LeaveTeamRequest, LeaveTeamResponse};
 use crate::config::messages::{SQUAD_LINK_SEVERED, USER_DISCONNECTED};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_leave_team(
         &self,
         request: Request<LeaveTeamRequest>,
@@ -13,7 +12,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        debug!("Leave team request for player {} received", username);
+        info!("Leave team request for player {} received", username);
 
         let mut player = self.state().get_player_with_handling(&username).await?;
 
@@ -43,8 +42,12 @@ impl BridgeService {
             Status::internal("Failed to leave team")
         })?;
 
-        self.send_message(&username, render!(SQUAD_LINK_SEVERED, team = &team.name))
-            .await;
+        if let Err(e) = self
+            .send_message(&username, render!(SQUAD_LINK_SEVERED, team = &team.name))
+            .await
+        {
+            error!("Failed to send message to player {}: {}", username, e);
+        };
 
         let team_broadcast_message = render!(USER_DISCONNECTED, username = &username);
 
@@ -58,11 +61,18 @@ impl BridgeService {
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            self.send_message(&member_username, team_broadcast_message.clone())
-                .await;
+            if let Err(e) = self
+                .send_message(&member_username, team_broadcast_message.clone())
+                .await
+            {
+                error!(
+                    "Failed to send message to player {}: {}",
+                    member_username, e
+                );
+            };
         }
 
-        debug!("Leave team request for player {} completed", username);
+        info!("Leave team request for player {} completed", username);
 
         Ok(Response::new(LeaveTeamResponse { success: true }))
     }

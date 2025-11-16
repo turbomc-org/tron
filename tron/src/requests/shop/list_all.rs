@@ -7,6 +7,7 @@ impl BridgeService {
         &self,
         request: Request<ListAllItemsRequest>,
     ) -> Result<Response<ListAllItemsResponse>, Status> {
-        todo!("list all items")
+        let _inner_request = request.into_inner(); // Request is empty, but still need to consume it
+        Ok(Response::new(ListAllItemsResponse { success: true }))
     }
 }

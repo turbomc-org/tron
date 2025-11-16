@@ -17,12 +17,12 @@ impl BridgeService {
 
         let player = self.state().get_player_with_handling(&username).await?;
 
-        self.send_message(&username, render!(BALANCE, balance = &player.coins))
+        if let Err(e) = self
+            .send_message(&username, render!(BALANCE, balance = &player.coins))
             .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+        {
+            error!("Failed to send player message: {}", e);
+        }
 
         info!("Get Balance request for player {} completed", username);
 

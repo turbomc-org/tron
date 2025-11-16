@@ -1,7 +1,8 @@
-use crate::BridgeService;
 use crate::bridge::{Bug as CompiledBug, GetBugRequest, GetBugResponse};
 use crate::models::player::Role;
+use crate::BridgeService;
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_get_bug(
@@ -11,6 +12,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let bug_id = inner_request.bug_id;
+
+        info!(
+            "Get bug request from player {} for bug {} received",
+            username, bug_id
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -51,6 +57,11 @@ impl BridgeService {
                 )
                 .await;
         };
+
+        info!(
+            "Get bug request from player {} for bug {} completed",
+            username, bug_id
+        );
 
         Ok(Response::new(GetBugResponse {
             bug: Some(CompiledBug {

@@ -1,7 +1,8 @@
 use crate::bridge::{FriendChatRequest, FriendChatResponse};
 use crate::config::messages::{FRIEND_CHAT_REQUEST_RECEIVED, FRIEND_CHAT_REQUEST_SENT};
-use crate::{BridgeService, render};
+use crate::{render, BridgeService};
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_friend_chat(
@@ -11,6 +12,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let friend_username = inner_request.friend;
+
+        info!(
+            "Friend chat request from player {} to {} received",
+            username, friend_username
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
         let friend = self
@@ -53,6 +59,11 @@ impl BridgeService {
             self.state().messaging.remove_request(&token);
             return Err(Status::internal(format!("Failed to send message: {}", e)));
         }
+
+        info!(
+            "Friend chat request from player {} to {} completed",
+            username, friend_username
+        );
 
         Ok(Response::new(FriendChatResponse { success: true }))
     }

@@ -438,6 +438,19 @@ pub static PLAYER_REPORT_NOTIFICATION: Lazy<Template<'static>> = Lazy::new(|| {
     }
 });
 
+pub static PLAYER_BUG_NOTIFICATION: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⚡ NEW BUG REPORT",
+        body: "
+           Player <white><bold>{{username}}</bold></white> had reported a bug.
+        ",
+        actions: {
+            view_reports: { kind: "command", value: "/admin bug list", label: "View bugs" }
+        }
+    }
+});
+
 pub static BENGALI_KALA_JADU: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
@@ -505,6 +518,22 @@ pub static BUG_LIST: Lazy<Template<'static>> = Lazy::new(|| {
         title: "🐛 REPORTED BUGS",
         body: r#"Displaying <white>{{count}}</white> reported issue{{s}}:
     {{list}}"#
+    }
+});
+
+pub static DELETE_BUG: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⛔ DELETED BUG",
+        body: "Successfully deleted bug."
+    }
+});
+
+pub static BUG_SUBMITTED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🐛 BUG SUBMITTED",
+        body: "Thank you for submitting bug. Our team will ensure it will get fixed."
     }
 });
 
@@ -860,7 +889,7 @@ pub static ADMIN_LIST_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
 
 pub static ADMIN_LIST: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
-        type: "success",
+        type: "info",
         title: "🛡️ KD LEADERBOARD",
         body: "
 <white><bold>ADMINS:</bold></white>
@@ -893,7 +922,7 @@ pub static MODERATOR_LIST_EMPTY: Lazy<Template<'static>> = Lazy::new(|| {
 
 pub static MODERATOR_LIST: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
-        type: "success",
+        type: "info",
         title: "👤 MODERATOR LIST",
         body: "
 <white><bold>MODERATORS:</bold></white>
@@ -926,7 +955,7 @@ pub static EMPTY_REDEEM_CODES: Lazy<Template<'static>> = Lazy::new(|| {
 
 pub static REDEEM_LIST: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
-        type: "success",
+        type: "info",
         title: "⌨️ REDEEM LIST",
         body: "
 <white><bold>REDEEM CODES:</bold></white>
@@ -949,5 +978,81 @@ pub static TRANSFERRING_PLAYER: Lazy<Template<'static>> = Lazy::new(|| {
         type: "info",
         title: "🌐 TRANSFERRING YOU TO SURVIVAL",
         body: "Hold on! We are transferring you to survival."
+    }
+});
+
+pub static ITEM_PURCHASED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ ITEM PURCHASED",
+        body: r#"You purchased the <white><bold>{{item_name}}</bold></white> for <white>{{price}}</white> credits."#,
+        actions: {
+            check_balance: { kind: "command", value: "/balance", label: "Check your new balance" }
+        }
+    }
+});
+
+pub static ITEM_CREATED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ ITEM CREATED",
+        body: r#"You created the <white><bold>{{item_name}}</bold></white> item."#,
+        actions: {
+            view_item: { kind: "command", value: "/shop view {{item_id}}", label: "View item" }
+        }
+    }
+});
+
+pub static ITEM_DELETED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ ITEM DELETED",
+        body: r#"You deleted the <white><bold>{{item_name}}</bold></white> item."#,
+        actions: {
+            view_shop: { kind: "command", value: "/shop", label: "View shop" }
+        }
+    }
+});
+
+pub static ITEM_SOLD: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ ITEM SOLD",
+        body: r#"You sold your items for <white><bold>{{price}}</bold></white> credits."#,
+        actions: {
+            check_balance: { kind: "command", value: "/balance", label: "Check your new balance" }
+        }
+    }
+});
+
+pub static DEMOTE_PERMS: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 DEMOTED PLAYER",
+        body: "Successfully demoted player {{username}}.",
+    }
+});
+
+pub static GAINED_MASTER_CONTROL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 YOU HAVE GAINED MASTER CONTROL",
+        body: "Your perms are promoted to admin.",
+    }
+});
+
+pub static MODERATOR_PERMS_GAINED: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺YOU HAVE GAINED MODERATOR CONTROL",
+        body: "Your perms are promoted to moderators.",
+    }
+});
+
+pub static PROMOTED_MODERATOR: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 SUCCESSFULLY PROMOTED MODERATOR",
+        body: "You successfully promoted player {{username}} to moderator.",
     }
 });

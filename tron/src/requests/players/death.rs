@@ -6,15 +6,12 @@ use tracing::{error, info};
 use crate::BridgeService;
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_player_death(
         &self,
         request: Request<PlayerDeathRequest>,
     ) -> Result<Response<PlayerDeathResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
-
-        info!("Death request of player {} received", username);
 
         let mut player = self.state().get_player_with_handling(&username).await?;
 
@@ -26,7 +23,7 @@ impl BridgeService {
                 Status::internal("Failed to add death")
             })?;
 
-        info!("Death request of player {} completed", username);
+        info!("Player {} died", username);
 
         Ok(Response::new(PlayerDeathResponse { success: true }))
     }

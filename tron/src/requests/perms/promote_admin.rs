@@ -1,5 +1,6 @@
-use crate::BridgeService;
 use crate::bridge::{PromoteAdminPermsRequest, PromoteAdminPermsResponse};
+use crate::config::messages::GAINED_MASTER_CONTROL;
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 
@@ -32,6 +33,16 @@ impl BridgeService {
                 return self
                     .status(&username, Status::internal("Failed to save player"))
                     .await;
+            }
+
+            if let Err(e) = self
+                .send_message(
+                    &username,
+                    render!(GAINED_MASTER_CONTROL, username = username),
+                )
+                .await
+            {
+                error!("Failed to send player message: {}", e);
             }
         } else {
             return self

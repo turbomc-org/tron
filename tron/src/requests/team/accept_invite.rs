@@ -6,7 +6,6 @@ use tonic::{Request, Response, Status};
 use tracing::{debug, error};
 
 impl BridgeService {
-    #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]
     pub async fn handle_accept_team_invite(
         &self,
         request: Request<AcceptTeamInviteRequest>,
@@ -44,8 +43,12 @@ impl BridgeService {
                 Status::internal("Failed to accept team invite request")
             })?;
 
-        self.send_message(&username, render!(SQUAD_LINK_ESTABLISHED, team = &target))
-            .await;
+        if let Err(e) = self
+            .send_message(&username, render!(SQUAD_LINK_ESTABLISHED, team = &target))
+            .await
+        {
+            error!("Failed to send message to player: {}", e);
+        };
 
         let team = self
             .state()
@@ -64,8 +67,12 @@ impl BridgeService {
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            self.send_message(&member_username, team_broadcast_message.clone())
-                .await;
+            if let Err(e) = self
+                .send_message(&member_username, team_broadcast_message.clone())
+                .await
+            {
+                error!("Failed to send message to player: {}", e);
+            }
         }
 
         debug!(

@@ -1,6 +1,9 @@
+use std::collections::HashSet;
+
 use crate::BridgeService;
 use crate::bridge::MessagePlayer;
 use anyhow::Result;
+use tracing::error;
 pub struct Message {}
 
 impl BridgeService {
@@ -10,6 +13,67 @@ impl BridgeService {
             message: message.to_string(),
         })
         .await?;
+        Ok(())
+    }
+
+    pub async fn send_message_to_admins(&self, message: String) -> Result<()> {
+        let admin_names: HashSet<String> = self
+            .state()
+            .indexes
+            .admin
+            .iter()
+            .map(|id| {
+                self.state()
+                    .get_player_username(&id)
+                    .unwrap_or_else(|| "Unknown".to_string())
+            })
+            .collect();
+
+        let active_admins: Vec<String> = self
+            .state()
+            .active_players
+            .iter()
+            .filter(|player| admin_names.contains(&player.value().username))
+            .map(|player| player.value().username.clone())
+            .collect();
+
+        for admin_username in active_admins {
+            if let Err(e) = self.send_message(&admin_username, message.clone()).await {
+                error!("Failed to send message to admin {}: {}", admin_username, e);
+            }
+        }
+
+        Ok(())
+    }
+
+    pub async fn send_message_to_moderators(&self, message: String) -> Result<()> {
+        let moderator_names: HashSet<String> = self
+            .state()
+            .indexes
+            .moderator
+            .iter()
+            .map(|id| {
+                self.state()
+                    .get_player_username(&id.clone())
+                    .unwrap_or_else(|| "Unknown".to_string())
+            })
+            .collect();
+
+        let active_moderators: Vec<String> = self
+            .state()
+            .active_players
+            .iter()
+            .filter(|player| moderator_names.contains(&player.value().username))
+            .map(|player| player.value().username.clone())
+            .collect();
+
+        for moderator in active_moderators {
+            if let Err(e) = self.send_message(&moderator, message.clone()).await {
+                error!("Failed to send player message: {}", e);
+                continue;
+            }
+        }
+
         Ok(())
     }
 }
