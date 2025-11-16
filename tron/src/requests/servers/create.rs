@@ -3,6 +3,7 @@ use crate::bridge::{CreateServerRequest, CreateServerResponse};
 use crate::models::player::Role;
 use crate::models::server::Server;
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_create_server(
@@ -14,6 +15,8 @@ impl BridgeService {
         let name = inner_request.name;
         let description = inner_request.description;
         let address = inner_request.address;
+
+        info!("Create server request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -54,6 +57,8 @@ impl BridgeService {
                 .status(&username, Status::internal(e.to_string()))
                 .await;
         }
+
+        info!("Create server request from player {} completed", username);
 
         Ok(Response::new(CreateServerResponse { success: true }))
     }

@@ -1,6 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{GetAllModeratorsRequest, GetAllModeratorsResponse};
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_get_all_moderators(
@@ -9,6 +10,8 @@ impl BridgeService {
     ) -> Result<Response<GetAllModeratorsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Get moderators request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -32,6 +35,8 @@ impl BridgeService {
                 continue;
             }
         }
+
+        info!("Get moderators request from player {} completed", username);
 
         Ok(Response::new(GetAllModeratorsResponse {
             usernames: moderator_names,

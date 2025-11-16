@@ -2,7 +2,7 @@ use crate::bridge::{ListAllAdminsRequest, ListAllAdminsResponse};
 use crate::config::messages::{ADMIN_LIST, ADMIN_LIST_EMPTY};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_all_admins(
@@ -11,6 +11,8 @@ impl BridgeService {
     ) -> Result<Response<ListAllAdminsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("List admins request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -63,6 +65,8 @@ impl BridgeService {
                 .map_err(|err| error!("Failed to send message: {}", err))
                 .ok();
         }
+
+        info!("List admins request from player {} completed", username);
 
         Ok(Response::new(ListAllAdminsResponse { success: true }))
     }

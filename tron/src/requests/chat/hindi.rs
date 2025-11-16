@@ -3,7 +3,7 @@ use crate::bridge::{HindiChatRequest, HindiChatResponse};
 use crate::config::messages::HINDI_CHANNEL;
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_hindi_chat(
@@ -12,6 +12,8 @@ impl BridgeService {
     ) -> Result<Response<HindiChatResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Hindi chat request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -36,6 +38,8 @@ impl BridgeService {
                 e
             )));
         }
+
+        info!("Hindi chat request from player {} completed", username);
 
         Ok(Response::new(HindiChatResponse { success: true }))
     }

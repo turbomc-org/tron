@@ -3,7 +3,7 @@ use crate::bridge::{ListOverallLeaderboardRequest, ListOverallLeaderboardRespons
 use crate::config::messages::{OVERALL_LEADERBOARD, OVERALL_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_overall_leaderboard(
@@ -12,6 +12,11 @@ impl BridgeService {
     ) -> Result<Response<ListOverallLeaderboardResponse>, Status> {
         let inner = request.into_inner();
         let username = inner.username;
+
+        info!(
+            "List Overall Leaderboard request from player {} received",
+            username
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -66,6 +71,11 @@ impl BridgeService {
             error!("Failed to send kd leaderboard message: {}", err);
         })
         .ok();
+
+        info!(
+            "List Overall Leaderboard request from player {} completed",
+            username
+        );
 
         Ok(Response::new(ListOverallLeaderboardResponse {
             success: true,

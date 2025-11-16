@@ -1,8 +1,11 @@
 use crate::BridgeService;
 use crate::bridge::{ProxyConnectionResponse, TransferPlayer};
+use tracing::info;
 
 impl BridgeService {
     pub async fn transfer_player(&self, req: TransferPlayer) {
+        info!("Transferring player {}", req.username);
+
         let mut dead_clients = Vec::new();
 
         for entry in self.state().proxy_connections.iter() {

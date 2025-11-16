@@ -2,6 +2,7 @@ use crate::BridgeService;
 use crate::bridge::{PlayerPasswordLoginRequest, PlayerPasswordLoginResponse};
 use crate::utils::verify_password;
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_player_password_login(
@@ -11,6 +12,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let password = inner_request.password;
+
+        info!("Password login request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -36,6 +39,8 @@ impl BridgeService {
         }
 
         self.join_game(player).await;
+
+        info!("Password login request from player {} completed", username);
 
         Ok(Response::new(PlayerPasswordLoginResponse { success: true }))
     }

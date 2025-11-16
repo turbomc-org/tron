@@ -6,7 +6,7 @@ use crate::models::server::Server;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_all_servers(
@@ -15,6 +15,8 @@ impl BridgeService {
     ) -> Result<Response<ListAllServersResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("List all servers request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -82,6 +84,11 @@ impl BridgeService {
             .map_err(|err| error!("Failed to send message: {}", err))
             .ok();
         }
+
+        info!(
+            "List all servers request from player {} completed",
+            username
+        );
 
         Ok(Response::new(ListAllServersResponse { success: true }))
     }

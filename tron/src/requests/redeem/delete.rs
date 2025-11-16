@@ -1,7 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{DeleteRedeemCodeRequest, DeleteRedeemCodeResponse};
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_delete_redeem_code(
@@ -11,6 +11,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let code = inner_request.code;
+
+        info!(
+            "Delete redeem code request from player {} received",
+            username
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -62,6 +67,11 @@ impl BridgeService {
                 .status(&username, Status::internal("Failed to delete redeem code."))
                 .await;
         }
+
+        info!(
+            "Delete redeem code request from player {} completed",
+            username
+        );
 
         Ok(Response::new(DeleteRedeemCodeResponse { success: true }))
     }

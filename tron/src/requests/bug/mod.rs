@@ -6,7 +6,7 @@ pub mod view;
 
 use crate::BridgeService;
 use crate::bridge::{BugRequest, BugResponse};
-use crate::config::messages::BUG_SUBMITTED;
+use crate::config::messages::{BUG_SUBMITTED, PLAYER_BUG_NOTIFICATION};
 use crate::models::bug::Bug;
 use crate::render;
 use tonic::{Request, Response, Status};
@@ -34,6 +34,20 @@ impl BridgeService {
 
         if let Err(e) = self
             .send_message(&username, render!(BUG_SUBMITTED, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        if let Err(e) = self
+            .send_message_to_admins(render!(PLAYER_BUG_NOTIFICATION, username = username))
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        if let Err(e) = self
+            .send_message_to_moderators(render!(PLAYER_BUG_NOTIFICATION, username = username))
             .await
         {
             error!("Failed to send player message: {}", e);

@@ -4,7 +4,7 @@ use crate::config::messages::{TEAMS_LEADERBOARD, TEAMS_LEADERBOARD_EMPTY};
 use crate::models::team::Team;
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_teams_leaderboard(
@@ -13,6 +13,11 @@ impl BridgeService {
     ) -> Result<Response<ListTeamsLeaderboardResponse>, Status> {
         let inner = request.into_inner();
         let username = inner.username;
+
+        info!(
+            "List Team Leaderboard request from player {} received",
+            username
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -76,6 +81,11 @@ impl BridgeService {
             error!("Failed to send kd leaderboard message: {}", err);
         })
         .ok();
+
+        info!(
+            "List Team Leaderboard request from player {} completed",
+            username
+        );
 
         Ok(Response::new(ListTeamsLeaderboardResponse {
             success: true,

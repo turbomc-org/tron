@@ -1,7 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{GetFriendsRequest, GetFriendsResponse};
 use tonic::{Request, Response, Status};
-use tracing::debug;
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_get_friends(
@@ -11,7 +11,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username.clone();
 
-        debug!("Get friends request for player {} received", username);
+        info!("Get friends request for player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -22,7 +22,7 @@ impl BridgeService {
             }
         }
 
-        debug!("Get friends request for player {} completed", username);
+        info!("Get friends request for player {} completed", username);
 
         Ok(Response::new(GetFriendsResponse { friends }))
     }

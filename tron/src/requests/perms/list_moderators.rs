@@ -3,7 +3,7 @@ use crate::bridge::{ListAllModeratorsRequest, ListAllModeratorsResponse};
 use crate::config::messages::{MODERATOR_LIST, MODERATOR_LIST_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_all_moderators(
@@ -12,6 +12,8 @@ impl BridgeService {
     ) -> Result<Response<ListAllModeratorsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("List moderators request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -63,6 +65,8 @@ impl BridgeService {
                 .ok();
         }
 
-        todo!("Implement list all moderators")
+        info!("List moderators request from player {} completed", username);
+
+        Ok(Response::new(ListAllModeratorsResponse { success: true }))
     }
 }

@@ -5,7 +5,7 @@ use crate::models::player::Role;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_all_reports(
@@ -15,9 +15,11 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
+        info!("List all report request from player {} received", username);
+
         let player = self.state().get_player_with_handling(&username).await?;
 
-        if player.role != Role::Admin {
+        if player.role != Role::Admin && player.role != Role::Moderator {
             return self
                 .status(
                     &username,
@@ -85,6 +87,8 @@ impl BridgeService {
             .map_err(|err| error!("Failed to send message: {}", err))
             .ok();
         }
+
+        info!("List all report request from player {} completed", username);
 
         Ok(Response::new(ListAllReportsResponse { success: true }))
     }

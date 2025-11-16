@@ -1,6 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{GetAllAdminsRequest, GetAllAdminsResponse};
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_get_all_admins(
@@ -9,6 +10,8 @@ impl BridgeService {
     ) -> Result<Response<GetAllAdminsResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Get admins request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -33,6 +36,8 @@ impl BridgeService {
                 continue;
             }
         }
+
+        info!("Get admins request from player {} completed", username);
 
         Ok(Response::new(GetAllAdminsResponse {
             usernames: admin_names,

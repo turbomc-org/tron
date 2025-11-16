@@ -3,7 +3,7 @@ use crate::bridge::{DemotePermsRequest, DemotePermsResponse};
 use crate::config::messages::DEMOTE_PERMS;
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_demote_perms(
@@ -13,6 +13,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let target = inner_request.target;
+
+        info!("Demote perms request from player {} received", username);
 
         let mut player = self.state().get_player_with_handling(&username).await?;
         let target = self.state().get_player_with_handling(&target).await?;
@@ -53,6 +55,8 @@ impl BridgeService {
         {
             error!("Failed to send player message: {}", e);
         }
+
+        info!("Demote perms request from player {} completed", username);
 
         Ok(Response::new(DemotePermsResponse { success: true }))
     }

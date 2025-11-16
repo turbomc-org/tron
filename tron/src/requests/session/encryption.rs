@@ -2,6 +2,7 @@ use crate::BridgeService;
 use crate::bridge::PlayerEncryptionLoginRequest;
 use crate::bridge::PlayerEncryptionLoginResponse;
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_player_encryption_login(
@@ -11,6 +12,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
+        info!("Encryption login request from player {} received", username);
+
         let player = self.state().get_player_with_handling(&username).await?;
 
         if player.original_name.is_none() {
@@ -18,6 +21,11 @@ impl BridgeService {
         }
 
         self.join_game(player).await;
+
+        info!(
+            "Encryption login request from player {} completed",
+            username
+        );
 
         Ok(Response::new(PlayerEncryptionLoginResponse {
             success: true,

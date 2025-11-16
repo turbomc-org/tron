@@ -2,6 +2,7 @@ use crate::BridgeService;
 use crate::bridge::{CreateRedeemCodeRequest, CreateRedeemCodeResponse};
 use crate::models::redeem::{Redeem, Reward};
 use tonic::{Request, Response, Status};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_create_redeem_code(
@@ -13,6 +14,11 @@ impl BridgeService {
         let code = inner_request.code;
         let expires_at = inner_request.expires_at;
         let reward = inner_request.reward;
+
+        info!(
+            "Create redeem code request from player {} received",
+            username
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -53,6 +59,11 @@ impl BridgeService {
                 .status(&username, Status::internal(e.to_string()))
                 .await;
         }
+
+        info!(
+            "Create redeem code request from player {} completed",
+            username
+        );
 
         Ok(Response::new(CreateRedeemCodeResponse { success: true }))
     }

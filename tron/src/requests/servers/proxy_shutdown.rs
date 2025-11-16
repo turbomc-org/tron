@@ -1,4 +1,5 @@
 use tonic::{Request, Response, Status};
+use tracing::warn;
 
 use crate::{
     BridgeService,
@@ -18,6 +19,8 @@ impl BridgeService {
         }
 
         self.state().proxies.remove(&client_id);
+
+        warn!("Proxy has shuted down");
 
         Ok(Response::new(ProxyShutdownResponse { success: true }))
     }

@@ -5,7 +5,7 @@ use crate::models::redeem::Redeem;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_list_all_redeem_codes(
@@ -14,6 +14,11 @@ impl BridgeService {
     ) -> Result<Response<ListAllRedeemCodesResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!(
+            "List all redeem codes request from player {} received",
+            username
+        );
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -76,6 +81,11 @@ impl BridgeService {
                 .map_err(|err| error!("Failed to send message: {}", err))
                 .ok();
         }
+
+        info!(
+            "List all redeem codes request from player {} completed",
+            username
+        );
 
         Ok(Response::new(ListAllRedeemCodesResponse { success: true }))
     }

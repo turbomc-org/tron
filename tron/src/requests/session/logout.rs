@@ -1,7 +1,7 @@
 use crate::BridgeService;
 use crate::bridge::{PlayerLogoutRequest, PlayerLogoutResponse};
 use tonic::{Request, Response, Status};
-use tracing::{debug, info};
+use tracing::info;
 
 impl BridgeService {
     pub async fn handle_player_logout(
@@ -10,8 +10,6 @@ impl BridgeService {
     ) -> Result<Response<PlayerLogoutResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
-
-        debug!("Leave request for player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
         self.state().active_players.remove(&player.username);

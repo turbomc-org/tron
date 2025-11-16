@@ -2,7 +2,7 @@ use crate::bridge::{IncreaseCoinsRequest, IncreaseCoinsResponse};
 use crate::config::messages::{ADMINISTRATIVE_GRANT, MASTER_CONTROL_CREDITS_GRANTED};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_increase_coins(
@@ -14,7 +14,19 @@ impl BridgeService {
         let target = inner_request.target;
         let amount = inner_request.amount;
 
-        let _ = self.state().get_player_with_handling(&username).await?;
+        info!("Inc coins request from player {} received", username);
+
+        let player = self.state().get_player_with_handling(&username).await?;
+
+        if !player.is_admin() {
+            return self
+                .status(
+                    &username,
+                    Status::permission_denied("Only admins can increase coins."),
+                )
+                .await;
+        }
+
         let mut target_player = self.state().get_player_with_handling(&target).await?;
 
         target_player
@@ -52,6 +64,8 @@ impl BridgeService {
         {
             error!("Failed to send player {} message: {}", target, e);
         };
+
+        info!("Inc coins request from player {} completed", username);
 
         Ok(Response::new(IncreaseCoinsResponse { success: true }))
     }

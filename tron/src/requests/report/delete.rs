@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::bridge::{DeleteReportRequest, DeleteReportResponse};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_delete_report(
@@ -12,6 +12,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let report_id = inner_request.id;
+
+        info!("Delete report request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -34,6 +36,8 @@ impl BridgeService {
                 )
                 .await;
         }
+
+        info!("Delete report request from player {} completed", username);
 
         Ok(Response::new(DeleteReportResponse { success: true }))
     }

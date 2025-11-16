@@ -17,7 +17,6 @@ impl BridgeService {
 
         let player = self.state().get_player_with_handling(&username).await?;
 
-        // Resolve all incoming friend requests synchronously
         let mut incoming_friend_requests: HashMap<String, u64> = HashMap::new();
 
         for (sender_id, sent_at) in &player.incoming_friend_requests {
@@ -28,7 +27,6 @@ impl BridgeService {
 
         let count = incoming_friend_requests.len();
 
-        // If none exist — send info message
         if count == 0 {
             self.send_message(
                 &player.username,

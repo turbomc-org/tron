@@ -3,7 +3,7 @@ use crate::bridge::{TeamChatRequest, TeamChatResponse};
 use crate::config::messages::JOINED_CHANNEL;
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_team_chat(
@@ -12,6 +12,8 @@ impl BridgeService {
     ) -> Result<Response<TeamChatResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
+
+        info!("Team chat request from player {} completed", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -50,6 +52,8 @@ impl BridgeService {
                 return Err(Status::internal("Failed to send message"));
             }
         }
+
+        info!("Team chat request from player {} completed", username);
 
         Ok(Response::new(TeamChatResponse { success: true }))
     }

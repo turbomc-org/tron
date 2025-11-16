@@ -7,7 +7,7 @@ use crate::BridgeService;
 use crate::bridge::{RedeemCodeRequest, RedeemCodeResponse};
 use crate::utils::is_expired;
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_redeem_code(
@@ -17,6 +17,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let code = inner_request.code;
+
+        info!("Redeem code request from player {} received", username);
 
         let mut player = self.state().get_player_with_handling(&username).await?;
 
@@ -76,6 +78,8 @@ impl BridgeService {
                 .status(&username, Status::internal("Failed to redeem code."))
                 .await;
         }
+
+        info!("Redeem code request from player {} completed", username);
 
         Ok(Response::new(RedeemCodeResponse { success: true }))
     }

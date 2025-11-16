@@ -3,7 +3,7 @@ use crate::config::messages::SERVER_DETAIL;
 use crate::utils::format_timestamp_indian_style;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::error;
+use tracing::{error, info};
 
 impl BridgeService {
     pub async fn handle_view_server(
@@ -13,6 +13,8 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let name = inner_request.name;
+
+        info!("View server request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -76,6 +78,8 @@ impl BridgeService {
         {
             error!("Failed to send player message: {}", e);
         };
+
+        info!("View server request from player {} completed", username);
 
         Ok(Response::new(ViewServerResponse { success: true }))
     }
