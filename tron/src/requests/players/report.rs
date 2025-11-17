@@ -1,4 +1,4 @@
-use crate::bridge::{ReportPlayerRequest, ReportPlayerResponse};
+use crate::bridge::{ReportRequest, ReportResponse};
 use crate::config::messages::{PLAYER_REPORT_NOTIFICATION, REPORT_PLAYER};
 use crate::models::report::Report;
 use crate::{BridgeService, render};
@@ -8,8 +8,8 @@ use tracing::{error, info};
 impl BridgeService {
     pub async fn handle_report_player(
         &self,
-        request: Request<ReportPlayerRequest>,
-    ) -> Result<Response<ReportPlayerResponse>, Status> {
+        request: Request<ReportRequest>,
+    ) -> Result<Response<ReportResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username;
         let target = inner_request.target;
@@ -56,6 +56,6 @@ impl BridgeService {
 
         info!("Report player request completed");
 
-        Ok(Response::new(ReportPlayerResponse { success: true }))
+        Ok(Response::new(ReportResponse { success: true }))
     }
 }

@@ -11,7 +11,7 @@ pub static WELCOME_BACK: Lazy<Template<'static>> = Lazy::new(|| {
         body: "Connection to the <gradient:#B200FF:#6A00A3>H01 Network</gradient> re-established.\n\
     <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 6</gradient> systems online — enjoy your session, <light_purple><bold>player.</bold></light_purple>",
         actions: {
-            discord: { kind: "url", value: "https://discord.gg/yourinvite", label: "Report bugs or updates on Discord" }
+            discord: { kind: "url", value: "https://discord.gg/6K22juDm7k", label: "Report bugs or updates on Discord" }
         }
     }
 });
@@ -23,7 +23,7 @@ pub static WELCOME_FIRST_TIME: Lazy<Template<'static>> = Lazy::new(|| {
         body: r#"You've entered the <bold><gradient:#B200FF:#6A00A3>H01 Network</gradient></bold> for the first time.
     <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 6</gradient> has begun — your legacy starts <light_purple><bold>now.</bold></light_purple>"#,
         actions: {
-            discord: { kind: "url", value: "https://discord.gg/yourinvite", label: "Join the Grid (Discord)" }
+            discord: { kind: "url", value: "https://discord.gg/6K22juDm7k", label: "Join the Grid (Discord)" }
         }
     }
 });
@@ -1054,5 +1054,21 @@ pub static PROMOTED_MODERATOR: Lazy<Template<'static>> = Lazy::new(|| {
         type: "info",
         title: "🔺 SUCCESSFULLY PROMOTED MODERATOR",
         body: "You successfully promoted player {{username}} to moderator.",
+    }
+});
+
+pub static SERVER_LANDING: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ LANDING SET",
+        body: r#"You successfully set the {{name}} as the landing."#,
+    }
+});
+
+pub static RELEASE_NOTE: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🚀 RELEASE NOTE",
+        body: "{{body}}"
     }
 });

@@ -4,6 +4,7 @@ use crate::config::messages::{SUCCESSFUL_LOGIN, TRANSFERRING_PLAYER};
 use crate::models::player::Player;
 use crate::render;
 use tracing::error;
+use tracing::info;
 
 impl BridgeService {
     pub async fn join_game(&self, player: Player) {
@@ -16,34 +17,32 @@ impl BridgeService {
             error!("Failed to send player message: {}", e);
         }
 
-        if let Err(e) = self
-            .send_message(&username, render!(TRANSFERRING_PLAYER, username = username))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        let landing_opt = self.state().servers.landing.lock().unwrap().clone();
 
-        let landing_id = self.state().servers.landing.clone();
+        info!(landing_opt);
 
-        let id = landing_id.lock().unwrap().expect("landing_id not set");
-
-        let server = match self.state().servers.documents.get(&id) {
-            Some(server) => server.clone(),
-            None => {
-                error!("Failed to find server with id {}", id);
-                return;
+        if let Some(landing_id) = landing_opt {
+            if let Err(e) = self
+                .send_message(&username, render!(TRANSFERRING_PLAYER, username = username))
+                .await
+            {
+                error!("Failed to send TRANSFERRING_PLAYER to {}: {}", username, e);
             }
-        };
 
-        self.transfer_player(TransferPlayer {
-            username: username,
-            server: Some(ProxyServer {
-                id: server.id,
-                address: server.address.clone(),
-                name: server.name,
-                motd: server.description,
-            }),
-        })
-        .await;
+            let server = match self.state().servers.documents.get(&landing_id) {
+                Some(s) => s.clone(),
+                None => {
+                    error!("Landing server ID {} not found in documents", landing_id);
+                    return;
+                }
+            };
+
+            // todo make transfer player
+        } else {
+            info!(
+                "No landing server configured (landing = None), keeping player {} on the proxy",
+                username
+            );
+        }
     }
 }

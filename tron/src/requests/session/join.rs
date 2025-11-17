@@ -1,5 +1,6 @@
 use crate::bridge::{PlayerJoinRequest, PlayerJoinResponse};
-use crate::config::messages::{WELCOME_BACK, WELCOME_FIRST_TIME};
+use crate::config::messages::{RELEASE_NOTE, WELCOME_BACK, WELCOME_FIRST_TIME};
+use crate::config::release::RELEASE_CONFIG;
 use crate::models::player::Edition;
 use crate::models::player::Player;
 use crate::utils::name_generator::generate;
@@ -76,6 +77,12 @@ impl BridgeService {
                 self.send_message(
                     &player.username,
                     render!(WELCOME_FIRST_TIME, username = &player.username),
+                )
+                .await;
+
+                self.send_message(
+                    &player.username,
+                    render!(RELEASE_NOTE, body = &RELEASE_CONFIG.note),
                 )
                 .await;
 

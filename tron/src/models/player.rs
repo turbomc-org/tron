@@ -14,7 +14,7 @@ pub struct Player {
     #[serde(rename = "_id")]
     pub id: u64,
     pub username: String,
-    pub original_name: Option<String>,
+    pub alias: Option<String>,
     pub password: Option<String>,
     pub discord_id: Option<u64>,
     pub edition: Edition,
@@ -95,7 +95,7 @@ impl TryFrom<i32> for Rank {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Encode, Decode, PartialEq, Copy)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum Edition {
     Java,
@@ -133,13 +133,13 @@ impl From<GrpcEdition> for Edition {
 }
 
 impl Player {
-    pub fn new(username: String, original_name: Option<String>, edition: Edition) -> Self {
+    pub fn new(username: String, alias: Option<String>, edition: Edition) -> Self {
         let now: DateTime<Utc> = Utc::now();
 
         Self {
             id: GENERATOR.generate(),
             username,
-            original_name,
+            alias,
             password: None,
             role: Role::Member,
             edition,

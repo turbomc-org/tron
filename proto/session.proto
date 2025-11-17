@@ -52,6 +52,7 @@ message PlayerPasswordLoginResponse {
 
 message PlayerPostLoginRequest {
     string username = 1;
+    uint64 proxy_id = 2;
 }
 
 message PlayerPostLoginResponse {

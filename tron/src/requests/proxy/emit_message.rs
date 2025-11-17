@@ -2,11 +2,13 @@ use crate::bridge::EmitMessage;
 use crate::config::messages::NOT_SUBSCRIBED;
 use crate::utils::format_message::format_message;
 use crate::{BridgeService, render};
-use tracing::{error, warn};
+use tracing::{error, info, warn};
 
 impl BridgeService {
     pub async fn handle_proxy_emit_message(&self, req: EmitMessage) {
         let username = req.username;
+
+        info!("Received emit message");
 
         let player = match self.state().get_player_with_handling(&username).await {
             Ok(player) => player,

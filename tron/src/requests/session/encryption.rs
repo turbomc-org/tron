@@ -16,7 +16,7 @@ impl BridgeService {
 
         let player = self.state().get_player_with_handling(&username).await?;
 
-        if player.original_name.is_none() {
+        if player.alias.is_none() {
             return self.status(&username, Status::internal("You are not a player using encryption authentication but still you tried for it.")).await;
         }
 

@@ -37,7 +37,6 @@ enum Rank {
     LEGEND = 4;
 }
 
-
 message Server {
     uint64 id = 1;
     string name = 2;

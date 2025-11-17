@@ -29,3 +29,36 @@ message DemotePermsRequest {
 message DemotePermsResponse {
     bool success = 1;
 }
+
+
+message GetAllAdminsRequest {
+    string username = 1;
+}
+
+message GetAllAdminsResponse {
+    repeated string usernames = 1;
+}
+
+message GetAllModeratorsRequest {
+    string username = 1;
+}
+
+message GetAllModeratorsResponse {
+    repeated string usernames = 1;
+}
+
+message ListAllAdminsRequest {
+    string username = 1;
+}
+
+message ListAllAdminsResponse {
+    bool success = 1;
+}
+
+message ListAllModeratorsRequest {
+    string username = 1;
+}
+
+message ListAllModeratorsResponse {
+    bool success = 1;
+}

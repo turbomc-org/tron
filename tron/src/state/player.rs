@@ -1,6 +1,7 @@
 use crate::models::achievements::Achievements;
 use crate::models::player::Player;
 use crate::state::State;
+use crate::utils::math::calculate_kd;
 use anyhow::Result;
 use anyhow::anyhow;
 use tonic::Status;
@@ -28,7 +29,10 @@ impl State {
     pub async fn insert_player(&self, player: Player) -> Result<()> {
         self.active_players
             .insert(player.username.clone(), player.clone());
-        self.indexes.player.insert(player.id, player.username);
+        self.indexes
+            .player
+            .insert(player.id, player.username.clone());
+        self.update_leaderboard(player).await?;
 
         Ok(())
     }
@@ -87,7 +91,6 @@ impl State {
         }
 
         self.insert_player(player.clone()).await?;
-        self.update_leaderboard(player).await?;
 
         Ok(())
     }
@@ -104,7 +107,6 @@ impl State {
         player.kills = player.kills.saturating_add(amount);
 
         self.insert_player(player.clone()).await?;
-        self.update_leaderboard(player).await?;
 
         Ok(())
     }
@@ -121,7 +123,6 @@ impl State {
         player.deaths = player.deaths.saturating_add(amount);
 
         self.insert_player(player.clone()).await?;
-        self.update_leaderboard(player).await?;
 
         Ok(())
     }
@@ -132,6 +133,24 @@ impl State {
             .update_score(player.id.clone(), player.coins.clone())
             .await;
 
+        self.leaderboards
+            .deaths
+            .update_score(player.id.clone(), player.deaths)
+            .await;
+
+        self.leaderboards
+            .kills
+            .update_score(player.id.clone(), player.kills)
+            .await;
+
+        self.leaderboards
+            .kd
+            .update_score(
+                player.id.clone(),
+                calculate_kd(player.kills, player.deaths) as u64,
+            )
+            .await;
+
         let overall =
             crate::utils::math::calculate_overall(player.kills, player.deaths, player.coins);
 
@@ -139,7 +158,6 @@ impl State {
             .overall
             .update_score(player.id.clone(), overall as u64)
             .await;
-
         if let Some(team) = player.team {
             let Some(team) = self.get_team(team) else {
                 return Err(anyhow!("Team not found"));

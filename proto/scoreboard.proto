@@ -28,3 +28,11 @@ message ToggleScoreboardRequest {
 message ToggleScoreboardResponse {
     bool success = 1;
 }
+
+message GetScoreboardStatusRequest {
+    string username = 1;
+}
+
+message GetScoreboardStatusResponse {
+    bool enabled = 1;
+}

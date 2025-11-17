@@ -24,8 +24,12 @@ impl Messaging {
         default_streams.insert(DefaultStreams::Global, global_stream);
         default_streams.insert(DefaultStreams::Hindi, hindi_stream);
 
+        let streams = DashSet::new();
+        streams.insert(global_stream);
+        streams.insert(hindi_stream);
+
         Self {
-            streams: DashSet::new(),
+            streams,
             subscriptions: DashMap::new(),
             team_streams: DashMap::new(),
             friend_chat_invites: DashMap::new(),

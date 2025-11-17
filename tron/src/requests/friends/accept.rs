@@ -1,6 +1,5 @@
 use crate::bridge::{AcceptFriendRequestRequest, AcceptFriendRequestResponse};
 use crate::config::messages::{FRIEND_CONNECTED, FRIEND_REQUEST_ACCEPTED};
-use crate::models::player::Player;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
@@ -32,18 +31,14 @@ impl BridgeService {
 
         let sender_id = self.state().check_friend_request(&player, &sender).await?;
 
-        Player::accept_friend_request(
-            &mut player,
-            (sender_id, sender.clone()),
-            players,
-            &self.state(),
-        )
-        .await
-        .map_err(|err| {
-            error!("Failed to accept friend request from {}: {}", sender, err);
+        player
+            .accept_friend_request((sender_id, sender.clone()), players, &self.state())
+            .await
+            .map_err(|err| {
+                error!("Failed to accept friend request from {}: {}", sender, err);
 
-            Status::internal(format!("Failed to accept friend request from {}", sender))
-        })?;
+                Status::internal(format!("Failed to accept friend request from {}", sender))
+            })?;
 
         if let Err(e) = self
             .send_message(&username, render!(FRIEND_CONNECTED, sender = &sender))

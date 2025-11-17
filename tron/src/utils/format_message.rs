@@ -54,11 +54,11 @@ pub async fn format_message(
 
     let mut emoji_part = String::new();
 
-    emoji_part.push_str(&rank_emoji("🎖️", overall_rank, "Overall Rank"));
-    emoji_part.push_str(&rank_emoji("🩸", kills_rank, "Most Kills"));
-    emoji_part.push_str(&rank_emoji("🗡️", kd_rank, "Best K/D Ratio"));
-    emoji_part.push_str(&rank_emoji("💩", deaths_rank, "Most Deaths"));
-    emoji_part.push_str(&rank_emoji("🪙", coins_rank, "Richest Player"));
+    emoji_part.push_str(&rank_emoji("\u{1F3C5}", overall_rank, "Overall Rank"));
+    emoji_part.push_str(&rank_emoji("\u{1FA78}", kills_rank, "Most Kills"));
+    emoji_part.push_str(&rank_emoji("\u{1F5E1}", kd_rank, "Best K/D Ratio"));
+    emoji_part.push_str(&rank_emoji("\u{1F4A9}", deaths_rank, "Most Deaths"));
+    emoji_part.push_str(&rank_emoji("\u{1FA99}", coins_rank, "Richest Player"));
 
     let achievement_display = get_best_achievement_display(&player.achievements);
 
@@ -102,8 +102,8 @@ fn rank_emoji(emoji: &str, rank: u64, hover_label: &str) -> String {
     }
 
     let (color, place) = match rank {
-        1 => ("gold", "1st"),
-        2 => ("silver", "2nd"),
+        1 => ("#FFD700", "1st"),
+        2 => ("#C0C0C0", "2nd"),
         3 => ("#b87333", "3rd"),
         _ => return String::new(), // only top 3
     };

@@ -1,6 +1,6 @@
 use crate::bridge::{FriendChatRequest, FriendChatResponse};
 use crate::config::messages::{FRIEND_CHAT_REQUEST_RECEIVED, FRIEND_CHAT_REQUEST_SENT};
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::info;
 
@@ -52,7 +52,11 @@ impl BridgeService {
         if let Err(e) = self
             .send_message(
                 &friend_username,
-                render!(FRIEND_CHAT_REQUEST_RECEIVED, friend = &username),
+                render!(
+                    FRIEND_CHAT_REQUEST_RECEIVED,
+                    friend = &username,
+                    token = &token
+                ),
             )
             .await
         {

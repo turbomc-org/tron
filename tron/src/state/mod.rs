@@ -214,7 +214,7 @@ impl State {
                 team_score += overall_score;
             }
 
-            team_score = team_score / 2 as f64;
+            team_score = team_score / 2 as f64; // TODO: Clarify if this division by 2 is intentional or if it should be divided by team.members.len() for an average.
             team_indexes.insert(team.id, team_score);
         }
 
@@ -232,7 +232,61 @@ impl State {
             cache.messaging.register_team_stream(team.id);
         }
 
-        info!("Populating aliases from database");
+        info!("Populating redeem codes from database");
+
+        let redeems = cols
+            .redeems
+            .all()
+            .await
+            .expect("Failed to populate redeem codes");
+
+        for redeem in redeems {
+            cache.redeems.insert(redeem.id, redeem.clone());
+            cache.indexes.redeem.insert(redeem.code, redeem.id);
+        }
+
+        info!("Populating admins from database");
+
+        let admins = cols
+            .players
+            .admin_indexes()
+            .await
+            .expect("Failed to populate admins from database");
+
+        for admin in admins {
+            cache.indexes.admin.insert(admin);
+        }
+
+        info!("Populating moderators from database");
+
+        let moderators = cols
+            .players
+            .moderator_indexes()
+            .await
+            .expect("Failed to populate moderators from database");
+
+        for moderator in moderators {
+            cache.indexes.moderator.insert(moderator);
+        }
+
+        info!("Populating servers from database");
+
+        let servers = cols
+            .servers
+            .all()
+            .await
+            .expect("Failed to populate servers from database");
+
+        for server in servers {
+            cache.servers.documents.insert(server.id, server.clone());
+            cache.servers.addresses.insert(server.address, server.id);
+            cache.servers.names.insert(server.name, server.id);
+            let _ = {
+                let mut landing = cache.servers.landing.lock().unwrap();
+                *landing = Some(server.id);
+                server.id
+            };
+        }
 
         Ok(cache)
     }

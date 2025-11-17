@@ -4,6 +4,15 @@ option java_package = "com.tron.bridge";
 package bridge;
 import "common.proto";
 
+message LandingServerRequest {
+    string username = 1;
+    string name = 2;
+}
+
+message LandingServerResponse {
+    bool success = 1;
+}
+
 message ListAllServersRequest {
     string username = 1;
 }

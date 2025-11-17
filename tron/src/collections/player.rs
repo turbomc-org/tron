@@ -715,31 +715,22 @@ impl PlayerCollection for MongoPlayerCollection {
     }
 
     async fn set_role(&self, player_id: u64, role: Role) -> Result<(), Error> {
-        let role_str: String = serde_json::to_string(&role).unwrap();
-
         self.collection
             .update_one(
-                doc! {"_id": player_id as i64},
-                doc! {
-                    "$set": {
-                        "role": role_str
-                    }
-                },
+                doc! { "_id": player_id as i64 },
+                doc! { "$set": { "role": to_bson(&role)? } },
             )
             .await?;
-
         Ok(())
     }
 
     async fn set_rank(&self, player_id: u64, rank: Rank) -> Result<(), Error> {
-        let rank_str: String = serde_json::to_string(&rank).unwrap();
-
         self.collection
             .update_one(
                 doc! {"_id": player_id as i64},
                 doc! {
                     "$set": {
-                        "rank": rank_str
+                        "rank": to_bson(&rank)?
                     }
                 },
             )

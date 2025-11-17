@@ -214,6 +214,23 @@ impl Player {
             }
         });
 
+        task::spawn({
+            let col = col.clone();
+            async move {
+                let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
+                    col.add_friend(sender.0, player_id).await.map_err(|e| {
+                        error!("Retrying player update due to: {}", e);
+                        e
+                    })
+                })
+                .await;
+
+                if let Err(e) = retry_result {
+                    error!("Player update permanently failed: {}", e);
+                }
+            }
+        });
+
         self.incoming_friend_requests.remove(&sender.0);
         self.friends.insert(sender.0.clone());
 
