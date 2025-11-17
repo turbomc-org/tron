@@ -1,5 +1,4 @@
 use crate::BridgeService;
-use crate::bridge::{ProxyServer, TransferPlayer};
 use crate::config::messages::{SUCCESSFUL_LOGIN, TRANSFERRING_PLAYER};
 use crate::models::player::Player;
 use crate::render;
@@ -29,7 +28,7 @@ impl BridgeService {
                 error!("Failed to send TRANSFERRING_PLAYER to {}: {}", username, e);
             }
 
-            let server = match self.state().servers.documents.get(&landing_id) {
+            let _ = match self.state().servers.documents.get(&landing_id) {
                 Some(s) => s.clone(),
                 None => {
                     error!("Landing server ID {} not found in documents", landing_id);
