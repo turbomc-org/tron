@@ -14,8 +14,6 @@ pub struct Player {
     #[serde(rename = "_id")]
     pub id: u64,
     pub username: String,
-    pub alias: Option<String>,
-    pub password: Option<String>,
     pub discord_id: Option<u64>,
     pub edition: Edition,
     pub role: Role,
@@ -133,14 +131,12 @@ impl From<GrpcEdition> for Edition {
 }
 
 impl Player {
-    pub fn new(username: String, alias: Option<String>, edition: Edition) -> Self {
+    pub fn new(username: String, edition: Edition) -> Self {
         let now: DateTime<Utc> = Utc::now();
 
         Self {
             id: GENERATOR.generate(),
             username,
-            alias,
-            password: None,
             role: Role::Member,
             edition,
             discord_id: None,

@@ -2,60 +2,14 @@ syntax = "proto3";
 option java_package = "com.tron.bridge";
 
 package bridge;
+import "common.proto";
 
-enum Edition {
-    BEDROCK = 0;
-    JAVA = 1;
-}
-
-message PlayerPreLoginRequest {
+message PlayerLoginRequest {
     string username = 1;
-    Edition edition = 3;
+    Edition edition = 2;
 }
 
-message PlayerPreLoginResponse {
-    enum LoginType {
-        FLOODGATE = 0;
-        ENCRYPTION = 1;
-        PASSWORD = 2;
-    }
-    LoginType login_type = 1;
-    string username = 2;
-}
-
-message PlayerFloodgateLoginRequest {
-    string username = 1;
-}
-
-message PlayerFloodgateLoginResponse {
-    bool success = 1;
-}
-
-message PlayerEncryptionLoginRequest {
-    string username = 1;
-    string ip = 2;
-}
-
-message PlayerEncryptionLoginResponse {
-    bool success = 1;
-}
-
-message PlayerPasswordLoginRequest {
-    string username = 1;
-    string ip = 2;
-    string password = 3;
-}
-
-message PlayerPasswordLoginResponse {
-    bool success = 1;
-}
-
-message PlayerPostLoginRequest {
-    string username = 1;
-    uint64 proxy_id = 2;
-}
-
-message PlayerPostLoginResponse {
+message PlayerLoginResponse {
     bool success = 1;
 }
 
@@ -64,5 +18,13 @@ message PlayerLogoutRequest {
 }
 
 message PlayerLogoutResponse {
+    bool success = 1;
+}
+
+message PlayerPostLoginRequest {
+    string username = 1;
+}
+
+message PlayerPostLoginResponse {
     bool success = 1;
 }

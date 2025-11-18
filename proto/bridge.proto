@@ -26,11 +26,8 @@ service Bridge {
     rpc ProxyConnection (stream ProxyConnectionRequest) returns (stream ProxyConnectionResponse);
 
     // Session
-    rpc PlayerPreLogin (PlayerPreLoginRequest) returns (PlayerPreLoginResponse);
+    rpc PlayerLogin(PlayerLoginRequest) returns (PlayerLoginResponse);
     rpc PlayerPostLogin (PlayerPostLoginRequest) returns (PlayerPostLoginResponse);
-    rpc PlayerFloodgateLogin (PlayerFloodgateLoginRequest) returns (PlayerFloodgateLoginResponse);
-    rpc PlayerEncryptionLogin (PlayerEncryptionLoginRequest) returns (PlayerEncryptionLoginResponse);
-    rpc PlayerPasswordLogin (PlayerPasswordLoginRequest) returns (PlayerPasswordLoginResponse);
     rpc PlayerLogout(PlayerLogoutRequest) returns (PlayerLogoutResponse);
 
     // Balance

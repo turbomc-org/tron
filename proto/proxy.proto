@@ -31,6 +31,7 @@ message EmitWhisper {
 message Heartbeat {
   uint64 proxy_id = 1;
   int64 timestamp = 2;
+  repeated string players = 3;
 }
 
 message ProxyConnectionResponse {

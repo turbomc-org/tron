@@ -72,3 +72,9 @@ message RedeemType {
     Rank rank = 2;
   }
 }
+
+
+enum Edition {
+    BEDROCK = 0;
+    JAVA = 1;
+}
