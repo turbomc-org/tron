@@ -1,12 +1,13 @@
-name: Build aarch64-musl binary
+name: Build aarch64-musl binary (with protoc)
 
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
-  release:
-    types: [published]
+    branches:
+      - "**"
+
+permissions:
+  contents: read
 
 jobs:
   build-aarch64-musl:
@@ -34,8 +35,6 @@ jobs:
 
       - name: Install protoc
         uses: arduino/setup-protoc@v3
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install zig
         run: |
@@ -51,6 +50,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y binutils-aarch64-linux-gnu
+
       - name: Build release binary (--package tron)
         run: |
           cargo zigbuild --release --target aarch64-unknown-linux-musl --package tron
@@ -69,12 +69,3 @@ jobs:
           name: tron-aarch64-linux-musl
           path: tron-aarch64-linux-musl
           if-no-files-found: error
-
-      - name: Upload to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: tron-aarch64-linux-musl
-
-permissions:
-  contents: write

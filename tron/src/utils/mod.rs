@@ -14,6 +14,7 @@ pub mod name_generator;
 pub mod redis;
 pub mod serde;
 pub mod templates;
+pub mod title;
 
 pub fn is_expired(saved_timestamp: u64) -> bool {
     let now = Utc::now().timestamp() as u64;
