@@ -8,7 +8,7 @@ use tron_protos::bridge_server::BridgeServer;
 pub struct GRPCService {}
 
 impl GRPCService {
-    pub async fn init() {
+    pub async fn init() -> Result<(), Box<dyn std::error::Error>> {
         let addr = "127.0.0.1:50051"
             .parse()
             .expect("failed to parse the address");
@@ -24,10 +24,8 @@ impl GRPCService {
         let bs = BridgeService::new(collections).await;
         let svc = BridgeServer::new(bs);
 
-        Server::builder()
-            .add_service(svc)
-            .serve(addr)
-            .await
-            .expect("failed to start the server");
+        Server::builder().add_service(svc).serve(addr).await?;
+
+        Ok(())
     }
 }
