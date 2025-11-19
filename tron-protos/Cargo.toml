@@ -1,5 +1,6 @@
 [package]
 name = "tron-protos"
+description = "Package to import tron protobuf"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
