@@ -7,35 +7,37 @@ on:
 
 jobs:
   build-aarch64-musl:
-    name: Build aarch64-unknown-linux-musl
+    runs-on: ubuntu-latest
     permissions:
       contents: write
-    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Install protoc
         run: |
           sudo apt-get update
           sudo apt-get install -y protobuf-compiler
 
-      - name: Install musl cross toolchain
+      - name: Install aarch64 musl cross toolchain
         run: |
           sudo apt-get update
-          sudo apt-get install -y musl-tools gcc-aarch64-linux-gnu
+          sudo apt-get install -y wget xz-utils
+          wget https://more.musl.cc/11.2.1/aarch64-linux-musl-cross.tgz
+          tar -xzf aarch64-linux-musl-cross.tgz
+          echo "$PWD/aarch64-linux-musl-cross/bin" >> $GITHUB_PATH
 
-      - name: Set up Rust
+      - name: Install Rust target
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           target: aarch64-unknown-linux-musl
           override: true
 
-      - name: Build (aarch64 musl)
+      - name: Build
         env:
-          CC_aarch64_unknown_linux_musl: aarch64-linux-gnu-gcc
+          CC_aarch64_unknown_linux_musl: aarch64-linux-musl-gcc
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_LINKER: aarch64-linux-musl-gcc
         run: cargo build --release --target aarch64-unknown-linux-musl --package tron
 
       - name: Rename binary
@@ -43,10 +45,9 @@ jobs:
           mv target/aarch64-unknown-linux-musl/release/gradient \
              target/aarch64-unknown-linux-musl/release/gradient-aarch64-unknown-linux-musl
 
-      - name: Create Release and Upload Artifact
+      - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            target/aarch64-unknown-linux-musl/release/gradient-aarch64-unknown-linux-musl
+          files: target/aarch64-unknown-linux-musl/release/gradient-aarch64-unknown-linux-musl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
