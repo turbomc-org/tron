@@ -1,4 +1,4 @@
-use crate::bridge::{GetBalanceRequest, GetBalanceResponse};
+use tron_protos::{GetBalanceRequest, GetBalanceResponse};
 use crate::config::messages::BALANCE;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};

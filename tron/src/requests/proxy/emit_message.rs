@@ -1,8 +1,8 @@
-use crate::bridge::EmitMessage;
 use crate::config::messages::NOT_SUBSCRIBED;
 use crate::utils::format_message::format_message;
 use crate::{BridgeService, render};
 use tracing::{error, info, warn};
+use tron_protos::EmitMessage;
 
 impl BridgeService {
     pub async fn handle_proxy_emit_message(&self, req: EmitMessage) {

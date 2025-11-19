@@ -5,7 +5,7 @@ pub mod list_all;
 pub mod view;
 
 use crate::BridgeService;
-use crate::bridge::{BugRequest, BugResponse};
+use tron_protos::{BugRequest, BugResponse};
 use crate::config::messages::{BUG_SUBMITTED, PLAYER_BUG_NOTIFICATION};
 use crate::models::bug::Bug;
 use crate::render;

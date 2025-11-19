@@ -1,8 +1,8 @@
-use crate::bridge::{GlobalChatRequest, GlobalChatResponse};
 use crate::config::messages::GLOBAL_CHAT;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{GlobalChatRequest, GlobalChatResponse};
 
 impl BridgeService {
     pub async fn handle_global_chat(

@@ -1,10 +1,10 @@
-use crate::bridge::{CreateShopItemRequest, CreateShopItemResponse};
 use crate::config::messages::ITEM_CREATED;
 use crate::models::shop_item::{Rarity, ShopItem};
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use std::collections::HashSet;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{CreateShopItemRequest, CreateShopItemResponse};
 
 impl BridgeService {
     pub async fn handle_create_shop_item(

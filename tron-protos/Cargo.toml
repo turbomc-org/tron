@@ -1,0 +1,23 @@
+[package]
+name = "tron-protos"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+build = "build.rs"
+include = [
+    "src/**/*",
+    "build.rs",
+    "proto/**/*",
+    "Cargo.toml"
+]
+
+[dependencies]
+prost = "0.14.1"
+serde = { version = "1.0.228", features = ["derive"] }
+tonic = "0.14.2"
+tonic-prost = "0.14.2"
+
+[build-dependencies]
+tonic-build = "0.14.2"
+tonic-prost-build = "0.14.2"

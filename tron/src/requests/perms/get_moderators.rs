@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetAllModeratorsRequest, GetAllModeratorsResponse};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{GetAllModeratorsRequest, GetAllModeratorsResponse};
 
 impl BridgeService {
     pub async fn handle_get_all_moderators(

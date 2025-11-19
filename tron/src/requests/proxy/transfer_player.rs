@@ -1,6 +1,6 @@
 use crate::BridgeService;
-use crate::bridge::{ProxyConnectionResponse, TransferPlayer};
 use tracing::info;
+use tron_protos::{ProxyConnectionResponse, TransferPlayer};
 
 impl BridgeService {
     pub async fn transfer_player(&self, req: TransferPlayer) {
@@ -13,7 +13,7 @@ impl BridgeService {
             let tx = entry.value();
 
             let response = ProxyConnectionResponse {
-                command: Some(crate::bridge::proxy_connection_response::Command::Transfer(
+                command: Some(tron_protos::proxy_connection_response::Command::Transfer(
                     req.clone(),
                 )),
             };

@@ -1,7 +1,7 @@
 use crate::collections::Collections;
 use crate::state::State;
-use bridge::bridge_server::Bridge;
 use futures::Stream;
+use tron_protos::bridge_server::Bridge;
 
 use crate::utils::templates::render_template;
 use once_cell::sync::Lazy;
@@ -24,7 +24,7 @@ pub mod state;
 pub mod utils;
 
 pub type ProxyConnectionStream =
-    Pin<Box<dyn Stream<Item = Result<crate::bridge::ProxyConnectionResponse, Status>> + Send>>;
+    Pin<Box<dyn Stream<Item = Result<tron_protos::ProxyConnectionResponse, Status>> + Send>>;
 
 static RETRY_STRATEGY: Lazy<Take<ExponentialBackoff>> = Lazy::new(|| {
     ExponentialBackoff::from_millis(100)
@@ -38,10 +38,6 @@ static GENERATOR: Generator = Generator::new(0);
 struct BridgeServiceInner {
     state: Arc<State>,
     collections: Collections,
-}
-
-pub mod bridge {
-    tonic::include_proto!("bridge");
 }
 
 #[derive(Debug, Clone)]

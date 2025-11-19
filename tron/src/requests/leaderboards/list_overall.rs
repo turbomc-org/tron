@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{ListOverallLeaderboardRequest, ListOverallLeaderboardResponse};
 use crate::config::messages::{OVERALL_LEADERBOARD, OVERALL_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListOverallLeaderboardRequest, ListOverallLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_list_overall_leaderboard(

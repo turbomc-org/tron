@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetServerRequest, GetServerResponse, Server as CompiledServer};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
+use tron_protos::{GetServerRequest, GetServerResponse, Server as CompiledServer};
 
 impl BridgeService {
     pub async fn handle_get_server(

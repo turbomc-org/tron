@@ -1,8 +1,8 @@
-use crate::bridge::{GetTeamMembersRequest, GetTeamMembersResponse};
 use crate::config::messages::SQUAD_ROSTER;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{GetTeamMembersRequest, GetTeamMembersResponse};
 
 impl BridgeService {
     pub async fn handle_get_team_members(

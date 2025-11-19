@@ -1,8 +1,8 @@
-use crate::bridge::{LeaveTeamRequest, LeaveTeamResponse};
 use crate::config::messages::{SQUAD_LINK_SEVERED, USER_DISCONNECTED};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{LeaveTeamRequest, LeaveTeamResponse};
 
 impl BridgeService {
     pub async fn handle_leave_team(

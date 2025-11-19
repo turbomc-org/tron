@@ -1,8 +1,8 @@
-use crate::bridge::{ListFriendsRequest, ListFriendsResponse};
 use crate::config::messages::{FRIEND_NETWORK, NO_CONNECTIONS};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListFriendsRequest, ListFriendsResponse};
 
 impl BridgeService {
     pub async fn handle_list_friends(

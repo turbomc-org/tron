@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{ListAllModeratorsRequest, ListAllModeratorsResponse};
 use crate::config::messages::{MODERATOR_LIST, MODERATOR_LIST_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListAllModeratorsRequest, ListAllModeratorsResponse};
 
 impl BridgeService {
     pub async fn handle_list_all_moderators(

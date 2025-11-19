@@ -1,4 +1,4 @@
-use crate::bridge::{PlayerKillRequest, PlayerKillResponse};
+use tron_protos::{PlayerKillRequest, PlayerKillResponse};
 use anyhow::Result;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};

@@ -1,4 +1,3 @@
-use crate::bridge::ProxyConnectionResponse;
 use crate::collections::Collections;
 use crate::models::leaderboards::Leaderboards;
 use crate::models::player::Player;
@@ -15,6 +14,7 @@ use std::collections::{HashMap, HashSet};
 use tokio::sync::mpsc;
 use tonic::Status;
 use tracing::info;
+use tron_protos::ProxyConnectionResponse;
 
 pub mod auth;
 pub mod messaging;

@@ -1,8 +1,8 @@
-use crate::bridge::{LandingServerRequest, LandingServerResponse};
 use crate::config::messages::SERVER_LANDING;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
+use tron_protos::{LandingServerRequest, LandingServerResponse};
 
 impl BridgeService {
     pub async fn handle_landing_server(

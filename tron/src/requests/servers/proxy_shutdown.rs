@@ -1,10 +1,7 @@
+use crate::BridgeService;
 use tonic::{Request, Response, Status};
 use tracing::warn;
-
-use crate::{
-    BridgeService,
-    bridge::{ProxyShutdownRequest, ProxyShutdownResponse},
-};
+use tron_protos::{ProxyShutdownRequest, ProxyShutdownResponse};
 
 impl BridgeService {
     pub async fn handle_proxy_shutdown(

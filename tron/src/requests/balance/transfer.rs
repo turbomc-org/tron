@@ -1,9 +1,9 @@
-use crate::bridge::{TransferBalanceRequest, TransferBalanceResponse};
 use crate::config::messages::{INCOMING_TRANSFER, TRANSFERRED};
 use crate::models::player::Player;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
+use tron_protos::{TransferBalanceRequest, TransferBalanceResponse};
 
 impl BridgeService {
     pub async fn handle_transfer_balance(

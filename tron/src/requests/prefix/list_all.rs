@@ -1,8 +1,8 @@
-use crate::bridge::{ListAllPrefixRequest, ListAllPrefixResponse, PartialPrefix as CompiledPrefix};
 use crate::config::messages::{MARKET_DATABASE_EMPTY, NETWORK_MARKET_IDENTIFIERS};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListAllPrefixRequest, ListAllPrefixResponse, PartialPrefix as CompiledPrefix};
 
 impl BridgeService {
     pub async fn handle_list_all_prefixes(

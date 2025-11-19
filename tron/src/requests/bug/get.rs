@@ -1,8 +1,8 @@
-use crate::bridge::{Bug as CompiledBug, GetBugRequest, GetBugResponse};
-use crate::models::player::Role;
 use crate::BridgeService;
+use crate::models::player::Role;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{Bug as CompiledBug, GetBugRequest, GetBugResponse};
 
 impl BridgeService {
     pub async fn handle_get_bug(

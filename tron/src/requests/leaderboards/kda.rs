@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{KdaLeaderboardRequest, KdaLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{KdaLeaderboardRequest, KdaLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_kda_leaderboard(

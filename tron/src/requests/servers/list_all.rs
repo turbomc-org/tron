@@ -1,5 +1,4 @@
 use crate::BridgeService;
-use crate::bridge::{ListAllServersRequest, ListAllServersResponse};
 use crate::config::messages::{NO_SERVERS_FOUND, SERVER_DETAIL, SERVER_LIST};
 use crate::models::player::Role;
 use crate::models::server::Server;
@@ -7,6 +6,7 @@ use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListAllServersRequest, ListAllServersResponse};
 
 impl BridgeService {
     pub async fn handle_list_all_servers(

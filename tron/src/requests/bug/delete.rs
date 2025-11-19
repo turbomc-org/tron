@@ -1,9 +1,9 @@
-use crate::bridge::{DeleteBugRequest, DeleteBugResponse};
 use crate::config::messages::DELETE_BUG;
 use crate::models::player::Role;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{DeleteBugRequest, DeleteBugResponse};
 
 impl BridgeService {
     pub async fn handle_delete_bug(

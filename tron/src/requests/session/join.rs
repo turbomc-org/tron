@@ -1,4 +1,3 @@
-use crate::bridge::{PlayerJoinRequest, PlayerJoinResponse};
 use crate::config::messages::{RELEASE_NOTE, WELCOME_BACK, WELCOME_FIRST_TIME};
 use crate::config::release::RELEASE_CONFIG;
 use crate::models::player::Edition;
@@ -7,6 +6,7 @@ use crate::utils::name_generator::generate;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
+use tron_protos::{PlayerJoinRequest, PlayerJoinResponse};
 
 impl BridgeService {
     pub async fn handle_player_join(
@@ -17,8 +17,8 @@ impl BridgeService {
         let username = inner_request.username;
 
         #[allow(deprecated)]
-        let edition: Edition = crate::bridge::Edition::from_i32(inner_request.edition)
-            .unwrap_or(crate::bridge::Edition::Java)
+        let edition: Edition = tron_protos::bridge::Edition::from_i32(inner_request.edition)
+            .unwrap_or(tron_protos::bridge::Edition::Java)
             .into();
 
         debug!("Join request for player {} received", username);

@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{GetAllBugsRequest, GetAllBugsResponse};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{GetAllBugsRequest, GetAllBugsResponse};
 
 impl BridgeService {
     pub async fn handle_get_all_bugs(

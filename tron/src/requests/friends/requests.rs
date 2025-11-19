@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{GetFriendRequestsRequest, GetFriendRequestsResponse};
 use chrono::Utc;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{GetFriendRequestsRequest, GetFriendRequestsResponse};
 
 impl BridgeService {
     pub async fn handle_get_friend_requests(

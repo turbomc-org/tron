@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{DeleteReportRequest, DeleteReportResponse};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{DeleteReportRequest, DeleteReportResponse};
 
 impl BridgeService {
     pub async fn handle_delete_report(

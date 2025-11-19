@@ -1,10 +1,10 @@
-use crate::bridge::{ListOwnedPrefixRequest, ListOwnedPrefixResponse};
 use crate::config::messages::{IDENTIFIER_COLLECTION, NO_ASSETS_UNLOCKED};
 use crate::models::prefix::Prefix;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
+use tron_protos::{ListOwnedPrefixRequest, ListOwnedPrefixResponse};
 
 impl BridgeService {
     pub async fn handle_list_owned_prefixes(

@@ -1,7 +1,7 @@
 use tonic::{Request, Response, Status};
 
 use crate::BridgeService;
-use crate::bridge::{DeleteTeamRequest, DeleteTeamResponse};
+use tron_protos::{DeleteTeamRequest, DeleteTeamResponse};
 
 impl BridgeService {
     pub async fn handle_delete_team(

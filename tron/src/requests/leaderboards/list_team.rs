@@ -1,10 +1,10 @@
 use crate::BridgeService;
-use crate::bridge::{ListTeamsLeaderboardRequest, ListTeamsLeaderboardResponse};
 use crate::config::messages::{TEAMS_LEADERBOARD, TEAMS_LEADERBOARD_EMPTY};
 use crate::models::team::Team;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListTeamsLeaderboardRequest, ListTeamsLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_list_teams_leaderboard(

@@ -1,6 +1,6 @@
 use crate::BridgeService;
-use crate::bridge::{MessagePlayer, ProxyConnectionResponse};
 use anyhow::Result;
+use tron_protos::{MessagePlayer, ProxyConnectionResponse};
 
 impl BridgeService {
     pub async fn message_player(&self, req: MessagePlayer) -> Result<()> {
@@ -11,7 +11,7 @@ impl BridgeService {
             let tx = entry.value();
 
             let response = ProxyConnectionResponse {
-                command: Some(crate::bridge::proxy_connection_response::Command::Message(
+                command: Some(tron_protos::proxy_connection_response::Command::Message(
                     req.clone(),
                 )),
             };

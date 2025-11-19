@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetScoreboardRequest, GetScoreboardResponse};
 use crate::utils::math::calculate_overall;
 use tonic::{Request, Response, Status};
+use tron_protos::{GetScoreboardRequest, GetScoreboardResponse};
 
 impl BridgeService {
     pub async fn handle_get_scoreboard(

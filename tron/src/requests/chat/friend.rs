@@ -1,8 +1,8 @@
-use crate::bridge::{FriendChatRequest, FriendChatResponse};
 use crate::config::messages::{FRIEND_CHAT_REQUEST_RECEIVED, FRIEND_CHAT_REQUEST_SENT};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{FriendChatRequest, FriendChatResponse};
 
 impl BridgeService {
     pub async fn handle_friend_chat(

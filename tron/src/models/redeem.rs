@@ -1,9 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-use crate::bridge::RedeemType;
-use crate::bridge::redeem_type;
 use crate::{GENERATOR, models::player::Rank};
 use chrono::Utc;
+use tron_protos::RedeemType;
+use tron_protos::redeem_type;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Redeem {

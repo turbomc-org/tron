@@ -1,5 +1,5 @@
 use crate::GENERATOR;
-use crate::bridge::{Rarity as CompiledRarity, ShopItem as CompiledShopItem};
+use tron_protos::{Rarity as CompiledRarity, ShopItem as CompiledShopItem};
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;

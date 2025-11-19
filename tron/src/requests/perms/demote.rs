@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{DemotePermsRequest, DemotePermsResponse};
 use crate::config::messages::DEMOTE_PERMS;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{DemotePermsRequest, DemotePermsResponse};
 
 impl BridgeService {
     pub async fn handle_demote_perms(

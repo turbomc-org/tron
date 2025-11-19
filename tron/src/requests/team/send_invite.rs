@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{SendTeamInviteRequest, SendTeamInviteResponse};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, warn};
+use tron_protos::{SendTeamInviteRequest, SendTeamInviteResponse};
 
 impl BridgeService {
     pub async fn handle_send_team_invite(

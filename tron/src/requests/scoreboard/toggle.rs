@@ -1,8 +1,8 @@
-use crate::bridge::{ToggleScoreboardRequest, ToggleScoreboardResponse};
 use crate::config::messages::{DISABLE_SCOREBOARD, ENABLE_SCOREBOARD};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ToggleScoreboardRequest, ToggleScoreboardResponse};
 
 impl BridgeService {
     pub async fn handle_toggle_scoreboard(

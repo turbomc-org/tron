@@ -1,11 +1,9 @@
 use crate::GENERATOR;
 use tonic::{Request, Response, Status};
 use tracing::warn;
+use tron_protos::{ProxyStartupRequest, ProxyStartupResponse};
 
-use crate::{
-    BridgeService,
-    bridge::{ProxyStartupRequest, ProxyStartupResponse},
-};
+use crate::BridgeService;
 
 impl BridgeService {
     #[cfg_attr(any(debug_assertions, test), tracing::instrument(skip(self), fields(request = ?request.get_ref())))]

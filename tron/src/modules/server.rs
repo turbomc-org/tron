@@ -1,6 +1,5 @@
 use crate::RETRY_STRATEGY;
 use crate::State;
-use crate::bridge::Server as CompiledServer;
 use crate::collections::server::ServerCollection;
 use crate::models::server::Server;
 use anyhow::Result;
@@ -8,6 +7,7 @@ use std::sync::Arc;
 use tokio::task;
 use tokio_retry::Retry;
 use tracing::error;
+use tron_protos::Server as CompiledServer;
 
 impl Server {
     pub async fn insert(&self, col: &Arc<dyn ServerCollection>, state: &Arc<State>) -> Result<()> {

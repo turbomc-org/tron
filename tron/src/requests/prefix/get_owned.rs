@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetOwnedPrefixRequest, GetOwnedPrefixResponse};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{GetOwnedPrefixRequest, GetOwnedPrefixResponse};
 
 impl BridgeService {
     pub async fn handle_get_owned_prefixes(

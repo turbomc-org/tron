@@ -1,9 +1,9 @@
-use crate::bridge::{ViewServerRequest, ViewServerResponse};
 use crate::config::messages::SERVER_DETAIL;
 use crate::utils::format_timestamp_indian_style;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ViewServerRequest, ViewServerResponse};
 
 impl BridgeService {
     pub async fn handle_view_server(

@@ -1,11 +1,11 @@
 use crate::BridgeService;
-use crate::bridge::{ViewReportRequest, ViewReportResponse};
 use crate::config::messages::REPORT_DETAIL;
 use crate::models::player::Role;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ViewReportRequest, ViewReportResponse};
 
 impl BridgeService {
     pub async fn handle_view_report(

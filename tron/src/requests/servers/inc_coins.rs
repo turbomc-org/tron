@@ -1,8 +1,8 @@
-use crate::bridge::{IncreaseCoinsRequest, IncreaseCoinsResponse};
 use crate::config::messages::{ADMINISTRATIVE_GRANT, MASTER_CONTROL_CREDITS_GRANTED};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{IncreaseCoinsRequest, IncreaseCoinsResponse};
 
 impl BridgeService {
     pub async fn handle_increase_coins(

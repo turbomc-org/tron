@@ -1,8 +1,8 @@
-use crate::bridge::{RemoveFriendRequest, RemoveFriendResponse};
 use crate::config::messages::FRIEND_REMOVED;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{RemoveFriendRequest, RemoveFriendResponse};
 
 impl BridgeService {
     pub async fn handle_remove_friend(

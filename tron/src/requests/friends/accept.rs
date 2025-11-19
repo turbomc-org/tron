@@ -1,8 +1,8 @@
-use crate::bridge::{AcceptFriendRequestRequest, AcceptFriendRequestResponse};
 use crate::config::messages::{FRIEND_CONNECTED, FRIEND_REQUEST_ACCEPTED};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{debug, error, info};
+use tron_protos::{AcceptFriendRequestRequest, AcceptFriendRequestResponse};
 
 impl BridgeService {
     pub async fn handle_accept_friend_request(

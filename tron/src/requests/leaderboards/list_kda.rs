@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{ListKdaLeaderboardRequest, ListKdaLeaderboardResponse};
 use crate::config::messages::{KD_LEADERBOARD, KD_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListKdaLeaderboardRequest, ListKdaLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_list_kda_leaderboard(

@@ -1,11 +1,11 @@
 use crate::BridgeService;
-use crate::bridge::{ListAllReportsRequest, ListAllReportsResponse};
 use crate::config::messages::{NO_REPORTS_FOUND, REPORT_LIST};
 use crate::models::player::Role;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListAllReportsRequest, ListAllReportsResponse};
 
 impl BridgeService {
     pub async fn handle_list_all_reports(

@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{CreateServerRequest, CreateServerResponse};
 use crate::models::player::Role;
 use crate::models::server::Server;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{CreateServerRequest, CreateServerResponse};
 
 impl BridgeService {
     pub async fn handle_create_server(

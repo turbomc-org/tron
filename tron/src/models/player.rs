@@ -1,11 +1,11 @@
-use crate::bridge::Edition as GrpcEdition;
-use crate::bridge::Rank as ProtoRank;
 use crate::models::achievements::Achievements;
 use bincode::{Decode, Encode};
 use chrono::{DateTime, Utc};
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
+use tron_protos::Edition as GrpcEdition;
+use tron_protos::Rank as ProtoRank;
 
 use crate::GENERATOR;
 

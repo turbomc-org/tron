@@ -1,5 +1,5 @@
 use crate::BridgeService;
-use crate::bridge::{BanPlayer, ProxyConnectionResponse};
+use tron_protos::{BanPlayer, ProxyConnectionResponse};
 
 impl BridgeService {
     pub async fn ban_player(&self, req: BanPlayer) {
@@ -10,7 +10,7 @@ impl BridgeService {
             let tx = entry.value();
 
             let response = ProxyConnectionResponse {
-                command: Some(crate::bridge::proxy_connection_response::Command::Ban(
+                command: Some(tron_protos::proxy_connection_response::Command::Ban(
                     req.clone(),
                 )),
             };

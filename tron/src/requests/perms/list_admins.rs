@@ -1,4 +1,4 @@
-use crate::bridge::{ListAllAdminsRequest, ListAllAdminsResponse};
+use tron_protos::{ListAllAdminsRequest, ListAllAdminsResponse};
 use crate::config::messages::{ADMIN_LIST, ADMIN_LIST_EMPTY};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};

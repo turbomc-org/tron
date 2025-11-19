@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{PromoteTeamMemberRequest, PromoteTeamMemberResponse};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{PromoteTeamMemberRequest, PromoteTeamMemberResponse};
 
 impl BridgeService {
     pub async fn handle_promote_team_member(

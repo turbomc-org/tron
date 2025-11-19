@@ -1,8 +1,8 @@
-use crate::bridge::{GetCurrentPrefixRequest, GetCurrentPrefixResponse};
 use crate::config::messages::ACTIVE_IDENTIFIER;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{GetCurrentPrefixRequest, GetCurrentPrefixResponse};
 
 impl BridgeService {
     pub async fn handle_get_current_prefix(

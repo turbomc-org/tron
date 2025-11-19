@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{ListCoinsLeaderboardRequest, ListCoinsLeaderboardResponse};
 use crate::config::messages::{COINS_LEADERBOARD, COINS_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListCoinsLeaderboardRequest, ListCoinsLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_list_coins_leaderboard(

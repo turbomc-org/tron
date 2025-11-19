@@ -1,6 +1,6 @@
 use crate::BridgeService;
-use crate::bridge::{GetAllTeamsRequest, GetAllTeamsResponse};
 use tonic::{Request, Response, Status};
+use tron_protos::{GetAllTeamsRequest, GetAllTeamsResponse};
 
 impl BridgeService {
     pub async fn handle_get_all_teams(

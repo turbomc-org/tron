@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{PlayerLoginRequest, PlayerLoginResponse};
 use crate::models::player::{Edition, Player};
 use tonic::{Request, Response, Status};
 use tracing::error;
+use tron_protos::{PlayerLoginRequest, PlayerLoginResponse};
 
 impl BridgeService {
     pub async fn handle_player_login(

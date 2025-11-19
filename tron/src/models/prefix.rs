@@ -1,6 +1,6 @@
-use crate::bridge::PartialPrefix as CompiledPrefix;
 use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
+use tron_protos::PartialPrefix as CompiledPrefix;
 
 use crate::GENERATOR;
 

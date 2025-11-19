@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{HindiChatRequest, HindiChatResponse};
 use crate::config::messages::HINDI_CHANNEL;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{HindiChatRequest, HindiChatResponse};
 
 impl BridgeService {
     pub async fn handle_hindi_chat(

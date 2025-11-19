@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetFriendsRequest, GetFriendsResponse};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{GetFriendsRequest, GetFriendsResponse};
 
 impl BridgeService {
     pub async fn handle_get_friends(

@@ -1,4 +1,3 @@
-use crate::bridge::ProxyConnectionRequest;
 use crate::{BridgeService, ProxyConnectionStream};
 use futures::StreamExt;
 use tokio::sync::mpsc;
@@ -6,6 +5,7 @@ use tokio_stream::wrappers::ReceiverStream;
 use tonic::{Request, Response, Status, Streaming};
 use tracing::error;
 use tracing::info;
+use tron_protos::ProxyConnectionRequest;
 
 pub mod ban_player;
 pub mod emit_message;
@@ -30,9 +30,8 @@ impl BridgeService {
 
         tokio::spawn(async move {
             if let Some(Ok(first_msg)) = in_stream.next().await {
-                if let Some(crate::bridge::proxy_connection_request::Payload::Handshake(
-                    handshake,
-                )) = first_msg.payload
+                if let Some(tron_protos::proxy_connection_request::Payload::Handshake(handshake)) =
+                    first_msg.payload
                 {
                     let proxy_id = handshake.proxy_id;
                     info!(
@@ -47,16 +46,16 @@ impl BridgeService {
                             Ok(v) => {
                                 if let Some(payload) = v.payload {
                                     match payload {
-                                        crate::bridge::proxy_connection_request::Payload::Heartbeat(p) => {
+                                        tron_protos::proxy_connection_request::Payload::Heartbeat(p) => {
                                             this.handle_proxy_heartbeat(p).await;
                                         }
-                                        crate::bridge::proxy_connection_request::Payload::EmitMessage(p) => {
+                                        tron_protos::proxy_connection_request::Payload::EmitMessage(p) => {
                                             this.handle_proxy_emit_message(p).await;
                                         }
-                                        crate::bridge::proxy_connection_request::Payload::EmitWhisper(p) => {
+                                        tron_protos::proxy_connection_request::Payload::EmitWhisper(p) => {
                                             this.handle_proxy_emit_whisper(p).await;
                                         }
-                                        crate::bridge::proxy_connection_request::Payload::Handshake(_) => {
+                                        tron_protos::proxy_connection_request::Payload::Handshake(_) => {
                                             error!("Proxy {} sent a second handshake.", proxy_id);
                                         }
                                     }

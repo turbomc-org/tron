@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{CoinsLeaderboardRequest, CoinsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{CoinsLeaderboardRequest, CoinsLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_coins_leaderboard(

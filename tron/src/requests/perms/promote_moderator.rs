@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{PromoteModeratorPermsRequest, PromoteModeratorPermsResponse};
 use crate::config::messages::{MODERATOR_PERMS_GAINED, PROMOTED_MODERATOR};
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{PromoteModeratorPermsRequest, PromoteModeratorPermsResponse};
 
 impl BridgeService {
     pub async fn handle_promote_moderator_perms(

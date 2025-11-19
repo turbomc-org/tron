@@ -1,7 +1,7 @@
-use crate::bridge::{PlayerDeathRequest, PlayerDeathResponse};
 use anyhow::Result;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{PlayerDeathRequest, PlayerDeathResponse};
 
 use crate::BridgeService;
 

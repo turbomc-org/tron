@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::bridge_server::BridgeServer;
 use crate::collections::Collections;
 use crate::utils::mongodb::MongoDB;
 use tonic::transport::Server;
 use tracing::info;
+use tron_protos::bridge_server::BridgeServer;
 
 pub struct GRPCService {}
 

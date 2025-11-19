@@ -1,9 +1,9 @@
 use std::collections::HashSet;
 
 use crate::BridgeService;
-use crate::bridge::MessagePlayer;
 use anyhow::Result;
 use tracing::error;
+use tron_protos::MessagePlayer;
 pub struct Message {}
 
 impl BridgeService {

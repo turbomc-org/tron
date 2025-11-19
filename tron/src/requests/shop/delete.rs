@@ -1,8 +1,8 @@
-use crate::bridge::{DeleteShopItemRequest, DeleteShopItemResponse};
 use crate::config::messages::ITEM_DELETED;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{DeleteShopItemRequest, DeleteShopItemResponse};
 
 impl BridgeService {
     pub async fn handle_delete_shop_item(

@@ -1,9 +1,9 @@
-use crate::bridge::{EquipPrefixRequest, EquipPrefixResponse};
 use crate::config::messages::IDENTIFIER_EQUIPPED;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
+use tron_protos::{EquipPrefixRequest, EquipPrefixResponse};
 
 impl BridgeService {
     pub async fn handle_equip_prefix(

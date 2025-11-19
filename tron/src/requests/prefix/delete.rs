@@ -1,4 +1,4 @@
-use crate::bridge::{DeletePrefixRequest, DeletePrefixResponse};
+use tron_protos::{DeletePrefixRequest, DeletePrefixResponse};
 use crate::config::messages::ASSET_PURGED;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};

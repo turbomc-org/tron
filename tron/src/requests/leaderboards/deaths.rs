@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{DeathsLeaderboardRequest, DeathsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{DeathsLeaderboardRequest, DeathsLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_deaths_leaderboard(

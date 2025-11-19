@@ -1,10 +1,10 @@
-use crate::bridge::{ListAllBugsRequest, ListAllBugsResponse};
 use crate::config::messages::{BUG_LIST, NO_BUGS_FOUND};
 use crate::models::player::Role;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListAllBugsRequest, ListAllBugsResponse};
 
 impl BridgeService {
     pub async fn handle_list_all_bugs(

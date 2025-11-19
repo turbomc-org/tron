@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{TeamChatRequest, TeamChatResponse};
 use crate::config::messages::JOINED_CHANNEL;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{TeamChatRequest, TeamChatResponse};
 
 impl BridgeService {
     pub async fn handle_team_chat(

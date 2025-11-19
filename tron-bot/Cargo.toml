@@ -10,3 +10,4 @@ documentation = "https://docs.rs/tron-bot"
 homepage = "https://h01.in"
 
 [dependencies]
+tron-protos = { path = "../tron-protos", version = "0.1.7" }

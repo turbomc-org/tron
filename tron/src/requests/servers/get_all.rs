@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetAllServersRequest, GetAllServersResponse};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
+use tron_protos::{GetAllServersRequest, GetAllServersResponse};
 
 impl BridgeService {
     pub async fn handle_get_all_servers(

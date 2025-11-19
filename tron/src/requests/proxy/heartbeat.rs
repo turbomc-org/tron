@@ -1,7 +1,7 @@
 use tracing::info;
 
 use crate::BridgeService;
-use crate::bridge::Heartbeat;
+use tron_protos::Heartbeat;
 
 impl BridgeService {
     pub async fn handle_proxy_heartbeat(&self, request: Heartbeat) {

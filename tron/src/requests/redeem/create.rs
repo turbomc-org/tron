@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{CreateRedeemCodeRequest, CreateRedeemCodeResponse};
 use crate::models::redeem::{Redeem, Reward};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{CreateRedeemCodeRequest, CreateRedeemCodeResponse};
 
 impl BridgeService {
     pub async fn handle_create_redeem_code(

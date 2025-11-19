@@ -1,11 +1,11 @@
 use crate::BridgeService;
-use crate::bridge::{ListAllRedeemCodesRequest, ListAllRedeemCodesResponse};
 use crate::config::messages::{EMPTY_REDEEM_CODES, REDEEM_LIST};
 use crate::models::redeem::Redeem;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListAllRedeemCodesRequest, ListAllRedeemCodesResponse};
 
 impl BridgeService {
     pub async fn handle_list_all_redeem_codes(

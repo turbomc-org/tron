@@ -1,9 +1,9 @@
-use crate::bridge::{AcceptTeamInviteRequest, AcceptTeamInviteResponse};
 use crate::config::messages::{CONNECTION_ESTABLISHED, SQUAD_LINK_ESTABLISHED};
 use crate::{BridgeService, render};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error};
+use tron_protos::{AcceptTeamInviteRequest, AcceptTeamInviteResponse};
 
 impl BridgeService {
     pub async fn handle_accept_team_invite(

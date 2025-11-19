@@ -1,9 +1,9 @@
-use crate::bridge::{RejectFriendRequestRequest, RejectFriendRequestResponse};
 use crate::config::messages::{FRIEND_REQUEST_DECLINED, FRIEND_REQUEST_REJECTED};
 use crate::models::player::Player;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{RejectFriendRequestRequest, RejectFriendRequestResponse};
 
 impl BridgeService {
     pub async fn handle_reject_friend_request(

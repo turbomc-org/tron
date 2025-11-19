@@ -1,5 +1,5 @@
 use crate::BridgeService;
-use crate::bridge::{KickPlayer, ProxyConnectionResponse};
+use tron_protos::{KickPlayer, ProxyConnectionResponse};
 
 impl BridgeService {
     pub async fn kick_player(&self, req: KickPlayer) {
@@ -10,7 +10,7 @@ impl BridgeService {
             let tx = entry.value();
 
             let response = ProxyConnectionResponse {
-                command: Some(crate::bridge::proxy_connection_response::Command::Kick(
+                command: Some(tron_protos::proxy_connection_response::Command::Kick(
                     req.clone(),
                 )),
             };

@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{TeamsLeaderboardRequest, TeamsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{TeamsLeaderboardRequest, TeamsLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_teams_leaderboard(

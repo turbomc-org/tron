@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{KillsLeaderboardRequest, KillsLeaderboardResponse};
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{KillsLeaderboardRequest, KillsLeaderboardResponse};
 
 impl BridgeService {
     pub async fn handle_kills_leaderboard(

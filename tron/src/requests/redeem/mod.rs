@@ -4,10 +4,10 @@ pub mod get_all;
 pub mod list_all;
 
 use crate::BridgeService;
-use crate::bridge::{RedeemCodeRequest, RedeemCodeResponse};
 use crate::utils::is_expired;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{RedeemCodeRequest, RedeemCodeResponse};
 
 impl BridgeService {
     pub async fn handle_redeem_code(

@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{PlayerLogoutRequest, PlayerLogoutResponse};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{PlayerLogoutRequest, PlayerLogoutResponse};
 
 impl BridgeService {
     pub async fn handle_player_logout(

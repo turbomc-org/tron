@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{RejectTeamInviteRequest, RejectTeamInviteResponse};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{RejectTeamInviteRequest, RejectTeamInviteResponse};
 
 impl BridgeService {
     pub async fn handle_reject_team_invite(

@@ -1,7 +1,7 @@
-use crate::bridge::{PlayerBreakBlockRequest, PlayerBreakBlockResponse};
 use anyhow::Result;
 use tonic::{Request, Response, Status};
 use tracing::error;
+use tron_protos::{PlayerBreakBlockRequest, PlayerBreakBlockResponse};
 
 use crate::BridgeService;
 

@@ -1,8 +1,8 @@
-use crate::bridge::{BuyPrefixRequest, BuyPrefixResponse};
 use crate::config::messages::{ALREADY_OWN_PREFIX, ASSET_ACQUIRED, INSUFFICIENT_CREDITS};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{BuyPrefixRequest, BuyPrefixResponse};
 
 impl BridgeService {
     pub async fn handle_buy_prefix(

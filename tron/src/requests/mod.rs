@@ -18,5 +18,5 @@ pub mod session;
 pub mod shop;
 pub mod team;
 
-#[auto_impl_bridge("../proto/bridge.proto")]
+#[auto_impl_bridge("../tron-protos/proto/bridge.proto")]
 impl Bridge for BridgeService {}

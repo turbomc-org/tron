@@ -1,7 +1,7 @@
-use crate::bridge::ViewItemRequest;
-use crate::{BridgeService, bridge::ViewItemResponse};
+use crate::BridgeService;
 use crate::models::shop_item::ShopItem;
 use tonic::{Request, Response, Status};
+use tron_protos::{ViewItemRequest, ViewItemResponse};
 
 impl BridgeService {
     pub async fn handle_view_item(

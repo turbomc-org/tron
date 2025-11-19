@@ -1,11 +1,11 @@
 use crate::BridgeService;
-use crate::bridge::EmitWhisper;
 use crate::config::messages::{
     FAILED_TO_SEND_WHISPER, NOT_A_FRIEND, PLAYER_OFFLINE, TARGET_NOT_FOUND,
 };
 use crate::render;
 use crate::utils::format_message::format_message;
 use tracing::{error, warn};
+use tron_protos::EmitWhisper;
 
 impl BridgeService {
     pub async fn handle_proxy_emit_whisper(&self, req: EmitWhisper) {

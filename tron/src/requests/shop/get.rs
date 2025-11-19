@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetItemRequest, GetItemResponse};
 use crate::models::shop_item::ShopItem;
 use tonic::{Request, Response, Status};
+use tron_protos::{GetItemRequest, GetItemResponse};
 
 impl BridgeService {
     pub async fn handle_get_item(

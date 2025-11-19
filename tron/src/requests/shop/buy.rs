@@ -1,9 +1,9 @@
-use crate::bridge::{BuyItemRequest, BuyItemResponse};
 use crate::config::messages::ITEM_PURCHASED;
 use crate::models::shop_item::ShopItem;
-use crate::{render, BridgeService};
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{BuyItemRequest, BuyItemResponse};
 
 impl BridgeService {
     pub async fn handle_buy_item(

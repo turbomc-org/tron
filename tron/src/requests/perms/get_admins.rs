@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{GetAllAdminsRequest, GetAllAdminsResponse};
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{GetAllAdminsRequest, GetAllAdminsResponse};
 
 impl BridgeService {
     pub async fn handle_get_all_admins(

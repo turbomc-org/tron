@@ -1,9 +1,9 @@
-use crate::bridge::{UnEquipPrefixRequest, UnEquipPrefixResponse};
 use crate::config::messages::{IDENTIFIER_UNEQUIPPED, NO_ACTIVE_IDENTIFIER};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::error;
 use tracing::info;
+use tron_protos::{UnEquipPrefixRequest, UnEquipPrefixResponse};
 
 impl BridgeService {
     pub async fn handle_un_equip_prefix(

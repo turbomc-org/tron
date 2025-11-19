@@ -1,4 +1,4 @@
-use crate::bridge::{PromoteAdminPermsRequest, PromoteAdminPermsResponse};
+use tron_protos::{PromoteAdminPermsRequest, PromoteAdminPermsResponse};
 use crate::config::messages::GAINED_MASTER_CONTROL;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};

@@ -1,9 +1,9 @@
 use crate::BridgeService;
-use crate::bridge::{ExitChatRequest, ExitChatResponse};
 use crate::config::messages::EXIT_CHAT;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ExitChatRequest, ExitChatResponse};
 
 impl BridgeService {
     pub async fn handle_exit_chat(

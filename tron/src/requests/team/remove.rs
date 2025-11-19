@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use crate::bridge::{RemoveTeamMemberRequest, RemoveTeamMemberResponse};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{RemoveTeamMemberRequest, RemoveTeamMemberResponse};
 
 impl BridgeService {
     pub async fn handle_remove_team_member(

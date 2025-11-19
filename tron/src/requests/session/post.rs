@@ -1,10 +1,10 @@
 use crate::BridgeService;
-use crate::bridge::{PlayerPostLoginRequest, PlayerPostLoginResponse};
 use crate::config::messages::{RELEASE_NOTE, WELCOME_BACK};
 use crate::config::release::RELEASE_CONFIG;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::info;
+use tron_protos::{PlayerPostLoginRequest, PlayerPostLoginResponse};
 
 impl BridgeService {
     pub async fn handle_player_post_login(

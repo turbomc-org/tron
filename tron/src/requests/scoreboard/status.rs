@@ -1,6 +1,6 @@
 use crate::BridgeService;
-use crate::bridge::{GetScoreboardStatusRequest, GetScoreboardStatusResponse};
 use tonic::{Request, Response, Status};
+use tron_protos::{GetScoreboardStatusRequest, GetScoreboardStatusResponse};
 
 impl BridgeService {
     pub async fn handle_get_scoreboard_status(

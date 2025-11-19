@@ -1,5 +1,5 @@
 use crate::BridgeService;
-use crate::bridge::{GetReportRequest, GetReportResponse, Report as CompiledReport};
+use tron_protos::{GetReportRequest, GetReportResponse, Report as CompiledReport};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
 

@@ -1,9 +1,9 @@
-use crate::bridge::{SendFriendRequestRequest, SendFriendRequestResponse};
 use crate::config::messages::{FRIEND_REQUEST_SENT, NEW_FRIEND_REQUEST};
 use crate::{BridgeService, render};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{SendFriendRequestRequest, SendFriendRequestResponse};
 
 impl BridgeService {
     pub async fn handle_send_friend_request(

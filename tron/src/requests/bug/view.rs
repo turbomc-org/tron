@@ -1,11 +1,11 @@
 use crate::BridgeService;
-use crate::bridge::{ViewBugRequest, ViewBugResponse};
 use crate::config::messages::BUG_DETAIL;
 use crate::models::player::Role;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ViewBugRequest, ViewBugResponse};
 
 impl BridgeService {
     pub async fn handle_view_bug(

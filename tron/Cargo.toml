@@ -2,12 +2,6 @@
 name = "tron"
 version.workspace = true
 edition = "2024"
-include = [
-    "src/**/*",
-    "build.rs",
-    "../proto/**/*",
-    "Cargo.toml"
-]
 description = "TRON — H01 MINECRAFT SERVER"
 license = "MIT"
 repository = "https://github.com/h01-team/tron"
@@ -18,11 +12,9 @@ homepage = "https://h01.in"
 bincode = { version = "2.0.1", features = ["serde"] }
 dashmap = "6.1.0"
 mongodb = "3.3.0"
-prost = "0.14.1"
 serde = { version = "1.0.228", features = ["derive"] }
 tokio = { version = "1.48.0", features = ["full"] }
 tonic = "0.14.2"
-tonic-prost = "0.14.2"
 tracing.workspace = true
 tracing-appender = {workspace = true}
 tracing-subscriber = {workspace = true}
@@ -46,10 +38,7 @@ names = "0.14.0"
 serde_json = "1.0.145"
 tron-macros = { path = "../tron-macros", version = "0.1.7" }
 argon2 = "0.5.3"
-
-[build-dependencies]
-tonic-build = "0.14.2"
-tonic-prost-build = "0.14.2"
+tron-protos = { path = "../tron-protos", version = "0.1.7" }
 
 [dev-dependencies]
 serial_test = "3.2.0"

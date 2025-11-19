@@ -1,10 +1,10 @@
-use crate::bridge::{ListFriendRequestsRequest, ListFriendRequestsResponse};
 use crate::config::messages::{INCOMING_FRIEND_REQUESTS, NO_INCOMING_FRIEND_REQUESTS};
 use crate::{BridgeService, render};
 use chrono::Utc;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ListFriendRequestsRequest, ListFriendRequestsResponse};
 
 impl BridgeService {
     pub async fn handle_list_friend_requests(

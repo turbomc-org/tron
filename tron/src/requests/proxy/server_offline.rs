@@ -1,5 +1,5 @@
 use crate::BridgeService;
-use crate::bridge::{ProxyConnectionResponse, ServerOffline};
+use tron_protos::{ProxyConnectionResponse, ServerOffline};
 
 impl BridgeService {
     pub async fn server_offline(&self, msg: MessagePlayer) {
@@ -10,9 +10,9 @@ impl BridgeService {
             let tx = entry.value();
 
             let response = ProxyConnectionResponse {
-                command: Some(crate::bridge::proxy_connection_response::Command::Message(
-                    msg.clone(),
-                )),
+                command: Some(
+                    tron_protos::bridge::proxy_connection_response::Command::Message(msg.clone()),
+                ),
             };
 
             if tx.send(Ok(response)).await.is_err() {

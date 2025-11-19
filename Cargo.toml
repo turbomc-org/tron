@@ -5,7 +5,7 @@ members = [
 "tron-bot"
 ,
 "tron-macros"
-]
+, "tron-protos"]
 
 [workspace.dependencies]
 tracing = "0.1.41"

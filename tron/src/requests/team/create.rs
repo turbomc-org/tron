@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::bridge::{CreateTeamRequest, CreateTeamResponse};
 use crate::models::team::Team;
 use tonic::{Request, Response, Status};
 use tracing::{debug, error};
+use tron_protos::{CreateTeamRequest, CreateTeamResponse};
 
 impl BridgeService {
     pub async fn handle_create_team(

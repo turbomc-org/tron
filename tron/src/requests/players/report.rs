@@ -1,9 +1,9 @@
-use crate::bridge::{ReportRequest, ReportResponse};
 use crate::config::messages::{PLAYER_REPORT_NOTIFICATION, REPORT_PLAYER};
 use crate::models::report::Report;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{ReportRequest, ReportResponse};
 
 impl BridgeService {
     pub async fn handle_report_player(
