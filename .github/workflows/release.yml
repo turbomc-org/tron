@@ -1,4 +1,4 @@
-name: Build and Release
+name: Build and Release (aarch64 musl)
 
 on:
   push:
@@ -6,37 +6,22 @@ on:
       - "v*.*.*"
 
 jobs:
-  build-and-release:
-    name: Build and Release
+  build-aarch64-musl:
+    name: Build aarch64-unknown-linux-musl
     permissions:
       contents: write
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            binary_name: gradient
-
-          - os: ubuntu-latest
-            target: aarch64-unknown-linux-musl
-            binary_name: gradient
-
-          - os: windows-latest
-            target: x86_64-pc-windows-gnu
-            binary_name: gradient.exe
-
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            binary_name: gradient
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install musl tools (aarch64 only)
-        if: matrix.target == 'aarch64-unknown-linux-musl'
+      - name: Install protoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y protobuf-compiler
+
+      - name: Install musl cross toolchain
         run: |
           sudo apt-get update
           sudo apt-get install -y musl-tools gcc-aarch64-linux-gnu
@@ -45,36 +30,23 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.target }}
+          target: aarch64-unknown-linux-musl
           override: true
 
-      - name: Build (gnu)
-        if: matrix.target != 'aarch64-unknown-linux-musl'
-        run: cargo build --release --target ${{ matrix.target }} --package tron
-
       - name: Build (aarch64 musl)
-        if: matrix.target == 'aarch64-unknown-linux-musl'
         env:
           CC_aarch64_unknown_linux_musl: aarch64-linux-gnu-gcc
-        run: |
-          cargo build --release --target aarch64-unknown-linux-musl --package tron
+        run: cargo build --release --target aarch64-unknown-linux-musl --package tron
 
       - name: Rename binary
-        if: matrix.os != 'windows-latest'
         run: |
-          mv target/${{ matrix.target }}/release/${{ matrix.binary_name }} \
-             target/${{ matrix.target }}/release/gradient-${{ matrix.target }}
-
-      - name: Rename binary (Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          move target\${{ matrix.target }}\release\${{ matrix.binary_name }} \
-               target\${{ matrix.target }}\release\gradient-${{ matrix.target }}.exe
+          mv target/aarch64-unknown-linux-musl/release/gradient \
+             target/aarch64-unknown-linux-musl/release/gradient-aarch64-unknown-linux-musl
 
       - name: Create Release and Upload Artifact
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            target/${{ matrix.target }}/release/gradient-${{ matrix.target }}${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+            target/aarch64-unknown-linux-musl/release/gradient-aarch64-unknown-linux-musl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
