@@ -67,7 +67,7 @@ pub static FRIEND_CONNECTED: Lazy<Template<'static>> = Lazy::new(|| {
         title: "✅ FRIEND CONNECTED",
         body: r#"You are now friends with <white><bold>{{sender}}</bold></white>."#,
         actions: {
-            open_friends_list: { kind: "command", value: "/friends", label: "Open Friends List" }
+            open_friends_list: { kind: "command", value: "/friend list", label: "Open Friends List" }
         }
     }
 });
@@ -107,7 +107,7 @@ pub static NO_INCOMING_FRIEND_REQUESTS: Lazy<Template<'static>> = Lazy::new(|| {
         title: "📭 NO INCOMING FRIEND REQUESTS",
         body: r#"Your <gradient:#B200FF:#6A00A3>H01 Network</gradient> inbox is currently empty."#,
         actions: {
-            send_a_new_request: { kind: "command", value: "/friends", label: "Send a new request" }
+            send_a_new_request: { kind: "command", value: "/friend list", label: "Send a new request" }
         }
     }
 });
@@ -119,10 +119,6 @@ pub static INCOMING_FRIEND_REQUESTS: Lazy<Template<'static>> = Lazy::new(|| {
         body: r#"You have <light_purple><bold>{{count}}</bold></light_purple> pending connection{{s}}
     on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
     {{list}}"#,
-        actions: {
-            accept_all: { kind: "command", value: "/friends accept_all" },
-            deny_all: { kind: "command", value: "/friends deny_all" }
-        }
     }
 });
 
@@ -132,7 +128,7 @@ pub static FRIEND_REQUEST_REJECTED: Lazy<Template<'static>> = Lazy::new(|| {
         title: "❌ FRIEND REQUEST REJECTED",
         body: r#"You have rejected the friend request from <white><bold>{{sender}}</bold></white>."#,
         actions: {
-            view_pending_requests: { kind: "command", value: "/friends", label: "View pending requests" }
+            view_pending_requests: { kind: "command", value: "/friend list", label: "View pending requests" }
         }
     }
 });
@@ -151,7 +147,7 @@ pub static FRIEND_REMOVED: Lazy<Template<'static>> = Lazy::new(|| {
         title: "❌ FRIEND REMOVED",
         body: r#"You have successfully removed <white><bold>{{target}}</bold></white> from your friend list."#,
         actions: {
-            view_remaining_friends: { kind: "command", value: "/friends", label: "View remaining friends" }
+            view_remaining_friends: { kind: "command", value: "/friend list", label: "View remaining friends" }
         }
     }
 });
@@ -174,8 +170,31 @@ pub static FRIEND_REQUEST_SENT: Lazy<Template<'static>> = Lazy::new(|| {
         body: r#"Your request has been transmitted to <white><bold>{{receiver}}</bold></white> via the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
     <dark_gray>»</dark_gray> <light_purple>Awaiting connection response...</light_purple>"#,
         actions: {
-            view_pending_requests: { kind: "command", value: "/friends", label: "View pending requests" }
+            view_pending_requests: { kind: "command", value: "/friend list", label: "View pending requests" }
         }
+    }
+});
+
+pub static NEW_TEAM_REQUEST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⚡ NEW TEAM REQUEST ⚡",
+        body: r#"
+    <white><bold>{{sender}}</bold></white> wants to join their team on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+    <dark_gray>»</dark_gray> <click:run_command:'/team accept {{name}}'><u><gradient:#8A2BE2:#C724B1>[ ACCEPT ]</gradient></u></click>
+    <click:run_command:'/team deny {{name}}'><u><gradient:#7A00FF:#4B0082>[ DENY ]</gradient></u></click>"#,
+       actions: {
+           view_team_request: {kind: "command", value: "/team requests", label: "View team requests"}
+       }
+    }
+});
+
+pub static TEAM_REQUEST_SENT: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "✅ TEAM REQUEST SENT",
+        body: r#"Your team request has been transmitted to <white><bold>{{receiver}}</bold></white> via the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+    <dark_gray>»</dark_gray> <light_purple>Awaiting connection response...</light_purple>"#,
     }
 });
 
@@ -185,7 +204,7 @@ pub static ALREADY_OWN_PREFIX: Lazy<Template<'static>> = Lazy::new(|| {
         title: "❌ DUPLICATE ASSET",
         body: r#"You have already unlocked this network identifier."#,
         actions: {
-            view_your_collection: { kind: "command", value: "/prefixes", label: "View your collection" }
+            view_your_collection: { kind: "command", value: "/prefix owned", label: "View your collection" }
         }
     }
 });
@@ -207,7 +226,7 @@ pub static ASSET_ACQUIRED: Lazy<Template<'static>> = Lazy::new(|| {
         title: "✅ ASSET ACQUIRED",
         body: r#"You purchased the <color:{{color}}>{{text}}</color> prefix for <white>{{price}}</white> credits."#,
         actions: {
-            equip: { kind: "command", value: "/prefix set {{name}}", label: "Click to equip" }
+            equip: { kind: "command", value: "/prefix equip {{name}}", label: "Click to equip" }
         }
     }
 });
@@ -962,6 +981,24 @@ pub static REDEEM_LIST: Lazy<Template<'static>> = Lazy::new(|| {
 
 {{list}}
         "
+    }
+});
+
+pub static REDEEM_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⌨️ REDEEM DETAIL",
+        body: r#"
+<gray>Redeem ID:</gray> <yellow><bold>#{{id}}</bold></yellow>
+<gray>Code:</gray> <aqua>{{code}}</aqua>
+<gray>Expires at:</gray> <white>{{expiry}}</white>
+
+<gray>Reward:</gray>
+<light_purple>{{reward}}</light_purple>
+
+<dark_gray>──────────────────────────────</dark_gray>
+[<red><click:run_command:'/admin redeem delete {{code}}'>Delete Redeem</click></red>]
+"#
     }
 });
 

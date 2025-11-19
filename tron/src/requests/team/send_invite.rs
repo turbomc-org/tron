@@ -1,7 +1,11 @@
-use crate::BridgeService;
+use crate::{
+    BridgeService,
+    config::messages::{NEW_TEAM_REQUEST, TEAM_REQUEST_SENT},
+    render,
+};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, warn};
+use tracing::{error, info, warn};
 use tron_protos::{SendTeamInviteRequest, SendTeamInviteResponse};
 
 impl BridgeService {
@@ -13,7 +17,7 @@ impl BridgeService {
         let username = inner_request.username;
         let target = inner_request.target;
 
-        debug!("Send invite request from player {} received", username);
+        info!("Send invite request from player {} received", username);
 
         let player = self.state().get_player_with_handling(&username).await?;
 
@@ -49,7 +53,27 @@ impl BridgeService {
                 Status::internal("Failed to send team invite")
             })?;
 
-        debug!("Send invite request from player {} completed", username);
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(NEW_TEAM_REQUEST, sender = &username, name = &team.name),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        if let Err(e) = self
+            .send_message(
+                &username,
+                render!(TEAM_REQUEST_SENT, receiver = target_player.username),
+            )
+            .await
+        {
+            error!("Failed to send player message: {}", e);
+        }
+
+        info!("Send invite request from player {} completed", username);
 
         Ok(Response::new(SendTeamInviteResponse { success: true }))
     }

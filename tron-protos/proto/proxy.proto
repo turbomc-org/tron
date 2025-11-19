@@ -13,9 +13,7 @@ message ProxyConnectionRequest {
   }
 }
 
-message Handshake {
-    uint64 proxy_id = 1;
-}
+message Handshake {}
 
 message EmitMessage {
     string username = 1;
@@ -29,7 +27,6 @@ message EmitWhisper {
 }
 
 message Heartbeat {
-  uint64 proxy_id = 1;
   int64 timestamp = 2;
   repeated string players = 3;
 }

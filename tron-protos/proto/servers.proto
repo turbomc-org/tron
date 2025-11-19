@@ -67,44 +67,6 @@ message DeleteServerResponse {
     bool success = 1;
 }
 
-message ProxyStartupRequest {}
-message ProxyStartupResponse {
-    uint64 client_id = 1;
-}
-
-message ProxyShutdownRequest {
-    uint64 client_id = 1;
-}
-message ProxyShutdownResponse {
-    bool success = 1;
-}
-
-message SurvivalStartupRequest {
-}
-message SurvivalStartupResponse {
-    uint64 client_id = 1;
-}
-
-message SurvivalShutdownRequest {
-    uint64 client_id = 1;
-}
-message SurvivalShutdownResponse {
-    bool success = 1;
-}
-
-message LobbyStartupRequest {
-}
-message LobbyStartupResponse {
-    uint64 client_id = 1;
-}
-
-message LobbyShutdownRequest {
-    uint64 client_id = 1;
-}
-message LobbyShutdownResponse {
-    bool success = 1;
-}
-
 message IncreaseCoinsRequest {
     string username = 1;
     string target = 2;

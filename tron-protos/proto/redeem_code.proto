@@ -49,10 +49,11 @@ message ListAllRedeemCodesResponse {
     bool success = 1;
 }
 
-message ViewRedeemCodesRequest {
+message ViewRedeemCodeRequest {
     string username = 1;
+    string code = 2;
 }
 
-message ViewRedeemCodesResponse {
-    repeated string codes = 1;
+message ViewRedeemCodeResponse {
+    bool success = 1;
 }

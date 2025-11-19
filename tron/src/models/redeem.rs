@@ -60,3 +60,12 @@ impl From<Reward> for RedeemType {
         }
     }
 }
+
+impl Reward {
+    pub fn as_string(&self) -> String {
+        match self {
+            Reward::Coins(amount) => format!("Coins: {}", amount),
+            Reward::Rank(rank) => format!("Rank: {:?}", rank),
+        }
+    }
+}

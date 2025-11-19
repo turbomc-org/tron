@@ -2,6 +2,7 @@ pub mod create;
 pub mod delete;
 pub mod get_all;
 pub mod list_all;
+pub mod view;
 
 use crate::BridgeService;
 use crate::utils::is_expired;

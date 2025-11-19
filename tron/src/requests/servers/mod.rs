@@ -5,6 +5,4 @@ pub mod get_all;
 pub mod inc_coins;
 pub mod landing;
 pub mod list_all;
-pub mod proxy_shutdown;
-pub mod proxy_startup;
 pub mod view;

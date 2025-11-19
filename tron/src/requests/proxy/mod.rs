@@ -1,3 +1,4 @@
+use crate::GENERATOR;
 use crate::{BridgeService, ProxyConnectionStream};
 use futures::StreamExt;
 use tokio::sync::mpsc;
@@ -30,10 +31,10 @@ impl BridgeService {
 
         tokio::spawn(async move {
             if let Some(Ok(first_msg)) = in_stream.next().await {
-                if let Some(tron_protos::proxy_connection_request::Payload::Handshake(handshake)) =
+                if let Some(tron_protos::proxy_connection_request::Payload::Handshake(_)) =
                     first_msg.payload
                 {
-                    let proxy_id = handshake.proxy_id;
+                    let proxy_id = GENERATOR.generate();
                     info!(
                         "🤝 Received handshake from Proxy ID: {}. Connection is now live.",
                         proxy_id

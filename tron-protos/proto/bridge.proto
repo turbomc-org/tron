@@ -102,8 +102,6 @@ service Bridge {
     rpc ListAllServers(ListAllServersRequest) returns (ListAllServersResponse);
     rpc CreateServer(CreateServerRequest) returns (CreateServerResponse);
     rpc DeleteServer(DeleteServerRequest) returns (DeleteServerResponse);
-    rpc ProxyStartup(ProxyStartupRequest) returns (ProxyStartupResponse);
-    rpc ProxyShutdown(ProxyShutdownRequest) returns (ProxyShutdownResponse);
     rpc LandingServer(LandingServerRequest) returns (LandingServerResponse);
 
     // Admin
@@ -132,6 +130,7 @@ service Bridge {
     rpc ListAllRedeemCodes(ListAllRedeemCodesRequest) returns (ListAllRedeemCodesResponse);
     rpc CreateRedeemCode(CreateRedeemCodeRequest) returns (CreateRedeemCodeResponse);
     rpc DeleteRedeemCode(DeleteRedeemCodeRequest) returns (DeleteRedeemCodeResponse);
+    rpc ViewRedeemCode(ViewRedeemCodeRequest) returns (ViewRedeemCodeResponse);
 
     // Bug
     rpc Bug(BugRequest) returns (BugResponse);
