@@ -2,6 +2,11 @@
 name = "tron-macros"
 version.workspace = true
 edition = "2024"
+description = "TRON — H01 MINECRAFT SERVER"
+license = "MIT"
+repository = "https://github.com/h01-team/tron"
+documentation = "https://docs.rs/tron"
+homepage = "https://h01.in"
 
 [lib]
 proc-macro = true
