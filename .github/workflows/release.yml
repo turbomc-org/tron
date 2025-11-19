@@ -1,40 +1,35 @@
-name: Build aarch64-musl binary (with protoc)
+name: Build aarch64-musl binary
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - "**"
+    tags:
+      - "v*"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-aarch64-musl:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@master
+      - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
           targets: aarch64-unknown-linux-musl
 
-      - name: Cargo cache
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
 
-      - name: Install protoc
-        uses: arduino/setup-protoc@v3
+      - uses: arduino/setup-protoc@v3
 
       - name: Install zig
         run: |
@@ -46,26 +41,21 @@ jobs:
       - name: Install cargo-zigbuild
         run: cargo install cargo-zigbuild
 
-      - name: Install cross binutils (for aarch64 strip)
+      - name: Install cross binutils
         run: |
           sudo apt-get update
           sudo apt-get install -y binutils-aarch64-linux-gnu
 
-      - name: Build release binary (--package tron)
-        run: |
-          cargo zigbuild --release --target aarch64-unknown-linux-musl --package tron
+      - name: Build release binary
+        run: cargo zigbuild --release --target aarch64-unknown-linux-musl --package tron
 
       - name: Strip binary
-        run: |
-          aarch64-linux-gnu-strip target/aarch64-unknown-linux-musl/release/tron
+        run: aarch64-linux-gnu-strip target/aarch64-unknown-linux-musl/release/tron
 
       - name: Prepare artifact
-        run: |
-          cp target/aarch64-unknown-linux-musl/release/tron tron-aarch64-linux-musl
+        run: cp target/aarch64-unknown-linux-musl/release/tron tron-aarch64-linux-musl
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: tron-aarch64-linux-musl
-          path: tron-aarch64-linux-musl
-          if-no-files-found: error
+          files: tron-aarch64-linux-musl
