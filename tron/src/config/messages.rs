@@ -569,7 +569,7 @@ pub static ENABLE_SCOREBOARD: Lazy<Template<'static>> = Lazy::new(|| {
         title: "✓ SUCCESSFULLY ENABLED SCOREBOARD",
         body: "You enabled your scoreboard. Enjoy live stats and let us know if found any bug!",
         actions: {
-           disable: {kind: "command", value: "/toggle", label: "Disable Scoreboard"},
+           disable: {kind: "command", value: "/scoreboard", label: "Disable Scoreboard"},
         }
     }
 });
@@ -580,7 +580,7 @@ pub static DISABLE_SCOREBOARD: Lazy<Template<'static>> = Lazy::new(|| {
         title: "✓ SUCCESSFULLY DISABLED SCOREBOARD",
         body: "You disabled your scoreboard. Enjoy true vanilla experience and toggle the scoreboard whenever you want!",
         actions: {
-           enable: {kind: "command", value: "/toggle", label: "Enable Scoreboard"},
+           enable: {kind: "command", value: "/scoreboard", label: "Enable Scoreboard"},
         }
     }
 });
