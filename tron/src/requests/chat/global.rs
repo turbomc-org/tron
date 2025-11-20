@@ -1,7 +1,7 @@
 use crate::config::messages::GLOBAL_CHAT;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{GlobalChatRequest, GlobalChatResponse};
 
 impl BridgeService {
@@ -14,7 +14,7 @@ impl BridgeService {
 
         info!("Global chat request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if self.state().messaging.is_in_global(player.id) {
             return self
@@ -27,16 +27,8 @@ impl BridgeService {
 
         self.state().messaging.join_global(player.id);
 
-        if let Err(e) = self
-            .send_message(&username, render!(GLOBAL_CHAT, username = &username))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-            return Err(Status::internal(format!(
-                "Failed to send global chat message: {}",
-                e
-            )));
-        }
+        self.send_message(&username, render!(GLOBAL_CHAT, username = &username))
+            .await;
 
         info!("Global chat request from player {} completed", username);
 

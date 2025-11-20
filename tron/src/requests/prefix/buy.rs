@@ -15,7 +15,7 @@ impl BridgeService {
 
         info!("Buy prefix request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let prefix = self.state().get_prefix_with_handling(&prefix_name).await?;
 
         if player.prefixes.contains(&prefix.id) {
@@ -23,11 +23,7 @@ impl BridgeService {
                 &username,
                 render!(ALREADY_OWN_PREFIX, username = &player.username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
 
             error!("Player already owns this prefix");
             return Err(Status::already_exists("You already owns this prefix"));
@@ -41,11 +37,7 @@ impl BridgeService {
                     credits = &(prefix.price - player.coins)
                 ),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
 
             error!("Player does not have enough coins");
             return Err(Status::failed_precondition("You do not have enough coins"));
@@ -59,21 +51,17 @@ impl BridgeService {
                 Status::internal("Failed to buy prefix")
             })?;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(
-                    ASSET_ACQUIRED,
-                    color = &prefix.color,
-                    text = &prefix.text,
-                    price = &prefix.price,
-                    name = &prefix_name
-                ),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(
+            &username,
+            render!(
+                ASSET_ACQUIRED,
+                color = &prefix.color,
+                text = &prefix.text,
+                price = &prefix.price,
+                name = &prefix_name
+            ),
+        )
+        .await;
 
         info!("Buy prefix request from player {} completed", username);
 

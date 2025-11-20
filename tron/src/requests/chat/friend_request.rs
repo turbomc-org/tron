@@ -18,7 +18,7 @@ impl BridgeService {
             username, token
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let friend_id = match self.state().messaging.friend_chat_invites.get(&token) {
             Some(friend_r) => friend_r.value().clone(),
@@ -68,31 +68,17 @@ impl BridgeService {
             .join_stream(player.id, stream_token.clone());
         self.state().messaging.join_stream(friend.id, stream_token);
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(FRIEND_CHAT_JOINED, friend = &friend.username),
-            )
-            .await
-        {
-            return Err(Status::internal(format!(
-                "Failed to send player {} message: {}",
-                &username, e
-            )));
-        }
+        self.send_message(
+            &username,
+            render!(FRIEND_CHAT_JOINED, friend = &friend.username),
+        )
+        .await;
 
-        if let Err(e) = self
-            .send_message(
-                &friend.username,
-                render!(FRIEND_CHAT_JOINED, friend = &username),
-            )
-            .await
-        {
-            return Err(Status::internal(format!(
-                "Failed to send player {} message: {}",
-                &username, e
-            )));
-        }
+        self.send_message(
+            &friend.username,
+            render!(FRIEND_CHAT_JOINED, friend = &username),
+        )
+        .await;
 
         info!(
             "Friend chat accept request from player {} with token {} completed",

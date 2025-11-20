@@ -20,7 +20,7 @@ impl BridgeService {
         );
 
         debug!("Fetching the player from cache");
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         debug!("Fetching the team id");
         let team_id = self.state().check_team_request(&player, &target).await?;
         let now = Utc::now().timestamp() as u64;
@@ -43,12 +43,8 @@ impl BridgeService {
                 Status::internal("Failed to accept team invite request")
             })?;
 
-        if let Err(e) = self
-            .send_message(&username, render!(SQUAD_LINK_ESTABLISHED, team = &target))
-            .await
-        {
-            error!("Failed to send message to player: {}", e);
-        };
+        self.send_message(&username, render!(SQUAD_LINK_ESTABLISHED, team = &target))
+            .await;
 
         let team = self
             .state()
@@ -67,12 +63,8 @@ impl BridgeService {
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            if let Err(e) = self
-                .send_message(&member_username, team_broadcast_message.clone())
-                .await
-            {
-                error!("Failed to send message to player: {}", e);
-            }
+            self.send_message(&member_username, team_broadcast_message.clone())
+                .await;
         }
 
         debug!(

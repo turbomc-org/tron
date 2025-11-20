@@ -16,27 +16,19 @@ impl BridgeService {
 
         info!("Post login request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
-        if let Err(e) = self
-            .send_message(
-                &player.username,
-                render!(RELEASE_NOTE, body = &RELEASE_CONFIG.note),
-            )
-            .await
-        {
-            return Err(Status::internal(e.to_string()));
-        };
+        self.send_message(
+            &player.username,
+            render!(RELEASE_NOTE, body = &RELEASE_CONFIG.note),
+        )
+        .await;
 
-        if let Err(e) = self
-            .send_message(
-                &player.username,
-                render!(WELCOME_BACK, username = &player.username),
-            )
-            .await
-        {
-            return Err(Status::internal(e.to_string()));
-        };
+        self.send_message(
+            &player.username,
+            render!(WELCOME_BACK, username = &player.username),
+        )
+        .await;
 
         info!("Post login request from player {} completed", username);
 

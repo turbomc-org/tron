@@ -14,7 +14,7 @@ impl BridgeService {
 
         info!("Leave team request for player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if player.team.is_none() {
             error!(
@@ -42,12 +42,8 @@ impl BridgeService {
             Status::internal("Failed to leave team")
         })?;
 
-        if let Err(e) = self
-            .send_message(&username, render!(SQUAD_LINK_SEVERED, team = &team.name))
-            .await
-        {
-            error!("Failed to send message to player {}: {}", username, e);
-        };
+        self.send_message(&username, render!(SQUAD_LINK_SEVERED, team = &team.name))
+            .await;
 
         let team_broadcast_message = render!(USER_DISCONNECTED, username = &username);
 
@@ -61,15 +57,8 @@ impl BridgeService {
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            if let Err(e) = self
-                .send_message(&member_username, team_broadcast_message.clone())
-                .await
-            {
-                error!(
-                    "Failed to send message to player {}: {}",
-                    member_username, e
-                );
-            };
+            self.send_message(&member_username, team_broadcast_message.clone())
+                .await;
         }
 
         info!("Leave team request for player {} completed", username);

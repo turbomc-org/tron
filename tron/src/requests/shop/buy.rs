@@ -16,7 +16,7 @@ impl BridgeService {
 
         info!("Buy item request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let item = self.state().get_shop_item(&item_id).await?;
 
         let item_name = item.name.clone();
@@ -39,11 +39,7 @@ impl BridgeService {
             &username,
             render!(ITEM_PURCHASED, item_name = item_name, price = price),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         info!("Buy item request from player {} completed", username);
 

@@ -4,8 +4,9 @@ pub mod get_all;
 pub mod list_all;
 pub mod view;
 
-use crate::BridgeService;
+use crate::config::messages::REDEEM;
 use crate::utils::is_expired;
+use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 use tron_protos::{RedeemCodeRequest, RedeemCodeResponse};
@@ -21,7 +22,7 @@ impl BridgeService {
 
         info!("Redeem code request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if !self.state().indexes.redeem.contains_key(&code) {
             return self
@@ -79,6 +80,16 @@ impl BridgeService {
                 .status(&username, Status::internal("Failed to redeem code."))
                 .await;
         }
+
+        self.send_message(
+            &username,
+            render!(
+                REDEEM,
+                code = redeem.code,
+                reward = redeem.reward.as_string()
+            ),
+        )
+        .await;
 
         info!("Redeem code request from player {} completed", username);
 

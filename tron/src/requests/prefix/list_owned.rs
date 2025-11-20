@@ -19,7 +19,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
         let mut owned_prefixes: Vec<Prefix> = Vec::new();
 
         for prefix in player.prefixes {
@@ -36,11 +36,7 @@ impl BridgeService {
                 &username,
                 render!(NO_ASSETS_UNLOCKED, username = &player.username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
         } else {
             let prefix_list_str = owned_prefixes
                 .iter()
@@ -70,11 +66,7 @@ impl BridgeService {
                     list = &prefix_list_str
                 ),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
         }
 
         let response_prefixes = owned_prefixes

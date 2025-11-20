@@ -19,7 +19,7 @@ impl BridgeService {
 
         info!("Send invite request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.team.is_none() {
             error!("Player {} is not in a team", username);
@@ -37,7 +37,7 @@ impl BridgeService {
             ));
         }
 
-        let mut target_player = self.state().get_player_with_handling(&target).await?;
+        let mut target_player = self.player(&target).await?;
 
         if target_player.team.is_some() {
             return Err(Status::already_exists("Target player is already in a team"));
@@ -53,25 +53,17 @@ impl BridgeService {
                 Status::internal("Failed to send team invite")
             })?;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(NEW_TEAM_REQUEST, sender = &username, name = &team.name),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(
+            &username,
+            render!(NEW_TEAM_REQUEST, sender = &username, name = &team.name),
+        )
+        .await;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(TEAM_REQUEST_SENT, receiver = target_player.username),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(
+            &username,
+            render!(TEAM_REQUEST_SENT, receiver = target_player.username),
+        )
+        .await;
 
         info!("Send invite request from player {} completed", username);
 

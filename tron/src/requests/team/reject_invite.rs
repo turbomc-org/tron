@@ -17,7 +17,7 @@ impl BridgeService {
             username
         );
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let team_id = self
             .state()
             .get_team_id(target.clone())

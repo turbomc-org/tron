@@ -7,13 +7,16 @@ use tron_protos::MessagePlayer;
 pub struct Message {}
 
 impl BridgeService {
-    pub async fn send_message(&self, username: &str, message: String) -> Result<()> {
-        self.message_player(MessagePlayer {
-            username: username.to_string(),
-            message: message.to_string(),
-        })
-        .await?;
-        Ok(())
+    pub async fn send_message(&self, username: &str, message: String) {
+        if let Err(e) = self
+            .message_player(MessagePlayer {
+                username: username.to_string(),
+                message: message.to_string(),
+            })
+            .await
+        {
+            error!("Failed to send message to player {}: {}", username, e);
+        }
     }
 
     pub async fn send_message_to_admins(&self, message: String) -> Result<()> {
@@ -38,9 +41,7 @@ impl BridgeService {
             .collect();
 
         for admin_username in active_admins {
-            if let Err(e) = self.send_message(&admin_username, message.clone()).await {
-                error!("Failed to send message to admin {}: {}", admin_username, e);
-            }
+            self.send_message(&admin_username, message.clone()).await;
         }
 
         Ok(())
@@ -68,10 +69,7 @@ impl BridgeService {
             .collect();
 
         for moderator in active_moderators {
-            if let Err(e) = self.send_message(&moderator, message.clone()).await {
-                error!("Failed to send player message: {}", e);
-                continue;
-            }
+            self.send_message(&moderator, message.clone()).await;
         }
 
         Ok(())

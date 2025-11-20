@@ -12,7 +12,7 @@ impl BridgeService {
         let username = inner_request.username;
         let team_name = inner_request.team_name;
 
-        let _ = self.state().get_player_with_handling(&username).await?;
+        let _ = self.player(&username).await?;
         let team = self.state().get_team_by_name(team_name);
 
         if team.is_none() {

@@ -12,7 +12,7 @@ impl BridgeService {
         let username = inner_request.username;
         let server_name = inner_request.name;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self

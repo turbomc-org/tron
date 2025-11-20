@@ -1,7 +1,7 @@
 use crate::config::messages::ACTIVE_IDENTIFIER;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{GetCurrentPrefixRequest, GetCurrentPrefixResponse};
 
 impl BridgeService {
@@ -17,7 +17,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.selected_prefix.is_none() {
             return Err(Status::not_found("You have not equipped any prefix"));
@@ -42,11 +42,7 @@ impl BridgeService {
                 text = &prefix.text
             ),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         Ok(Response::new(GetCurrentPrefixResponse {
             prefix: Some(prefix.compile()),

@@ -21,7 +21,7 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let players = &self.collections().players.clone();
 
         debug!(
@@ -40,22 +40,14 @@ impl BridgeService {
                 Status::internal(format!("Failed to accept friend request from {}", sender))
             })?;
 
-        if let Err(e) = self
-            .send_message(&username, render!(FRIEND_CONNECTED, sender = &sender))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(&username, render!(FRIEND_CONNECTED, sender = &sender))
+            .await;
 
-        if let Err(e) = self
-            .send_message(
-                &sender,
-                render!(FRIEND_REQUEST_ACCEPTED, username = &username),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(
+            &sender,
+            render!(FRIEND_REQUEST_ACCEPTED, username = &username),
+        )
+        .await;
 
         info!("Accept friend request from player {} completed", username);
 

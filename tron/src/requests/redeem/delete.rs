@@ -1,4 +1,6 @@
 use crate::BridgeService;
+use crate::config::messages::DELETE_REDEEM;
+use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 use tron_protos::{DeleteRedeemCodeRequest, DeleteRedeemCodeResponse};
@@ -17,7 +19,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -67,6 +69,9 @@ impl BridgeService {
                 .status(&username, Status::internal("Failed to delete redeem code."))
                 .await;
         }
+
+        self.send_message(&username, render!(DELETE_REDEEM, username = &username))
+            .await;
 
         info!(
             "Delete redeem code request from player {} completed",

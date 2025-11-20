@@ -10,7 +10,7 @@ impl BridgeService {
 
         info!("Received emit message");
 
-        let player = match self.state().get_player_with_handling(&username).await {
+        let player = match self.player(&username).await {
             Ok(player) => player,
             Err(err) => {
                 error!("❌ Failed to get player '{}': {}", username, err);
@@ -34,11 +34,7 @@ impl BridgeService {
             None => {
                 warn!("⚠️ Player '{}' not subscribed to any stream", username);
                 self.send_message(&username, render!(NOT_SUBSCRIBED, username = &username))
-                    .await
-                    .map_err(|err| {
-                        error!("Failed to send player message: {}", err);
-                    })
-                    .unwrap();
+                    .await;
                 return;
             }
         };
@@ -49,11 +45,7 @@ impl BridgeService {
                 subscription, username
             );
             self.send_message(&username, render!(NOT_SUBSCRIBED, username = &username))
-                .await
-                .map_err(|err| {
-                    error!("Failed to send player message: {}", err);
-                })
-                .unwrap();
+                .await;
             return;
         }
 
@@ -69,14 +61,7 @@ impl BridgeService {
                 continue;
             };
 
-            if let Err(e) = self.send_message(&username, message.clone()).await {
-                error!(
-                    "❌ Failed to send message from '{}' to '{}': {:?}",
-                    player.username,
-                    username.clone(),
-                    e
-                );
-            }
+            self.send_message(&username, message.clone()).await;
         }
     }
 }

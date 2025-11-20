@@ -15,7 +15,7 @@ impl BridgeService {
 
         info!("Sell item request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let mut sum: u64 = 0;
 
         for sell_item in sell_items {
@@ -47,11 +47,7 @@ impl BridgeService {
         }
 
         self.send_message(&username, render!(ITEM_SOLD, price = sum))
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
 
         info!("Sell item request from player {} completed", username);
 

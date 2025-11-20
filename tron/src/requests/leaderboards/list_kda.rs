@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::config::messages::{KD_LEADERBOARD, KD_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListKdaLeaderboardRequest, ListKdaLeaderboardResponse};
 
 impl BridgeService {
@@ -18,7 +18,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let leaderboard = self.state().leaderboards.kd.get(10).await;
 
@@ -27,11 +27,7 @@ impl BridgeService {
                 &username,
                 render!(KD_LEADERBOARD_EMPTY, username = username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send leaderboard empty message: {}", err);
-            })
-            .ok();
+            .await;
 
             return Ok(Response::new(ListKdaLeaderboardResponse { success: true }));
         }
@@ -64,11 +60,7 @@ impl BridgeService {
             &username,
             render!(KD_LEADERBOARD, list = &list_msg, rank = &rank_display),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send kd leaderboard message: {}", err);
-        })
-        .ok();
+        .await;
 
         info!(
             "List Kda Leaderboard request from player {} completed",

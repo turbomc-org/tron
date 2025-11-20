@@ -16,7 +16,7 @@ impl BridgeService {
 
         info!("Inc coins request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -27,7 +27,7 @@ impl BridgeService {
                 .await;
         }
 
-        let mut target_player = self.state().get_player_with_handling(&target).await?;
+        let mut target_player = self.player(&target).await?;
 
         target_player
             .inc_coins(amount, &self.collections().players, &self.state())
@@ -44,26 +44,18 @@ impl BridgeService {
                 ))
             })?;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(
-                    MASTER_CONTROL_CREDITS_GRANTED,
-                    amount = &amount,
-                    target = &target
-                ),
-            )
-            .await
-        {
-            error!("Failed to send player {} message: {}", username, e);
-        };
+        self.send_message(
+            &username,
+            render!(
+                MASTER_CONTROL_CREDITS_GRANTED,
+                amount = &amount,
+                target = &target
+            ),
+        )
+        .await;
 
-        if let Err(e) = self
-            .send_message(&target, render!(ADMINISTRATIVE_GRANT, amount = &amount))
-            .await
-        {
-            error!("Failed to send player {} message: {}", target, e);
-        };
+        self.send_message(&target, render!(ADMINISTRATIVE_GRANT, amount = &amount))
+            .await;
 
         info!("Inc coins request from player {} completed", username);
 

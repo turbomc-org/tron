@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::config::messages::JOINED_CHANNEL;
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{TeamChatRequest, TeamChatResponse};
 
 impl BridgeService {
@@ -15,7 +15,7 @@ impl BridgeService {
 
         info!("Team chat request from player {} completed", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.team.is_none() {
             return self
@@ -44,13 +44,8 @@ impl BridgeService {
         }
 
         for player in active_members {
-            if let Err(e) = self
-                .send_message(&player, render!(JOINED_CHANNEL, username = &player))
-                .await
-            {
-                error!("Failed to send message to player {}: {}", player, e);
-                return Err(Status::internal("Failed to send message"));
-            }
+            self.send_message(&player, render!(JOINED_CHANNEL, username = &player))
+                .await;
         }
 
         info!("Team chat request from player {} completed", username);

@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::config::messages::{MODERATOR_LIST, MODERATOR_LIST_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListAllModeratorsRequest, ListAllModeratorsResponse};
 
 impl BridgeService {
@@ -15,7 +15,7 @@ impl BridgeService {
 
         info!("List moderators request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return Err(Status::permission_denied("You are not an admin"));
@@ -43,9 +43,7 @@ impl BridgeService {
                 &username,
                 render!(MODERATOR_LIST_EMPTY, username = username),
             )
-            .await
-            .map_err(|err| error!("Failed to send message: {}", err))
-            .ok();
+            .await;
         } else {
             let mut entries = Vec::new();
 
@@ -60,9 +58,7 @@ impl BridgeService {
             let list_str = entries.join("\n\n");
 
             self.send_message(&username, render!(MODERATOR_LIST, list = &list_str))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         }
 
         info!("List moderators request from player {} completed", username);

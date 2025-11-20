@@ -1,8 +1,7 @@
 use crate::config::messages::{INCOMING_TRANSFER, TRANSFERRED};
-use crate::models::player::Player;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{debug, error, info};
+use tracing::{error, info};
 use tron_protos::{TransferBalanceRequest, TransferBalanceResponse};
 
 impl BridgeService {
@@ -28,31 +27,29 @@ impl BridgeService {
             )));
         }
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
-        let mut target = self.state().get_player_with_handling(&receiver).await?;
+        let mut player = self.player(&username).await?;
+        let mut target = self.player(&receiver).await?;
 
         if player.coins < amount {
             error!("Player {} does not have enough coins", player.username);
 
-            return Err(Status::invalid_argument(format!(
-                "You don't have enough coins"
-            )));
+            return self
+                .status(
+                    &username,
+                    Status::out_of_range("You don't have enough coins."),
+                )
+                .await;
         }
 
-        debug!(
-            "Transferring coins from player {} to player {}",
-            player.username, target.username
-        );
-
-        Player::transfer_coins(
-            &mut player,
-            &mut target,
-            amount,
-            &self.collections().players,
-            &self.state(),
-        )
-        .await
-        .map_err(|e| {
+        if let Err(e) = player
+            .transfer_coins(
+                &mut target,
+                amount,
+                &self.collections().players,
+                &self.state(),
+            )
+            .await
+        {
             error!(
                 "Failed to transfer coins from player {} to player {} : {}",
                 player.username,
@@ -60,31 +57,28 @@ impl BridgeService {
                 e.to_string()
             );
 
-            Status::internal(format!(
-                "Failed to transfer coins to player {}",
-                target.username,
-            ))
-        })?;
+            return self
+                .status(
+                    &username,
+                    Status::internal(format!(
+                        "Failed to transfer coins to player {}",
+                        target.username
+                    )),
+                )
+                .await;
+        }
 
         self.send_message(
             &username,
             render!(TRANSFERRED, amount = &amount, target = &receiver),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         self.send_message(
             &receiver,
             render!(INCOMING_TRANSFER, amount = &amount, sender = &username),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         info!(
             "Transfer Balance request for player {} to {} completed",

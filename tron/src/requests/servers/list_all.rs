@@ -5,7 +5,7 @@ use crate::models::server::Server;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListAllServersRequest, ListAllServersResponse};
 
 impl BridgeService {
@@ -18,7 +18,7 @@ impl BridgeService {
 
         info!("List all servers request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self
@@ -39,9 +39,7 @@ impl BridgeService {
 
         if servers.is_empty() {
             self.send_message(&username, render!(NO_SERVERS_FOUND, username = &username))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         } else {
             let now = Utc::now().timestamp() as u64;
             let mut entries = Vec::new();
@@ -80,9 +78,7 @@ impl BridgeService {
                 &username,
                 render!(SERVER_LIST, count = &servers.len(), list = &list_str),
             )
-            .await
-            .map_err(|err| error!("Failed to send message: {}", err))
-            .ok();
+            .await;
         }
 
         info!(

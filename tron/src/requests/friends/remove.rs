@@ -21,7 +21,7 @@ impl BridgeService {
             ));
         }
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let target_id = self.state().get_friend_id(&player, &target).await?;
 
         player
@@ -42,11 +42,7 @@ impl BridgeService {
             })?;
 
         self.send_message(&username, render!(FRIEND_REMOVED, target = &target))
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
 
         info!("Remove friend request from player {} completed", username);
 

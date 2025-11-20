@@ -13,7 +13,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         player
             .add_blocks_broken(1, &self.collections().players, &self.state())

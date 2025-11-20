@@ -31,11 +31,7 @@ impl BridgeService {
             })?;
 
         self.send_message(&username, render!(ITEM_DELETED, item_name = item_name))
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
 
         info!("Delete item request from player {} completed", username);
 

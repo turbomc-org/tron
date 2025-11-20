@@ -24,7 +24,7 @@ impl BridgeService {
             return Err(Status::invalid_argument("Prefix cannot be empty"));
         }
 
-        let _ = self.state().get_player_with_handling(&username).await?;
+        let _ = self.player(&username).await?;
         let decompiled_prefix = Prefix::decompile(prefix.unwrap());
 
         if self
@@ -51,19 +51,15 @@ impl BridgeService {
                 Status::internal("Failed to insert prefix")
             })?;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(
-                    IDENTIFIER_REGISTERED,
-                    color = &decompiled_prefix.color,
-                    text = &decompiled_prefix.text
-                ),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(
+            &username,
+            render!(
+                IDENTIFIER_REGISTERED,
+                color = &decompiled_prefix.color,
+                text = &decompiled_prefix.text
+            ),
+        )
+        .await;
 
         info!("Create prefix request from player {} completed", username);
 

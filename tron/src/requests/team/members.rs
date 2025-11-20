@@ -1,7 +1,7 @@
 use crate::config::messages::SQUAD_ROSTER;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{GetTeamMembersRequest, GetTeamMembersResponse};
 
 impl BridgeService {
@@ -14,7 +14,7 @@ impl BridgeService {
 
         info!("Get team members request for player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
         let team_id = player
             .team
             .ok_or_else(|| Status::not_found("You are not in a team"))?;
@@ -64,20 +64,16 @@ impl BridgeService {
 
         let roster_text = roster_lines.join("\n");
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(
-                    SQUAD_ROSTER,
-                    team_name = &team.name,
-                    member_count = &members.len(),
-                    roster_text = &roster_text
-                ),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(
+            &username,
+            render!(
+                SQUAD_ROSTER,
+                team_name = &team.name,
+                member_count = &members.len(),
+                roster_text = &roster_text
+            ),
+        )
+        .await;
 
         info!("Get team members request for player {} completed", username);
 

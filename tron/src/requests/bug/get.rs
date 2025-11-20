@@ -18,7 +18,7 @@ impl BridgeService {
             username, bug_id
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self

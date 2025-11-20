@@ -1,8 +1,8 @@
-use tron_protos::{ListAllAdminsRequest, ListAllAdminsResponse};
 use crate::config::messages::{ADMIN_LIST, ADMIN_LIST_EMPTY};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
+use tron_protos::{ListAllAdminsRequest, ListAllAdminsResponse};
 
 impl BridgeService {
     pub async fn handle_list_all_admins(
@@ -14,7 +14,7 @@ impl BridgeService {
 
         info!("List admins request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -44,9 +44,7 @@ impl BridgeService {
 
         if admins.is_empty() {
             self.send_message(&username, render!(ADMIN_LIST_EMPTY, username = username))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         } else {
             let mut entries = Vec::new();
 
@@ -61,9 +59,7 @@ impl BridgeService {
             let list_str = entries.join("\n\n");
 
             self.send_message(&username, render!(ADMIN_LIST, list = &list_str))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         }
 
         info!("List admins request from player {} completed", username);

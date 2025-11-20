@@ -10,7 +10,7 @@ impl BridgeService {
         let inner_request = request.into_inner();
         let username = inner_request.username;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         Ok(Response::new(GetScoreboardStatusResponse {
             enabled: player.scoreboard_enabled,

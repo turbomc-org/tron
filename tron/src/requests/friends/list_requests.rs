@@ -3,7 +3,7 @@ use crate::{BridgeService, render};
 use chrono::Utc;
 use std::collections::HashMap;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListFriendRequestsRequest, ListFriendRequestsResponse};
 
 impl BridgeService {
@@ -16,9 +16,8 @@ impl BridgeService {
 
         info!("Get friend requests for player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
-        // Resolve all incoming friend requests synchronously
         let mut incoming_friend_requests: HashMap<String, u64> = HashMap::new();
 
         for (sender_id, sent_at) in &player.incoming_friend_requests {
@@ -34,11 +33,7 @@ impl BridgeService {
                 &player.username,
                 render!(NO_INCOMING_FRIEND_REQUESTS, username = &player.username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
         } else {
             let now = Utc::now().timestamp() as u64;
             let mut entries = Vec::new();
@@ -73,11 +68,7 @@ impl BridgeService {
                     list = &list
                 ),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
         }
 
         info!("Get friend requests for player {} completed", username);

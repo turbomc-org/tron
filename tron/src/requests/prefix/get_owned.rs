@@ -16,7 +16,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let prefixes: Result<Vec<String>, Status> = player
             .prefixes

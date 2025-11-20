@@ -3,7 +3,6 @@ use crate::config::messages::REDEEM_DETAIL;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::error;
 use tron_protos::{ViewRedeemCodeRequest, ViewRedeemCodeResponse};
 
 impl BridgeService {
@@ -15,7 +14,7 @@ impl BridgeService {
         let username = request.username;
         let code = request.code;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -61,21 +60,17 @@ impl BridgeService {
 
         let reward = redeem.reward.as_string();
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(
-                    REDEEM_DETAIL,
-                    id = &redeem.id,
-                    code = &redeem.code,
-                    reward = &reward,
-                    expiry = &time
-                ),
-            )
-            .await
-        {
-            error!("Failed to send redeem view message: {}", e);
-        }
+        self.send_message(
+            &username,
+            render!(
+                REDEEM_DETAIL,
+                id = &redeem.id,
+                code = &redeem.code,
+                reward = &reward,
+                expiry = &time
+            ),
+        )
+        .await;
 
         Ok(Response::new(ViewRedeemCodeResponse { success: true }))
     }

@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::config::messages::{COINS_LEADERBOARD, COINS_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListCoinsLeaderboardRequest, ListCoinsLeaderboardResponse};
 
 impl BridgeService {
@@ -18,7 +18,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let leaderboard = self.state().leaderboards.coins.get(10).await;
 
@@ -27,11 +27,7 @@ impl BridgeService {
                 &username,
                 render!(COINS_LEADERBOARD_EMPTY, username = username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send leaderboard empty message: {}", err);
-            })
-            .ok();
+            .await;
 
             return Ok(Response::new(ListCoinsLeaderboardResponse {
                 success: true,
@@ -66,11 +62,7 @@ impl BridgeService {
             &username,
             render!(COINS_LEADERBOARD, list = &list_msg, rank = &rank_display),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send coins leaderboard message: {}", err);
-        })
-        .ok();
+        .await;
 
         info!(
             "List Coins Leaderboard request from player {} completed",

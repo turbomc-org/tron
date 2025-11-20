@@ -17,7 +17,7 @@ impl BridgeService {
 
         debug!("Create team request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if player.team.is_some() {
             error!("Player {} is already in a team", username);
@@ -51,7 +51,7 @@ impl BridgeService {
                 Status::internal("Failed to set team for player")
             })?;
 
-        if let Err(err) = self.send_message(
+        self.send_message(
           &username,
           format!(
             "<gradient:#C724B1:#7A00FF><bold>✅ SQUAD INITIALIZED</bold></gradient>\n\
@@ -59,9 +59,7 @@ impl BridgeService {
              <dark_gray>»</dark_gray> <gray>Use <white>/team invite <user></white> to expand your roster.</gray>",
             team_name
           ),
-        ).await {
-            error!("Failed to send message to player: {}", err);
-        };
+        ).await;
 
         debug!("Create team request from player {} completed", username);
         debug!("Created team {} for player {}", team_name, username);

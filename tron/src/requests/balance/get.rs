@@ -1,9 +1,8 @@
-use tron_protos::{GetBalanceRequest, GetBalanceResponse};
 use crate::config::messages::BALANCE;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::error;
 use tracing::info;
+use tron_protos::{GetBalanceRequest, GetBalanceResponse};
 
 impl BridgeService {
     pub async fn handle_get_balance(
@@ -15,14 +14,10 @@ impl BridgeService {
 
         info!("Get Balance request for player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
-        if let Err(e) = self
-            .send_message(&username, render!(BALANCE, balance = &player.coins))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(&username, render!(BALANCE, balance = &player.coins))
+            .await;
 
         info!("Get Balance request for player {} completed", username);
 

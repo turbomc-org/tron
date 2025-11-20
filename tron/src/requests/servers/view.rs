@@ -2,7 +2,7 @@ use crate::config::messages::SERVER_DETAIL;
 use crate::utils::format_timestamp_indian_style;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ViewServerRequest, ViewServerResponse};
 
 impl BridgeService {
@@ -16,7 +16,7 @@ impl BridgeService {
 
         info!("View server request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -61,23 +61,19 @@ impl BridgeService {
 
         let created_at = format_timestamp_indian_style(server.created_at);
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(
-                    SERVER_DETAIL,
-                    id = server.id,
-                    name = server.name,
-                    description = server.description,
-                    created_by = created_by,
-                    created = created_at,
-                    address = server.address
-                ),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(
+            &username,
+            render!(
+                SERVER_DETAIL,
+                id = server.id,
+                name = server.name,
+                description = server.description,
+                created_by = created_by,
+                created = created_at,
+                address = server.address
+            ),
+        )
+        .await;
 
         info!("View server request from player {} completed", username);
 

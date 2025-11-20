@@ -13,7 +13,7 @@ impl BridgeService {
 
         info!("Get moderators request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return Err(Status::permission_denied("Your are not an admin."));

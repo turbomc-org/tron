@@ -30,7 +30,7 @@ impl BridgeService {
             ));
         }
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
         let mut target = self
             .state()
             .get_player_with_handling(&target_username)
@@ -57,21 +57,13 @@ impl BridgeService {
             &target_username,
             render!(NEW_FRIEND_REQUEST, sender = &username),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         self.send_message(
             &player.username,
             render!(FRIEND_REQUEST_SENT, receiver = &target_username),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         info!(
             "Send friend request request from player {} completed",

@@ -1,7 +1,7 @@
 use crate::BridgeService;
-use tron_protos::{GetReportRequest, GetReportResponse, Report as CompiledReport};
 use crate::models::player::Role;
 use tonic::{Request, Response, Status};
+use tron_protos::{GetReportRequest, GetReportResponse, Report as CompiledReport};
 
 impl BridgeService {
     pub async fn handle_get_report(
@@ -12,7 +12,7 @@ impl BridgeService {
         let username = inner_request.username;
         let report_id = inner_request.id;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self

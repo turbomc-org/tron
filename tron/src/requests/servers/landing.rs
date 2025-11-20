@@ -1,7 +1,6 @@
 use crate::config::messages::SERVER_LANDING;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::error;
 use tron_protos::{LandingServerRequest, LandingServerResponse};
 
 impl BridgeService {
@@ -13,7 +12,7 @@ impl BridgeService {
         let username = inner_request.username;
         let name = inner_request.name;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -42,12 +41,8 @@ impl BridgeService {
             id
         };
 
-        if let Err(e) = self
-            .send_message(&username, render!(SERVER_LANDING, name = name))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(&username, render!(SERVER_LANDING, name = name))
+            .await;
 
         Ok(Response::new(LandingServerResponse { success: true }))
     }

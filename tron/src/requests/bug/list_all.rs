@@ -16,7 +16,7 @@ impl BridgeService {
 
         info!("List all bugs request from player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self
@@ -42,9 +42,7 @@ impl BridgeService {
 
         if bugs.is_empty() {
             self.send_message(&username, render!(NO_BUGS_FOUND, username = &username))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         } else {
             let now = Utc::now().timestamp() as u64;
             let mut entries = Vec::new();
@@ -82,9 +80,7 @@ impl BridgeService {
                 &username,
                 render!(BUG_LIST, count = &bugs.len(), list = &list_str),
             )
-            .await
-            .map_err(|err| error!("Failed to send message: {}", err))
-            .ok();
+            .await;
         }
 
         info!("List all bugs request from player {} completed", username);

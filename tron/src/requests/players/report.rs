@@ -17,8 +17,8 @@ impl BridgeService {
 
         info!("Report player request received");
 
-        let player = self.state().get_player_with_handling(&username).await?;
-        let target_player = self.state().get_player_with_handling(&target).await?;
+        let player = self.player(&username).await?;
+        let target_player = self.player(&target).await?;
 
         let report = Report::new(player.id, target_player.id, reason);
 
@@ -30,15 +30,11 @@ impl BridgeService {
                 Status::internal("Failed to insert report")
             })?;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(REPORT_PLAYER, username = target, reason = report.reason),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(
+            &username,
+            render!(REPORT_PLAYER, username = target, reason = report.reason),
+        )
+        .await;
 
         if let Err(e) = self
             .send_message_to_admins(render!(PLAYER_REPORT_NOTIFICATION, username = username))

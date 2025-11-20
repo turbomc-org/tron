@@ -15,18 +15,14 @@ impl BridgeService {
 
         info!("UnEquip prefix request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if player.selected_prefix.is_none() {
             self.send_message(
                 &username,
                 render!(NO_ACTIVE_IDENTIFIER, username = &player.username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
 
             return Err(Status::invalid_argument("Player has no prefix equipped"));
         }
@@ -43,11 +39,7 @@ impl BridgeService {
             &username,
             render!(IDENTIFIER_UNEQUIPPED, username = &player.username),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         info!("UnEquip prefix request from player {} completed", username);
 

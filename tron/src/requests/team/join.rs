@@ -16,7 +16,7 @@ impl BridgeService {
 
         info!("Join team request for player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if player.team.is_some() {
             error!("Player {} is already in a team", username);
@@ -54,15 +54,11 @@ impl BridgeService {
             Status::internal("Failed to join team")
         })?;
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(SQUAD_LINK_ESTABLISHED, team = &team_name),
-            )
-            .await
-        {
-            error!("Failed to send message to player {}: {}", username, e);
-        };
+        self.send_message(
+            &username,
+            render!(SQUAD_LINK_ESTABLISHED, team = &team_name),
+        )
+        .await;
 
         let team_broadcast_message = render!(CONNECTION_ESTABLISHED, username = &username);
 
@@ -76,12 +72,8 @@ impl BridgeService {
                 .get_player_username(&member.0)
                 .ok_or_else(|| Status::not_found("Member not found"))?;
 
-            if let Err(e) = self
-                .send_message(&member_username, team_broadcast_message.clone())
-                .await
-            {
-                error!("Failed to send player message: {}", e);
-            };
+            self.send_message(&member_username, team_broadcast_message.clone())
+                .await;
         }
 
         info!("Join team request for player {} completed", username);

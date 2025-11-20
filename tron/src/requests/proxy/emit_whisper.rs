@@ -1,7 +1,5 @@
 use crate::BridgeService;
-use crate::config::messages::{
-    FAILED_TO_SEND_WHISPER, NOT_A_FRIEND, PLAYER_OFFLINE, TARGET_NOT_FOUND,
-};
+use crate::config::messages::{FAILED_TO_SEND_WHISPER, NOT_A_FRIEND, TARGET_NOT_FOUND};
 use crate::render;
 use crate::utils::format_message::format_message;
 use tracing::{error, warn};
@@ -13,7 +11,7 @@ impl BridgeService {
         let target_username = req.target;
         let message = req.message;
 
-        let player = match self.state().get_player_with_handling(&username).await {
+        let player = match self.player(&username).await {
             Ok(player) => player,
             Err(err) => {
                 error!("Failed to get player '{}': {}", username, err);
@@ -58,46 +56,18 @@ impl BridgeService {
                     "Failed to format whisper message for '{}': {}",
                     username, err
                 );
-                if let Err(e) = self
-                    .send_message(
-                        &username,
-                        render!(FAILED_TO_SEND_WHISPER, target = &target_username),
-                    )
-                    .await
-                {
-                    error!(
-                        "Failed to send failed whisper message to '{}': {}",
-                        username, e
-                    );
-                };
+                self.send_message(
+                    &username,
+                    render!(FAILED_TO_SEND_WHISPER, target = &target_username),
+                )
+                .await;
                 return;
             }
         };
 
-        if self
-            .send_message(&target.username, formatted)
-            .await
-            .is_err()
-        {
-            error!("Failed to deliver whisper to '{}'", target.username);
-            if let Err(e) = self
-                .send_message(
-                    &username,
-                    render!(PLAYER_OFFLINE, username = &target.username),
-                )
-                .await
-            {
-                error!("Failed to send offline message to '{}': {}", username, e);
-            };
-            return;
-        }
+        self.send_message(&target.username, formatted).await;
 
         let confirm_msg = format!("[To {}] {}", target.username, message);
-        if let Err(e) = self.send_message(&username, confirm_msg).await {
-            error!(
-                "Failed to send confirmation message to '{}': {}",
-                username, e
-            );
-        };
+        self.send_message(&username, confirm_msg).await;
     }
 }

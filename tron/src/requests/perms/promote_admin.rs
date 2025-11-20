@@ -1,8 +1,8 @@
-use tron_protos::{PromoteAdminPermsRequest, PromoteAdminPermsResponse};
 use crate::config::messages::GAINED_MASTER_CONTROL;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
+use tron_protos::{PromoteAdminPermsRequest, PromoteAdminPermsResponse};
 
 impl BridgeService {
     pub async fn handle_promote_admin_perms(
@@ -15,7 +15,7 @@ impl BridgeService {
 
         info!("Promote admin request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if player.is_admin() {
             return self
@@ -37,15 +37,11 @@ impl BridgeService {
                     .await;
             }
 
-            if let Err(e) = self
-                .send_message(
-                    &username,
-                    render!(GAINED_MASTER_CONTROL, username = username),
-                )
-                .await
-            {
-                error!("Failed to send player message: {}", e);
-            }
+            self.send_message(
+                &username,
+                render!(GAINED_MASTER_CONTROL, username = username),
+            )
+            .await;
         } else {
             return self
                 .status(&username, Status::unauthenticated("Invalid token."))

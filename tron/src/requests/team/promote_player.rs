@@ -17,7 +17,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.team.is_none() {
             return Err(Status::not_found("You are not in a team"));

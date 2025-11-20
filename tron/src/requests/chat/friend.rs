@@ -18,7 +18,7 @@ impl BridgeService {
             username, friend_username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
         let friend = self
             .state()
             .get_player_with_handling(&friend_username)
@@ -38,31 +38,21 @@ impl BridgeService {
 
         let token = self.state().messaging.insert_request(player.id);
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(FRIEND_CHAT_REQUEST_SENT, friend = &friend_username),
-            )
-            .await
-        {
-            self.state().messaging.remove_request(&token);
-            return Err(Status::internal(format!("Failed to send message: {}", e)));
-        }
+        self.send_message(
+            &username,
+            render!(FRIEND_CHAT_REQUEST_SENT, friend = &friend_username),
+        )
+        .await;
 
-        if let Err(e) = self
-            .send_message(
-                &friend_username,
-                render!(
-                    FRIEND_CHAT_REQUEST_RECEIVED,
-                    friend = &username,
-                    token = &token
-                ),
-            )
-            .await
-        {
-            self.state().messaging.remove_request(&token);
-            return Err(Status::internal(format!("Failed to send message: {}", e)));
-        }
+        self.send_message(
+            &friend_username,
+            render!(
+                FRIEND_CHAT_REQUEST_RECEIVED,
+                friend = &username,
+                token = &token
+            ),
+        )
+        .await;
 
         info!(
             "Friend chat request from player {} to {} completed",

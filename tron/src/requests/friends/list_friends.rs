@@ -1,7 +1,7 @@
 use crate::config::messages::{FRIEND_NETWORK, NO_CONNECTIONS};
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListFriendsRequest, ListFriendsResponse};
 
 impl BridgeService {
@@ -14,7 +14,7 @@ impl BridgeService {
 
         info!("Get friends list for player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let mut friends: Vec<String> = Vec::new();
         for friend_id in &player.friends {
@@ -28,9 +28,7 @@ impl BridgeService {
                 &username,
                 render!(NO_CONNECTIONS, username = &player.username),
             )
-            .await
-            .map_err(|err| error!("Failed to send player message: {}", err))
-            .ok();
+            .await;
         } else {
             let mut friend_entries = Vec::new();
 
@@ -62,9 +60,7 @@ impl BridgeService {
                     friend_list = &friend_list_str
                 ),
             )
-            .await
-            .map_err(|err| error!("Failed to send player message: {}", err))
-            .ok();
+            .await;
         }
 
         info!("Get friends list for player {} completed", username);

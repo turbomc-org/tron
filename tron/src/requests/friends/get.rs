@@ -13,7 +13,7 @@ impl BridgeService {
 
         info!("Get friends request for player {} received", username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let mut friends: Vec<String> = Vec::new();
         for friend_id in &player.friends {

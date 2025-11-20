@@ -14,7 +14,7 @@ impl BridgeService {
 
         info!("List all prefix request received");
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let prefixes = self.state().get_prefixes().await.map_err(|err| {
             error!("Failed to get all prefixes: {}", err);
@@ -28,11 +28,7 @@ impl BridgeService {
                 &username,
                 render!(MARKET_DATABASE_EMPTY, username = &player.username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
         } else {
             let player_owned_prefixes: std::collections::HashSet<String> = player
                 .prefixes
@@ -67,11 +63,7 @@ impl BridgeService {
                 &username,
                 render!(NETWORK_MARKET_IDENTIFIERS, list = &prefix_list_str),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send player message: {}", err);
-            })
-            .unwrap();
+            .await;
         }
 
         info!("List all prefix request completed");

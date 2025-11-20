@@ -18,7 +18,7 @@ impl BridgeService {
 
         info!("View report {} requested by {}", report_id, username);
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self
@@ -79,9 +79,7 @@ impl BridgeService {
                 created = &time_ago
             ),
         )
-        .await
-        .map_err(|err| error!("Failed to send bug view message: {}", err))
-        .ok();
+        .await;
 
         Ok(Response::new(ViewReportResponse { success: true }))
     }

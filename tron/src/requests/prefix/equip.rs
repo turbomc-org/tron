@@ -16,7 +16,7 @@ impl BridgeService {
 
         info!("Equip prefix request from player {} received", username);
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
         let prefix = self.state().get_prefix_with_handling(&prefix_id).await?;
 
         if !player.prefixes.contains(&prefix.id) {
@@ -40,11 +40,7 @@ impl BridgeService {
                 text = &prefix.text
             ),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         info!("Equip prefix request from player {} completed", username);
 

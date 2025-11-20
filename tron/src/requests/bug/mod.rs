@@ -5,12 +5,12 @@ pub mod list_all;
 pub mod view;
 
 use crate::BridgeService;
-use tron_protos::{BugRequest, BugResponse};
 use crate::config::messages::{BUG_SUBMITTED, PLAYER_BUG_NOTIFICATION};
 use crate::models::bug::Bug;
 use crate::render;
 use tonic::{Request, Response, Status};
 use tracing::error;
+use tron_protos::{BugRequest, BugResponse};
 
 impl BridgeService {
     pub async fn handle_bug(
@@ -21,7 +21,7 @@ impl BridgeService {
         let username = inner_request.username;
         let description = inner_request.description;
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let bug = Bug::new(player.id, description);
 
@@ -32,12 +32,8 @@ impl BridgeService {
                 .await;
         }
 
-        if let Err(e) = self
-            .send_message(&username, render!(BUG_SUBMITTED, username = username))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(&username, render!(BUG_SUBMITTED, username = username))
+            .await;
 
         if let Err(e) = self
             .send_message_to_admins(render!(PLAYER_BUG_NOTIFICATION, username = username))

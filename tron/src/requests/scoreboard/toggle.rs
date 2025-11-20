@@ -17,7 +17,7 @@ impl BridgeService {
             username
         );
 
-        let mut player = self.state().get_player_with_handling(&username).await?;
+        let mut player = self.player(&username).await?;
 
         if player.scoreboard_enabled {
             if let Err(e) = player
@@ -50,19 +50,11 @@ impl BridgeService {
         }
 
         if player.scoreboard_enabled {
-            if let Err(e) = self
-                .send_message(&username, render!(ENABLE_SCOREBOARD, username = &username))
-                .await
-            {
-                error!("Failed to send message to player: {}", e);
-            }
+            self.send_message(&username, render!(ENABLE_SCOREBOARD, username = &username))
+                .await;
         } else {
-            if let Err(e) = self
-                .send_message(&username, render!(DISABLE_SCOREBOARD, username = &username))
-                .await
-            {
-                error!("Failed to send message to player: {}", e);
-            }
+            self.send_message(&username, render!(DISABLE_SCOREBOARD, username = &username))
+                .await;
         }
 
         info!(

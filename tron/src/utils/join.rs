@@ -9,24 +9,16 @@ impl BridgeService {
     pub async fn join_game(&self, player: Player) {
         let username = player.username.clone();
 
-        if let Err(e) = self
-            .send_message(&username, render!(SUCCESSFUL_LOGIN, username = username))
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(&username, render!(SUCCESSFUL_LOGIN, username = username))
+            .await;
 
         let landing_opt = self.state().servers.landing.lock().unwrap().clone();
 
         info!(landing_opt);
 
         if let Some(landing_id) = landing_opt {
-            if let Err(e) = self
-                .send_message(&username, render!(TRANSFERRING_PLAYER, username = username))
-                .await
-            {
-                error!("Failed to send TRANSFERRING_PLAYER to {}: {}", username, e);
-            }
+            self.send_message(&username, render!(TRANSFERRING_PLAYER, username = username))
+                .await;
 
             let _ = match self.state().servers.documents.get(&landing_id) {
                 Some(s) => s.clone(),

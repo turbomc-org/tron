@@ -6,6 +6,7 @@ use chrono::{TimeZone, Utc};
 
 pub mod error;
 pub mod format_message;
+pub mod get;
 pub mod join;
 pub mod math;
 pub mod message;

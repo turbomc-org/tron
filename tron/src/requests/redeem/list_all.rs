@@ -4,7 +4,7 @@ use crate::models::redeem::Redeem;
 use crate::render;
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListAllRedeemCodesRequest, ListAllRedeemCodesResponse};
 
 impl BridgeService {
@@ -20,7 +20,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if !player.is_admin() {
             return self
@@ -40,9 +40,7 @@ impl BridgeService {
 
         if redeems.is_empty() {
             self.send_message(&username, render!(EMPTY_REDEEM_CODES, username = &username))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         } else {
             let now = Utc::now().timestamp() as u64;
             let mut entries = Vec::new();
@@ -77,9 +75,7 @@ impl BridgeService {
             let list_str = entries.join("\n\n");
 
             self.send_message(&username, render!(REDEEM_LIST, list = &list_str))
-                .await
-                .map_err(|err| error!("Failed to send message: {}", err))
-                .ok();
+                .await;
         }
 
         info!(

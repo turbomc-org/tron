@@ -2,7 +2,7 @@ use crate::BridgeService;
 use crate::config::messages::{MODERATOR_PERMS_GAINED, PROMOTED_MODERATOR};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{PromoteModeratorPermsRequest, PromoteModeratorPermsResponse};
 
 impl BridgeService {
@@ -19,8 +19,8 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
-        let mut target = self.state().get_player_with_handling(&target).await?;
+        let player = self.player(&username).await?;
+        let mut target = self.player(&target).await?;
 
         if !player.is_admin() {
             return self
@@ -49,25 +49,17 @@ impl BridgeService {
                 .await;
         }
 
-        if let Err(e) = self
-            .send_message(
-                &username,
-                render!(PROMOTED_MODERATOR, username = target.username),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        };
+        self.send_message(
+            &username,
+            render!(PROMOTED_MODERATOR, username = target.username),
+        )
+        .await;
 
-        if let Err(e) = self
-            .send_message(
-                &target.username,
-                render!(MODERATOR_PERMS_GAINED, username = username),
-            )
-            .await
-        {
-            error!("Failed to send player message: {}", e);
-        }
+        self.send_message(
+            &target.username,
+            render!(MODERATOR_PERMS_GAINED, username = username),
+        )
+        .await;
 
         info!(
             "Promote moderator request from player {} completed",

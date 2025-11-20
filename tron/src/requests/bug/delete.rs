@@ -19,7 +19,7 @@ impl BridgeService {
             username, bug_id
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.role != Role::Admin {
             return self
@@ -41,12 +41,8 @@ impl BridgeService {
                 .await;
         }
 
-        if let Err(e) = self
-            .send_message(&username, render!(DELETE_BUG, username = username))
-            .await
-        {
-            error!("Failed to send player message: {}", e)
-        }
+        self.send_message(&username, render!(DELETE_BUG, username = username))
+            .await;
 
         info!(
             "Delete bug request from player {} for bug {} completed",

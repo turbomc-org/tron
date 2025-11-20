@@ -1002,6 +1002,40 @@ pub static REDEEM_DETAIL: Lazy<Template<'static>> = Lazy::new(|| {
     }
 });
 
+pub static CREATE_REDEEM: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⌨️ CREATED REDEEM",
+        body: r#"
+<gray>Redeem ID:</gray> <yellow><bold>#{{id}}</bold></yellow>
+<gray>Code:</gray> <aqua>{{code}}</aqua>
+<gray>Expires at:</gray> <white>{{expiry}}</white>
+
+<gray>Reward:</gray>
+<light_purple>{{reward}}</light_purple>
+
+<dark_gray>──────────────────────────────</dark_gray>
+[<red><click:run_command:'/admin redeem delete {{code}}'>Delete Redeem</click></red>]
+"#
+    }
+});
+
+pub static DELETE_REDEEM: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "⌨️ DELETE REDEEM",
+        body: "Successfully deleted redeem code."
+    }
+});
+
+pub static REDEEM: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "success",
+        title: "⌨️ REDEEM SUCCESSFUL",
+        body: "You have successfully redeemed the code <aqua>{{code}}</aqua>. {{reward}} has been added to your account."
+    }
+});
+
 pub static SUCCESSFUL_LOGIN: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",

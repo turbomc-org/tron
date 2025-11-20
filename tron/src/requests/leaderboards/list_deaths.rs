@@ -1,8 +1,8 @@
 use crate::BridgeService;
-use crate::config::messages::{COINS_LEADERBOARD, COINS_LEADERBOARD_EMPTY};
+use crate::config::messages::{DEATHS_LEADERBOARD, DEATHS_LEADERBOARD_EMPTY};
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListDeathsLeaderboardRequest, ListDeathsLeaderboardResponse};
 
 impl BridgeService {
@@ -18,20 +18,16 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         let leaderboard = self.state().leaderboards.deaths.get(10).await;
 
         if leaderboard.is_empty() {
             self.send_message(
                 &username,
-                render!(COINS_LEADERBOARD_EMPTY, username = username),
+                render!(DEATHS_LEADERBOARD_EMPTY, username = username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send leaderboard empty message: {}", err);
-            })
-            .ok();
+            .await;
 
             return Ok(Response::new(ListDeathsLeaderboardResponse {
                 success: true,
@@ -64,13 +60,9 @@ impl BridgeService {
 
         self.send_message(
             &username,
-            render!(COINS_LEADERBOARD, list = &list_msg, rank = &rank_display),
+            render!(DEATHS_LEADERBOARD, list = &list_msg, rank = &rank_display),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send coins leaderboard message: {}", err);
-        })
-        .ok();
+        .await;
 
         info!(
             "List Deaths Leaderboard request from player {} completed",

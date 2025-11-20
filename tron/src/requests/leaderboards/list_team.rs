@@ -3,7 +3,7 @@ use crate::config::messages::{TEAMS_LEADERBOARD, TEAMS_LEADERBOARD_EMPTY};
 use crate::models::team::Team;
 use crate::render;
 use tonic::{Request, Response, Status};
-use tracing::{error, info};
+use tracing::info;
 use tron_protos::{ListTeamsLeaderboardRequest, ListTeamsLeaderboardResponse};
 
 impl BridgeService {
@@ -19,7 +19,7 @@ impl BridgeService {
             username
         );
 
-        let player = self.state().get_player_with_handling(&username).await?;
+        let player = self.player(&username).await?;
 
         if player.team.is_none() {
             return self
@@ -37,11 +37,7 @@ impl BridgeService {
                 &username,
                 render!(TEAMS_LEADERBOARD_EMPTY, username = username),
             )
-            .await
-            .map_err(|err| {
-                error!("Failed to send leaderboard empty message: {}", err);
-            })
-            .ok();
+            .await;
 
             return Ok(Response::new(ListTeamsLeaderboardResponse {
                 success: true,
@@ -76,11 +72,7 @@ impl BridgeService {
             &username,
             render!(TEAMS_LEADERBOARD, list = &list_msg, rank = &rank_display),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send kd leaderboard message: {}", err);
-        })
-        .ok();
+        .await;
 
         info!(
             "List Team Leaderboard request from player {} completed",

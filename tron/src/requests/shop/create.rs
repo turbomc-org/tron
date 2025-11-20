@@ -47,11 +47,7 @@ impl BridgeService {
             &username,
             render!(ITEM_CREATED, item_name = name.clone(), item_id = item_id),
         )
-        .await
-        .map_err(|err| {
-            error!("Failed to send player message: {}", err);
-        })
-        .unwrap();
+        .await;
 
         info!("Create item request from player {} completed", username);
 
