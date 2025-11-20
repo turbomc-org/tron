@@ -1,3 +1,2 @@
-disable-publish = true
 no-confirm = true
 push-remote = "origin"
