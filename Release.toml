@@ -1,3 +1,4 @@
 no_build = true
 no_publish = true
 no_confirm = true
+push_remote = "origin"
