@@ -12,24 +12,18 @@ pub static RELEASE_CONFIG: Lazy<ReleaseConfig> = Lazy::new(|| {
     let note = format!(
         r#"
 [{version}] H01 VERSION
-features:-
-1. Direct message to friend using /dm
-2. Team chat using /tc
-3. Toggle scoreboard using /scoreboard
-4. Buy prefix using prefix command
-5. Report for bug using /bug <description>
-6. Report players using /report <player_name> <reason>
-7. Use leaderboard command to view leaderboard and your rank
-8. Press tab to view leaderboard directly
+new features:-
+1. Achievement title notification
+2. New team related commands
 
 fixes:-
-1. Redeem codes
-2. Team invite command
+1. Tab list leaderboard
+2. Scoreboard
+3. Team commands
 
 pending:-
-1. Password authentication system
-2. Shop
-3. Achievements notification
+1. Shop
+2. Pvp server
 "#,
         version = PACKAGE_VERSION
     );
