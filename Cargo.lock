@@ -2879,7 +2879,7 @@ dependencies = [
 
 [[package]]
 name = "tron"
-version = "0.1.13"
+version = "0.1.14"
 dependencies = [
  "anyhow",
  "argon2",
@@ -2918,14 +2918,14 @@ dependencies = [
 
 [[package]]
 name = "tron-bot"
-version = "0.1.13"
+version = "0.1.14"
 dependencies = [
  "tron-protos",
 ]
 
 [[package]]
 name = "tron-macros"
-version = "0.1.13"
+version = "0.1.14"
 dependencies = [
  "heck 0.5.0",
  "proc-macro2",
@@ -2936,7 +2936,7 @@ dependencies = [
 
 [[package]]
 name = "tron-protos"
-version = "0.1.13"
+version = "0.1.14"
 dependencies = [
  "prost",
  "serde",
