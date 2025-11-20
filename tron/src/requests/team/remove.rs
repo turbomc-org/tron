@@ -1,4 +1,8 @@
-use crate::BridgeService;
+use crate::{
+    BridgeService,
+    config::messages::{KICKED_FROM_TEAM, REMOVED_TEAM_MEMBER},
+    render,
+};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 use tron_protos::{RemoveTeamMemberRequest, RemoveTeamMemberResponse};
@@ -50,6 +54,15 @@ impl BridgeService {
 
             Status::internal("Failed to remove player from team")
         })?;
+
+        self.send_message(
+            &username,
+            render!(REMOVED_TEAM_MEMBER, username = &target, name = team.name),
+        )
+        .await;
+
+        self.send_message(&target, render!(KICKED_FROM_TEAM, username = &target))
+            .await;
 
         info!(
             "Remove team member request from player {} completed",

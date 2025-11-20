@@ -10,6 +10,10 @@ impl State {
         self.teams.get(&id).map(|entry| entry.value().clone())
     }
 
+    pub fn get_team_name(&self, id: u64) -> Option<String> {
+        self.teams.get(&id).map(|entry| entry.value().name.clone())
+    }
+
     pub async fn delete_team(&self, team_id: u64, team_name: &String) -> Result<()> {
         self.teams.remove(&team_id);
         self.indexes.team.remove(team_name);

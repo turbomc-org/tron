@@ -1,7 +1,7 @@
 use crate::BridgeService;
 use crate::models::team::Team;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 use tron_protos::{CreateTeamRequest, CreateTeamResponse};
 
 impl BridgeService {
@@ -15,7 +15,7 @@ impl BridgeService {
         let color = inner_request.color;
         let open = inner_request.open;
 
-        debug!("Create team request from player {} received", username);
+        info!("Create team request from player {} received", username);
 
         let mut player = self.player(&username).await?;
 
@@ -61,8 +61,7 @@ impl BridgeService {
           ),
         ).await;
 
-        debug!("Create team request from player {} completed", username);
-        debug!("Created team {} for player {}", team_name, username);
+        info!("Create team request from player {} completed", username);
 
         Ok(Response::new(CreateTeamResponse { success: true }))
     }

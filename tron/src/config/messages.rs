@@ -1143,3 +1143,111 @@ pub static RELEASE_NOTE: Lazy<Template<'static>> = Lazy::new(|| {
         body: "{{body}}"
     }
 });
+
+pub static TEAM_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 TEAM LIST",
+        body: "
+<white><bold>All Teams:</bold></white>
+
+{{list}}
+        "
+    }
+});
+
+pub static NO_TEAMS_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 NO OPEN TEAMS FOUND",
+        body: r#"No open teams found in the system."#
+    }
+});
+
+pub static OPEN_TEAM_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 OPEN TEAM LIST",
+        body: "
+<white><bold>Open Teams:</bold></white>
+
+{{list}}
+        "
+    }
+});
+
+pub static NO_OPEN_TEAMS_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 NO OPEN TEAMS FOUND",
+        body: r#"No open teams found in the system."#
+    }
+});
+
+pub static NO_TEAM_REQUESTS_FOUND: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 NO TEAM REQUESTS FOUND",
+        body: r#"No team request found in the system."#
+    }
+});
+
+pub static TEAM_REQUESTS_LIST: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 TEAM REQUESTS LIST",
+        body: "
+<white><bold>Team Requests list:</bold></white>
+
+{{list}}
+        "
+    }
+});
+
+pub static DELETE_TEAM: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "success",
+        title: "🔺 DELETED TEAM",
+        body: "Team is been deleted successfully."
+    }
+});
+
+pub static PROMOTE_TO_LEADER: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "success",
+        title: "🔺 PROMOTED {{username}} TO TEAM LEADER",
+        body: "You successfully transferred the leadership to player {{username}}."
+    }
+});
+
+pub static GAINED_LEADER: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 YOU ARE NEW LEADER OF {{name}}",
+        body: "Previous leader transferred leadership of team {{name}} to you."
+    }
+});
+
+pub static REMOVED_TEAM_MEMBER: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 REMOVED {{username}} FROM TEAM",
+        body: "Successfully removed {{username}} from team {{name}}."
+    }
+});
+
+pub static KICKED_FROM_TEAM: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 YOU ARE KICKED FROM TEAM",
+        body: "Team leader removed you from team."
+    }
+});
+
+pub static SUCCESSFULLY_REJECTED_TEAM_INVITATION: Lazy<Template<'static>> = Lazy::new(|| {
+    message! {
+        type: "info",
+        title: "🔺 SUCCESSFULLY REJECTED TEAM INVITATION",
+        body: "You successfully rejected the invitation from team {{name}}."
+    }
+});

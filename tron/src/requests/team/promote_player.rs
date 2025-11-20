@@ -1,4 +1,6 @@
-use crate::BridgeService;
+use crate::config::messages::PROMOTE_TO_LEADER;
+use crate::render;
+use crate::{BridgeService, config::messages::GAINED_LEADER};
 use tonic::{Request, Response, Status};
 use tracing::{error, info};
 use tron_protos::{PromoteTeamMemberRequest, PromoteTeamMemberResponse};
@@ -45,6 +47,12 @@ impl BridgeService {
 
                 Status::internal(format!("Failed to promote player {} to leader", &target))
             })?;
+
+        self.send_message(&username, render!(PROMOTE_TO_LEADER, username = &target))
+            .await;
+
+        self.send_message(&target, render!(GAINED_LEADER, name = team.name))
+            .await;
 
         info!(
             "Promote team member request from player {} completed",

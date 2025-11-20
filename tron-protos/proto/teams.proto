@@ -11,20 +11,52 @@ message GetAllTeamsResponse {
     repeated string teams = 1;
 }
 
-message GetTeamLeaderboardRequest {
+message GetOpenTeamsRequest {
     string username = 1;
 }
 
-message GetTeamLeaderboardResponse {
-    map<string, uint64> leaderboard = 1;
+message GetOpenTeamsResponse {
+    repeated string teams = 1;
 }
 
-message GetTeamInviteRequestsRequest {
+message GetTeamMembersRequest {
     string username = 1;
 }
 
-message GetTeamInviteRequestsResponse {
-    repeated string requests = 1;
+message GetTeamMembersResponse {
+    repeated string members = 1;
+}
+
+message GetTeamRequestsRequest {
+    string username = 1;
+}
+
+message GetTeamRequestsResponse {
+    repeated string teams = 1;
+}
+
+message ListTeamMembersRequest {
+    string username = 1;
+}
+
+message ListTeamMembersResponse {
+    bool success = 1;
+}
+
+message ListTeamRequestsRequest {
+    string username = 1;
+}
+
+message ListTeamRequestsResponse {
+    bool success = 1;
+}
+
+message ListOpenTeamsRequest {
+    string username = 1;
+}
+
+message ListOpenTeamsResponse {
+    bool success = 1;
 }
 
 message CreateTeamRequest {
@@ -82,14 +114,6 @@ message RejectTeamInviteResponse {
     bool success = 1;
 }
 
-message GetTeamMembersRequest {
-    string username = 1;
-}
-
-message GetTeamMembersResponse {
-    repeated string members = 1;
-}
-
 message PromoteTeamMemberRequest {
     string username = 1;
     string target = 2;
@@ -99,17 +123,19 @@ message PromoteTeamMemberResponse {
     bool success = 1;
 }
 
-message GetOpenTeamsRequest {}
-
-message GetOpenTeamsResponse {
-    repeated string teams = 1;
-}
-
 message DeleteTeamRequest {
     string username = 1;
     string team_name = 2;
 }
 
 message DeleteTeamResponse {
+    bool success = 1;
+}
+
+message ListTeamsRequest {
+    string username = 1;
+}
+
+message ListTeamsResponse {
     bool success = 1;
 }

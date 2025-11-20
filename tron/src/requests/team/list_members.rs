@@ -2,13 +2,13 @@ use crate::config::messages::SQUAD_ROSTER;
 use crate::{BridgeService, render};
 use tonic::{Request, Response, Status};
 use tracing::info;
-use tron_protos::{GetTeamMembersRequest, GetTeamMembersResponse};
+use tron_protos::{ListTeamMembersRequest, ListTeamMembersResponse};
 
 impl BridgeService {
-    pub async fn handle_get_team_members(
+    pub async fn handle_list_team_members(
         &self,
-        request: Request<GetTeamMembersRequest>,
-    ) -> Result<Response<GetTeamMembersResponse>, Status> {
+        request: Request<ListTeamMembersRequest>,
+    ) -> Result<Response<ListTeamMembersResponse>, Status> {
         let inner_request = request.into_inner();
         let username = inner_request.username.clone();
 
@@ -77,6 +77,6 @@ impl BridgeService {
 
         info!("Get team members request for player {} completed", username);
 
-        Ok(Response::new(GetTeamMembersResponse { members }))
+        Ok(Response::new(ListTeamMembersResponse { success: true }))
     }
 }

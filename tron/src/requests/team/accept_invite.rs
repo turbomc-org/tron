@@ -2,7 +2,7 @@ use crate::config::messages::{CONNECTION_ESTABLISHED, SQUAD_LINK_ESTABLISHED};
 use crate::{BridgeService, render};
 use chrono::Utc;
 use tonic::{Request, Response, Status};
-use tracing::{debug, error};
+use tracing::{error, info};
 use tron_protos::{AcceptTeamInviteRequest, AcceptTeamInviteResponse};
 
 impl BridgeService {
@@ -14,18 +14,15 @@ impl BridgeService {
         let username = inner_request.username;
         let target = inner_request.team;
 
-        debug!(
+        info!(
             "Accept team invite request from player {} received",
             username
         );
 
-        debug!("Fetching the player from cache");
         let mut player = self.player(&username).await?;
-        debug!("Fetching the team id");
         let team_id = self.state().check_team_request(&player, &target).await?;
         let now = Utc::now().timestamp() as u64;
 
-        debug!("Accepting the team request");
         player
             .accept_team_request(
                 team_id,
@@ -67,7 +64,7 @@ impl BridgeService {
                 .await;
         }
 
-        debug!(
+        info!(
             "Accept team invite request from player {} completed",
             username
         );

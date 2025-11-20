@@ -59,6 +59,14 @@ service Bridge {
     rpc RemoveFriend (RemoveFriendRequest)  returns (RemoveFriendResponse);
 
     // Teams
+    rpc GetAllTeams (GetAllTeamsRequest) returns (GetAllTeamsResponse);
+    rpc GetOpenTeams (GetOpenTeamsRequest) returns (GetOpenTeamsResponse);
+    rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
+    rpc GetTeamRequests (GetTeamRequestsRequest) returns (GetTeamRequestsResponse);
+    rpc ListTeams (ListTeamsRequest) returns (ListTeamsResponse);
+    rpc ListOpenTeams (ListOpenTeamsRequest) returns (ListOpenTeamsResponse);
+    rpc ListTeamMembers (ListTeamMembersRequest) returns (ListTeamMembersResponse);
+    rpc ListTeamRequests (ListTeamRequestsRequest) returns (ListTeamRequestsResponse);
     rpc CreateTeam (CreateTeamRequest) returns (CreateTeamResponse);
     rpc DeleteTeam (DeleteTeamRequest) returns (DeleteTeamResponse);
     rpc LeaveTeam (LeaveTeamRequest) returns (LeaveTeamResponse);
@@ -66,11 +74,8 @@ service Bridge {
     rpc SendTeamInvite (SendTeamInviteRequest) returns (SendTeamInviteResponse);
     rpc AcceptTeamInvite (AcceptTeamInviteRequest) returns (AcceptTeamInviteResponse);
     rpc RejectTeamInvite (RejectTeamInviteRequest) returns (RejectTeamInviteResponse);
-    rpc GetTeamMembers (GetTeamMembersRequest) returns (GetTeamMembersResponse);
     rpc RemoveTeamMember (RemoveTeamMemberRequest) returns (RemoveTeamMemberResponse);
     rpc PromoteTeamMember (PromoteTeamMemberRequest) returns (PromoteTeamMemberResponse);
-    rpc GetOpenTeams (GetOpenTeamsRequest) returns (GetOpenTeamsResponse);
-    rpc GetAllTeams (GetAllTeamsRequest) returns (GetAllTeamsResponse);
 
     // Shop
     rpc ListAllItems (ListAllItemsRequest) returns (ListAllItemsResponse);

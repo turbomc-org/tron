@@ -2,7 +2,6 @@ syntax = "proto3";
 option java_package = "com.tron.bridge";
 
 package bridge;
-import "common.proto";
 
 message ProxyConnectionRequest {
   oneof payload {
