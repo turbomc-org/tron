@@ -15,13 +15,10 @@ impl BridgeService {
 
         let mut player = self.player(&username).await?;
 
-        player
-            .add_kill(1, &self.collections().players, &self.state())
-            .await
-            .map_err(|err| {
-                error!("Failed to add death of player {}: {}", username, err);
-                Status::internal("Failed to add death")
-            })?;
+        player.add_kill(1, &self).await.map_err(|err| {
+            error!("Failed to add death of player {}: {}", username, err);
+            Status::internal("Failed to add death")
+        })?;
 
         info!("Player {} killed a player", username);
 

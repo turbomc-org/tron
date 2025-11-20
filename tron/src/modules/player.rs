@@ -1,10 +1,11 @@
-use crate::RETRY_STRATEGY;
 use crate::collections::player::PlayerCollection;
 use crate::collections::team::TeamCollection;
+use crate::config::titles::{ACHIEVEMENT_SUBTITLE, ACHIEVEMENT_TITLE};
 use crate::models::achievements::Achievements;
 use crate::models::player::{Player, Rank, Role};
 use crate::models::team::Team;
 use crate::state::State;
+use crate::{BridgeService, RETRY_STRATEGY, render};
 use anyhow::Result;
 use anyhow::anyhow;
 use std::sync::Arc;
@@ -515,16 +516,11 @@ impl Player {
         Ok(())
     }
 
-    pub async fn add_kill(
-        &mut self,
-        kills: u64,
-        col: &Arc<dyn PlayerCollection>,
-        state: &Arc<State>,
-    ) -> Result<()> {
+    pub async fn add_kill(&mut self, kills: u64, service: &BridgeService) -> Result<()> {
         let player_id = self.id.clone();
 
         task::spawn({
-            let col = col.clone();
+            let col = service.collections().players.clone();
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.add_kill(player_id, kills).await.map_err(|e| {
@@ -541,8 +537,8 @@ impl Player {
         });
 
         self.kills += kills;
-        state.inc_kills(player_id, kills).await?;
-        self.check_achievements_after_kill(&col, state).await?;
+        service.state().inc_kills(player_id, kills).await?;
+        self.check_achievements_after_kill(service).await?;
 
         Ok(())
     }
@@ -581,13 +577,12 @@ impl Player {
     pub async fn add_blocks_placed(
         &mut self,
         blocks_placed: u64,
-        col: &Arc<dyn PlayerCollection>,
-        state: &Arc<State>,
+        service: &BridgeService,
     ) -> Result<()> {
         let player_id = self.id.clone();
 
         task::spawn({
-            let col = col.clone();
+            let col = service.collections().players.clone();
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.add_blocks_placed(player_id, blocks_placed)
@@ -606,9 +601,8 @@ impl Player {
         });
 
         self.blocks_placed += blocks_placed;
-        state.insert_player(self.clone()).await?;
-        self.check_achievements_after_block_placed(&col, state)
-            .await?;
+        service.state().insert_player(self.clone()).await?;
+        self.check_achievements_after_block_placed(&service).await?;
 
         Ok(())
     }
@@ -616,13 +610,12 @@ impl Player {
     pub async fn add_blocks_broken(
         &mut self,
         blocks_broken: u64,
-        col: &Arc<dyn PlayerCollection>,
-        state: &Arc<State>,
+        service: &BridgeService,
     ) -> Result<()> {
         let player_id = self.id.clone();
 
         task::spawn({
-            let col = col.clone();
+            let col = service.collections().players.clone();
             async move {
                 let retry_result = Retry::spawn(RETRY_STRATEGY.clone(), || async {
                     col.add_block_broken(player_id, blocks_broken)
@@ -641,9 +634,8 @@ impl Player {
         });
 
         self.blocks_broken += blocks_broken;
-        state.insert_player(self.clone()).await?;
-        self.check_achievements_after_block_broken(&col, state)
-            .await?;
+        service.state().insert_player(self.clone()).await?;
+        self.check_achievements_after_block_broken(service).await?;
 
         Ok(())
     }
@@ -658,26 +650,28 @@ impl Player {
         }
     }
 
-    pub async fn check_achievements_after_kill(
-        &mut self,
-        col: &Arc<dyn PlayerCollection>,
-        state: &Arc<State>,
-    ) -> Result<()> {
+    pub async fn check_achievements_after_kill(&mut self, service: &BridgeService) -> Result<()> {
         if let Some(new_achievement) = Achievements::warrior_for_kills(self.kills) {
             if !self.achievements.contains(&new_achievement) {
                 self.achievements.insert(new_achievement.clone());
 
-                col.add_achievement(self.id, new_achievement.clone())
+                service
+                    .collections()
+                    .players
+                    .add_achievement(self.id, new_achievement.clone())
                     .await?;
-                state
+                service
+                    .state()
                     .add_achievement(self.id, new_achievement.clone())
                     .await?;
 
-                col.inc_coins(
-                    self.id,
-                    Achievements::reward(new_achievement.clone()) as i64,
-                )
-                .await?;
+                service
+                    .send_title(
+                        &self.username,
+                        render!(ACHIEVEMENT_TITLE, achievement = new_achievement.to_string(),),
+                        render!(ACHIEVEMENT_SUBTITLE, coins = new_achievement.reward()),
+                    )
+                    .await;
 
                 info!(
                     "Player {} unlocked achievement {:?}",
@@ -690,24 +684,35 @@ impl Player {
 
     pub async fn check_achievements_after_block_broken(
         &mut self,
-        col: &Arc<dyn PlayerCollection>,
-        state: &Arc<State>,
+        service: &BridgeService,
     ) -> Result<()> {
         if let Some(new_achievement) = Achievements::miner_for_block_broken(self.blocks_broken) {
             if !self.achievements.contains(&new_achievement) {
                 self.achievements.insert(new_achievement.clone());
 
-                col.add_achievement(self.id, new_achievement.clone())
+                service
+                    .collections()
+                    .players
+                    .add_achievement(self.id, new_achievement.clone())
                     .await?;
-                state
+                service
+                    .state()
                     .add_achievement(self.id, new_achievement.clone())
                     .await?;
 
-                col.inc_coins(
-                    self.id,
-                    Achievements::reward(new_achievement.clone()) as i64,
-                )
-                .await?;
+                service
+                    .collections()
+                    .players
+                    .inc_coins(self.id, new_achievement.reward() as i64)
+                    .await?;
+
+                service
+                    .send_title(
+                        &self.username,
+                        render!(ACHIEVEMENT_TITLE, achievement = new_achievement.to_string(),),
+                        render!(ACHIEVEMENT_SUBTITLE, coins = new_achievement.reward()),
+                    )
+                    .await;
 
                 info!(
                     "Player {} unlocked achievement {:?}",
@@ -720,24 +725,35 @@ impl Player {
 
     pub async fn check_achievements_after_block_placed(
         &mut self,
-        col: &Arc<dyn PlayerCollection>,
-        state: &Arc<State>,
+        service: &BridgeService,
     ) -> Result<()> {
         if let Some(new_achievement) = Achievements::builder_for_blocks_placed(self.blocks_placed) {
             if !self.achievements.contains(&new_achievement) {
                 self.achievements.insert(new_achievement.clone());
 
-                col.add_achievement(self.id, new_achievement.clone())
+                service
+                    .collections()
+                    .players
+                    .add_achievement(self.id, new_achievement.clone())
                     .await?;
-                state
+                service
+                    .state()
                     .add_achievement(self.id, new_achievement.clone())
                     .await?;
 
-                col.inc_coins(
-                    self.id,
-                    Achievements::reward(new_achievement.clone()) as i64,
-                )
-                .await?;
+                service
+                    .collections()
+                    .players
+                    .inc_coins(self.id, new_achievement.reward() as i64)
+                    .await?;
+
+                service
+                    .send_title(
+                        &self.username,
+                        render!(ACHIEVEMENT_TITLE, achievement = new_achievement.to_string(),),
+                        render!(ACHIEVEMENT_SUBTITLE, coins = new_achievement.reward()),
+                    )
+                    .await;
 
                 info!(
                     "Player {} unlocked achievement {:?}",

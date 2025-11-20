@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::fmt;
 use std::hash::Hash;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
@@ -149,8 +150,8 @@ impl Achievements {
         }
     }
 
-    pub fn reward(achievements: Achievements) -> u64 {
-        match achievements {
+    pub fn reward(&self) -> u64 {
+        match self {
             Achievements::BuilderI => 100,
             Achievements::BuilderII => 200,
             Achievements::BuilderIII => 300,
@@ -212,5 +213,23 @@ impl Achievements {
             Achievements::WarriorXIX => 1900,
             Achievements::WarriorXX => 2000,
         }
+    }
+}
+
+impl fmt::Display for Achievements {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let s = format!("{:?}", self);
+
+        let (category, numeral) = if s.starts_with("Miner") {
+            ("MINER", &s[5..])
+        } else if s.starts_with("Warrior") {
+            ("WARRIOR", &s[7..])
+        } else if s.starts_with("Builder") {
+            ("BUILDER", &s[7..])
+        } else {
+            return write!(f, "{}", s.to_uppercase());
+        };
+
+        write!(f, "{} {}", category, numeral)
     }
 }
