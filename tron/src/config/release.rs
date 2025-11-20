@@ -15,6 +15,8 @@ pub static RELEASE_CONFIG: Lazy<ReleaseConfig> = Lazy::new(|| {
 new features:-
 1. Achievement title notification
 2. New team related commands
+3. New prefixes
+4. Redeem codes
 
 fixes:-
 1. Tab list leaderboard
