@@ -1,3 +1,3 @@
 no-confirm = true
 push-remote = "origin"
-tag-message = ""
+disable-tag = true
