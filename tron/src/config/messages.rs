@@ -182,7 +182,8 @@ pub static NEW_TEAM_REQUEST: Lazy<Template<'static>> = Lazy::new(|| {
         body: r#"
     <white><bold>{{sender}}</bold></white> wants to join their team on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
     <dark_gray>»</dark_gray> <click:run_command:'/team accept {{name}}'><u><gradient:#8A2BE2:#C724B1>[ ACCEPT ]</gradient></u></click>
-    <click:run_command:'/team deny {{name}}'><u><gradient:#7A00FF:#4B0082>[ DENY ]</gradient></u></click>"#,
+    <dark_gray>»</dark_gray> <click:run_command:'/team deny {{name}}'><u><gradient:#8A2BE2:#C724B1>[ DENY ]</gradient></u></click>
+    "#,
        actions: {
            view_team_request: {kind: "command", value: "/team requests", label: "View team requests"}
        }
