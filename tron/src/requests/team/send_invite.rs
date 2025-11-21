@@ -54,7 +54,7 @@ impl BridgeService {
             })?;
 
         self.send_message(
-            &username,
+            &target,
             render!(NEW_TEAM_REQUEST, sender = &username, name = &team.name),
         )
         .await;

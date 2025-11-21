@@ -665,6 +665,13 @@ impl Player {
                     .add_achievement(self.id, new_achievement.clone())
                     .await?;
 
+                self.inc_coins(
+                    new_achievement.reward() as i64,
+                    &service.collections().players,
+                    &service.state(),
+                )
+                .await?;
+
                 service
                     .send_title(
                         &self.username,
@@ -700,11 +707,12 @@ impl Player {
                     .add_achievement(self.id, new_achievement.clone())
                     .await?;
 
-                service
-                    .collections()
-                    .players
-                    .inc_coins(self.id, new_achievement.reward() as i64)
-                    .await?;
+                self.inc_coins(
+                    new_achievement.reward() as i64,
+                    &service.collections().players,
+                    &service.state(),
+                )
+                .await?;
 
                 service
                     .send_title(
