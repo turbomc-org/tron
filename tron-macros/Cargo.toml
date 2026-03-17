@@ -12,8 +12,8 @@ homepage = "https://h01.in"
 proc-macro = true
 
 [dependencies]
-heck = "0.5.0"
-proc-macro2 = "1.0.103"
-quote = "1.0.42"
-syn = "2.0.109"
+heck.workspace = true
+proc-macro2.workspace = true
+quote.workspace = true
+syn.workspace = true
 tracing.workspace = true

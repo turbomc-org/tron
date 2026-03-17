@@ -38,6 +38,6 @@ tron-macros = { path = "../tron-macros" }
 tron-protos = { path = "../tron-protos" }
 
 [dev-dependencies]
-serial_test = "3.2.0"
-temp-env = "0.3.6"
-tracing-test = "0.2.5"
+serial_test.workspace = true
+temp-env.workspace = true
+tracing-test.workspace = true
