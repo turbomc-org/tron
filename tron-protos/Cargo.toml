@@ -14,11 +14,11 @@ include = [
 ]
 
 [dependencies]
-prost = "0.14.1"
-serde = { version = "1.0.228", features = ["derive"] }
-tonic = "0.14.2"
-tonic-prost = "0.14.2"
+prost = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+tonic = { workspace = true }
+tonic-prost = { workspace = true }
 
 [build-dependencies]
-tonic-build = "0.14.2"
-tonic-prost-build = "0.14.2"
+tonic-build = { workspace = true }
+tonic-prost-build = { workspace = true }
