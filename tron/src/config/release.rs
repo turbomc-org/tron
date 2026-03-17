@@ -11,7 +11,7 @@ pub static PACKAGE_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub static RELEASE_CONFIG: Lazy<ReleaseConfig> = Lazy::new(|| {
     let note = format!(
         r#"
-[{version}] H01 VERSION
+[{version}] Turbo VERSION
 new features:-
 1. Achievement title notification
 2. New team related commands

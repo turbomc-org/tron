@@ -31,7 +31,7 @@ impl BridgeService {
             self.send_message(
                 &player.username,
                 "<gradient:#C724B1:#7A00FF><bold>📭 NO INCOMING FRIEND REQUESTS</bold></gradient>\n\
-                 <gray>Your <gradient:#B200FF:#6A00A3>H01 Network</gradient> inbox is currently empty.</gray>\n\
+                 <gray>Your <gradient:#B200FF:#6A00A3>Turbo Network</gradient> inbox is currently empty.</gray>\n\
                  <dark_gray>»</dark_gray> <click:run_command:'/friends'><u><gradient:#C724B1:#7A00FF>Send a new request</gradient></u></click>"
                     .to_string(),
             )
@@ -66,7 +66,7 @@ impl BridgeService {
                 format!(
                     "<gradient:#C724B1:#7A00FF><bold>📨 INCOMING FRIEND REQUESTS</bold></gradient>\n\
                      <gray>You have <light_purple><bold>{}</bold></light_purple> pending connection{} \
-                     on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.</gray>\n\
+                     on the <gradient:#B200FF:#6A00A3>Turbo Network</gradient>.</gray>\n\
                      {}\n\
                      <dark_gray>»</dark_gray> <click:run_command:'/friends accept_all'>\
                      <u><gradient:#C724B1:#7A00FF>[ ACCEPT ALL ]</gradient></u></click>  \

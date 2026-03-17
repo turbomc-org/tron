@@ -3,7 +3,7 @@ name = "tron-bot"
 version.workspace = true
 edition = "2024"
 
-description = "TRON Bot — Discord bot for H01 minecraft server"
+description = "TRON Bot — Discord bot for Turbo minecraft server"
 license = "MIT"
 repository = "https://github.com/h01-team/tron"
 documentation = "https://docs.rs/tron-bot"

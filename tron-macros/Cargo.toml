@@ -2,7 +2,7 @@
 name = "tron-macros"
 version.workspace = true
 edition = "2024"
-description = "TRON — H01 MINECRAFT SERVER"
+description = "TRON — Turbo MINECRAFT SERVER"
 license = "MIT"
 repository = "https://github.com/h01-team/tron"
 documentation = "https://docs.rs/tron"

@@ -8,8 +8,8 @@ pub static WELCOME_BACK: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "⚡ WELCOME BACK, {{username}}",
-        body: "Connection to the <gradient:#B200FF:#6A00A3>H01 Network</gradient> re-established.\n\
-    <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 6</gradient> systems online — enjoy your session, <light_purple><bold>player.</bold></light_purple>",
+        body: "Connection to the <gradient:#B200FF:#6A00A3>Turbo Network</gradient> re-established.\n\
+    <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 7</gradient> systems online — enjoy your session, <light_purple><bold>player.</bold></light_purple>",
         actions: {
             discord: { kind: "url", value: "https://discord.gg/6K22juDm7k", label: "Report bugs or updates on Discord" }
         }
@@ -20,8 +20,8 @@ pub static WELCOME_FIRST_TIME: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "⛓ WELCOME, {{username}}",
-        body: r#"You've entered the <bold><gradient:#B200FF:#6A00A3>H01 Network</gradient></bold> for the first time.
-    <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 6</gradient> has begun — your legacy starts <light_purple><bold>now.</bold></light_purple>"#,
+        body: r#"You've entered the <bold><gradient:#B200FF:#6A00A3>Turbo Network</gradient></bold> for the first time.
+    <dark_gray>»</dark_gray> <gradient:#D66BFF:#8A2BE2>Season 7</gradient> has begun — your legacy starts <light_purple><bold>now.</bold></light_purple>"#,
         actions: {
             discord: { kind: "url", value: "https://discord.gg/6K22juDm7k", label: "Join the Grid (Discord)" }
         }
@@ -105,7 +105,7 @@ pub static NO_INCOMING_FRIEND_REQUESTS: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "📭 NO INCOMING FRIEND REQUESTS",
-        body: r#"Your <gradient:#B200FF:#6A00A3>H01 Network</gradient> inbox is currently empty."#,
+        body: r#"Your <gradient:#B200FF:#6A00A3>Turbo Network</gradient> inbox is currently empty."#,
         actions: {
             send_a_new_request: { kind: "command", value: "/friend list", label: "Send a new request" }
         }
@@ -117,7 +117,7 @@ pub static INCOMING_FRIEND_REQUESTS: Lazy<Template<'static>> = Lazy::new(|| {
         type: "info",
         title: "📨 INCOMING FRIEND REQUESTS",
         body: r#"You have <light_purple><bold>{{count}}</bold></light_purple> pending connection{{s}}
-    on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+    on the <gradient:#B200FF:#6A00A3>Turbo Network</gradient>.
     {{list}}"#,
     }
 });
@@ -156,7 +156,7 @@ pub static NEW_FRIEND_REQUEST: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "⚡ NEW FRIEND REQUEST ⚡",
-        body: r#"<white><bold>{{sender}}</bold></white> wants to connect with you on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+        body: r#"<white><bold>{{sender}}</bold></white> wants to connect with you on the <gradient:#B200FF:#6A00A3>Turbo Network</gradient>.
     <dark_gray>»</dark_gray> <click:run_command:'/friend accept {{sender}}'><u><gradient:#8A2BE2:#C724B1>[ ACCEPT ]</gradient></u></click>
     <click:run_command:'/friend deny {{sender}}'><u><gradient:#7A00FF:#4B0082>[ DENY ]</gradient></u></click>
     <dark_gray>»</dark_gray> Manage requests via <light_purple>/friends</light_purple>"#
@@ -167,7 +167,7 @@ pub static FRIEND_REQUEST_SENT: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "✅ FRIEND REQUEST SENT",
-        body: r#"Your request has been transmitted to <white><bold>{{receiver}}</bold></white> via the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+        body: r#"Your request has been transmitted to <white><bold>{{receiver}}</bold></white> via the <gradient:#B200FF:#6A00A3>Turbo Network</gradient>.
     <dark_gray>»</dark_gray> <light_purple>Awaiting connection response...</light_purple>"#,
         actions: {
             view_pending_requests: { kind: "command", value: "/friend list", label: "View pending requests" }
@@ -180,7 +180,7 @@ pub static NEW_TEAM_REQUEST: Lazy<Template<'static>> = Lazy::new(|| {
         type: "info",
         title: "⚡ NEW TEAM REQUEST ⚡",
         body: r#"
-    <white><bold>{{sender}}</bold></white> wants to join their team on the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+    <white><bold>{{sender}}</bold></white> wants to join their team on the <gradient:#B200FF:#6A00A3>Turbo Network</gradient>.
     <dark_gray>»</dark_gray> <click:run_command:'/team accept {{name}}'><u><gradient:#8A2BE2:#C724B1>[ ACCEPT ]</gradient></u></click>
     <dark_gray>»</dark_gray> <click:run_command:'/team deny {{name}}'><u><gradient:#8A2BE2:#C724B1>[ DENY ]</gradient></u></click>
     "#,
@@ -194,7 +194,7 @@ pub static TEAM_REQUEST_SENT: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "✅ TEAM REQUEST SENT",
-        body: r#"Your team request has been transmitted to <white><bold>{{receiver}}</bold></white> via the <gradient:#B200FF:#6A00A3>H01 Network</gradient>.
+        body: r#"Your team request has been transmitted to <white><bold>{{receiver}}</bold></white> via the <gradient:#B200FF:#6A00A3>Turbo Network</gradient>.
     <dark_gray>»</dark_gray> <light_purple>Awaiting connection response...</light_purple>"#,
     }
 });
@@ -1041,7 +1041,7 @@ pub static SUCCESSFUL_LOGIN: Lazy<Template<'static>> = Lazy::new(|| {
     message! {
         type: "info",
         title: "✔️ SUCCESSFULL LOGIN",
-        body: "Welcome <white><bold>{{username}}</bold></white> to H01 network. You have successfully logged in."
+        body: "Welcome <white><bold>{{username}}</bold></white> to Turbo network. You have successfully logged in."
     }
 });
 

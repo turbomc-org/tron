@@ -29,26 +29,31 @@ pub async fn format_message(
     let overall_rank = state
         .leaderboards
         .overall
-        .get_rank(player.id)
+        .get_rank(&player.id)
         .await
         .unwrap_or(0) as u64;
-    let kd_rank = state.leaderboards.kd.get_rank(player.id).await.unwrap_or(0) as u64;
+    let kd_rank = state
+        .leaderboards
+        .kd
+        .get_rank(&player.id)
+        .await
+        .unwrap_or(0) as u64;
     let kills_rank = state
         .leaderboards
         .kills
-        .get_rank(player.id)
+        .get_rank(&player.id)
         .await
         .unwrap_or(0) as u64;
     let deaths_rank = state
         .leaderboards
         .deaths
-        .get_rank(player.id)
+        .get_rank(&player.id)
         .await
         .unwrap_or(0) as u64;
     let coins_rank = state
         .leaderboards
         .coins
-        .get_rank(player.id)
+        .get_rank(&player.id)
         .await
         .unwrap_or(0) as u64;
 
