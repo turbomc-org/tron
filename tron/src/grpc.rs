@@ -9,7 +9,8 @@ pub struct GRPCService {}
 
 impl GRPCService {
     pub async fn init() -> Result<(), Box<dyn std::error::Error>> {
-        let addr = "127.0.0.1:50051"
+        let addr = std::env::var("TRON_ADDR")
+            .unwrap_or_else(|_| "0.0.0.0:50051".to_string())
             .parse()
             .expect("failed to parse the address");
         info!("🟩 Listener running on {}", addr);

@@ -25,6 +25,8 @@ impl BridgeService {
                     return Err(Status::internal("Failed to authenticate the player."));
                 }
 
+                self.state().messaging.join_global(player.id);
+
                 player
             }
             Err(e) => {
