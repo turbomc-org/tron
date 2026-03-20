@@ -8,6 +8,10 @@ repository = "https://github.com/h01-team/tron"
 documentation = "https://docs.rs/tron"
 homepage = "https://h01.in"
 
+[[bin]]
+name = "tron"
+path = "src/main.rs"
+
 [dependencies]
 anyhow.workspace = true
 argon2.workspace = true
