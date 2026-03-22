@@ -1,6 +1,6 @@
 use crate::State;
 use crate::models::{achievements::Achievements, player::Player, prefix::Prefix, team::Team};
-use anyhow::Result;
+use anyhow::{Context, Result};
 use std::sync::Arc;
 use tracing::error;
 
@@ -88,6 +88,39 @@ pub async fn format_message(
     } else {
         format!("<bold>{}</bold>", player.username)
     };
+
+    let global_channel = state
+        .messaging
+        .default_streams
+        .get(&crate::state::messaging::DefaultStreams::Global)
+        .context("Failed to get global")?;
+
+    let hindi_channel = state
+        .messaging
+        .default_streams
+        .get(&crate::state::messaging::DefaultStreams::Hindi)
+        .context("Failed to get hindi")?;
+
+    let is_global = match state.messaging.streams.get(&player.id) {
+        Some(channel) => channel.to_owned() == *global_channel,
+        None => false,
+    };
+
+    let is_hindi = match state.messaging.streams.get(&player.id) {
+        Some(channel) => channel.to_owned() == *hindi_channel,
+        None => false,
+    };
+
+    let mut is_team = false;
+
+    if let Some(team) = player.team {
+        let team_stream = state
+            .messaging
+            .team_streams
+            .get(&team)
+            .context("Failed to get team stream")?;
+        is_team = team_stream.is_some();
+    }
 
     let final_message = format!(
         "{} {} {} <color:#750085><st>=</st></color> {} {}",
