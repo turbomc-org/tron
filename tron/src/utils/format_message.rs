@@ -89,41 +89,51 @@ pub async fn format_message(
         format!("<bold>{}</bold>", player.username)
     };
 
-    let global_channel = state
-        .messaging
-        .default_streams
-        .get(&crate::state::messaging::DefaultStreams::Global)
-        .context("Failed to get global")?;
+    let channel_indicator = {
+        let current_stream = state.messaging.streams.get(&player.id);
 
-    let hindi_channel = state
-        .messaging
-        .default_streams
-        .get(&crate::state::messaging::DefaultStreams::Hindi)
-        .context("Failed to get hindi")?;
+        match current_stream {
+            Some(stream_id) => {
+                let global_channel = state
+                    .messaging
+                    .default_streams
+                    .get(&crate::state::messaging::DefaultStreams::Global);
 
-    let is_global = match state.messaging.streams.get(&player.id) {
-        Some(channel) => channel.to_owned() == *global_channel,
-        None => false,
+                let hindi_channel = state
+                    .messaging
+                    .default_streams
+                    .get(&crate::state::messaging::DefaultStreams::Hindi);
+
+                if global_channel.as_deref() == Some(&*stream_id) {
+                    "<hover:show_text:'<gray>Channel:</gray> <white>Global</white>'><color:#00AA00>🌐</color></hover>".to_string()
+                } else if hindi_channel.as_deref() == Some(&*stream_id) {
+                    "<hover:show_text:'<gray>Channel:</gray> <white>Hindi</white>'><color:#FF6B00>🇮🇳</color></hover>".to_string()
+                } else if let Some(team_id) = player.team {
+                    let team_stream = state.messaging.team_streams.get(&team_id);
+                    if team_stream
+                        .as_deref()
+                        .map(|s| s == &*stream_id)
+                        .unwrap_or(false)
+                    {
+                        format!(
+                            "<hover:show_text:'<gray>Channel:</gray> Team Chat'>👥</hover>"
+                        )
+                    } else {
+                        "<hover:show_text:'<gray>Channel:</gray> <white>Private</white>'><color:#AAAAAA>💬</color></hover>".to_string()
+                    }
+                } else {
+                    "<hover:show_text:'<gray>Channel:</gray> <white>Private</white>'><color:#AAAAAA>💬</color></hover>".to_string()
+                }
+            }
+            None => {
+                "<hover:show_text:'<gray>Channel:</gray> <white>Unknown</white>'><color:#555555>?</color></hover>".to_string()
+            }
+        }
     };
-
-    let is_hindi = match state.messaging.streams.get(&player.id) {
-        Some(channel) => channel.to_owned() == *hindi_channel,
-        None => false,
-    };
-
-    let mut is_team = false;
-
-    if let Some(team) = player.team {
-        let team_stream = state
-            .messaging
-            .team_streams
-            .get(&team)
-            .context("Failed to get team stream")?;
-        is_team = team_stream.is_some();
-    }
 
     let final_message = format!(
-        "{} {} {} <color:#750085><st>=</st></color> {} {}",
+        "{} {} {} {} <color:#750085><st>=</st></color> {} {}",
+        channel_indicator,
         emoji_part.trim(),
         achievement_display,
         prefix_or_rank,
@@ -143,7 +153,7 @@ fn rank_emoji(emoji: &str, rank: u64, hover_label: &str) -> String {
         1 => ("#FFD700", "1st"),
         2 => ("#C0C0C0", "2nd"),
         3 => ("#b87333", "3rd"),
-        _ => return String::new(), // only top 3
+        _ => return String::new(),
     };
 
     format!(

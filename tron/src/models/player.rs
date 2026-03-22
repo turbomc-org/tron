@@ -152,7 +152,7 @@ impl Player {
             invite_blocked: false,
             vault_count: 0,
             rank: Rank::Newbie,
-            scoreboard_enabled: true,
+            scoreboard_enabled: edition == Edition::Java,
             achievements: HashSet::new(),
             owned_vault_ids: HashSet::new(),
             redeemed_codes: HashSet::new(),
