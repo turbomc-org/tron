@@ -89,51 +89,8 @@ pub async fn format_message(
         format!("<bold>{}</bold>", player.username)
     };
 
-    let channel_indicator = {
-        let current_stream = state.messaging.streams.get(&player.id);
-
-        match current_stream {
-            Some(stream_id) => {
-                let global_channel = state
-                    .messaging
-                    .default_streams
-                    .get(&crate::state::messaging::DefaultStreams::Global);
-
-                let hindi_channel = state
-                    .messaging
-                    .default_streams
-                    .get(&crate::state::messaging::DefaultStreams::Hindi);
-
-                if global_channel.as_deref() == Some(&*stream_id) {
-                    "<hover:show_text:'<gray>Channel:</gray> <white>Global</white>'><color:#00AA00>🌐</color></hover>".to_string()
-                } else if hindi_channel.as_deref() == Some(&*stream_id) {
-                    "<hover:show_text:'<gray>Channel:</gray> <white>Hindi</white>'><color:#FF6B00>🇮🇳</color></hover>".to_string()
-                } else if let Some(team_id) = player.team {
-                    let team_stream = state.messaging.team_streams.get(&team_id);
-                    if team_stream
-                        .as_deref()
-                        .map(|s| s == &*stream_id)
-                        .unwrap_or(false)
-                    {
-                        format!(
-                            "<hover:show_text:'<gray>Channel:</gray> Team Chat'>👥</hover>"
-                        )
-                    } else {
-                        "<hover:show_text:'<gray>Channel:</gray> <white>Private</white>'><color:#AAAAAA>💬</color></hover>".to_string()
-                    }
-                } else {
-                    "<hover:show_text:'<gray>Channel:</gray> <white>Private</white>'><color:#AAAAAA>💬</color></hover>".to_string()
-                }
-            }
-            None => {
-                "<hover:show_text:'<gray>Channel:</gray> <white>Unknown</white>'><color:#555555>?</color></hover>".to_string()
-            }
-        }
-    };
-
     let final_message = format!(
-        "{} {} {} {} <color:#750085><st>=</st></color> {} {}",
-        channel_indicator,
+        "{} {} {} <color:#750085><st>=</st></color> {} {}",
         emoji_part.trim(),
         achievement_display,
         prefix_or_rank,
